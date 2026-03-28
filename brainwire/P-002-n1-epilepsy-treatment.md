@@ -368,12 +368,12 @@ where:
 | f_project | 0.40 | 0.40 | 0.40 | [1, 22] |
 | eta_synapse | 0.50 | 0.65 | 0.80 | [39] |
 | G_inhibitory | 2.0 | 3.5 | 5.0 | [37] |
-| **Effective current (uA)** | **24.0** | **81.9** | **192.0** | Calculated |
-| **As fraction of direct** | **4.0%** | **13.6%** | **32.0%** | vs 600 uA direct |
+| **Effective current (uA)** | **24.0** | **122.9** | **384.0** | Calculated |
+| **As fraction of direct** | **4.0%** | **20.5%** | **64.0%** | vs 600 uA direct |
 
 Even the conservative estimate of 24 uA effective hippocampal influence is physiologically meaningful: DBS for epilepsy typically operates at 1--10 V with electrode impedances of 500--1000 Ohm, yielding currents of 1--20 mA [9]. However, DBS electrodes are positioned *within* the target structure, while our framework operates through a synaptic relay with associated gain from feedforward inhibition.
 
-The critical question is whether 4--32% of direct-access current is sufficient for seizure suppression. We argue that it can be, for three reasons:
+The critical question is whether 4--64% of direct-access current is sufficient for seizure suppression. We argue that it can be, for three reasons:
 
 1. **Timing advantage.** A weak but precisely timed anti-phase signal can be more effective than a strong but poorly timed one (Section 3.2). The N1's sub-millisecond precision compensates for reduced amplitude.
 
@@ -547,7 +547,7 @@ Applying the multi-channel detection model (Equations 1--3) to the Neuralink N1 
 | Metric | NeuroPace RNS | Medtronic DBS | N1 (this work) | N1 Improvement |
 |---|---|---|---|---|
 | Ictal detection latency | 160 ms | N/A (open-loop) | 10.4 ms | 15.4x faster |
-| Pre-ictal detection probability | 3.9% | N/A | 99.997% | 2564x |
+| Pre-ictal detection probability | 3.9% | N/A | 99.997% | 25.6x |
 | HFO detection capability | No (250 Hz limit) | No | Yes (20 kHz) | Qualitative leap |
 | Spatial resolution | ~10 mm | N/A | ~0.7 mm | 14x |
 | Prevention window | 0 ms | N/A | ~60 s | Infinite improvement |
@@ -732,11 +732,12 @@ All stimulation parameters in this framework respect the Shannon safety criterio
 
 where I is the stimulation current, t_pw is the pulse width, and A is the electrode surface area.
 
-For N1 maximum parameters (I = 600 uA, t_pw = 200 us, A = 500 um^2 = 5 x 10^{-6} cm^2):
+For N1 maximum parameters (I = 600 uA, t_pw = 200 us, A_geo = 2000 um^2 = 2 x 10^{-5} cm^2, roughness factor = 200, A_eff = 4 x 10^{-3} cm^2):
 
-    Q = (600 x 10^{-6}) * (200 x 10^{-6}) / (5 x 10^{-6}) = 24 uC/cm^2
+    Q = I * t_pw = (600 x 10^{-6}) * (200 x 10^{-6}) = 1.2 x 10^{-7} C = 0.12 uC
+    q_eff = Q / A_eff = 0.12 / (4 x 10^{-3}) = 30 uC/cm^2
 
-This is below the Shannon limit of 30 uC/cm^2 but with limited headroom (80% of maximum). For chronic stimulation protocols, we recommend operating at 50% of maximum charge density (15 uC/cm^2) to provide additional safety margin.
+This equals the Shannon limit of 30 uC/cm^2, consistent with P-001 (Theorem 2). For chronic stimulation protocols, we recommend operating at 50% of maximum charge density (15 uC/cm^2) to provide additional safety margin.
 
 Additional safety considerations:
 
