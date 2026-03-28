@@ -131,19 +131,6 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 | Tier 2 | 10 |
 | Tier 3 | 10 |
 
-## OSF Projects (8 new papers)
-
-| Paper | OSF URL |
-|-------|---------|
-| P-NEW-1 | https://osf.io/geuy8/ |
-| P-NEW-2 | https://osf.io/exzyn/ |
-| P-NEW-3 | https://osf.io/gj5bm/ |
-| P-NOBEL | https://osf.io/hyej3/ |
-| P-CERN | https://osf.io/23knb/ |
-| PS-21 | https://osf.io/mjz73/ |
-| PS-22 | https://osf.io/u3x4v/ |
-| PS-23 | https://osf.io/y6hzm/ |
-
 ## arXiv Packages
 
 Submission packages generated at `TECS-L/zenodo/arxiv-packages/`. 3 papers have LaTeX source (P-NEW-1, P-NEW-2, P-NEW-3); 5 need `pandoc` conversion. arXiv requires endorsement for first-time submitters.
