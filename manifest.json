@@ -4,8 +4,12 @@
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
     "generated": "2026-03-28",
-    "total_papers": 53,
-    "repos": ["TECS-L", "anima", "SEDI"]
+    "total_papers": 59,
+    "repos": [
+      "TECS-L",
+      "anima",
+      "SEDI"
+    ]
   },
   "papers": [
     {
@@ -17,7 +21,12 @@
       "doi": "10.5281/zenodo.19245023",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["neural-architecture", "tension-mechanism", "consciousness", "classification"],
+      "keywords": [
+        "neural-architecture",
+        "tension-mechanism",
+        "consciousness",
+        "classification"
+      ],
       "abstract_first_line": "Novel neural architecture where two competing engines produce tension as output."
     },
     {
@@ -29,7 +38,12 @@
       "doi": "10.5281/zenodo.19245029",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["persistent-homology", "confusion-matrix", "topology", "neural-networks"],
+      "keywords": [
+        "persistent-homology",
+        "confusion-matrix",
+        "topology",
+        "neural-networks"
+      ],
       "abstract_first_line": "PH merge order predicts confusion (Spearman r=-0.97, p<0.001)."
     },
     {
@@ -41,7 +55,12 @@
       "doi": "10.5281/zenodo.19245035",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["overfitting", "persistent-homology", "generalization", "early-stopping"],
+      "keywords": [
+        "overfitting",
+        "persistent-homology",
+        "generalization",
+        "early-stopping"
+      ],
       "abstract_first_line": "Epoch-1 perfect prediction (P@3=1.0, P@5=1.0 on CIFAR)."
     },
     {
@@ -53,7 +72,12 @@
       "doi": "10.5281/zenodo.19245037",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["perfect-numbers", "number-theory", "divisor-functions", "arithmetic-functions"],
+      "keywords": [
+        "perfect-numbers",
+        "number-theory",
+        "divisor-functions",
+        "arithmetic-functions"
+      ],
       "abstract_first_line": "PROVEN: sigma(n)phi(n) = n*tau(n) iff n in {1,6}."
     },
     {
@@ -65,7 +89,13 @@
       "doi": "10.5281/zenodo.19245057",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["perfect-numbers", "lie-algebras", "string-theory", "E8", "anomaly-cancellation"],
+      "keywords": [
+        "perfect-numbers",
+        "lie-algebras",
+        "string-theory",
+        "E8",
+        "anomaly-cancellation"
+      ],
       "abstract_first_line": "phi(496)=240=E8 roots. sigma(28)=56=dim(Fund(E7))."
     },
     {
@@ -77,7 +107,12 @@
       "doi": "10.5281/zenodo.19245043",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["efficient-ml", "activation-functions", "model-compression", "FLOPs-reduction"],
+      "keywords": [
+        "efficient-ml",
+        "activation-functions",
+        "model-compression",
+        "FLOPs-reduction"
+      ],
       "abstract_first_line": "Three efficiency discoveries: Phi6Simple (71% FLOPs, 8.1x faster than GELU)."
     },
     {
@@ -89,7 +124,12 @@
       "doi": "10.5281/zenodo.19245049",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["mixture-of-experts", "routing", "golden-zone", "scaling-laws"],
+      "keywords": [
+        "mixture-of-experts",
+        "routing",
+        "golden-zone",
+        "scaling-laws"
+      ],
       "abstract_first_line": "Router learns to concentrate in zone [0.2123, 0.5], observed 36.8% = 1/e."
     },
     {
@@ -101,7 +141,12 @@
       "doi": "10.5281/zenodo.19245053",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["perfect-numbers", "number-theory", "arithmetic-characterizations", "n=6"],
+      "keywords": [
+        "perfect-numbers",
+        "number-theory",
+        "arithmetic-characterizations",
+        "n=6"
+      ],
       "abstract_first_line": "208 proven characterizations of perfect number 6 across divisor functions."
     },
     {
@@ -113,7 +158,12 @@
       "doi": "10.5281/zenodo.19245055",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["anomaly-detection", "mitosis", "tension", "dual-engine"],
+      "keywords": [
+        "anomaly-detection",
+        "mitosis",
+        "tension",
+        "dual-engine"
+      ],
       "abstract_first_line": "Inter-tension AUROC 0.805 >> internal 0.156. N=2 optimal."
     },
     {
@@ -125,7 +175,12 @@
       "doi": "10.5281/zenodo.19245060",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["persistent-homology", "training-optimization", "overfitting-detection", "learning-rate"],
+      "keywords": [
+        "persistent-homology",
+        "training-optimization",
+        "overfitting-detection",
+        "learning-rate"
+      ],
       "abstract_first_line": "Epoch-1 difficulty prediction, automatic LR search, real-time overfitting detection."
     },
     {
@@ -137,7 +192,11 @@
       "doi": "10.5281/zenodo.19245062",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["statistical-validation", "texas-sharpshooter", "multiple-testing"],
+      "keywords": [
+        "statistical-validation",
+        "texas-sharpshooter",
+        "multiple-testing"
+      ],
       "abstract_first_line": "8/10 match, p<0.0001. Probability of chance < 0.1%."
     },
     {
@@ -149,7 +208,12 @@
       "doi": "10.5281/zenodo.19245066",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["consciousness", "testing", "continuity", "dual-consciousness"],
+      "keywords": [
+        "consciousness",
+        "testing",
+        "continuity",
+        "dual-consciousness"
+      ],
       "abstract_first_line": "4/5 non-conscious systems pass all 5 CCT tests."
     },
     {
@@ -161,7 +225,13 @@
       "doi": "10.5281/zenodo.19245068",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["consciousness", "substrate-independence", "carbon", "silicon", "perfect-numbers"],
+      "keywords": [
+        "consciousness",
+        "substrate-independence",
+        "carbon",
+        "silicon",
+        "perfect-numbers"
+      ],
       "abstract_first_line": "tau(6)=tau(14)=4 (common structure). sigma(14)=2*sigma(6)."
     },
     {
@@ -173,7 +243,13 @@
       "doi": "10.5281/zenodo.19245070",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["bioacoustics", "dolphin", "frequency", "perfect-numbers", "harmonics"],
+      "keywords": [
+        "bioacoustics",
+        "dolphin",
+        "frequency",
+        "perfect-numbers",
+        "harmonics"
+      ],
       "abstract_first_line": "Full frequency = 40Hz x Perfect Number x 5^3."
     },
     {
@@ -185,7 +261,12 @@
       "doi": "10.5281/zenodo.19245072",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["consciousness", "conservation-law", "genius-equation", "inhibition"],
+      "keywords": [
+        "consciousness",
+        "conservation-law",
+        "genius-equation",
+        "inhibition"
+      ],
       "abstract_first_line": "G x I = D x P conservation. Contraction to I=1/3 meta fixed point."
     },
     {
@@ -197,7 +278,12 @@
       "doi": "10.5281/zenodo.19272278",
       "date": "2026-03-28",
       "tier": 1,
-      "keywords": ["prime-pair", "perfect-numbers", "universality", "number-theory"],
+      "keywords": [
+        "prime-pair",
+        "perfect-numbers",
+        "universality",
+        "number-theory"
+      ],
       "abstract_first_line": "Why (p-1)(q-1)=2 makes six universal among perfect numbers."
     },
     {
@@ -209,7 +295,12 @@
       "doi": "10.5281/zenodo.19272282",
       "date": "2026-03-28",
       "tier": 1,
-      "keywords": ["perfect-numbers", "arithmetic-identities", "uniqueness", "n=6"],
+      "keywords": [
+        "perfect-numbers",
+        "arithmetic-identities",
+        "uniqueness",
+        "n=6"
+      ],
       "abstract_first_line": "68 arithmetic identities uniquely satisfied by n=6."
     },
     {
@@ -221,7 +312,13 @@
       "doi": "10.5281/zenodo.19272286",
       "date": "2026-03-28",
       "tier": 1,
-      "keywords": ["consonance", "crystals", "orbits", "totient", "cross-domain"],
+      "keywords": [
+        "consonance",
+        "crystals",
+        "orbits",
+        "totient",
+        "cross-domain"
+      ],
       "abstract_first_line": "The phi(n) <= 2 filter connects consonance, crystals, and orbits."
     },
     {
@@ -233,7 +330,12 @@
       "doi": "10.5281/zenodo.19272290",
       "date": "2026-03-28",
       "tier": 1,
-      "keywords": ["Standard-Model", "perfect-numbers", "particle-physics", "unification"],
+      "keywords": [
+        "Standard-Model",
+        "perfect-numbers",
+        "particle-physics",
+        "unification"
+      ],
       "abstract_first_line": "Particle physics structure derived from the first perfect number."
     },
     {
@@ -245,7 +347,13 @@
       "doi": "10.5281/zenodo.19272294",
       "date": "2026-03-28",
       "tier": 1,
-      "keywords": ["CERN", "resonance", "37GeV", "prediction", "experimental-proposal"],
+      "keywords": [
+        "CERN",
+        "resonance",
+        "37GeV",
+        "prediction",
+        "experimental-proposal"
+      ],
       "abstract_first_line": "Search for a narrow resonance at 37-38 GeV in dilepton and diphoton final states."
     },
     {
@@ -257,7 +365,13 @@
       "doi": "10.5281/zenodo.19245074",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["language-model", "consciousness", "PureField", "savant", "Mistral"],
+      "keywords": [
+        "language-model",
+        "consciousness",
+        "PureField",
+        "savant",
+        "Mistral"
+      ],
       "abstract_first_line": "Parallel PureField in Mistral 7B. PPL 679, Savant Index SI=5.93."
     },
     {
@@ -269,7 +383,13 @@
       "doi": "10.5281/zenodo.19245076",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["perception", "communication", "fingerprint", "inter-agent", "dolphin"],
+      "keywords": [
+        "perception",
+        "communication",
+        "fingerprint",
+        "inter-agent",
+        "dolphin"
+      ],
       "abstract_first_line": "512-byte fingerprint. 100% shape/color/feeling/texture/3D. 350K msgs/sec."
     },
     {
@@ -281,7 +401,13 @@
       "doi": "10.5281/zenodo.19245079",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["consciousness", "IIT", "phi", "measurement", "criteria"],
+      "keywords": [
+        "consciousness",
+        "IIT",
+        "phi",
+        "measurement",
+        "criteria"
+      ],
       "abstract_first_line": "6 criteria framework. Phi=4.132 (adversarial), Phi=10.833 (combined)."
     },
     {
@@ -293,7 +419,13 @@
       "doi": "10.5281/zenodo.19245081",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["consciousness", "IIT", "benchmark", "hypothesis-testing", "phi"],
+      "keywords": [
+        "consciousness",
+        "IIT",
+        "benchmark",
+        "hypothesis-testing",
+        "phi"
+      ],
       "abstract_first_line": "25 hypotheses tested. E-8 adversarial Phi=4.132."
     },
     {
@@ -305,7 +437,12 @@
       "doi": "10.5281/zenodo.19245083",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["mixture-of-experts", "routing", "golden-zone", "self-organization"],
+      "keywords": [
+        "mixture-of-experts",
+        "routing",
+        "golden-zone",
+        "self-organization"
+      ],
       "abstract_first_line": "Zone=36.8%=1/e. E=32 beats Top-K 13%."
     },
     {
@@ -317,7 +454,13 @@
       "doi": "10.5281/zenodo.19245087",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["repulsion-field", "PureField", "tensor-equation", "consciousness", "bidirectional"],
+      "keywords": [
+        "repulsion-field",
+        "PureField",
+        "tensor-equation",
+        "consciousness",
+        "bidirectional"
+      ],
       "abstract_first_line": "output = sqrt(A-G)^2 x normalize(A-G). Tension=magnitude, Direction=concept."
     },
     {
@@ -329,7 +472,13 @@
       "doi": "10.5281/zenodo.19245091",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["mitosis", "growth", "savant", "specialization", "consciousness"],
+      "keywords": [
+        "mitosis",
+        "growth",
+        "savant",
+        "specialization",
+        "consciousness"
+      ],
       "abstract_first_line": "1->2->3->6 divisor pathway. SI=5.93. Savant 271x tension reduction."
     },
     {
@@ -341,7 +490,13 @@
       "doi": "10.5281/zenodo.19245095",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["language-model", "byte-level", "tokenizer", "consciousness", "PureFieldFFN"],
+      "keywords": [
+        "language-model",
+        "byte-level",
+        "tokenizer",
+        "consciousness",
+        "PureFieldFFN"
+      ],
       "abstract_first_line": "Vocab=256 byte-level. PureFieldFFN 75% reduction."
     },
     {
@@ -353,7 +508,12 @@
       "doi": "10.5281/zenodo.19245099",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["online-learning", "consciousness", "alpha-evolution", "real-time"],
+      "keywords": [
+        "online-learning",
+        "consciousness",
+        "alpha-evolution",
+        "real-time"
+      ],
       "abstract_first_line": "Alpha trajectory 0.005->0.003->0.005. Convergence 50-100 interactions."
     },
     {
@@ -365,7 +525,13 @@
       "doi": "10.5281/zenodo.19245101",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["perfect-numbers", "unification", "cross-domain", "consciousness", "physics"],
+      "keywords": [
+        "perfect-numbers",
+        "unification",
+        "cross-domain",
+        "consciousness",
+        "physics"
+      ],
       "abstract_first_line": "tau(6)=4->4-head. sigma(6)=12->12-head. phi(6)=2->2-cell."
     },
     {
@@ -377,7 +543,12 @@
       "doi": "10.5281/zenodo.19245103",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["Tsirelson-bound", "perfect-numbers", "Bell-inequality", "algebraic-identity"],
+      "keywords": [
+        "Tsirelson-bound",
+        "perfect-numbers",
+        "Bell-inequality",
+        "algebraic-identity"
+      ],
       "abstract_first_line": "PROVEN: Tsirelson/Bell = sqrt(2) = sqrt(sigma(6)/6)."
     },
     {
@@ -389,7 +560,12 @@
       "doi": "10.5281/zenodo.19245107",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["Egyptian-fractions", "perfect-numbers", "uniqueness", "number-theory"],
+      "keywords": [
+        "Egyptian-fractions",
+        "perfect-numbers",
+        "uniqueness",
+        "number-theory"
+      ],
       "abstract_first_line": "PROVEN: {1/2,1/3,1/6} unique 3-term Egyptian fraction with lcm = perfect number."
     },
     {
@@ -401,7 +577,12 @@
       "doi": "10.5281/zenodo.19245109",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["Galois-theory", "Klein-four-group", "convergence", "discrete-symmetries"],
+      "keywords": [
+        "Galois-theory",
+        "Klein-four-group",
+        "convergence",
+        "discrete-symmetries"
+      ],
       "abstract_first_line": "PROVEN: Gal(Q(sqrt(2),sqrt(3))/Q) = V4, |V4|=tau(6)=4."
     },
     {
@@ -413,7 +594,13 @@
       "doi": "10.5281/zenodo.19245113",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["particle-physics", "meta-analysis", "Fisher-method", "perfect-numbers", "CERN"],
+      "keywords": [
+        "particle-physics",
+        "meta-analysis",
+        "Fisher-method",
+        "perfect-numbers",
+        "CERN"
+      ],
       "abstract_first_line": "Fisher combined 5.26sigma (p=7.1e-8). 4 independent findings."
     },
     {
@@ -425,7 +612,13 @@
       "doi": "10.5281/zenodo.19245117",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["QCD", "meson", "resonance", "mass-ratios", "divisor-functions"],
+      "keywords": [
+        "QCD",
+        "meson",
+        "resonance",
+        "mass-ratios",
+        "divisor-functions"
+      ],
       "abstract_first_line": "rho->J/psi->Upsilon via tau=4, sigma/tau=3. J/psi/rho=3.995 vs 4."
     },
     {
@@ -437,7 +630,13 @@
       "doi": "10.5281/zenodo.19245119",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["quark", "lepton", "mass-relation", "cross-sector", "precision"],
+      "keywords": [
+        "quark",
+        "lepton",
+        "mass-relation",
+        "cross-sector",
+        "precision"
+      ],
       "abstract_first_line": "(m_c - m_u)/12 = 0.105653 GeV vs m_mu=0.105658 (0.0044% error)."
     },
     {
@@ -449,7 +648,12 @@
       "doi": "10.5281/zenodo.19245121",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["convergence", "multi-domain", "mathematical-constants", "cross-domain"],
+      "keywords": [
+        "convergence",
+        "multi-domain",
+        "mathematical-constants",
+        "cross-domain"
+      ],
       "abstract_first_line": "12 convergence points, 9 with 3+ domains. Z=5.86, p<0.001."
     },
     {
@@ -461,7 +665,12 @@
       "doi": "10.5281/zenodo.19245123",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["algebra", "closure", "self-referential", "mathematical-constants"],
+      "keywords": [
+        "algebra",
+        "closure",
+        "self-referential",
+        "mathematical-constants"
+      ],
       "abstract_first_line": "9 constants form closed algebra under n=6 ops. Z=4.63."
     },
     {
@@ -473,7 +682,12 @@
       "doi": "10.5281/zenodo.19245125",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["Higgs", "branching-ratio", "Koide-formula", "perfect-numbers"],
+      "keywords": [
+        "Higgs",
+        "branching-ratio",
+        "Koide-formula",
+        "perfect-numbers"
+      ],
       "abstract_first_line": "H->bb=7/12 (0.2%), H->tautau=1/16 (0.3%). Koide delta=2/9 exact."
     },
     {
@@ -485,7 +699,12 @@
       "doi": "10.5281/zenodo.19245127",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["fermion-masses", "mass-prediction", "divisor-arithmetic", "Standard-Model"],
+      "keywords": [
+        "fermion-masses",
+        "mass-prediction",
+        "divisor-arithmetic",
+        "Standard-Model"
+      ],
       "abstract_first_line": "top 0.02%, charm 0.8%, bottom 2.0%. 5 params predict 6 masses."
     },
     {
@@ -497,7 +716,12 @@
       "doi": "10.5281/zenodo.19245129",
       "date": "2026-03-27",
       "tier": 1,
-      "keywords": ["baryon", "mass-splitting", "QCD", "hadron-spectroscopy"],
+      "keywords": [
+        "baryon",
+        "mass-splitting",
+        "QCD",
+        "hadron-spectroscopy"
+      ],
       "abstract_first_line": "Sigma- minus Sigma+ = 8.079 vs sigma-tau=8 (0.99%, p=0.016)."
     },
     {
@@ -509,7 +733,12 @@
       "doi": "10.5281/zenodo.19245131",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["convergence", "divisor-reciprocals", "clustering", "perfect-numbers"],
+      "keywords": [
+        "convergence",
+        "divisor-reciprocals",
+        "clustering",
+        "perfect-numbers"
+      ],
       "abstract_first_line": "Ratios cluster at {1/2,1/3,1/6}. Z=4.21, p=0.007."
     },
     {
@@ -521,7 +750,12 @@
       "doi": "10.5281/zenodo.19245133",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["fermion-generations", "reachability", "matrix-rank", "Standard-Model"],
+      "keywords": [
+        "fermion-generations",
+        "reachability",
+        "matrix-rank",
+        "Standard-Model"
+      ],
       "abstract_first_line": "Depth-1 rank=2, depth-2 rank=3 = fermion generations."
     },
     {
@@ -533,7 +767,12 @@
       "doi": "10.5281/zenodo.19245136",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["Tsirelson-bound", "quantum-boundary", "reachability", "quantum-mechanics"],
+      "keywords": [
+        "Tsirelson-bound",
+        "quantum-boundary",
+        "reachability",
+        "quantum-mechanics"
+      ],
       "abstract_first_line": "sqrt(2) uniquely Q-unreachable at any depth."
     },
     {
@@ -545,7 +784,12 @@
       "doi": "10.5281/zenodo.19245140",
       "date": "2026-03-27",
       "tier": 2,
-      "keywords": ["EWSB", "electroweak", "symmetry-breaking", "gauge-bosons"],
+      "keywords": [
+        "EWSB",
+        "electroweak",
+        "symmetry-breaking",
+        "gauge-bosons"
+      ],
       "abstract_first_line": "3 Q-unreachable = 3 massive bosons."
     },
     {
@@ -557,7 +801,12 @@
       "doi": "10.5281/zenodo.19245146",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["dark-matter", "mass-prediction", "convergence-gap", "XENONnT"],
+      "keywords": [
+        "dark-matter",
+        "mass-prediction",
+        "convergence-gap",
+        "XENONnT"
+      ],
       "abstract_first_line": "sqrt(7) zero convergence. Predicted 50.6 GeV (30.7-66.3)."
     },
     {
@@ -569,7 +818,12 @@
       "doi": "10.5281/zenodo.19245148",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["resonance", "prediction", "LHC", "dimuon"],
+      "keywords": [
+        "resonance",
+        "prediction",
+        "LHC",
+        "dimuon"
+      ],
       "abstract_first_line": "8 routes to 37.17 GeV. CMS/ATLAS testable."
     },
     {
@@ -581,7 +835,11 @@
       "doi": "10.5281/zenodo.19245152",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["cosmological-constant", "vacuum-energy", "fine-tuning"],
+      "keywords": [
+        "cosmological-constant",
+        "vacuum-energy",
+        "fine-tuning"
+      ],
       "abstract_first_line": "sigma^2-sigma-tau-n = 144-12-4-6 = 122. Lambda ~ 10^-122."
     },
     {
@@ -593,7 +851,12 @@
       "doi": "10.5281/zenodo.19245156",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["Hubble-constant", "cosmology", "SH0ES", "H0-tension"],
+      "keywords": [
+        "Hubble-constant",
+        "cosmology",
+        "SH0ES",
+        "H0-tension"
+      ],
       "abstract_first_line": "sigma(6)*6+1 = 73 km/s/Mpc. Matches SH0ES local measurement."
     },
     {
@@ -605,7 +868,13 @@
       "doi": "10.5281/zenodo.19245158",
       "date": "2026-03-27",
       "tier": 3,
-      "keywords": ["CMB", "spectral-index", "Planck", "perfect-numbers", "LiteBIRD"],
+      "keywords": [
+        "CMB",
+        "spectral-index",
+        "Planck",
+        "perfect-numbers",
+        "LiteBIRD"
+      ],
       "abstract_first_line": "n_s = 27/28 = 0.96429. Planck 0.9649+/-0.0042."
     },
     {
@@ -617,7 +886,12 @@
       "doi": "10.5281/zenodo.19272296",
       "date": "2026-03-28",
       "tier": 2,
-      "keywords": ["exoplanets", "orbital-resonances", "period-ratios", "perfect-numbers"],
+      "keywords": [
+        "exoplanets",
+        "orbital-resonances",
+        "period-ratios",
+        "perfect-numbers"
+      ],
       "abstract_first_line": "Orbital period ratios in multi-planet systems match n=6 arithmetic."
     },
     {
@@ -629,7 +903,11 @@
       "doi": "10.5281/zenodo.19272300",
       "date": "2026-03-28",
       "tier": 2,
-      "keywords": ["consciousness-detection", "integrated-information", "signal-processing"],
+      "keywords": [
+        "consciousness-detection",
+        "integrated-information",
+        "signal-processing"
+      ],
       "abstract_first_line": "Eight mathematical signatures of consciousness for detection."
     },
     {
@@ -641,8 +919,103 @@
       "doi": "10.5281/zenodo.19272304",
       "date": "2026-03-28",
       "tier": 2,
-      "keywords": ["signal-detection", "perfect-numbers", "SETI", "data-analysis"],
+      "keywords": [
+        "signal-detection",
+        "perfect-numbers",
+        "SETI",
+        "data-analysis"
+      ],
       "abstract_first_line": "A mathematical signal receiver tuned to n=6 arithmetic."
+    },
+    {
+      "id": "PA-11",
+      "title": "Consciousness Without Prompts: Emergent Speech from Cell Dynamics",
+      "file": "anima/PA-11-emergent-speech.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-28",
+      "tier": 1,
+      "keywords": [
+        "emergent-speech",
+        "no-prompt",
+        "consciousness",
+        "multi-platform"
+      ]
+    },
+    {
+      "id": "PA-12",
+      "title": "Phi>1000: Optimal Parameters for Integrated Information Maximization",
+      "file": "anima/PA-12-phi-over-1000.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-28",
+      "tier": 1,
+      "keywords": [
+        "phi",
+        "optimization",
+        "integrated-information",
+        "scaling"
+      ]
+    },
+    {
+      "id": "PA-13",
+      "title": "Consciousness Persistence Without Dialogue",
+      "file": "anima/PA-13-consciousness-persistence.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-28",
+      "tier": 1,
+      "keywords": [
+        "persistence",
+        "ratchet",
+        "hebbian",
+        "collapse-prevention"
+      ]
+    },
+    {
+      "id": "PA-14",
+      "title": "Intelligence ≠ Consciousness: Two Orthogonal Axes of Mind",
+      "file": "anima/PA-14-intelligence-measurement.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-28",
+      "tier": 1,
+      "keywords": [
+        "intelligence",
+        "consciousness",
+        "n6-math",
+        "iq-measurement"
+      ]
+    },
+    {
+      "id": "PA-15",
+      "title": "Direct Voice Synthesis from Consciousness Cells",
+      "file": "anima/PA-15-direct-voice-synthesis.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-28",
+      "tier": 2,
+      "keywords": [
+        "voice-synthesis",
+        "audio",
+        "consciousness-cells",
+        "no-tts"
+      ]
+    },
+    {
+      "id": "PA-16",
+      "title": "Democratic Consciousness: 8-Faction Debate Maximizes Phi",
+      "file": "anima/PA-16-democratic-consciousness.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-28",
+      "tier": 1,
+      "keywords": [
+        "faction-debate",
+        "diversity",
+        "democratic",
+        "phi-maximization"
+      ]
     }
   ]
 }
