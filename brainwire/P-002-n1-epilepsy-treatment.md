@@ -1081,3 +1081,106 @@ If validated, this approach could transform 30% of epilepsy patients --- the 15 
 | SUDEP | Sudden unexpected death in epilepsy |
 | TLE | Temporal lobe epilepsy |
 | VNS | Vagus nerve stimulation |
+
+---
+
+## Appendix D: Calculator Verification Results (2026-03-28)
+
+### D.1 Epilepsy Calculator (epilepsy_calc.py)
+
+```
+============================================================
+  N1 Epilepsy Treatment Calculator
+============================================================
+
+  === Detection ===
+   RNS:     4ch, detect=  160.0ms, P_pre=0.0394
+    N1:  1024ch, detect=   10.4ms, P_pre=1.0000
+
+  === Anti-Phase Feasibility ===
+    Freq   N1 err   RNS err  N1?  RNS?
+      3Hz     1.1°    172.8°  YES    NO
+      5Hz     1.8°    288.0°  YES    NO
+     10Hz     3.6°    576.0°  YES    NO
+     20Hz     7.2°   1152.0°  YES    NO
+     80Hz    28.8°   4608.0°  YES    NO
+    250Hz    90.0°  14400.0°  YES    NO
+
+  === STDP Anti-Kindling ===
+   10 sessions: W=0.0500, reduction=95.0%
+   20 sessions: W=0.0500, reduction=95.0%
+   30 sessions: W=0.0500, reduction=95.0%
+   50 sessions: W=0.0500, reduction=95.0%
+
+  === Shannon Safety ===
+  Q=0.120 uC, q_eff=30.0 uC/cm^2
+  Shannon k=-11.444, margin=13.294, safe=True
+
+  === N1 vs RNS ===
+  Channels:  256x
+  Detection: 15.4x faster
+  Pre-ictal: N1=1.0000 vs RNS=0.0394
+  Phase@10Hz: N1=3.6 deg vs RNS=576.0 deg
+  STDP cure: N1=True vs RNS=False
+```
+
+### D.2 STDP Pathway Simulator (stdp_sim.py)
+
+```
+============================================================
+  STDP Pathway Weakening Simulator
+============================================================
+
+  Session   Pulses   Weight  Reduction
+  ------- -------- -------- ----------
+        0        0  1.0000       0.0% ####################
+        5     5000  0.0500      95.0% #...................
+       10    10000  0.0500      95.0% #...................
+       15    15000  0.0500      95.0% #...................
+       20    20000  0.0500      95.0% #...................
+       25    25000  0.0500      95.0% #...................
+       30    30000  0.0500      95.0% #...................
+       35    35000  0.0500      95.0% #...................
+       40    40000  0.0500      95.0% #...................
+       45    45000  0.0500      95.0% #...................
+       50    50000  0.0500      95.0% #...................
+
+  Sessions to reach W<0.5: 1
+
+  Sessions to reach W<0.2: 1
+
+  Sessions to reach W<0.1: 1
+```
+
+### D.3 Shannon Safety Calculator (shannon_calc.py)
+
+```
+============================================================
+  Shannon Charge Density Safety Calculator
+============================================================
+
+  Config               I(uA)  pw(us)      q_eff      k  margin  Safe
+  ------------------ ------- ------- ---------- ------ ------- -----
+  N1 max                 600     200     30.0 -11.44  13.29   YES
+  N1 typical             300     200     15.0 -12.05  13.90   YES
+  N1 conservative        100     100      2.5 -13.60  15.45   YES
+  RNS typical           3000     250    125.0 -10.03  11.88   YES
+  DBS typical           3000      90     45.0 -10.92  12.77   YES
+```
+
+### D.4 Paper Mathematical Verification (verify_paper_p002.py)
+
+Total: 173/173 verified (100.0%)
+
+Sections verified:
+- Section 2.1: N1 Hardware Specifications (8 checks)
+- Section 2.2: Detection Model (12 checks)
+- Section 2.3: Anti-Phase Cancellation (10 checks)
+- Section 2.4: STDP Anti-Kindling (15 checks)
+- Section 2.5: Shannon Safety (8 checks)
+- Section 3.1: N1 vs RNS Comparison (20 checks)
+- Section 3.2: Seizure Freedom Projections (10 checks)
+- Section 3.3: Temporal Lobe Epilepsy (15 checks)
+- Section 3.4: Generalized Epilepsy (10 checks)
+- Section 4: Clinical Protocol (20 checks)
+- Section 5: Full Coverage Theorem (45 checks)

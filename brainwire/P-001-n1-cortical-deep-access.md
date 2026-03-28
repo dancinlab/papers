@@ -2216,5 +2216,102 @@ Because this is a pre-print draft, figures are described rather than rendered. F
 
 ---
 
+## Appendix E: Calculator Verification Results (2026-03-28)
+
+### E.1 Implant Placement Optimizer (n1_placement.py)
+
+```
+============================================================
+  N1 Implant Placement Optimizer
+============================================================
+
+  Rank Location   Name                      J  Deep     G
+  ---- ---------- -------------------- ------ ----- -----
+     1 F3         Left DLPFC           0.902   13/15 1.00
+     2 F4         Right DLPFC          0.722   10/15 0.67
+     3 Fz         Medial PFC           0.588    5/15 0.67
+     4 ACC        Anterior Cingulate   0.463    8/15 0.33
+     5 Insula     Anterior Insula      0.337    7/15 0.00
+     6 P3         Left Parietal        0.303    2/15 0.33
+     7 P4         Right Parietal       0.303    2/15 0.33
+     8 C3         Left Motor           0.257    4/15 0.00
+     9 C4         Right Motor          0.257    4/15 0.00
+    10 Oz         Occipital            0.177    1/15 0.00
+
+  Minimum covering set:
+    F3: +13 (Amygdala, Basal_Ganglia, Cerebellum, Hippocampus, Hypothalamus...)
+    Insula: +2 (NTS, PBN...)
+    Total: 2 locations for 15/15 structures
+```
+
+### E.2 Projection Map (projection_map.py)
+
+```
+======================================================================
+  Cortical → Deep Brain Projection Map
+======================================================================
+
+  Target           Depth    ACC     EC Insula  Motor    OFC    PFC    SMA Temporal     V1   Best #src
+  ---------------- ----- ------ ------ ------ ------ ------ ------ ------ ------ ------ ------ ----
+  VTA                75mm  0.06     .     .     .  0.06  0.08     .     .     .  0.08    3
+  LC                 90mm  0.04     .  0.03     .     .  0.03     .     .     .  0.04    3
+  Raphe              90mm  0.04     .  0.03     .     .  0.05     .     .     .  0.05    3
+  Hippocampus        40mm     .  0.40     .     .     .  0.05     .  0.08     .  0.40    3
+  Thalamus           50mm     .     .     .  0.20     .  0.15     .     .  0.10  0.20    3
+  Amygdala           35mm     .     .  0.12     .     .  0.10     .  0.15     .  0.15    3
+  Hypothalamus       55mm  0.06     .  0.10     .     .  0.08     .     .     .  0.10    3
+  Basal_Ganglia      45mm     .     .     .  0.15     .  0.12  0.10     .     .  0.15    3
+  NAc                50mm  0.08     .     .     .  0.12  0.10     .     .     .  0.12    3
+  PAG                85mm  0.05     .  0.04     .     .  0.03     .     .     .  0.05    3
+  SN                 65mm     .     .     .  0.08     .  0.05  0.06     .     .  0.08    3
+  STN                55mm     .     .     .  0.10     .  0.08     .     .     .  0.10    2
+  Cerebellum         70mm     .     .     .  0.12     .  0.08     .     .     .  0.12    2
+  NTS                95mm  0.02     .  0.05     .     .     .     .     .     .  0.05    2
+  PBN                80mm  0.02     .  0.03     .     .     .     .     .     .  0.03    2
+
+  Coverage: 15/15
+  All structures covered (Theorem 6 verified)
+```
+
+### E.3 Shannon Safety Calculator (shannon_calc.py)
+
+```
+============================================================
+  Shannon Charge Density Safety Calculator
+============================================================
+
+  Config               I(uA)  pw(us)      q_eff      k  margin  Safe
+  ------------------ ------- ------- ---------- ------ ------- -----
+  N1 max                 600     200     30.0 -11.44  13.29   YES
+  N1 typical             300     200     15.0 -12.05  13.90   YES
+  N1 conservative        100     100      2.5 -13.60  15.45   YES
+  RNS typical           3000     250    125.0 -10.03  11.88   YES
+  DBS typical           3000      90     45.0 -10.92  12.77   YES
+```
+
+### E.4 Paper Mathematical Verification (verify_paper.py)
+
+Total: 140/140 verified (100.0%)
+
+Sections verified:
+- Section 2.1: Brain-State Model (3 checks)
+- Section 2.2.1: Projections (8 checks)
+- Section 2.2.2: Temporal Interference (4 checks)
+- Section 2.2.3: STDP (7 checks)
+- Section 2.3: G=D×P/I (11 checks)
+- Section 2.5: Optimization (3 checks)
+- Section 2.6: Perfect Number 6 (13 checks)
+- Section 2.7: PureField Tension (2 checks)
+- Section 2.8: Phi Scaling (3 checks)
+- Section 2.9: Consciousness Criteria (3 checks)
+- Section 3.1: Deep Access (3 checks)
+- Section 3.3: Vulnerability (5 checks)
+- Section 3.9: Kuramoto (3 checks)
+- Section 4.6: Shannon Safety (8 checks)
+- Section 4.7: Homeostasis (2 checks)
+- Section 5: Full Coverage Theorem (60+ checks)
+
+---
+
 *Manuscript prepared March 2026. Pre-submission draft for internal review.*
 *Correspondence: BrainWire Research Group.*
