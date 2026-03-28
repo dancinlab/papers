@@ -284,7 +284,9 @@
         "universality",
         "number-theory"
       ],
-      "abstract_first_line": "Why (p-1)(q-1)=2 makes six universal among perfect numbers."
+      "abstract_first_line": "Why (p-1)(q-1)=2 makes six universal among perfect numbers.",
+      "osf_url": "https://osf.io/geuy8/",
+      "osf_status": "Published"
     },
     {
       "id": "P-NEW-2",
@@ -301,7 +303,9 @@
         "uniqueness",
         "n=6"
       ],
-      "abstract_first_line": "68 arithmetic identities uniquely satisfied by n=6."
+      "abstract_first_line": "68 arithmetic identities uniquely satisfied by n=6.",
+      "osf_url": "https://osf.io/exzyn/",
+      "osf_status": "Published"
     },
     {
       "id": "P-NEW-3",
@@ -319,7 +323,9 @@
         "totient",
         "cross-domain"
       ],
-      "abstract_first_line": "The phi(n) <= 2 filter connects consonance, crystals, and orbits."
+      "abstract_first_line": "The phi(n) <= 2 filter connects consonance, crystals, and orbits.",
+      "osf_url": "https://osf.io/gj5bm/",
+      "osf_status": "Published"
     },
     {
       "id": "P-NOBEL",
@@ -336,7 +342,9 @@
         "particle-physics",
         "unification"
       ],
-      "abstract_first_line": "Particle physics structure derived from the first perfect number."
+      "abstract_first_line": "Particle physics structure derived from the first perfect number.",
+      "osf_url": "https://osf.io/hyej3/",
+      "osf_status": "Published"
     },
     {
       "id": "P-CERN",
@@ -354,7 +362,9 @@
         "prediction",
         "experimental-proposal"
       ],
-      "abstract_first_line": "Search for a narrow resonance at 37-38 GeV in dilepton and diphoton final states."
+      "abstract_first_line": "Search for a narrow resonance at 37-38 GeV in dilepton and diphoton final states.",
+      "osf_url": "https://osf.io/23knb/",
+      "osf_status": "Published"
     },
     {
       "id": "PA-01",
@@ -892,7 +902,9 @@
         "period-ratios",
         "perfect-numbers"
       ],
-      "abstract_first_line": "Orbital period ratios in multi-planet systems match n=6 arithmetic."
+      "abstract_first_line": "Orbital period ratios in multi-planet systems match n=6 arithmetic.",
+      "osf_url": "https://osf.io/mjz73/",
+      "osf_status": "Published"
     },
     {
       "id": "PS-22",
@@ -908,7 +920,9 @@
         "integrated-information",
         "signal-processing"
       ],
-      "abstract_first_line": "Eight mathematical signatures of consciousness for detection."
+      "abstract_first_line": "Eight mathematical signatures of consciousness for detection.",
+      "osf_url": "https://osf.io/u3x4v/",
+      "osf_status": "Published"
     },
     {
       "id": "PS-23",
@@ -925,7 +939,9 @@
         "SETI",
         "data-analysis"
       ],
-      "abstract_first_line": "A mathematical signal receiver tuned to n=6 arithmetic."
+      "abstract_first_line": "A mathematical signal receiver tuned to n=6 arithmetic.",
+      "osf_url": "https://osf.io/y6hzm/",
+      "osf_status": "Published"
     },
     {
       "id": "PA-11",
