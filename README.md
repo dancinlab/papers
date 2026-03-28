@@ -64,7 +64,7 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 | P-DOL | Dolphin Frequency Harmonics and Perfect Number Structure | Published | [10.5281/zenodo.19245070](https://doi.org/10.5281/zenodo.19245070) |
 | P-GI | G x I = D x P Conservation Law in Consciousness Models | Published | [10.5281/zenodo.19245072](https://doi.org/10.5281/zenodo.19245072) |
 | P-NEW-1 | The Unique Prime Pair: Why (p-1)(q-1)=2 Makes Six Universal | Draft | - |
-| P-NEW-2 | Sixty-Eight Ways to Be Six: Arithmetic Identities Uniquely Satisfied by n=6 | Draft | - |
+| P-NEW-2 | Thirty-Six Ways to Be Six: Arithmetic Identities Uniquely Satisfied by n=6 | Draft | - |
 | P-NEW-3 | Consonance, Crystals, and Orbits: The phi(n) <= 2 Filter Across Domains | Draft | - |
 | P-NOBEL | The Arithmetic Necessity of the Standard Model | Draft | - |
 | P-CERN | Experimental Proposal: Search for a Narrow Resonance at 37-38 GeV | Draft | - |
