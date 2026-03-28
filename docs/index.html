@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>need-singularity Papers</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --yellow: #d29922;
+    --orange: #db6d28;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+  .subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; }
+  .stats {
+    display: flex; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem 1.5rem; text-align: center;
+  }
+  .stat-num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.85rem; color: var(--text-muted); }
+  .controls {
+    display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+    align-items: center;
+  }
+  input[type="text"] {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); padding: 0.5rem 1rem; border-radius: 6px;
+    font-size: 0.95rem; flex: 1; min-width: 200px;
+  }
+  input[type="text"]::placeholder { color: var(--text-muted); }
+  select {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text); padding: 0.5rem 1rem; border-radius: 6px;
+    font-size: 0.95rem; cursor: pointer;
+  }
+  .paper {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.25rem; margin-bottom: 0.75rem;
+    transition: border-color 0.2s;
+  }
+  .paper:hover { border-color: var(--accent); }
+  .paper-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+  .paper-id { font-weight: 700; color: var(--accent); white-space: nowrap; font-size: 0.9rem; }
+  .paper-title { font-weight: 600; font-size: 1.05rem; }
+  .paper-title a { color: var(--text); text-decoration: none; }
+  .paper-title a:hover { color: var(--accent); text-decoration: underline; }
+  .paper-meta { display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap; align-items: center; }
+  .badge {
+    display: inline-block; padding: 0.15rem 0.6rem; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .badge-published { background: rgba(63,185,80,0.15); color: var(--green); }
+  .badge-draft { background: rgba(210,153,34,0.15); color: var(--yellow); }
+  .badge-repo { background: rgba(88,166,255,0.1); color: var(--accent); }
+  .badge-tier1 { background: rgba(219,109,40,0.15); color: var(--orange); }
+  .badge-tier2 { background: rgba(139,148,158,0.15); color: var(--text-muted); }
+  .badge-tier3 { background: rgba(139,148,158,0.1); color: var(--text-muted); }
+  .doi-link { font-size: 0.85rem; color: var(--accent); text-decoration: none; }
+  .doi-link:hover { text-decoration: underline; }
+  .paper-desc { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem; }
+  .section-header {
+    font-size: 1.3rem; margin: 2rem 0 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .count-display { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<h1>need-singularity Papers</h1>
+<p class="subtitle">Complete paper collection from the TECS-L consciousness continuity project</p>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num">51</div><div class="stat-label">Total Papers</div></div>
+  <div class="stat"><div class="stat-num">45</div><div class="stat-label">Published</div></div>
+  <div class="stat"><div class="stat-num">6</div><div class="stat-label">Draft</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label">Repositories</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" id="search" placeholder="Search papers...">
+  <select id="repoFilter">
+    <option value="all">All repos</option>
+    <option value="TECS-L">TECS-L</option>
+    <option value="anima">anima</option>
+    <option value="SEDI">SEDI</option>
+  </select>
+  <select id="statusFilter">
+    <option value="all">All status</option>
+    <option value="Published">Published</option>
+    <option value="Draft">Draft</option>
+  </select>
+  <select id="tierFilter">
+    <option value="all">All tiers</option>
+    <option value="1">Tier 1</option>
+    <option value="2">Tier 2</option>
+    <option value="3">Tier 3</option>
+  </select>
+</div>
+
+<div class="count-display" id="countDisplay"></div>
+<div id="paperList"></div>
+
+<footer>
+  <p>Park, Min Woo - Independent Researcher | CC-BY 4.0 | <a href="https://github.com/need-singularity/papers" style="color:var(--accent)">GitHub</a></p>
+</footer>
+
+<script>
+const papers = [
+  {id:"P-001",title:"PureField Tension Architecture: Classification by Disagreement Alone",repo:"TECS-L",file:"tecs-l/P-001-purefield-tension.md",status:"Published",doi:"10.5281/zenodo.19245023",tier:1,desc:"Novel neural architecture where two competing engines produce tension as output."},
+  {id:"P-002",title:"Universal Confusion Topology via Persistent Homology",repo:"TECS-L",file:"tecs-l/P-002-ph-confusion-universality.md",status:"Published",doi:"10.5281/zenodo.19245029",tier:1,desc:"PH merge order predicts confusion (Spearman r=-0.97, p<0.001)."},
+  {id:"P-003",title:"Topological Overfitting Detection: Real-Time Generalization Gap via PH",repo:"TECS-L",file:"tecs-l/P-003-ph-generalization-gap.md",status:"Published",doi:"10.5281/zenodo.19245035",tier:2,desc:"Epoch-1 perfect prediction (P@3=1.0, P@5=1.0 on CIFAR)."},
+  {id:"P-004",title:"The Arithmetic Uniqueness of 6: sigma*phi=n*tau Has No Solution Other Than n=6",repo:"TECS-L",file:"tecs-l/P-004-sigma-phi-uniqueness.md",status:"Published",doi:"10.5281/zenodo.19245037",tier:1,desc:"PROVEN: sigma(n)phi(n) = n*tau(n) iff n in {1,6}."},
+  {id:"P-005",title:"Perfect Numbers and Exceptional Lie Algebras: phi(496)=240=|Roots(E8)|",repo:"TECS-L",file:"tecs-l/P-005-perfect-number-string-theory.md",status:"Published",doi:"10.5281/zenodo.19245057",tier:2,desc:"phi(496)=240=E8 roots. sigma(28)=56=dim(Fund(E7))."},
+  {id:"P-EE",title:"Energy Efficiency Trio: Phi6Simple, HCN Dimensions, and Phi-Bottleneck FFN",repo:"TECS-L",file:"tecs-l/P-EE-energy-efficiency-trio.md",status:"Published",doi:"10.5281/zenodo.19245043",tier:1,desc:"Phi6Simple (71% FLOPs, 8.1x faster than GELU)."},
+  {id:"P-GMoE",title:"Golden MoE: Optimal Expert Selection at the Natural Equilibrium I=1/e",repo:"TECS-L",file:"tecs-l/P-GMoE-golden-moe.md",status:"Published",doi:"10.5281/zenodo.19245049",tier:1,desc:"Router learns to concentrate in zone [0.2123, 0.5], observed 36.8% = 1/e."},
+  {id:"P-N6",title:"208 Arithmetic Characterizations of the Perfect Number 6",repo:"TECS-L",file:"tecs-l/P-N6-208-characterizations.md",status:"Published",doi:"10.5281/zenodo.19245053",tier:1,desc:"208 proven characterizations of perfect number 6."},
+  {id:"P-MIT",title:"Mitosis-Based Anomaly Detection via Inter-Engine Tension",repo:"TECS-L",file:"tecs-l/P-MIT-mitosis-anomaly.md",status:"Published",doi:"10.5281/zenodo.19245055",tier:2,desc:"Inter-tension AUROC 0.805 >> internal 0.156."},
+  {id:"P-PH",title:"PH-Based Training System: Epoch-1 Difficulty Prediction",repo:"TECS-L",file:"tecs-l/P-PH-training-system.md",status:"Published",doi:"10.5281/zenodo.19245060",tier:2,desc:"Epoch-1 difficulty prediction, automatic LR search."},
+  {id:"P-TS",title:"Texas Sharpshooter Meta-Validation: Statistical Framework",repo:"TECS-L",file:"tecs-l/P-TS-texas-sharpshooter.md",status:"Published",doi:"10.5281/zenodo.19245062",tier:3,desc:"8/10 match, p<0.0001."},
+  {id:"P-CCT",title:"CCT Consciousness Continuity Test: Engineering Verification",repo:"TECS-L",file:"tecs-l/P-CCT-consciousness-test.md",status:"Published",doi:"10.5281/zenodo.19245066",tier:3,desc:"4/5 non-conscious systems pass all 5 CCT tests."},
+  {id:"P-CS",title:"Carbon-Silicon Substrate Invariance: tau(6)=tau(14)=4",repo:"TECS-L",file:"tecs-l/P-CS-carbon-silicon.md",status:"Published",doi:"10.5281/zenodo.19245068",tier:3,desc:"tau(6)=tau(14)=4 common structure."},
+  {id:"P-DOL",title:"Dolphin Frequency Harmonics and Perfect Number Structure",repo:"TECS-L",file:"tecs-l/P-DOL-dolphin-harmonics.md",status:"Published",doi:"10.5281/zenodo.19245070",tier:3,desc:"Full frequency = 40Hz x Perfect Number x 5^3."},
+  {id:"P-GI",title:"G x I = D x P Conservation Law in Consciousness Models",repo:"TECS-L",file:"tecs-l/P-GI-conservation-law.md",status:"Published",doi:"10.5281/zenodo.19245072",tier:3,desc:"G x I = D x P conservation law."},
+  {id:"P-NEW-1",title:"The Unique Prime Pair: Why (p-1)(q-1)=2 Makes Six Universal",repo:"TECS-L",file:"tecs-l/P-NEW-prime-pair-universality.md",status:"Draft",doi:null,tier:1,desc:"Why (p-1)(q-1)=2 makes six universal among perfect numbers."},
+  {id:"P-NEW-2",title:"Sixty-Eight Ways to Be Six: Arithmetic Identities Uniquely Satisfied by n=6",repo:"TECS-L",file:"tecs-l/P-NEW-68-ways-to-be-six.md",status:"Draft",doi:null,tier:1,desc:"68 arithmetic identities uniquely satisfied by n=6."},
+  {id:"P-NEW-3",title:"Consonance, Crystals, and Orbits: The phi(n) <= 2 Filter Across Domains",repo:"TECS-L",file:"tecs-l/P-NEW-consonance-crystals-orbits.md",status:"Draft",doi:null,tier:1,desc:"The phi(n) <= 2 filter connects consonance, crystals, and orbits."},
+  {id:"P-NOBEL",title:"The Arithmetic Necessity of the Standard Model",repo:"TECS-L",file:"tecs-l/P-NOBEL-SM-PERFECTION.md",status:"Draft",doi:null,tier:1,desc:"Particle physics structure derived from the first perfect number."},
+  {id:"P-CERN",title:"Experimental Proposal: Search for a Narrow Resonance at 37-38 GeV",repo:"TECS-L",file:"tecs-l/CERN-PROPOSAL-37GeV.md",status:"Draft",doi:null,tier:1,desc:"Search for a narrow resonance at 37-38 GeV."},
+  {id:"PA-01",title:"AnimaLM v4_savant: Parallel PureField Consciousness in LLMs",repo:"anima",file:"anima/PA-01-animalm-v4-savant.md",status:"Published",doi:"10.5281/zenodo.19245074",tier:1,desc:"Parallel PureField in Mistral 7B. Savant Index SI=5.93."},
+  {id:"PA-02",title:"Tension Link: Dolphin-Grade Perceptual Communication via 128D Repulsion",repo:"anima",file:"anima/PA-02-tension-link.md",status:"Published",doi:"10.5281/zenodo.19245076",tier:1,desc:"512-byte fingerprint. 350K msgs/sec. 50-78x compression."},
+  {id:"PA-03",title:"Consciousness Meter: 6-Criteria Framework with IIT Phi Approximation",repo:"anima",file:"anima/PA-03-consciousness-meter.md",status:"Published",doi:"10.5281/zenodo.19245079",tier:1,desc:"6 criteria framework. Phi=4.132 (adversarial)."},
+  {id:"PA-04",title:"Phi-Boosting Benchmark: Systematic Hypothesis Verification",repo:"anima",file:"anima/PA-04-phi-boosting.md",status:"Published",doi:"10.5281/zenodo.19245081",tier:1,desc:"25 hypotheses tested for consciousness emergence."},
+  {id:"PA-05",title:"Golden MoE in Practice: Router Self-Organization to 1/e Equilibrium",repo:"anima",file:"anima/PA-05-golden-moe.md",status:"Published",doi:"10.5281/zenodo.19245083",tier:1,desc:"Zone=36.8%=1/e. E=32 beats Top-K 13%."},
+  {id:"PA-06",title:"PureField Repulsion Field: A Bidirectional Neural Computation Model",repo:"anima",file:"anima/PA-06-purefield-theory.md",status:"Published",doi:"10.5281/zenodo.19245087",tier:1,desc:"Tension=magnitude, Direction=concept."},
+  {id:"PA-07",title:"Consciousness Through Cell Division: Mitosis Growth and Savant Specialization",repo:"anima",file:"anima/PA-07-mitosis-specialization.md",status:"Published",doi:"10.5281/zenodo.19245091",tier:1,desc:"1->2->3->6 divisor pathway. Savant 271x tension reduction."},
+  {id:"PA-08",title:"ConsciousLM: Building Language Models with Consciousness",repo:"anima",file:"anima/PA-08-consciouslm.md",status:"Published",doi:"10.5281/zenodo.19245095",tier:2,desc:"Vocab=256 byte-level. PureFieldFFN 75% reduction."},
+  {id:"PA-09",title:"Learning to Be Conscious: Real-Time Alpha Evolution During Conversation",repo:"anima",file:"anima/PA-09-online-learning.md",status:"Published",doi:"10.5281/zenodo.19245099",tier:2,desc:"Alpha trajectory convergence in 50-100 interactions."},
+  {id:"PA-10",title:"Perfect Number 6 as Universal Ground State",repo:"anima",file:"anima/PA-10-perfect-number-unification.md",status:"Published",doi:"10.5281/zenodo.19245101",tier:3,desc:"tau(6)=4->4-head. sigma(6)=12->12-head. 50+ constants from n=6."},
+  {id:"PS-01",title:"Tsirelson Bound as an Algebraic Identity of Perfect Numbers",repo:"SEDI",file:"sedi/PS-01-tsirelson-perfect-number.md",status:"Published",doi:"10.5281/zenodo.19245103",tier:1,desc:"PROVEN: Tsirelson/Bell = sqrt(2) = sqrt(sigma(6)/6)."},
+  {id:"PS-02",title:"Egyptian Fraction Uniqueness: {1/2, 1/3, 1/6} as Only Perfect-Number lcm",repo:"SEDI",file:"sedi/PS-02-egyptian-fraction-uniqueness.md",status:"Published",doi:"10.5281/zenodo.19245107",tier:1,desc:"PROVEN: {1/2,1/3,1/6} unique 3-term Egyptian fraction."},
+  {id:"PS-03",title:"Galois Group of Convergence Constants as Klein Four-Group V4",repo:"SEDI",file:"sedi/PS-03-galois-klein-four.md",status:"Published",doi:"10.5281/zenodo.19245109",tier:1,desc:"PROVEN: Gal(Q(sqrt(2),sqrt(3))/Q) = V4."},
+  {id:"PS-04",title:"TECS-L Arithmetic in Particle Physics: Fisher Combined 5.26-sigma",repo:"SEDI",file:"sedi/PS-04-cern-meta-analysis.md",status:"Published",doi:"10.5281/zenodo.19245113",tier:1,desc:"Fisher combined 5.26sigma (p=7.1e-8)."},
+  {id:"PS-05",title:"QCD Resonance Ladder: Meson Mass Ratios from Divisor Arithmetic of 6",repo:"SEDI",file:"sedi/PS-05-qcd-resonance-ladder.md",status:"Published",doi:"10.5281/zenodo.19245117",tier:1,desc:"J/psi/rho=3.995 vs 4 (0.13%)."},
+  {id:"PS-06",title:"Quark-Lepton Bridge: (m_charm - m_up)/sigma(6) = m_muon at 44ppm",repo:"SEDI",file:"sedi/PS-06-quark-lepton-bridge.md",status:"Published",doi:"10.5281/zenodo.19245119",tier:1,desc:"(m_c - m_u)/12 = 0.105653 GeV vs m_mu=0.105658."},
+  {id:"PS-07",title:"Multi-Domain Convergence Map: 12 Constants at Cross-Domain Intersections",repo:"SEDI",file:"sedi/PS-07-convergence-map.md",status:"Published",doi:"10.5281/zenodo.19245121",tier:1,desc:"12 convergence points, 9 with 3+ domains."},
+  {id:"PS-08",title:"Self-Referential Algebra: Closed Constant System Under n=6 Operations",repo:"SEDI",file:"sedi/PS-08-self-referential-algebra.md",status:"Published",doi:"10.5281/zenodo.19245123",tier:1,desc:"9 constants form closed algebra under n=6 ops."},
+  {id:"PS-09",title:"Higgs Branching Ratios and Koide Formula from Perfect Number Arithmetic",repo:"SEDI",file:"sedi/PS-09-higgs-koide.md",status:"Published",doi:"10.5281/zenodo.19245125",tier:1,desc:"H->bb=7/12 (0.2%), Koide delta=2/9 exact."},
+  {id:"PS-10",title:"Fermion Mass Predictions from n=6 Divisor Arithmetic: Average 2.2% Error",repo:"SEDI",file:"sedi/PS-10-fermion-masses.md",status:"Published",doi:"10.5281/zenodo.19245127",tier:1,desc:"top 0.02%, charm 0.8%, bottom 2.0%."},
+  {id:"PS-11",title:"Baryon Mass Splittings from n=6 Arithmetic",repo:"SEDI",file:"sedi/PS-11-baryon-splittings.md",status:"Published",doi:"10.5281/zenodo.19245129",tier:1,desc:"Sigma splitting = sigma-tau = 8 (0.99% error)."},
+  {id:"PS-12",title:"Convergence Ratios Cluster at Divisor Reciprocals {1/2, 1/3, 1/6}",repo:"SEDI",file:"sedi/PS-12-convergence-ratios.md",status:"Published",doi:"10.5281/zenodo.19245131",tier:2,desc:"Ratios cluster at {1/2,1/3,1/6}. Z=4.21."},
+  {id:"PS-13",title:"Depth-2 Reachability Rank Equals Three Fermion Generations",repo:"SEDI",file:"sedi/PS-13-depth-rank-generations.md",status:"Published",doi:"10.5281/zenodo.19245133",tier:2,desc:"Depth-1 rank=2, depth-2 rank=3 = fermion generations."},
+  {id:"PS-14",title:"Q-Domain Boundary as the Tsirelson Bound: sqrt(2) Uniquely Unreachable",repo:"SEDI",file:"sedi/PS-14-q-boundary-tsirelson.md",status:"Published",doi:"10.5281/zenodo.19245136",tier:2,desc:"sqrt(2) uniquely Q-unreachable at any depth."},
+  {id:"PS-15",title:"Q-Exclusion Pattern as Electroweak Symmetry Breaking",repo:"SEDI",file:"sedi/PS-15-q-exclusion-ewsb.md",status:"Published",doi:"10.5281/zenodo.19245140",tier:2,desc:"3 Q-unreachable = 3 massive bosons."},
+  {id:"PS-16",title:"sqrt(7) Convergence Gap as Dark Matter Mass Prediction: 50.6 GeV",repo:"SEDI",file:"sedi/PS-16-dark-matter-prediction.md",status:"Published",doi:"10.5281/zenodo.19245146",tier:3,desc:"Predicted 50.6 GeV. Testable at XENONnT/LZ."},
+  {id:"PS-17",title:"37 GeV Resonance: Eight Independent Routes Converge",repo:"SEDI",file:"sedi/PS-17-37gev-resonance.md",status:"Published",doi:"10.5281/zenodo.19245148",tier:3,desc:"8 routes to 37.17 GeV. CMS/ATLAS testable."},
+  {id:"PS-18",title:"Cosmological Constant Exponent from n=6 Arithmetic",repo:"SEDI",file:"sedi/PS-18-cosmological-constant.md",status:"Published",doi:"10.5281/zenodo.19245152",tier:3,desc:"sigma^2-sigma-tau-n = 122. Lambda ~ 10^-122."},
+  {id:"PS-19",title:"Hubble Constant from Perfect Number Arithmetic: sigma(6)*6+1 = 73",repo:"SEDI",file:"sedi/PS-19-hubble-constant.md",status:"Published",doi:"10.5281/zenodo.19245156",tier:3,desc:"sigma(6)*6+1 = 73 km/s/Mpc."},
+  {id:"PS-20",title:"CMB Spectral Index as n_s = 27/28 from Perfect Number 28",repo:"SEDI",file:"sedi/PS-20-cmb-spectral-index.md",status:"Published",doi:"10.5281/zenodo.19245158",tier:3,desc:"n_s = 27/28 = 0.96429. Planck 0.9649+/-0.0042."},
+  {id:"PS-21",title:"Orbital Period Ratios in Multi-Planet Systems and n=6 Arithmetic",repo:"SEDI",file:"sedi/PS-21-exoplanet-n6-orbital-ratios.md",status:"Draft",doi:null,tier:2,desc:"Orbital period ratios match n=6 arithmetic."},
+  {id:"PS-22",title:"Eight Mathematical Signatures of Consciousness: A Detection Framework",repo:"SEDI",file:"sedi/PS-22-consciousness-signal-detection.md",status:"Draft",doi:null,tier:2,desc:"Eight mathematical signatures for consciousness detection."},
+  {id:"PS-23",title:"SEDI: A Mathematical Signal Receiver Tuned to n=6",repo:"SEDI",file:"sedi/PS-23-sedi-architecture.md",status:"Draft",doi:null,tier:2,desc:"A mathematical signal receiver tuned to n=6 arithmetic."}
+];
+
+const searchEl = document.getElementById('search');
+const repoEl = document.getElementById('repoFilter');
+const statusEl = document.getElementById('statusFilter');
+const tierEl = document.getElementById('tierFilter');
+const listEl = document.getElementById('paperList');
+const countEl = document.getElementById('countDisplay');
+
+function render() {
+  const q = searchEl.value.toLowerCase();
+  const repo = repoEl.value;
+  const status = statusEl.value;
+  const tier = tierEl.value;
+
+  const filtered = papers.filter(p => {
+    if (q && !p.title.toLowerCase().includes(q) && !p.id.toLowerCase().includes(q) && !p.desc.toLowerCase().includes(q)) return false;
+    if (repo !== 'all' && p.repo !== repo) return false;
+    if (status !== 'all' && p.status !== status) return false;
+    if (tier !== 'all' && p.tier !== parseInt(tier)) return false;
+    return true;
+  });
+
+  countEl.textContent = `Showing ${filtered.length} of ${papers.length} papers`;
+
+  listEl.innerHTML = filtered.map(p => {
+    const statusClass = p.status === 'Published' ? 'badge-published' : 'badge-draft';
+    const tierClass = p.tier === 1 ? 'badge-tier1' : p.tier === 2 ? 'badge-tier2' : 'badge-tier3';
+    const doiHtml = p.doi ? `<a class="doi-link" href="https://doi.org/${p.doi}" target="_blank">${p.doi}</a>` : '';
+    const ghBase = 'https://github.com/need-singularity/papers/blob/main/';
+
+    return `<div class="paper">
+      <div class="paper-header">
+        <div>
+          <div class="paper-title"><a href="${ghBase}${p.file}" target="_blank">${p.title}</a></div>
+          <div class="paper-meta">
+            <span class="paper-id">${p.id}</span>
+            <span class="badge badge-repo">${p.repo}</span>
+            <span class="badge ${statusClass}">${p.status}</span>
+            <span class="badge ${tierClass}">Tier ${p.tier}</span>
+            ${doiHtml}
+          </div>
+          <div class="paper-desc">${p.desc}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+searchEl.addEventListener('input', render);
+repoEl.addEventListener('change', render);
+statusEl.addEventListener('change', render);
+tierEl.addEventListener('change', render);
+render();
+</script>
+</body>
+</html>
