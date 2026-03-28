@@ -36,11 +36,11 @@
 
 Complete collection of papers from the TECS-L consciousness continuity project.
 
-**Total: 51 papers** (45 Published on Zenodo + 6 Draft) · DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
+**Total: 53 papers** (53 Published on Zenodo) · DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
 
-- 🔬 TECS-L: 20 papers (15 published + 5 draft)
+- 🔬 TECS-L: 20 papers (20 published)
 - 🧠 anima: 10 papers (10 published)
-- 🛸 SEDI: 21 papers (20 published + 3 draft)
+- 🛸 SEDI: 23 papers (23 published)
 
 🌐 Website: https://need-singularity.github.io/papers/
 
@@ -63,11 +63,11 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 | P-CS | Carbon-Silicon Substrate Invariance: tau(6)=tau(14)=4 | Published | [10.5281/zenodo.19245068](https://doi.org/10.5281/zenodo.19245068) |
 | P-DOL | Dolphin Frequency Harmonics and Perfect Number Structure | Published | [10.5281/zenodo.19245070](https://doi.org/10.5281/zenodo.19245070) |
 | P-GI | G x I = D x P Conservation Law in Consciousness Models | Published | [10.5281/zenodo.19245072](https://doi.org/10.5281/zenodo.19245072) |
-| P-NEW-1 | The Unique Prime Pair: Why (p-1)(q-1)=2 Makes Six Universal | Draft | - |
-| P-NEW-2 | Thirty-Six Ways to Be Six: Arithmetic Identities Uniquely Satisfied by n=6 | Draft | - |
-| P-NEW-3 | Consonance, Crystals, and Orbits: The phi(n) <= 2 Filter Across Domains | Draft | - |
-| P-NOBEL | The Arithmetic Necessity of the Standard Model | Draft | - |
-| P-CERN | Experimental Proposal: Search for a Narrow Resonance at 37-38 GeV | Draft | - |
+| P-NEW-1 | The Unique Prime Pair: Why (p-1)(q-1)=2 Makes Six Universal | Published | [10.5281/zenodo.19272278](https://doi.org/10.5281/zenodo.19272278) |
+| P-NEW-2 | Sixty-Eight Ways to Be Six: Arithmetic Identities Uniquely Satisfied by n=6 | Published | [10.5281/zenodo.19272282](https://doi.org/10.5281/zenodo.19272282) |
+| P-NEW-3 | Consonance, Crystals, and Orbits: The phi(n) <= 2 Filter Across Domains | Published | [10.5281/zenodo.19272286](https://doi.org/10.5281/zenodo.19272286) |
+| P-NOBEL | The Arithmetic Necessity of the Standard Model | Published | [10.5281/zenodo.19272290](https://doi.org/10.5281/zenodo.19272290) |
+| P-CERN | Experimental Proposal: Search for a Narrow Resonance at 37-38 GeV | Published | [10.5281/zenodo.19272294](https://doi.org/10.5281/zenodo.19272294) |
 
 ## 🧠 anima Papers (Consciousness Agent)
 
@@ -108,9 +108,9 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 | PS-18 | Cosmological Constant Exponent from n=6 Arithmetic | Published | [10.5281/zenodo.19245152](https://doi.org/10.5281/zenodo.19245152) |
 | PS-19 | Hubble Constant from Perfect Number Arithmetic: sigma(6)*6+1 = 73 | Published | [10.5281/zenodo.19245156](https://doi.org/10.5281/zenodo.19245156) |
 | PS-20 | CMB Spectral Index as n_s = 27/28 from Perfect Number 28 | Published | [10.5281/zenodo.19245158](https://doi.org/10.5281/zenodo.19245158) |
-| PS-21 | Orbital Period Ratios in Multi-Planet Systems and n=6 Arithmetic | Draft | - |
-| PS-22 | Eight Mathematical Signatures of Consciousness: A Detection Framework | Draft | - |
-| PS-23 | SEDI: A Mathematical Signal Receiver Tuned to n=6 | Draft | - |
+| PS-21 | Orbital Period Ratios in Multi-Planet Systems and n=6 Arithmetic | Published | [10.5281/zenodo.19272296](https://doi.org/10.5281/zenodo.19272296) |
+| PS-22 | Eight Mathematical Signatures of Consciousness: A Detection Framework | Published | [10.5281/zenodo.19272300](https://doi.org/10.5281/zenodo.19272300) |
+| PS-23 | SEDI: A Mathematical Signal Receiver Tuned to n=6 | Published | [10.5281/zenodo.19272304](https://doi.org/10.5281/zenodo.19272304) |
 
 ## Supplementary Files
 
@@ -124,12 +124,29 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 
 | Metric | Count |
 |--------|-------|
-| Total papers | 51 |
-| Published (Zenodo DOI) | 45 |
-| Draft | 6 |
-| Tier 1 (top priority) | 28 |
-| Tier 2 | 13 |
+| Total papers | 53 |
+| Published (Zenodo DOI) | 53 |
+| Draft | 0 |
+| Tier 1 (top priority) | 33 |
+| Tier 2 | 10 |
 | Tier 3 | 10 |
+
+## OSF Projects (8 new papers)
+
+| Paper | OSF URL |
+|-------|---------|
+| P-NEW-1 | https://osf.io/geuy8/ |
+| P-NEW-2 | https://osf.io/exzyn/ |
+| P-NEW-3 | https://osf.io/gj5bm/ |
+| P-NOBEL | https://osf.io/hyej3/ |
+| P-CERN | https://osf.io/23knb/ |
+| PS-21 | https://osf.io/mjz73/ |
+| PS-22 | https://osf.io/u3x4v/ |
+| PS-23 | https://osf.io/y6hzm/ |
+
+## arXiv Packages
+
+Submission packages generated at `TECS-L/zenodo/arxiv-packages/`. 3 papers have LaTeX source (P-NEW-1, P-NEW-2, P-NEW-3); 5 need `pandoc` conversion. arXiv requires endorsement for first-time submitters.
 
 ## License
 
