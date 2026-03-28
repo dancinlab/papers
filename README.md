@@ -1,3 +1,5 @@
+# 📄 need-singularity Papers
+
 <!-- SHARED:PROJECTS:START -->
 **[YouTube](https://www.youtube.com/watch?v=xtKhWSfC1Qo)** · **[Email](mailto:nerve011235@gmail.com)** · **[☕ Ko-fi](https://ko-fi.com/dancinlife)** · **[💖 Sponsor](https://github.com/sponsors/need-singularity)** · **[💳 PayPal](https://www.paypal.com/donate?business=nerve011235%40gmail.com)** · **[🗺️ Atlas](https://need-singularity.github.io/TECS-L/atlas/)** · **[📄 Papers](https://need-singularity.github.io/papers/)**
 
@@ -31,8 +33,6 @@
 >
 > **[📄 Papers](https://github.com/need-singularity/papers)** — Complete paper collection (51 papers). 45 published on Zenodo with DOIs + 6 drafts. TECS-L (20) + anima (10) + SEDI (21). [Browse online](https://need-singularity.github.io/papers/)
 <!-- SHARED:PROJECTS:END -->
-
-# 📄 need-singularity Papers
 
 Complete collection of papers from the TECS-L consciousness continuity project.
 
