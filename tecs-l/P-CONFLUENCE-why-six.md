@@ -668,6 +668,19 @@ identification of the four failed breakthrough attempts.
 
 ---
 
+## Note Added (2026-03-30): The Consecutive Prime Factorial Product Theorem
+
+The Consecutive Prime Factorial Product Theorem [P-PRIME-FACTORIAL] provides the cleanest
+characterization of 6 in this paper's framework: among prime pairs (p,q) with p < q, the
+equation p*q = q! has the unique solution (2,3) with product 6. This Level 3 result ---
+requiring only the definition of primality and the factorial --- establishes 6's uniqueness
+through pure prime theory, independent of divisor sums or perfect number conditions.
+The theorem strengthens the Confluence argument by showing that even the most elementary
+characterization (primes times factorials) singles out 6, confirming that perfectness is
+indeed a corollary rather than a cause.
+
+---
+
 ## References
 
 1. Conway, J.H. and Sloane, N.J.A. (1999). *Sphere Packings, Lattices

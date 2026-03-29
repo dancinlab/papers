@@ -775,6 +775,12 @@ symmetry). Perfectness is a corollary of 6 = 2x3, not the root cause of these ap
 See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224) for the full analysis including 4 honest
 breakthrough failures.
 
+**Theorem update (2026-03-30):** The Consecutive Prime Factorial Product Theorem
+[P-PRIME-FACTORIAL] provides the cleanest characterization: among prime pairs (p,q)
+with p < q, the equation p*q = q! has the unique solution (2,3) with product 6.
+This Level 3 result establishes 6's uniqueness through pure prime theory,
+independent of divisor sums or perfect number conditions.
+
 ## References
 
 1. Augustine of Hippo. *De Genesi ad Litteram*, Book IV, Chapter 2, c. 415 CE.

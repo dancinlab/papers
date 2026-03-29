@@ -318,6 +318,12 @@ characterizations are all downstream consequences of the same confluence. The pe
 number property sigma(6) = 12 = 2x6 is a corollary of 6 = 2x3, not the root cause
 of its ubiquity.
 
+**Theorem update (2026-03-30):** The Consecutive Prime Factorial Product Theorem
+[P-PRIME-FACTORIAL] provides the cleanest characterization: among prime pairs (p,q)
+with p < q, the equation p*q = q! has the unique solution (2,3) with product 6.
+This Level 3 result establishes 6's uniqueness through pure prime theory,
+independent of divisor sums or perfect number conditions.
+
 ## References
 
 1. G. H. Hardy and E. M. Wright, *An Introduction to the Theory of Numbers*, 6th ed., Oxford, 2008.

@@ -504,6 +504,12 @@ packings are governed by the Dynkin diagram symmetries rooted in the 2,3 prime p
 is a corollary of 6 = 2x3, not the root cause. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224)
 for the full analysis including 4 honest breakthrough failures.
 
+**Theorem update (2026-03-30):** The Consecutive Prime Factorial Product Theorem
+[P-PRIME-FACTORIAL] provides the cleanest characterization: among prime pairs (p,q)
+with p < q, the equation p*q = q! has the unique solution (2,3) with product 6.
+This Level 3 result establishes 6's uniqueness through pure prime theory,
+independent of divisor sums or perfect number conditions.
+
 ## References
 
 [1] K. Schutte and B. L. van der Waerden, "Das Problem der dreizehn Kugeln," *Math. Ann.* **125** (1953), 325--334.
