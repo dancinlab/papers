@@ -481,6 +481,26 @@ with p < q, the equation p*q = q! has the unique solution (2,3) with product 6.
 This Level 3 result establishes 6's uniqueness through pure prime theory,
 independent of divisor sums or perfect number conditions.
 
+## Appendix F: Experimental Protocols for Verification (v3.0)
+
+### F.1. Hachimoji DNA Test
+- Obtain 8-base Hachimoji DNA from Benner lab (FAME)
+- Construct random triplet codon library (8^3 = 512 codons)
+- In vitro translation with engineered ribosomes
+- Test prediction: degeneracy set includes {1,2,3,6} = divisors(6)
+- Contact: Foundation for Applied Molecular Evolution
+
+### F.2. Romesberg xDNA Test
+- Obtain 6-base xDNA system (Romesberg lab, UMass)
+- codons = 6^3 = 216 = n^(n/phi)
+- Test prediction: if naturally evolved, ~72 AAs = sigma*n
+- Contact: Floyd Romesberg laboratory
+
+### F.3. Extraterrestrial Genetic Code
+- Falsifiable: any independently evolved genetic code must use (4,3)
+- Testable when: Mars sample return, Europa lander, or SETI biochemistry
+- Refutation: discovery of viable (b,L) ≠ (4,3) alien code
+
 ## References
 
 [1] C. R. Woese, "The universal ancestor," *Proc. Natl. Acad. Sci. USA* **95** (1998), 6854--6859.

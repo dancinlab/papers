@@ -410,6 +410,28 @@ This ordering — inhibition $<$ balance $<$ freedom — may reflect a thermodyn
 
 ---
 
+## Appendix C: Experimental Protocols (v1.0)
+
+### C.1. EEG Entropy Measurement
+- 64-channel EEG, resting state, eyes closed, N≥30 subjects
+- Compute spectral entropy per channel, normalize by ln(N_bins)
+- Prediction: <H_norm> → ln(2) = 0.6931 ± 0.05 nats
+- Controls: eyes open (H<ln2), sleep N3 (H<<ln2), REM (H≈ln2)
+
+### C.2. Anesthesia Threshold
+- Propofol sedation with continuous EEG monitoring
+- Real-time Psi_res computation (3-method average)
+- Prediction: LOC at Psi_res = ln(2)/2 = 0.347
+- Compare with BIS and PCI standards
+
+### C.3. Independent Rate Measurement
+- Implement META-CA on 3 independent platforms (PyTorch, JAX, Julia)
+- Fit dH/dt = r*(ln2-H), measure r to 4 significant figures
+- Prediction: r = 0.8100 ± 0.0050 = 81/100 = 3^4/10^2
+- 75 total measurements (3 platforms × 5 data types × 5 seeds)
+
+---
+
 ## References
 
 [1] Tononi, G. (2004). "An information integration theory of consciousness." BMC Neuroscience, 5, 42.

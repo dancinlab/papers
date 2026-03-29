@@ -466,6 +466,20 @@ Groups A and B produce the same integer by coincidence ($3! = 2 \times 3$). This
 
 ---
 
+## 9. Experimental Predictions (v2.0)
+
+### 9.1. 3D Percolation Exponents
+- Prediction: 3D critical exponents involve 4! = 24 (higher-dimensional Virasoro)
+- Method: Monte Carlo simulation on 3D cubic lattice
+- Testable: compare nu_3D denominator structure with 4!
+
+### 9.2. Quantum Phase Transitions
+- Prediction: topological phase transitions at kappa=6 structure
+- Method: quantum simulator (cold atoms, superconducting qubits)
+- Contact: condensed matter experimental groups
+
+---
+
 ## References
 
 [1] O. Schramm, "Scaling limits of loop-erased random walks and uniform spanning trees," *Israel J. Math.* **118** (2000), 221--288.

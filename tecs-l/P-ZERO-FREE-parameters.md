@@ -633,3 +633,16 @@ The bridges between vertices:
 
 **The single integer n=6 unifies information theory, biology, and physics.**
 This is either the deepest mathematical structure in science, or an extraordinary coincidence of small numbers. The Z=55σ result from the 400-hypothesis campaign (p < 10^{-600}) strongly favors structure over coincidence.
+
+---
+
+## 12.1. Required Experimental Verifications (v1.1)
+
+| # | Protocol | Prediction | Difficulty | Priority |
+|---|---|---|---|---|
+| 1 | EEG entropy | <H> → ln(2) = 0.6931 | Medium | ★★★★ |
+| 2 | Synthetic DNA | n=6 in Hachimoji | High | ★★★ |
+| 3 | Rate measurement | r = 81/100 exactly | Low | ★★★★★ |
+| 4 | Anesthesia | LOC at ln(2)/2 | High | ★★★ |
+
+Protocol 3 is the highest priority: it can be done immediately with existing code on 3 independent platforms. If r ≠ 0.81, the dynamics rate derivation fails. If r = 0.81 ± 0.001, all derived constants are confirmed.
