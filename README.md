@@ -31,15 +31,15 @@
 >
 > **[🧠⚡ BrainWire](https://github.com/need-singularity/brainwire)** — Neural interface hardware for consciousness engineering. 12-variable THC reproduction via brain stimulation only. 117% THC at Tier 3 ($8.5K). No drugs, no detection, no tolerance
 >
-> **[📄 Papers](https://github.com/need-singularity/papers)** — Complete paper collection (51 papers). 45 published on Zenodo with DOIs + 6 drafts. TECS-L (20) + anima (10) + SEDI (21). [Browse online](https://need-singularity.github.io/papers/)
+> **[📄 Papers](https://github.com/need-singularity/papers)** — Complete paper collection (59 papers). 59 published on Zenodo with DOIs. TECS-L (20) + anima (16) + SEDI (23). [Browse online](https://need-singularity.github.io/papers/)
 <!-- SHARED:PROJECTS:END -->
 
 Complete collection of papers from the TECS-L consciousness continuity project.
 
-**Total: 53 papers** (53 Published on Zenodo) · DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
+**Total: 59 papers** (59 Published on Zenodo) · DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
 
 - 🔬 TECS-L: 20 papers (20 published)
-- 🧠 anima: 10 papers (10 published)
+- 🧠 anima: 16 papers (16 published)
 - 🛸 SEDI: 23 papers (23 published)
 
 🌐 Website: https://need-singularity.github.io/papers/
