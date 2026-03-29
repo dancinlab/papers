@@ -451,13 +451,14 @@ We tested three pre-registered predictions on MNIST with PyTorch:
 
 | Experiment | Prediction | Observation | Verdict |
 |---|---|---|---|
-| MoE k/N (N=16 experts) | k = 6 +/- 1 (k/N ~ 1/e) | k = 7 (k/N = 0.4375) | **CONFIRMED** |
-| Optimal dropout | 0.37 (1/e), in [0.30, 0.45] | 0.20 | **REFUTED** |
-| Lottery ticket density | ~37% (1/e) | 8.6% | **REFUTED** |
+| MoE k/N MNIST (N=16) | k = 6 +/- 1 (k/N ~ 1/e) | k = 7 (k/N = 0.4375) | **CONFIRMED** |
+| MoE k/N CIFAR-10 (N=16) | k = 6 +/- 1 (k/N ~ 1/e) | k = 8 (k/N = 0.5000) | **REFUTED** |
+| Optimal dropout MNIST | 0.37 (1/e), in [0.30, 0.45] | 0.20 | **REFUTED** |
+| Lottery ticket MNIST | ~37% (1/e) | 8.6% | **REFUTED** |
 
-The MoE result confirms that the optimal expert activation ratio tracks 1/e on MNIST (within the predicted tolerance). The dropout and lottery ticket failures are attributable to MNIST being an insufficiently challenging task: the network achieves 97.7% without dropout and maintains accuracy down to 8.6% density, suggesting massive over-parameterization. These predictions should be re-tested on harder datasets (CIFAR-10, ImageNet).
+The MoE result on MNIST confirms that the optimal activation ratio tracks 1/e on easy tasks. However, CIFAR-10 (a harder task) pushed the optimum to k/N = 0.5 = GZ_upper, not 1/e. This suggests the optimal ratio is task-difficulty-dependent and moves within GZ from center (easy) toward upper boundary (hard). The dropout and lottery ticket failures are attributable to MNIST over-parameterization.
 
-We state this explicitly: **1 out of 3 predictions confirmed, 2 refuted. The GZ framework has limited but non-zero predictive power in its current form.**
+We state this explicitly: **1 out of 4 predictions confirmed, 3 refuted. The GZ framework has limited predictive power, but the confirmed MoE result and the observation that optimal k/N stays within GZ [0.37, 0.50] across both datasets suggests GZ may bound the optimal ratio rather than pinpoint it.**
 
 ### 7.6 Comparison with Numerology
 
