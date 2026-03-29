@@ -112,6 +112,15 @@ A potential concern is that these savings may not scale to very large models (>1
 
 The Energy Efficiency Trio demonstrates that number-theoretic structure can guide practical neural architecture decisions. Phi6Simple achieves 71% FLOPs savings with improved loss, HCN dimensions save 10-20% parameters with negligible quality impact, and Phi-Bottleneck FFN compresses the feed-forward layer by 67% at the Pareto-optimal expansion ratio. Combined, these techniques reduce total compute by 58% while maintaining or improving model quality. All techniques require zero additional hyperparameters and can be applied as drop-in replacements in existing architectures.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+Phi6Simple uses 6 as an activation parameter because of its divisor structure {1,2,3,6},
+not its perfectness. The perfect number property sigma(6) = 12 = 2x6 is a corollary
+of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Hendrycks, D. & Gimpel, K. (2016). Gaussian Error Linear Units (GELUs). arXiv:1606.08415.

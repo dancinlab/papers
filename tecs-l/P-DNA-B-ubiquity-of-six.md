@@ -763,6 +763,18 @@ integer. The ubiquity of 6 is the shadow of geometry cast across every science.
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 across 500 hypotheses is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the 500 hypotheses documented here reflect four independent structural roles:
+consecutive-prime product (root systems, kissing numbers), factorial (Virasoro algebra, SLE,
+CFT), triangular number (Gauss sums, crystal symmetry), and primorial (S_3, hexagonal
+symmetry). Perfectness is a corollary of 6 = 2x3, not the root cause of these appearances.
+See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224) for the full analysis including 4 honest
+breakthrough failures.
+
 ## References
 
 1. Augustine of Hippo. *De Genesi ad Litteram*, Book IV, Chapter 2, c. 415 CE.

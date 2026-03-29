@@ -308,6 +308,16 @@ The script precomputes $\sigma, \varphi, \tau, \omega, \Omega, \mu, \operatornam
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The prime pair (2,3) with (p-1)(q-1) = 2 is the root algebraic fact; this paper's 55
+characterizations are all downstream consequences of the same confluence. The perfect
+number property sigma(6) = 12 = 2x6 is a corollary of 6 = 2x3, not the root cause
+of its ubiquity.
+
 ## References
 
 1. G. H. Hardy and E. M. Wright, *An Introduction to the Theory of Numbers*, 6th ed., Oxford, 2008.

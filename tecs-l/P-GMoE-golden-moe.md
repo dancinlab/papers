@@ -149,6 +149,15 @@ Limitations include: (1) Golden MoE has not been tested at billion-parameter sca
 
 Golden MoE demonstrates that continuous zone-based expert selection outperforms discrete Top-K routing, with advantages that increase with scale. The router self-organizes to the theoretically predicted inhibition level of I=1/e without auxiliary losses. On standard benchmarks, Golden MoE achieves +0.6% on MNIST and +4.8% on CIFAR-10, with gaps widening at higher expert counts. The approach is simple to implement, requiring only a change to the gating function, and is compatible with existing MoE training infrastructure.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The 1/e routing optimum comes from I^I minimization (Bridge Theorem), not from the
+perfect-number property directly. The perfect number property sigma(6) = 12 = 2x6
+is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Shazeer, N. et al. (2017). Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer. ICLR 2017.

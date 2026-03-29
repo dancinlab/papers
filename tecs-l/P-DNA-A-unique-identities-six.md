@@ -501,6 +501,17 @@ The results suggest a view of $n = 6$ not merely as the smallest perfect number,
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in unique arithmetic identities is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the 136 unique identities cataloged here arise primarily because 6 = 2x3 is the
+only consecutive-prime semiprime, giving it a divisor structure {1, 2, 3, 6} that simultaneously
+satisfies additive, multiplicative, and factorial constraints no other integer can. Perfectness
+is a corollary of 6 = 2x3, not the root cause. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224)
+for the full analysis including 4 honest breakthrough failures.
+
 ## References
 
 [1] G. H. Hardy and E. M. Wright, *An Introduction to the Theory of Numbers*, 6th ed., Oxford University Press, 2008.

@@ -426,6 +426,18 @@ We have proved that the polynomial--factorial equation $n^2 - \sigma(n) = \tau(n
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in arithmetic identities is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+The identity n^2 - sigma = tau! (36 - 12 = 24 = 4!) is a genuine unique characterization of
+n = 6 that remains valid regardless of causal attribution. However, the reason it works is
+that sigma(6) = 12 follows from 6 = 2x3 (consecutive-prime structure), and tau(6) = 4
+follows from having exactly two prime factors. Perfectness is a corollary, not the root cause.
+See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224) for the full analysis including 4 honest
+breakthrough failures.
+
 ## References
 
 [1] L. E. Dickson, *History of the Theory of Numbers*, Vol. I, Chelsea, 1952.

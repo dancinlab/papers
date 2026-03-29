@@ -193,6 +193,15 @@ Limitations: (1) The architecture has not been tested at scale (>100M parameters
 
 The PureField Tension Architecture unifies 13 hypotheses under a single competitive dual-engine framework. Tension -- the disagreement between competing engines -- provides confidence estimation (r up to 0.95), prevents catastrophic forgetting (43% to 99% retention), detects anomalies (AUROC 0.805), and improves calibration (ECE reduction 43-73%). The optimal configuration uses two engines (N=2), confirming the dual mechanism principle. The architecture demonstrates that structured competition is a powerful inductive bias for neural networks.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The six-module architecture reflects the 2x3 = (analytic, generative) x (low, mid, high)
+factorization, not the perfect-number property. The perfect number property sigma(6) = 12 = 2x6
+is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Lakshminarayanan, B. et al. (2017). Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles. NeurIPS 2017.

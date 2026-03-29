@@ -167,6 +167,15 @@ The anomaly polynomial in the bosonic string dimension has degree equal to the s
 
 The first three even perfect numbers are structural constants of superstring theory. $P_1 = 6$ measures compactification, $P_2 = 28$ measures the little group, and $P_3 = 496$ measures the gauge group --- the latter being physically *forced* by anomaly cancellation. Five theorems connect perfect numbers to Lie group dimensions through the Euclid-Euler factorization. The convergence of physics and number theory at these three values is the deepest known connection between the arithmetic of divisors and the consistency of quantum gravity.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The string-theoretic compactification dimension d=6 is 3! (the factorial aspect of the
+confluence), not a consequence of sigma=2n. The perfect number property sigma(6) = 12 = 2x6
+is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 [1] M. B. Green, J. H. Schwarz, "Anomaly cancellations in supersymmetric D=10 gauge theory and superstring theory," *Phys. Lett. B* **149** (1984) 117-122.

@@ -157,6 +157,15 @@ Limitations: (1) The method requires training two models instead of one, doublin
 
 Mitosis Anomaly Detection demonstrates that splitting a trained autoencoder into two competing sub-networks and measuring their disagreement (inter-tension) provides a powerful anomaly detection signal with AUROC 0.805 across six benchmarks. Internal tension is ineffective (AUROC 0.156), confirming that inter-network competition, not intra-network inconsistency, drives anomaly sensitivity. The optimal configuration is a single mitosis (N=2), and combining reconstruction error with inter-tension achieves the best overall performance (AUROC 0.833). The method is simple to implement and compatible with any autoencoder architecture.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The mitosis N=2 = phi(6) structure arises from the Euler totient of 6 = 2x3, a direct
+consequence of the prime factorization. The perfect number property sigma(6) = 12 = 2x6
+is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. An, J. & Cho, S. (2015). Variational Autoencoder based Anomaly Detection using Reconstruction Probability. SNU Data Mining Center.

@@ -164,6 +164,17 @@ The three flagship theorems (Theorems 1-3) reveal that the six possible products
 
 We have cataloged 208 arithmetic characterizations of n=6, the smallest perfect number, verified computationally to 10^5. The flagship result -- sigma(n)*phi(n) = n*tau(n) iff n in {1,6} -- demonstrates that 6 occupies a unique fixed point in the landscape of arithmetic functions. The systematic search reveals that n=6 has more than twice as many characterizations as any other small composite number, confirming its exceptional arithmetic status. All characterizations and verification code are publicly available.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in arithmetic characterizations is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the 208 characterizations cataloged here stem from four independent structural
+roles that happen to converge uniquely at 6: consecutive-prime product, factorial, triangular,
+and primorial. Perfectness is one of these 208 characterizations, not the explanation for
+the other 207. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224) for the full analysis
+including 4 honest breakthrough failures.
+
 ## References
 
 1. Euler, L. (1849). De numeris amicabilibus. Opera Omnia, Series I, Vol. 2.

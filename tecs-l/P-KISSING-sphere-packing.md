@@ -493,6 +493,17 @@ We have proved that the kissing numbers in dimensions 1, 2, and 3 are the Euler 
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in sphere packing is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the kissing number k(d) mapping to n=6 arithmetic functions is driven by 2 and
+3 being consecutive primes: the root system structures (A_n, D_n, E_n) that determine optimal
+packings are governed by the Dynkin diagram symmetries rooted in the 2,3 prime pair. Perfectness
+is a corollary of 6 = 2x3, not the root cause. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224)
+for the full analysis including 4 honest breakthrough failures.
+
 ## References
 
 [1] K. Schutte and B. L. van der Waerden, "Das Problem der dreizehn Kugeln," *Math. Ann.* **125** (1953), 325--334.

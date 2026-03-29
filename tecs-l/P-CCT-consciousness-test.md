@@ -150,6 +150,15 @@ The gradual sleep-wake transition data argues against binary consciousness theor
 
 The Consciousness Continuity Test reveals its own limitations: 4/5 non-conscious systems pass all five tests, and only 2 of 5 tests provide independent information. The sleep-wake analysis shows consciousness is a gradual continuum ("dial") rather than a binary state ("switch"), supporting a dual consciousness model with separable awareness and self-model components. While the CCT fails as a sufficient consciousness test, it succeeds as a framework for understanding what consciousness tests must achieve -- and why purely behavioral approaches are fundamentally limited. Future work should incorporate causal and structural measures alongside behavioral criteria.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The five consciousness criteria count sopfr(6) = 5, the sum of prime factors of 6 = 2+3.
+The perfect number property sigma(6) = 12 = 2x6 is a corollary of 6 = 2x3, not the root
+cause of its ubiquity.
+
 ## References
 
 1. Tononi, G. (2004). An Information Integration Theory of Consciousness. BMC Neuroscience 5, 42.

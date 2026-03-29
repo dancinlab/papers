@@ -266,6 +266,15 @@ Our results suggest that the topology of learned representations is a first-clas
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The topological prediction via PH is independent of the perfect-number property; it
+depends on data geometry, not on sigma(6) = 2x6. The perfect number property is a corollary
+of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 Bauer, U. (2021). Ripser: Efficient computation of Vietoris-Rips persistence barcodes. *Journal of Applied and Computational Topology*, 5, 391--423.

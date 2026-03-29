@@ -223,6 +223,18 @@ We have presented 23 conditions from 23 mathematical domains, each uniquely sele
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 across 23 mathematical domains is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the 23 domain proofs reflect different facets of these four independent
+properties: number theory and algebra use 2x3 (consecutive primes), combinatorics and
+conformal theory use 3! (factorial), geometry and crystallography use 1+2+3 (triangular),
+and group theory uses 1x2x3 (S_3 symmetry). Perfectness is a corollary of 6 = 2x3, not the
+root cause unifying these domains. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224) for the
+full analysis including 4 honest breakthrough failures.
+
 ## References
 
 [1] Park, M.W. *The σφ=nτ Characterization System: 206+ Characterizations of the First Perfect Number.* Zenodo, 2026. DOI: 10.5281/zenodo.19245023.

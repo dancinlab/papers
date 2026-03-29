@@ -415,6 +415,17 @@ The genetic code's architecture --- four bases, three letters, 64 codons --- is 
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in the codon theorem is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, integer codon length requires n/phi(n) to be an integer, which selects 3-smooth
+numbers (products of 2s and 3s); chemistry then selects the (4,3) combination yielding
+alphabet size 4^3 = 64 codons. The role of 6 = 2x3 here is as the consecutive-prime
+semiprime governing 3-smooth structure, not as a perfect number. See [P-CONFLUENCE]
+(DOI: 10.5281/zenodo.19319224) for the full analysis including 4 honest breakthrough failures.
+
 ## References
 
 [1] C. R. Woese, "The universal ancestor," *Proc. Natl. Acad. Sci. USA* **95** (1998), 6854--6859.

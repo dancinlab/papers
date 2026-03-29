@@ -168,6 +168,15 @@ The observation that phi(14) = 6 (from the carbon-silicon paper) adds another la
 
 We document four numerical relationships between dolphin bioacoustic parameters and TECS-L constants: frequency decomposition via 40 * 6 * 5^k, human-dolphin frequency overlap, click/whistle ratio approximately 6, and neuron ratio approximately e. The combined p-value is 4 * 10^-4 before Bonferroni correction (0.04 after). While individually each relationship is of marginal significance, their convergence within a single biological system warrants further investigation. We recommend systematic measurement of click/whistle ratios across delphinid species to test whether the ratio 6 is a conserved feature or specific to T. truncatus.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The frequency harmonics via 40 * 6 * 5^k decompose through the 2x3 structure of 6, not
+through perfectness. The perfect number property sigma(6) = 12 = 2x6 is a corollary
+of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Au, W.W.L. (1993). The Sonar of Dolphins. Springer-Verlag.

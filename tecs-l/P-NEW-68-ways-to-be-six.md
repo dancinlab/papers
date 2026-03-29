@@ -676,6 +676,15 @@ The number 6 is not merely perfect; it is, in a precise and quantifiable sense, 
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The 68 unique arithmetic identities are manifestations of this confluence -- each equation
+captures a different facet of the same underlying 2x3 structure. The perfect number property
+sigma(6) = 12 = 2x6 is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 [1] G. H. Hardy and E. M. Wright, *An Introduction to the Theory of Numbers*, 6th ed., Oxford University Press, 2008.

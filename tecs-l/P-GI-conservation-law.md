@@ -195,6 +195,15 @@ Limitations: (1) The model assumes independence of D and P, which is unlikely in
 
 The conservation law G * I = D * P, derived from the TECS-L genius equation G = D * P / I, constrains consciousness parameters to a 3-dimensional manifold. The contraction mapping on I converges to the fixed point I* = 1/3, which lies within the Golden Zone [0.2123, 0.5]. At the Golden Zone center I = 1/e, the genius level equals e times the deficit-plasticity product. The three critical inhibition values (1/2, 1/3, 1/6) satisfy the completeness identity and define three distinct cognitive regimes. While the model remains a conceptual framework rather than an empirical theory, the conservation structure provides clear predictions about parameter trade-offs that could be tested with operational definitions of the four parameters.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The model parameters (D, P, I, G) and the 1/2 + 1/3 + 1/6 = 1 completeness identity
+arise from the proper divisors of 6 = 2x3. The perfect number property sigma(6) = 12 = 2x6
+is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Banach, S. (1922). Sur les operations dans les ensembles abstraits et leur application aux equations integrales. Fundamenta Mathematicae 3.

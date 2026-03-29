@@ -183,6 +183,15 @@ The connection to the TECS-L framework is through the topological lens and teles
 
 PH-based training control provides three valuable capabilities -- epoch-1 difficulty prediction (rho=0.94), automatic LR search (matching grid search with 5x fewer epochs), and real-time overfitting detection (r=0.998, 3-7 epoch lead time). These topological signals complement and sometimes supersede traditional scalar metrics. The system reduces total training time by 22-35% while maintaining or improving final accuracy across MNIST (98.3%), Fashion-MNIST (87.4%), and CIFAR-10 (52.0%).
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+PH-based training is independent of the perfect-number property; the topological signals
+arise from data geometry, not from sigma(6) = 2x6. The perfect number property is a corollary
+of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Edelsbrunner, H. & Harer, J. (2010). Computational Topology: An Introduction. AMS.

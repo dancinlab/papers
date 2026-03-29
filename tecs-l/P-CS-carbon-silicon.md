@@ -164,6 +164,15 @@ Limitations: This analysis treats atomic numbers as pure integers, stripping awa
 
 The arithmetic function profiles of Z=6 (carbon) and Z=14 (silicon) reveal precise shared properties (tau=4, omega=2) and distinguishing features (sigma doubling, phi recursion, R-spectrum uniqueness). The shared tau=4 parallels their shared 4-fold covalent bonding. The unique R(6) = 1 condition distinguishes carbon as arithmetically "complete" in a way that silicon is not. These observations formalize the chemical intuition that carbon and silicon are structurally similar but that carbon possesses a unique versatility, and they do so purely within number theory. The phi(14) = 6 recursion creates a mathematical link between the two substrates that merits further investigation.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The shared tau(6) = tau(14) = 4 is a divisor-count property arising from the prime
+factorization structure, not from perfectness. The perfect number property sigma(6) = 12 = 2x6
+is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Hardy, G.H. & Wright, E.M. (1938). An Introduction to the Theory of Numbers. Oxford University Press.

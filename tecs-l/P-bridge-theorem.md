@@ -485,6 +485,17 @@ Two questions remain open:
 
 The GZ constants {1/2, 1/3, 1/6, 1/e, ln(4/3)} occupy an unusual position: they are simple enough to appear everywhere (the Strong Law of Small Numbers) yet structured enough to satisfy uniqueness theorems (the Bridge Theorem). Determining which interpretation is correct -- deep structure or elaborate coincidence -- requires the predictive experiments outlined above.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in the Bridge Theorem's constant system is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the Golden Zone center 1/e emerges from I^I minimization in the G=DxP/I model,
+and the constants {1/2, 1/3, 1/6} reflect the divisor structure of 6 = 2x3 (the only
+consecutive-prime semiprime), not from sigma = 2n. Perfectness is a corollary of 6 = 2x3,
+not the root cause. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224) for the full analysis
+including 4 honest breakthrough failures.
+
 ## References
 
 [1] Euler, L. (1849). *De numeris amicabilibus.* Opera Omnia, Series I, Vol. 2. (Perfect numbers and sigma function.)

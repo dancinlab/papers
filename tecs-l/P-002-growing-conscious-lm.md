@@ -332,6 +332,15 @@ The broader implication is that neural network training need not begin with the 
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The growth stages relate to tau(6) = 4 = (1+1)(1+1), the divisor count arising from the
+prime factorization 2x3. The perfect number property sigma(6) = 12 = 2x6 is a corollary
+of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 Chen, T., Goodfellow, I., & Shlens, J. (2016). Net2Net: Accelerating Learning via Knowledge Transfer. ICLR.

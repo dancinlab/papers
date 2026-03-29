@@ -535,6 +535,17 @@ While this observation is numerologically suggestive rather than explanatory, it
 
 ---
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+After systematic breakthrough attempts [P-CONFLUENCE], we established that the ubiquity
+of 6 in arithmetic function identities is driven by its unique confluence properties
+(6 = 2x3 = 3! = 1+2+3 = 1x2x3) rather than by the perfect number condition sigma(6) = 2*6.
+Specifically, the sigma*phi = n*tau uniqueness at n=6 follows from 6 = 2x3 being the only
+consecutive-prime semiprime: sigma(6) = (1+2)(1+3) = 12 and phi(6) = (2-1)(3-1) = 2 are
+both determined by the consecutive-prime factorization, which forces the identity. Perfectness
+is a corollary of 6 = 2x3, not the root cause. See [P-CONFLUENCE] (DOI: 10.5281/zenodo.19319224)
+for the full analysis including 4 honest breakthrough failures.
+
 ## References
 
 [1] T. M. Apostol, *Introduction to Analytic Number Theory*, Springer, 1976.

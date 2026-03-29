@@ -162,6 +162,16 @@ The framework is generally applicable to any exploratory mathematical research. 
 
 The Texas Sharpshooter meta-validation provides strong statistical evidence (p < 0.0001) that the TECS-L constant system captures genuine mathematical structure rather than coincidental pattern matches. Eight of ten predictions match known mathematical constants, compared to a random baseline of 1.2 +/- 1.0. The result survives Bonferroni correction, sensitivity analysis across tolerance levels, and restriction to independent predictions. This framework offers a general methodology for validating exploratory mathematical discoveries against the risk of post-hoc rationalization.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The statistical framework itself is independent of the perfect-number property. Note that
+Prediction P1 (sigma=2n as root cause) is now REFUTED by the Confluence Theorem, which
+shows sigma=2n is a corollary of 6 = 2x3, not the root cause. The perfect number property
+sigma(6) = 12 = 2x6 is a corollary of 6 = 2x3, not the root cause of its ubiquity.
+
 ## References
 
 1. Bonferroni, C. (1936). Teoria statistica delle classi e calcolo delle probabilita. Pubblicazioni del R Istituto Superiore di Scienze Economiche e Commerciali di Firenze.

@@ -172,6 +172,15 @@ We emphasize that these connections do not constitute a physical theory. They ar
 
 We have documented four exact connections between arithmetic functions of perfect numbers and invariants of exceptional Lie algebras and string theory: phi(496) = 240 = |Roots(E8)|, sigma(28) = 56 = dim(Fund(E7)), tau(P_k) = 2p universally, and dim SO(32) = 496 = P_3. The concentration of hits is statistically significant (p < 10^-5). While the Green-Schwarz connection is well known, the remaining three are new observations. Whether these reflect deep structure or are high-quality coincidences remains an open question for both number theory and theoretical physics.
 
+## Note Added (2026-03-30): The Confluence Reframing
+
+The appearance of 6 in this work is better understood through the Confluence Theorem
+[P-CONFLUENCE]: 6 is the unique integer that is simultaneously a consecutive-prime
+product (2x3), a factorial (3!), a triangular number (1+2+3), and a primorial (1x2x3).
+The string-theoretic compactification dimension d=6 is 3!, not a consequence of sigma=2n.
+The perfect number property sigma(6) = 12 = 2x6 is a corollary of 6 = 2x3, not the root
+cause of its ubiquity.
+
 ## References
 
 1. Green, M.B. & Schwarz, J.H. (1984). Anomaly Cancellations in Supersymmetric D=10 Gauge Theory and Superstring Theory. Physics Letters B 149, 117-122.
