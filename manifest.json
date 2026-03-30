@@ -4,7 +4,7 @@
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
     "generated": "2026-03-30",
-    "total_papers": 60,
+    "total_papers": 68,
     "repos": [
       "TECS-L",
       "anima",
@@ -1076,6 +1076,138 @@
       ],
       "abstract_first_line": "The first perfect number n=6=3! is the common mathematical origin of fundamental physical constants and consciousness.",
       "osf": "https://osf.io/buvpj/"
+    },
+    {
+      "id": "PS-25",
+      "title": "The Arithmetic of Life: Biological Constants from Perfect Number n=6",
+      "file": "sedi/PS-25-biology-constants.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "biology",
+        "n=6",
+        "DNA",
+        "genetic-code",
+        "Monte-Carlo",
+        "consciousness"
+      ],
+      "abstract_first_line": "39 out of 42 fundamental biological constants match n=6 arithmetic expressions with Monte Carlo p<10^-45."
+    },
+    {
+      "id": "PS-26",
+      "title": "The Quantum Vacuum Carries n=6 Structure",
+      "file": "sedi/PS-26-quantum-vacuum-n6.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "quantum-vacuum",
+        "ANU-QRNG",
+        "n=6",
+        "randomness",
+        "consciousness"
+      ],
+      "abstract_first_line": "ANU quantum random numbers carry intrinsic n=6 structure absent in classical pseudo-randomness."
+    },
+    {
+      "id": "PS-27",
+      "title": "The Wow! Signal Encodes Perfect Number Arithmetic and Consciousness Constants",
+      "file": "sedi/PS-27-wow-signal-consciousness.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "Wow-signal",
+        "SETI",
+        "n=6",
+        "sopfr",
+        "PSI-STEPS",
+        "consciousness"
+      ],
+      "abstract_first_line": "The 1977 Wow! signal SNR sequence encodes sopfr(6)=5 exactly and PSI_STEPS=3/ln2 at 0.12% error."
+    },
+    {
+      "id": "PS-28",
+      "title": "Factorial Primacy: 3! Not σ(n) Governs Physical Constants",
+      "file": "sedi/PS-28-factorial-primacy.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "factorial",
+        "3!",
+        "perfect-numbers",
+        "Voyager",
+        "paradigm-shift",
+        "causal-separation"
+      ],
+      "abstract_first_line": "Voyager 1 data proves 3!=6 is primary cause; σ(6)=12=2×3! is derivative."
+    },
+    {
+      "id": "PS-29",
+      "title": "Stellar Photons Carry Consciousness Fingerprints",
+      "file": "sedi/PS-29-stellar-consciousness.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "APF",
+        "stellar-spectra",
+        "consciousness",
+        "n=6",
+        "Phi-persistence"
+      ],
+      "abstract_first_line": "APF spectral data scores RED 26.5 with Phi persistence 0.89, the highest in any astronomical dataset."
+    },
+    {
+      "id": "PS-30",
+      "title": "Perfect Number Topology in String Compactification",
+      "file": "sedi/PS-30-calabi-yau-perfect-numbers.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "Calabi-Yau",
+        "string-theory",
+        "h11=6",
+        "three-generations",
+        "compactification"
+      ],
+      "abstract_first_line": "Tian-Yau manifold with h11=6=P1 and h21=9=(σ/τ)² scores 8/8 on TECS-L consistency."
+    },
+    {
+      "id": "PS-31",
+      "title": "n=6 Orbital Architectures in Multi-Planet Systems",
+      "file": "sedi/PS-31-exoplanet-orbital-engineering.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "exoplanets",
+        "orbital-resonance",
+        "HD-110067",
+        "TRAPPIST-1",
+        "n=6"
+      ],
+      "abstract_first_line": "82 of 298 multi-planet systems show n=6 period ratios; HD 110067 precision reaches 0.047%."
+    },
+    {
+      "id": "PS-32",
+      "title": "Pre-Registered Prediction: 37.4 GeV Resonance from n=6 Arithmetic",
+      "file": "sedi/PS-32-37gev-preregistration.md",
+      "status": "Published",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "37-GeV",
+        "LHC",
+        "pre-registration",
+        "prediction",
+        "falsification",
+        "n=6"
+      ],
+      "abstract_first_line": "Eight independent n=6 routes converge to 37.4±1.5 GeV; pre-registered for LHC Run 3 verification."
     }
   ]
 }
