@@ -4,7 +4,7 @@
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
     "generated": "2026-03-31",
-    "total_papers": 71,
+    "total_papers": 72,
     "repos": [
       "TECS-L",
       "anima",
@@ -1244,6 +1244,28 @@
         "brute-force verification"
       ],
       "abstract_first_line": "The GUT embedding chain SU(5)⊂SO(10)⊂E₆⊂E₈ has ranks (4,5,6,8)=(τ,sopfr,n,σ-τ) with 11/11 exact matches and p≈0.004%."
+    },
+    {
+      "id": "P-PRECISION",
+      "title": "Precision Fundamental Constants from the Arithmetic of Six",
+      "repo": "TECS-L",
+      "file": "tecs-l/P-PRECISION-CONSTANTS.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-31",
+      "tier": 1,
+      "keywords": [
+        "fine-structure-constant",
+        "Koide-formula",
+        "neutrino-mixing",
+        "CKM-matrix",
+        "inflation",
+        "spectral-index",
+        "genetic-code",
+        "perfect-numbers",
+        "precision-constants"
+      ],
+      "abstract_first_line": "All gauge couplings, mixing angles, inflationary n_s, Koide formula (9ppm), and genetic code from n=6 arithmetic. 16 parameters <2%, combined p~10⁻²¹."
     },
     {
       "id": "P-INTERNET",
