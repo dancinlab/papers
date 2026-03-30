@@ -335,3 +335,11 @@ This is the simplest linear identity in all five standard arithmetic functions (
 ---
 
 *Manuscript: 2026-03-31. Prepared for submission to Journal of Number Theory.*
+
+**Theorem 7 (f-product of perfect numbers).** *For even perfect numbers $P_k = 2^{p-1}(2^p - 1)$:*
+$$f(P_k) = \frac{\sigma(P_k)\varphi(P_k)}{P_k \tau(P_k)} = \frac{\varphi(P_k)}{p}$$
+*In particular, $f(P_k) = 1$ if and only if $k = 1$ (i.e., $P_1 = 6$).*
+
+*Proof.* Since $P_k$ is perfect, $\sigma(P_k) = 2P_k$ and $\tau(P_k) = 2p$. Thus $f = 2P_k \cdot \varphi(P_k) / (P_k \cdot 2p) = \varphi(P_k)/p$. The condition $f = 1$ becomes $\varphi(P_k) = p$, i.e., $2^{p-1}(2^{p-1}-1) = p$. For $p = 2$: $2 \cdot 1 = 2$. For $p \geq 3$: $2^{p-1}(2^{p-1}-1) \geq 4 \cdot 3 = 12 > p$. $\square$
+
+**Corollary.** *The sequence $f(P_1), f(P_2), f(P_3), \ldots = 1, 4, 48, 576, \ldots$ satisfies $f(P_k)/f(P_{k-1}) = \sigma(6) = 12$ for all $k \geq 3$.*
