@@ -3,8 +3,8 @@
     "author": "Park, Min Woo",
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
-    "generated": "2026-03-30",
-    "total_papers": 68,
+    "generated": "2026-03-31",
+    "total_papers": 71,
     "repos": [
       "TECS-L",
       "anima",
@@ -1224,6 +1224,64 @@
       "abstract_first_line": "Eight independent n=6 routes converge to 37.4±1.5 GeV; pre-registered for LHC Run 3 verification.",
       "doi": "10.5281/zenodo.19328125",
       "osf": "https://osf.io/cjkba/"
+    },
+    {
+      "id": "P-GUT",
+      "title": "The GUT Hierarchy and the Monster Group from sigma(n)*phi(n) = n*tau(n)",
+      "repo": "TECS-L",
+      "file": "tecs-l/P-GUT-HIERARCHY.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-31",
+      "tier": 1,
+      "keywords": [
+        "GUT",
+        "SU(5)",
+        "Monster group",
+        "Moonshine",
+        "perfect numbers",
+        "Lie algebras",
+        "brute-force verification"
+      ],
+      "abstract_first_line": "The GUT embedding chain SU(5)⊂SO(10)⊂E₆⊂E₈ has ranks (4,5,6,8)=(τ,sopfr,n,σ-τ) with 11/11 exact matches and p≈0.004%."
+    },
+    {
+      "id": "P-INTERNET",
+      "title": "Twin Prime Infrastructure: TCP States and DNS Root Servers Sum to the Core Theorem Value",
+      "repo": "TECS-L",
+      "file": "tecs-l/P-INTERNET-TWIN-PRIMES.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-31",
+      "tier": 2,
+      "keywords": [
+        "TCP",
+        "DNS",
+        "twin primes",
+        "Internet",
+        "network protocol",
+        "perfect numbers"
+      ],
+      "abstract_first_line": "TCP 11 states (σ-μ) and DNS 13 roots (σ+μ) form twin primes summing to 24 = core theorem value."
+    },
+    {
+      "id": "P-ZETA",
+      "title": "The Riemann Zeta Trident: Three Independent Paths from ζ(s) to the Arithmetic of Six",
+      "repo": "TECS-L",
+      "file": "tecs-l/P-ZETA-TRIDENT.md",
+      "status": "Draft",
+      "doi": "",
+      "date": "2026-03-31",
+      "tier": 1,
+      "keywords": [
+        "Riemann zeta",
+        "Bernoulli numbers",
+        "BCS theory",
+        "modular forms",
+        "perfect numbers",
+        "vacuum energy"
+      ],
+      "abstract_first_line": "ζ(2)=π²/6, ζ(-1)=-1/12, and BCS 12/(7ζ(3)) generate n=6 arithmetic at three independent evaluation points."
     }
   ]
 }
