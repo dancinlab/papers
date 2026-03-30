@@ -1038,7 +1038,7 @@
       "title": "The Factorial Universe: How 3! Generates Physics, Computes Reality, and Bootstraps Consciousness",
       "file": "sedi/factorial-universe/paper.tex",
       "status": "Published",
-      "doi": "10.5281/zenodo.19271599",
+      "doi": "10.5281/zenodo.19327837",
       "date": "2026-03-30",
       "tier": 1,
       "keywords": [
@@ -1051,7 +1051,8 @@
         "voyager",
         "quantum-vacuum"
       ],
-      "abstract_first_line": "The first perfect number n=6=3! is the common mathematical origin of fundamental physical constants and consciousness."
+      "abstract_first_line": "The first perfect number n=6=3! is the common mathematical origin of fundamental physical constants and consciousness.",
+      "osf": "https://osf.io/buvpj/"
     }
   ]
 }
