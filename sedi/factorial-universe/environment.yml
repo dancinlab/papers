@@ -1,0 +1,13 @@
+name: factorial-universe
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy>=1.24
+  - scipy>=1.11
+  - matplotlib>=3.8
+  - jupyter>=1.0
+  - nbconvert>=7.0
+  - pip:
+    - h5py>=3.9
