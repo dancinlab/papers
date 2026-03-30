@@ -559,7 +559,8 @@
         "Bell-inequality",
         "algebraic-identity"
       ],
-      "abstract_first_line": "PROVEN: Tsirelson/Bell = sqrt(2) = sqrt(sigma(6)/6)."
+      "abstract_first_line": "PROVEN: Tsirelson/Bell = sqrt(2) = sqrt(sigma(6)/6).",
+      "osf": "https://osf.io/xawv9/"
     },
     {
       "id": "PS-02",
@@ -576,7 +577,8 @@
         "uniqueness",
         "number-theory"
       ],
-      "abstract_first_line": "PROVEN: {1/2,1/3,1/6} unique 3-term Egyptian fraction with lcm = perfect number."
+      "abstract_first_line": "PROVEN: {1/2,1/3,1/6} unique 3-term Egyptian fraction with lcm = perfect number.",
+      "osf": "https://osf.io/ef3yh/"
     },
     {
       "id": "PS-03",
@@ -593,7 +595,8 @@
         "convergence",
         "discrete-symmetries"
       ],
-      "abstract_first_line": "PROVEN: Gal(Q(sqrt(2),sqrt(3))/Q) = V4, |V4|=tau(6)=4."
+      "abstract_first_line": "PROVEN: Gal(Q(sqrt(2),sqrt(3))/Q) = V4, |V4|=tau(6)=4.",
+      "osf": "https://osf.io/sd2n5/"
     },
     {
       "id": "PS-04",
@@ -611,7 +614,8 @@
         "perfect-numbers",
         "CERN"
       ],
-      "abstract_first_line": "Fisher combined 5.26sigma (p=7.1e-8). 4 independent findings."
+      "abstract_first_line": "Fisher combined 5.26sigma (p=7.1e-8). 4 independent findings.",
+      "osf": "https://osf.io/74rmv/"
     },
     {
       "id": "PS-05",
@@ -629,7 +633,8 @@
         "mass-ratios",
         "divisor-functions"
       ],
-      "abstract_first_line": "rho->J/psi->Upsilon via tau=4, sigma/tau=3. J/psi/rho=3.995 vs 4."
+      "abstract_first_line": "rho->J/psi->Upsilon via tau=4, sigma/tau=3. J/psi/rho=3.995 vs 4.",
+      "osf": "https://osf.io/fa6jm/"
     },
     {
       "id": "PS-06",
@@ -647,7 +652,8 @@
         "cross-sector",
         "precision"
       ],
-      "abstract_first_line": "(m_c - m_u)/12 = 0.105653 GeV vs m_mu=0.105658 (0.0044% error)."
+      "abstract_first_line": "(m_c - m_u)/12 = 0.105653 GeV vs m_mu=0.105658 (0.0044% error).",
+      "osf": "https://osf.io/4eqk6/"
     },
     {
       "id": "PS-07",
@@ -664,7 +670,8 @@
         "mathematical-constants",
         "cross-domain"
       ],
-      "abstract_first_line": "12 convergence points, 9 with 3+ domains. Z=5.86, p<0.001."
+      "abstract_first_line": "12 convergence points, 9 with 3+ domains. Z=5.86, p<0.001.",
+      "osf": "https://osf.io/5tu2e/"
     },
     {
       "id": "PS-08",
@@ -681,7 +688,8 @@
         "self-referential",
         "mathematical-constants"
       ],
-      "abstract_first_line": "9 constants form closed algebra under n=6 ops. Z=4.63."
+      "abstract_first_line": "9 constants form closed algebra under n=6 ops. Z=4.63.",
+      "osf": "https://osf.io/ryub2/"
     },
     {
       "id": "PS-09",
@@ -698,7 +706,8 @@
         "Koide-formula",
         "perfect-numbers"
       ],
-      "abstract_first_line": "H->bb=7/12 (0.2%), H->tautau=1/16 (0.3%). Koide delta=2/9 exact."
+      "abstract_first_line": "H->bb=7/12 (0.2%), H->tautau=1/16 (0.3%). Koide delta=2/9 exact.",
+      "osf": "https://osf.io/edxry/"
     },
     {
       "id": "PS-10",
@@ -715,7 +724,8 @@
         "divisor-arithmetic",
         "Standard-Model"
       ],
-      "abstract_first_line": "top 0.02%, charm 0.8%, bottom 2.0%. 5 params predict 6 masses."
+      "abstract_first_line": "top 0.02%, charm 0.8%, bottom 2.0%. 5 params predict 6 masses.",
+      "osf": "https://osf.io/q7ez9/"
     },
     {
       "id": "PS-11",
@@ -732,7 +742,8 @@
         "QCD",
         "hadron-spectroscopy"
       ],
-      "abstract_first_line": "Sigma- minus Sigma+ = 8.079 vs sigma-tau=8 (0.99%, p=0.016)."
+      "abstract_first_line": "Sigma- minus Sigma+ = 8.079 vs sigma-tau=8 (0.99%, p=0.016).",
+      "osf": "https://osf.io/h9vw2/"
     },
     {
       "id": "PS-12",
@@ -749,7 +760,8 @@
         "clustering",
         "perfect-numbers"
       ],
-      "abstract_first_line": "Ratios cluster at {1/2,1/3,1/6}. Z=4.21, p=0.007."
+      "abstract_first_line": "Ratios cluster at {1/2,1/3,1/6}. Z=4.21, p=0.007.",
+      "osf": "https://osf.io/7fctu/"
     },
     {
       "id": "PS-13",
@@ -766,7 +778,8 @@
         "matrix-rank",
         "Standard-Model"
       ],
-      "abstract_first_line": "Depth-1 rank=2, depth-2 rank=3 = fermion generations."
+      "abstract_first_line": "Depth-1 rank=2, depth-2 rank=3 = fermion generations.",
+      "osf": "https://osf.io/58n4k/"
     },
     {
       "id": "PS-14",
@@ -783,7 +796,8 @@
         "reachability",
         "quantum-mechanics"
       ],
-      "abstract_first_line": "sqrt(2) uniquely Q-unreachable at any depth."
+      "abstract_first_line": "sqrt(2) uniquely Q-unreachable at any depth.",
+      "osf": "https://osf.io/x56st/"
     },
     {
       "id": "PS-15",
@@ -800,7 +814,8 @@
         "symmetry-breaking",
         "gauge-bosons"
       ],
-      "abstract_first_line": "3 Q-unreachable = 3 massive bosons."
+      "abstract_first_line": "3 Q-unreachable = 3 massive bosons.",
+      "osf": "https://osf.io/ke8ar/"
     },
     {
       "id": "PS-16",
@@ -817,7 +832,8 @@
         "convergence-gap",
         "XENONnT"
       ],
-      "abstract_first_line": "sqrt(7) zero convergence. Predicted 50.6 GeV (30.7-66.3)."
+      "abstract_first_line": "sqrt(7) zero convergence. Predicted 50.6 GeV (30.7-66.3).",
+      "osf": "https://osf.io/3trcj/"
     },
     {
       "id": "PS-17",
@@ -834,7 +850,8 @@
         "LHC",
         "dimuon"
       ],
-      "abstract_first_line": "8 routes to 37.17 GeV. CMS/ATLAS testable."
+      "abstract_first_line": "8 routes to 37.17 GeV. CMS/ATLAS testable.",
+      "osf": "https://osf.io/qwx2s/"
     },
     {
       "id": "PS-18",
@@ -850,7 +867,8 @@
         "vacuum-energy",
         "fine-tuning"
       ],
-      "abstract_first_line": "sigma^2-sigma-tau-n = 144-12-4-6 = 122. Lambda ~ 10^-122."
+      "abstract_first_line": "sigma^2-sigma-tau-n = 144-12-4-6 = 122. Lambda ~ 10^-122.",
+      "osf": "https://osf.io/2auq3/"
     },
     {
       "id": "PS-19",
@@ -867,7 +885,8 @@
         "SH0ES",
         "H0-tension"
       ],
-      "abstract_first_line": "sigma(6)*6+1 = 73 km/s/Mpc. Matches SH0ES local measurement."
+      "abstract_first_line": "sigma(6)*6+1 = 73 km/s/Mpc. Matches SH0ES local measurement.",
+      "osf": "https://osf.io/m3b58/"
     },
     {
       "id": "PS-20",
@@ -885,7 +904,8 @@
         "perfect-numbers",
         "LiteBIRD"
       ],
-      "abstract_first_line": "n_s = 27/28 = 0.96429. Planck 0.9649+/-0.0042."
+      "abstract_first_line": "n_s = 27/28 = 0.96429. Planck 0.9649+/-0.0042.",
+      "osf": "https://osf.io/5mu4g/"
     },
     {
       "id": "PS-21",
@@ -904,7 +924,8 @@
       ],
       "abstract_first_line": "Orbital period ratios in multi-planet systems match n=6 arithmetic.",
       "osf_url": "https://osf.io/mjz73/",
-      "osf_status": "Published"
+      "osf_status": "Published",
+      "osf": "https://osf.io/gazkj/"
     },
     {
       "id": "PS-22",
@@ -922,7 +943,8 @@
       ],
       "abstract_first_line": "Eight mathematical signatures of consciousness for detection.",
       "osf_url": "https://osf.io/u3x4v/",
-      "osf_status": "Published"
+      "osf_status": "Published",
+      "osf": "https://osf.io/yfqsw/"
     },
     {
       "id": "PS-23",
@@ -941,7 +963,8 @@
       ],
       "abstract_first_line": "A mathematical signal receiver tuned to n=6 arithmetic.",
       "osf_url": "https://osf.io/y6hzm/",
-      "osf_status": "Published"
+      "osf_status": "Published",
+      "osf": "https://osf.io/q7h2t/"
     },
     {
       "id": "PA-11",
