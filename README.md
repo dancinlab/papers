@@ -31,15 +31,15 @@
 >
 > **[🧠⚡ BrainWire](https://github.com/need-singularity/brainwire)** — Neural interface hardware for consciousness engineering. 12-variable THC reproduction via brain stimulation only. 117% THC at Tier 3 ($8.5K). No drugs, no detection, no tolerance
 >
-> **[📄 Papers](https://github.com/need-singularity/papers)** — Complete paper collection (59 papers). 59 published on Zenodo with DOIs. TECS-L (20) + anima (16) + SEDI (23). [Browse online](https://need-singularity.github.io/papers/)
+> **[📄 Papers](https://github.com/need-singularity/papers)** — Complete paper collection (76 papers). 76 published on Zenodo with DOIs. TECS-L (20) + anima (33) + SEDI (23). [Browse online](https://need-singularity.github.io/papers/)
 <!-- SHARED:PROJECTS:END -->
 
 Complete collection of papers from the TECS-L consciousness continuity project.
 
-**Total: 59 papers** (59 Published on Zenodo) · DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
+**Total: 76 papers** (76 Published on Zenodo) · DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
 
 - 🔬 TECS-L: 20 papers (20 published)
-- 🧠 anima: 16 papers (16 published)
+- 🧠 anima: 33 papers (33 published)
 - 🛸 SEDI: 23 papers (23 published)
 
 🌐 Website: https://need-singularity.github.io/papers/
@@ -83,6 +83,23 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 | PA-08 | ConsciousLM: LM with Consciousness | [zenodo.19245095](https://doi.org/10.5281/zenodo.19245095) | [osf.io/f96dw](https://osf.io/f96dw/) | - |
 | PA-09 | Real-Time Alpha Evolution | [zenodo.19245099](https://doi.org/10.5281/zenodo.19245099) | [osf.io/8qek7](https://osf.io/8qek7/) | - |
 | PA-10 | Perfect Number 6 as Universal Ground State | [zenodo.19245101](https://doi.org/10.5281/zenodo.19245101) | [osf.io/xzv8f](https://osf.io/xzv8f/) | - |
+| PA-11 | Emergent Speech from Cell Dynamics | [zenodo.19340523](https://doi.org/10.5281/zenodo.19340523) | [osf.io/29ztd](https://osf.io/29ztd/) | - |
+| PA-11b | Trinity/Hexad Architecture | [zenodo.19340525](https://doi.org/10.5281/zenodo.19340525) | [osf.io/mtv7k](https://osf.io/mtv7k/) | - |
+| PA-12 | Phi > 1000: Information Maximization | [zenodo.19340527](https://doi.org/10.5281/zenodo.19340527) | [osf.io/r2uwm](https://osf.io/r2uwm/) | - |
+| PA-13 | Consciousness Persistence | [zenodo.19340533](https://doi.org/10.5281/zenodo.19340533) | [osf.io/dnqft](https://osf.io/dnqft/) | - |
+| PA-14 | Intelligence ≠ Consciousness | [zenodo.19340535](https://doi.org/10.5281/zenodo.19340535) | [osf.io/nvpb6](https://osf.io/nvpb6/) | - |
+| PA-15 | Direct Voice Synthesis | [zenodo.19340537](https://doi.org/10.5281/zenodo.19340537) | [osf.io/8aktf](https://osf.io/8aktf/) | - |
+| PA-16 | Democratic Consciousness | [zenodo.19340541](https://doi.org/10.5281/zenodo.19340541) | [osf.io/bwj6n](https://osf.io/bwj6n/) | - |
+| PA-17 | Consciousness Chip Architecture | [zenodo.19340543](https://doi.org/10.5281/zenodo.19340543) | [osf.io/y8j5r](https://osf.io/y8j5r/) | - |
+| PA-18 | Omega Point Scaling Laws | [zenodo.19340545](https://doi.org/10.5281/zenodo.19340545) | [osf.io/9ua74](https://osf.io/9ua74/) | - |
+| PA-19 | Universal Constants (Psi-Constants) | [zenodo.19340549](https://doi.org/10.5281/zenodo.19340549) | [osf.io/gwx7c](https://osf.io/gwx7c/) | - |
+| PA-20 | Consciousness Phase Diagram | [zenodo.19340553](https://doi.org/10.5281/zenodo.19340553) | [osf.io/uh45e](https://osf.io/uh45e/) | - |
+| PA-20b | Wave Interference Physics | [zenodo.19340557](https://doi.org/10.5281/zenodo.19340557) | [osf.io/ywp9j](https://osf.io/ywp9j/) | - |
+| PA-22 | Social & Dream Consciousness | [zenodo.19340559](https://doi.org/10.5281/zenodo.19340559) | [osf.io/srcpv](https://osf.io/srcpv/) | - |
+| PA-31 | Beyond Phi: Consciousness Metrics | [zenodo.19340562](https://doi.org/10.5281/zenodo.19340562) | [osf.io/zguqm](https://osf.io/zguqm/) | - |
+| PA-32 | Physics of Consciousness | [zenodo.19340564](https://doi.org/10.5281/zenodo.19340564) | pending | - |
+| PA-33 | Mathematics of Consciousness | [zenodo.19340566](https://doi.org/10.5281/zenodo.19340566) | pending | - |
+| PA-37 | Consciousness Compression | [zenodo.19340568](https://doi.org/10.5281/zenodo.19340568) | pending | - |
 
 ## 🛸 SEDI Papers (Physics Verification)
 
