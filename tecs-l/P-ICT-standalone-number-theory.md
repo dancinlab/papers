@@ -363,7 +363,7 @@ $$f(P_k) = \frac{\sigma(P_k)\varphi(P_k)}{P_k \tau(P_k)} = \frac{\varphi(P_k)}{p
 
 *Proof.* Each condition is proved in Theorems 1--7. The equivalences follow from the common unique solution $n = 6$. $\square$
 
-**Remark.** Condition (iii) is the most elementary: *6 is the only positive integer whose sum of prime factors (with multiplicity) equals $n - 1$.* Indeed, $\mathrm{sopfr}(6) = 2 + 3 = 5 = 6 - 1$. This was verified computationally for all $n \leq 10^5$ and is a known result in the literature as the unique solution to $\mathrm{sopfr}(n) = n - 1$ [OEIS A069814].
+**Remark.** Condition (iii) admits a short analytic proof requiring no computation. Define the *deficit* $\delta(n) = n - \mathrm{sopfr}(n)$. For primes: $\delta(p) = 0$. For $p^2$: $\delta = p(p-2) \neq 1$. For $p^a$, $a \geq 3$: $\delta \geq 2$. For semiprimes $pq$: $\delta = (p-1)(q-1) - 1 = 1$ iff $(p-1)(q-1) = 2$, the Master Identity selecting $(2,3)$. For $\Omega(n) \geq 3$: $\delta \geq 2$ (minimum at $n = 8$). Thus $\delta(n) = 1$ --- equivalently, $\mathrm{sopfr}(n) = n - 1$ --- holds uniquely at $n = 6$.
 
 **Theorem 9 (Primitive root characterization).** *Among even perfect numbers, $n = 6$ is the only one possessing a primitive root.*
 
