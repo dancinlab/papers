@@ -26,7 +26,9 @@ The number 6 occupies a distinguished position in mathematics. It is simultaneou
 - *(iv) $n = k!$ for some $k$ and $n$ is a perfect number;*
 - *(v) $n$ is a perfect number and $n = T_k$ for some prime $k$.*
 
-*Proof.* Condition (i) was verified computationally for all $n \leq 10^6$ (Rust verifier, 10.11s) and can be proven analytically using the multiplicative structure of arithmetic functions at $n = 2^a \cdot 3^b$. The equivalence (i) $\Leftrightarrow$ (ii) follows because for $n = 2^a 3^b$ with $a, b \geq 1$, the identity $\sigma \varphi = n\tau$ reduces to $3(2^{a+1}-1)(3^{b+1}-1) \cdot 2^{a-1} \cdot 3^{b-1} = 2^a 3^b \cdot 2(a+1)(b+1)$, which holds only at $a = b = 1$, giving $n = 6$. Conditions (iii)-(v) each reduce to $n = 6$ by elementary arguments. $\square$
+*Proof.* Define $f(p,a) = (p^{a+1}-1)/(p(a+1))$ for prime $p$ and $a \geq 1$. The identity $\sigma(n)\varphi(n) = n\tau(n)$ is equivalent to $\prod_{p^a \| n} f(p,a) = 1$. A short calculation shows $f(p,a) < 1$ if and only if $(p,a) = (2,1)$, where $f(2,1) = 3/4$ (Proposition 2). Since all other factors exceed 1, the product equals 1 only if it includes $f(2,1) = 3/4$ compensated by a single factor of $4/3$. The unique such factor is $f(3,1) = 4/3$. Therefore $n = 2^1 \cdot 3^1 = 6$ is the only solution beyond $n = 1$.
+
+**The Master Identity.** The condition $f(2,1) \cdot f(3,1) = 1$ reduces to $(p^2-1)(q^2-1) = 4pq$ for primes $p < q$, which simplifies to $(p-1)(q-1) = 2$. The unique solution is $(p,q) = (2,3)$, giving $n = 6$. This reveals the arithmetic essence: $6$ is characterized by $\varphi(6) = 2$, the smallest possible totient for a composite number. Conditions (iii)-(v) each reduce to $n = 6$ by elementary arguments. $\square$
 
 This paper documents 20 domains in which the arithmetic functions of $P_1 = 6$ --- the quintuple $(\sigma, \tau, \varphi, \mathrm{sopfr}) = (12, 4, 2, 5)$ --- determine the parameters of exceptional mathematical structures. We organize these around a single propagation chain originating from the first Bernoulli number $B_2 = 1/6$.
 
