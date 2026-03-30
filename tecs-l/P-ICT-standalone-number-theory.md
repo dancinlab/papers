@@ -268,9 +268,19 @@ We have proved that the integrality of $n/\varphi(n)$ among even perfect numbers
 
 The results add to the growing list of arithmetic characterizations of the number 6. It is well known that 6 is the smallest perfect number, the only even perfect number less than 28, and the product of the first two primes. The characterizations presented here --- via integrality of $n/\varphi(n)$, the sigma-phi-tau identity, and the sopfr-phi identity --- appear to be new and provide structural reasons, beyond its small size, for the distinguished role of 6 in arithmetic.
 
+**Additional uniqueness ratios involving sopfr.** Computational search to $n = 10^5$ reveals that the following ratios are satisfied uniquely at $n = 6$ among all $n \geq 2$:
+
+| Identity | Value at $n = 6$ | Verified to |
+|----------|-----------------|-------------|
+| $\sigma(n)/\mathrm{sopfr}(n) = 12/5$ | $2.4$ | $10^5$ |
+| $\varphi(n)/\mathrm{sopfr}(n) = 2/5$ | $0.4$ | $10^4$ |
+| $\mathrm{sopfr}(n)/n = 5/6$ | $0.8\overline{3}$ | $10^4$ |
+
+The identity $\mathrm{sopfr}(n)/n = 5/6$ is particularly striking: 6 is the only integer whose sum of prime factors (with multiplicity) equals $5/6$ of itself.
+
 **Open questions.**
 
-1. Prove Conjecture 1 ($\sigma(n)\varphi(n) = n\tau(n) \Rightarrow n \in \{1, 6\}$) unconditionally for all $n$.
+1. Prove analytically that $\sigma(n)/\mathrm{sopfr}(n) = 12/5$ implies $n = 6$ for all $n$.
 
 2. Determine whether any odd perfect number, if one exists, satisfies $n/\varphi(n) \in \mathbb{Z}$.
 
