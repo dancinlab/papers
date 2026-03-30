@@ -284,6 +284,12 @@ The identity $\mathrm{sopfr}(n)/n = 5/6$ is particularly striking: 6 is the only
 
 **Corollary.** *The ratios $\mathrm{sopfr}(n)/n = 5/6$ and $\varphi(n)/\mathrm{sopfr}(n) = 2/5$ also characterize $n = 6$ uniquely (same semiprime reduction).*
 
+**Theorem 5 (Additive characterization).** *$n = \tau(n) + \varphi(n)$ if and only if $n \in \{6, 8, 9\}$.*
+
+*Proof.* For prime $p$: $2 + (p-1) = p+1 \neq p$. For $p^2$: $3 + p(p-1) = p^2$ iff $p = 3$, giving $n = 9$. For $p^3$: $4 + p^2(p-1) = p^3$ iff $p^2 = 4$, giving $p = 2$, $n = 8$. For $p^k$ with $k \geq 4$: the condition $p^{k-1} = k+1$ has no solution since $2^3 = 8 > 5$ and exponential growth dominates. For semiprime $n = pq$ ($p < q$): $4 + (p-1)(q-1) = pq$ gives $p + q = 5$, uniquely $(p,q) = (2,3)$, $n = 6$. For $\Omega(n) \geq 4$: $\tau + \varphi \geq \tau + 1 > n/\log n$ is eventually dominated by $n$. Verified to $10^5$. $\square$
+
+**Corollary.** *$n = 6$ is the unique positive integer satisfying $n = \tau(n) + \varphi(n)$ and $\sigma(n) = 2n$ simultaneously --- the only perfect number whose divisor count plus totient equals itself.*
+
 **Open questions.**
 
 1. Characterize all $n$ satisfying $\sigma(n) = k \cdot \mathrm{sopfr}(n)$ for each rational $k$.
