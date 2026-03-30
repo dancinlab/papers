@@ -1,0 +1,140 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.30)  30 MAR 2026 22:56
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**cover_letter.tex
+(./cover_letter.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/letter.cls
+Document Class: letter 2024/08/12 v1.3c Standard LaTeX document class
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
+)
+\longindentation=\dimen148
+\indentedwidth=\dimen149
+\labelcount=\count275
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2024/02/08 v1.3d Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/local/texlive/2026basic/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2024/12/12 v1.0g TeX engine tests
+))
+\Gm@cnth=\count276
+\Gm@cntv=\count277
+\c@Gm@tempcnt=\count278
+\Gm@bindingoffset=\dimen150
+\Gm@wd@mp=\dimen151
+\Gm@odd@mp=\dimen152
+\Gm@even@mp=\dimen153
+\Gm@layoutwidth=\dimen154
+\Gm@layoutheight=\dimen155
+\Gm@layouthoffset=\dimen156
+\Gm@layoutvoffset=\dimen157
+\Gm@dimlist=\toks20
+)
+(/usr/local/texlive/2026basic/texmf-dist/tex/latex/l3backend/l3backend-pdftex.d
+ef
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count279
+)
+No file cover_letter.aux.
+\openout1 = `cover_letter.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-57.0pt
+* \headheight=12.0pt
+* \headsep=45.0pt
+* \topskip=12.0pt
+* \footskip=25.0pt
+* \marginparwidth=90.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 2.0pt minus 4.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 14.
+[1
+
+{/usr/local/texlive/2026basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2] (./cover_letter.aux)
+ ***********
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+ ***********
+ ) 
+Here is how much of TeX's memory you used:
+ 1010 strings out of 469006
+ 17573 string characters out of 5454813
+ 439756 words of memory out of 5000000
+ 29762 multiletter control sequences out of 15000+600000
+ 630973 words of font info for 51 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 57i,6n,65p,515b,169s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
+2.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy10.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmti12.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmtt12.pfb>
+Output written on cover_letter.pdf (2 pages, 57377 bytes).
+PDF statistics:
+ 36 PDF objects out of 1000 (max. 8388607)
+ 21 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

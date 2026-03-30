@@ -2,7 +2,7 @@
 
 **Authors:** Park, Min Woo (Independent Researcher)
 
-**Status:** Draft v3.0 (2026-03-30)
+**Status:** Draft v4.0 (2026-03-31)
 
 **Target:** Journal of Theoretical Biology / BioSystems / Origins of Life and Evolution of Biospheres
 
@@ -500,6 +500,32 @@ independent of divisor sums or perfect number conditions.
 - Falsifiable: any independently evolved genetic code must use (4,3)
 - Testable when: Mars sample return, Europa lander, or SETI biochemistry
 - Refutation: discovery of viable (b,L) ≠ (4,3) alien code
+
+## 11. New Connections from the Grand Scan (v4.0)
+
+The 337-hypothesis grand scan and DFS deep search revealed five new connections between the genetic code and the arithmetic of $P_1 = 6$. Each reinforces the Integer Codon Length Theorem from a different domain.
+
+### 11.1. GF($2^{P_1}$) = GF(64) = Codon Field
+
+The finite field with $2^6 = 64$ elements has exactly 64 elements matching the 64 codons. It has $\tau(6) = 4$ subfields --- GF(2), GF(4), GF(8), and GF(64) --- corresponding to the divisors of 6 (namely 1, 2, 3, 6). The multiplicative group GF(64)$^*$ has order $63 = 2^{P_1} - 1$. BCH codes of length 63 are built over this field, providing a natural algebraic framework for codon error correction. The subfield lattice of GF($2^6$) mirrors the divisor lattice of 6 because subfields of GF($2^n$) correspond bijectively to divisors of $n$.
+
+### 11.2. Benzene $\mathrm{C_6H_6}$: The Aromatic Foundation
+
+The hexagonal aromatic ring contains $P_1 = 6$ carbon atoms. Huckel's rule states that planar cyclic molecules are aromatic when they contain $4n + 2$ $\pi$-electrons; the first aromatic system has $n = 1$, giving $4 \cdot 1 + 2 = 6 = P_1$ $\pi$-electrons. The coefficients in Huckel's formula are $4 = \tau(6)$ and $2 = \varphi(6)$ --- arithmetic functions of $P_1$. Benzene is the foundation of organic chemistry, and its six-fold symmetry ($D_{6h}$ point group) is the molecular manifestation of the same integer that governs the genetic code.
+
+### 11.3. DNA Minor Groove = 12 A = $\sigma(6)$
+
+The B-DNA minor groove width is approximately 12 A $= \sigma(6)$. This structural parameter determines protein--DNA recognition: transcription factors and regulatory proteins read the minor groove geometry to identify binding sites. The same $\sigma(6) = 12$ that parameterizes modular forms (weight-12 Ramanujan $\Delta$ function) and Lie algebras ($E_6$ has 12 positive roots in the root system) appears as the physical width of the information-carrying groove in the double helix.
+
+### 11.4. Virus Icosahedral Symmetry
+
+ALL icosahedral viruses have exactly $\sigma(6) = 12$ pentameric capsomers. This is a consequence of Euler's polyhedron formula ($V - E + F = 2$) applied to icosahedral symmetry: exactly 12 pentagonal vertices are required regardless of capsid size. For $T = 7$ capsids (e.g., HK97 bacteriophage), the total number of capsomers is $72 = n \times \sigma = 6 \times 12 = |\Phi(E_6)|$, where $|\Phi(E_6)| = 72$ is the number of roots in the $E_6$ root system. The virus capsid architecture thus encodes both $\sigma(6)$ and $n \cdot \sigma(n)$ in its geometry.
+
+### 11.5. Max Codon Degeneracy = $P_1$ = 6
+
+Leucine, Serine, and Arginine each have exactly 6 codons --- the maximum degeneracy in the standard genetic code. No amino acid is encoded by more than $P_1 = 6$ codons. The degeneracy set of the standard code is $\{1, 2, 3, 4, 6\}$, which is precisely the set of divisors of 6 excluding only 0. The number of 6-codon amino acids is $3 = n/\varphi(6)$, the codon length itself. This self-referential structure --- the maximum degeneracy equals the perfect number, and the count of maximally degenerate amino acids equals the codon length --- is unique to the $(4, 3)$ architecture derived from $n = 6$.
+
+---
 
 ## References
 
