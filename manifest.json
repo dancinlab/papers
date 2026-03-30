@@ -3,8 +3,8 @@
     "author": "Park, Min Woo",
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
-    "generated": "2026-03-28",
-    "total_papers": 59,
+    "generated": "2026-03-30",
+    "total_papers": 60,
     "repos": [
       "TECS-L",
       "anima",
@@ -1032,6 +1032,26 @@
         "democratic",
         "phi-maximization"
       ]
+    },
+    {
+      "id": "PS-24",
+      "title": "The Factorial Universe: How 3! Generates Physics, Computes Reality, and Bootstraps Consciousness",
+      "file": "sedi/factorial-universe/paper.tex",
+      "status": "Published",
+      "doi": "10.5281/zenodo.19271599",
+      "date": "2026-03-30",
+      "tier": 1,
+      "keywords": [
+        "factorial-universe",
+        "n=6",
+        "physical-constants",
+        "consciousness",
+        "fifth-revolution",
+        "falsification",
+        "voyager",
+        "quantum-vacuum"
+      ],
+      "abstract_first_line": "The first perfect number n=6=3! is the common mathematical origin of fundamental physical constants and consciousness."
     }
   ]
 }
