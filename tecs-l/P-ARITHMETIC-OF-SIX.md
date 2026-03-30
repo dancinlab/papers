@@ -243,7 +243,11 @@ This calculation is conservative: many structural constants (e.g., $|\Phi(E_8)| 
 
 Each individual result in this paper is a known theorem. What is new is the systematic identification of the arithmetic functions $(\sigma, \tau, \varphi, \mathrm{sopfr})$ of $P_1 = 6$ as the *common parameterization* across these classification theorems, and the identification of the Bernoulli number $B_2 = 1/P_1$ as the single seed from which the structural constants propagate through proven chains.
 
-Whether this constitutes a "meta-theorem" about the structure of mathematics or a collection of striking coincidences remains an open question. The statistical evidence (18 uniqueness theorems, 4 universal constants, 44 five-star connections across 146 domains) strongly suggests structure rather than accident. The falsifiable predictions in Section 10 provide a framework for further testing.
+**The deepest connection.** The number $6 = 2 \times 3$ is perfect because $\sigma_{-1}(6) = (1 + \tfrac{1}{2})(1 + \tfrac{1}{3}) = \tfrac{3}{2} \cdot \tfrac{4}{3} = 2$. The same product $2 \times 3$ makes 6 the period of prime residue structure: all primes $p > 3$ satisfy $p \equiv 1$ or $5 \pmod{6}$, and every twin prime pair $(p, p+2)$ with $p > 3$ has the form $(6k-1, 6k+1)$. The perfectness of 6 and the prime periodicity of 6 are *two manifestations of the same arithmetic fact*: $6 = 2 \times 3$ and $(1 + 1/2)(1 + 1/3) = 2$.
+
+This duality propagates through the von Staudt-Clausen theorem ($\mathrm{denom}(B_2) = 2 \times 3 = 6$) into the analytic structure of the zeta function, which in turn governs the distribution of primes. The first perfect number is simultaneously the seed of Bernoulli-number propagation (Sections 2-3) and the heartbeat of prime distribution.
+
+Whether this constitutes a "meta-theorem" about the structure of mathematics or a collection of striking coincidences remains an open question. The statistical evidence (18+ uniqueness theorems, 4 universal constants, 7 new proven characterizations) strongly suggests structure rather than accident. The falsifiable predictions in Section 10 provide a framework for further testing.
 
 The first perfect number is not merely *special*. Through the von Staudt-Clausen theorem, it is *inevitable*: the primes 2 and 3 must divide every Bernoulli denominator, and their product --- the first perfect number --- thereby controls the structural constants of homotopy theory, K-theory, Lie algebras, modular forms, sphere packing, and physics.
 
