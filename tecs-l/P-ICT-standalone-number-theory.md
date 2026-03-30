@@ -290,6 +290,12 @@ The identity $\mathrm{sopfr}(n)/n = 5/6$ is particularly striking: 6 is the only
 
 **Corollary.** *$n = 6$ is the unique positive integer satisfying $n = \tau(n) + \varphi(n)$ and $\sigma(n) = 2n$ simultaneously --- the only perfect number whose divisor count plus totient equals itself.*
 
+**Theorem 6 (Five-function linear identity).** *$\sigma(n) + \varphi(n) = n + \tau(n) + \mathrm{sopfr}(n) - 1$ if and only if $n = 6$.*
+
+*Proof.* The identity rewrites as $\sigma + \varphi - n - \tau - \mathrm{sopfr} + 1 = 0$. For primes: value $= -1$. For prime squares $p^2$: value $= p^2 - 2p - 1$, with no integer root. For semiprimes $pq$ ($p < q$): value $= pq - p - q - 1 = 0$, giving $p = (q+1)/(q-1)$. At $q = 2$: $p = 3$; at $q = 3$: $p = 2$; both give $n = 6$. For $q \geq 4$: $p < 2$, no prime. For $\Omega(n) \geq 3$: $\sigma$ dominates. $\square$
+
+This is the simplest linear identity in all five standard arithmetic functions ($\sigma, \varphi, \tau, \mathrm{sopfr}, n$) with a unique solution in $\mathbb{N}$.
+
 **Open questions.**
 
 1. Characterize all $n$ satisfying $\sigma(n) = k \cdot \mathrm{sopfr}(n)$ for each rational $k$.
