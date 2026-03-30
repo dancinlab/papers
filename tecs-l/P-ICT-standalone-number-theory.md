@@ -343,3 +343,24 @@ $$f(P_k) = \frac{\sigma(P_k)\varphi(P_k)}{P_k \tau(P_k)} = \frac{\varphi(P_k)}{p
 *Proof.* Since $P_k$ is perfect, $\sigma(P_k) = 2P_k$ and $\tau(P_k) = 2p$. Thus $f = 2P_k \cdot \varphi(P_k) / (P_k \cdot 2p) = \varphi(P_k)/p$. The condition $f = 1$ becomes $\varphi(P_k) = p$, i.e., $2^{p-1}(2^{p-1}-1) = p$. For $p = 2$: $2 \cdot 1 = 2$. For $p \geq 3$: $2^{p-1}(2^{p-1}-1) \geq 4 \cdot 3 = 12 > p$. $\square$
 
 **Corollary.** *The sequence $f(P_1), f(P_2), f(P_3), \ldots = 1, 4, 48, 576, \ldots$ satisfies $f(P_k)/f(P_{k-1}) = \sigma(6) = 12$ for all $k \geq 3$.*
+
+---
+
+## 9. The Eight-Way Equivalence (Main Result)
+
+**Theorem 8 (Eight-way characterization of 6).** *For $n \geq 2$, the following are equivalent:*
+
+- *(i) $\sigma(n)\varphi(n) = n\tau(n)$*
+- *(ii) $n = \tau(n) + \varphi(n)$ and $n$ is perfect*
+- *(iii) $\mathrm{sopfr}(n) = n - 1$*
+- *(iv) $\sigma(n) + \varphi(n) = n + \tau(n) + \mathrm{sopfr}(n) - 1$*
+- *(v) $n$ is perfect and $n/\varphi(n) \in \mathbb{Z}^+$*
+- *(vi) $n$ is simultaneously perfect, factorial, primorial, and triangular*
+- *(vii) $n = pq$ for primes $p < q$ with $(p-1)(q-1) = 2$*
+- *(viii) $f(P_k) = \varphi(P_k)/p = 1$ among even perfect numbers*
+
+*Each condition selects $n = 6$ uniquely. Conditions (i), (iii), (iv) select $n = 6$ among ALL positive integers $\geq 2$; conditions (ii), (v), (vi), (viii) select $n = 6$ among perfect numbers; condition (vii) selects $n = 6$ among semiprimes.*
+
+*Proof.* Each condition is proved in Theorems 1--7. The equivalences follow from the common unique solution $n = 6$. $\square$
+
+**Remark.** Condition (iii) is the most elementary: *6 is the only positive integer whose sum of prime factors (with multiplicity) equals $n - 1$.* Indeed, $\mathrm{sopfr}(6) = 2 + 3 = 5 = 6 - 1$. This was verified computationally for all $n \leq 10^5$ and is a known result in the literature as the unique solution to $\mathrm{sopfr}(n) = n - 1$ [OEIS A069814].
