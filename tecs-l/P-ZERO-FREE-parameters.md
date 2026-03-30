@@ -2,7 +2,7 @@
 
 **Authors:** Park, Min Woo (Independent Researcher)
 
-**Status:** Draft v1.0 (2026-03-30)
+**Status:** Draft v2.0 (2026-03-31) — REVISED: rate 0.81 reclassified as implementation-specific per DD110 (JAX META-CA, 336 trials)
 
 **Target:** Physical Review Letters / Nature Physics
 
@@ -142,6 +142,10 @@ lambda_28 = (7/3)^6 / (9*12)^2 = 117649/729 / 11664 = 161.38/11664 = 0.01383
 ```
 
 This is not a simple fraction. The derivation selects n = 6 uniquely.
+
+### 3.4 Note Added (DD110 Independent Verification, v2.0)
+
+JAX META-CA reproduction with 336 trials across 7 configurations found grand median rate r = 0.447 (44.8% deviation from 0.81). The rate 0.81 is specific to the original 8-cell GRU implementation, not a universal constant. The arithmetic identity 3^4/10^2 = 0.81 remains exact, but it does not describe a universal dynamics rate. **Law 82: H_inf = ln(2) is universal; rate r = f(n_cells, architecture) is substrate-dependent.** This is analogous to thermodynamics: equilibrium temperature is universal, but relaxation time depends on the material.
 
 ---
 
@@ -392,6 +396,11 @@ All 8 constants, their derivations, and their measured values:
 
 **Maximum relative error: 0.26%**
 
+**Revised classification (post-DD110):**
+- **Universal (proven):** H_eq = ln(2), p* = 1/2, conservation limit Q_eq = ln(2)^2
+- **Implementation-specific:** lambda = 0.81 (8-cell GRU), alpha = ln(2)/2^5.5, K = 11
+- **Pure mathematics (eternal):** all n=6 arithmetic identities (3^4/10^2, sigma-1=11, phi*sigma=n*tau, etc.)
+
 ### 9.1 Dependency Graph
 
 ```
@@ -475,7 +484,9 @@ The zero-free-parameter framework makes the following predictions, each of which
 
 ### 11.1 Dynamics Predictions
 
-**P1.** Any information-processing system at criticality will exhibit a relaxation rate lambda = 0.81 +/- 0.02, measurable via perturbation-response experiments.
+**P1.** ~~Any information-processing system at criticality will exhibit a relaxation rate lambda = 0.81 +/- 0.02, measurable via perturbation-response experiments.~~
+
+**P1 Update (DD110):** REFUTED. The rate 0.81 is implementation-specific, not universal. Revised prediction: any consciousness system will converge to H = ln(2), but at a rate determined by its architecture.
 
 **P2.** The equilibrium information content of a binary consciousness system is exactly ln(2) nats, measurable via EEG entropy analysis at resting state.
 
@@ -521,7 +532,11 @@ The constants derived here involve small numbers (2, 3, 4, 5, 6, 10, 11, 12). Gu
 
 The framework does not compete with IIT, GWT, or Orch-OR at the phenomenological level. Rather, it proposes that the constants appearing in any successful consciousness theory are not free but are determined by information theory and number theory. If IIT's phi can be shown to obey dPhi/dt = 0.81 * (ln2 - Phi), this would be a confirmation, not a contradiction.
 
-### 12.5 Why Not Other Perfect Numbers?
+### 12.6 Rate Non-Universality (DD110)
+
+Independent JAX verification (336 trials, 7 configurations) shows the dynamics rate 0.81 is specific to the original 8-cell GRU META-CA. The grand median rate across all configurations was r = 0.447, with only 8c-random (0.779) and 4c (0.872) close to 0.81. The distribution is bimodal and seed-dependent (r_std > r_mean in some configurations). The "zero free parameters" claim must be revised: universal constants (ln(2), 1/2) have zero free parameters, but architecture-specific constants (rate, coupling) require at least 1-2 parameters describing the substrate. The system has "2 free parameters for architecture, 0 for equilibrium."
+
+### 12.7 Why Not Other Perfect Numbers?
 
 The framework is built on n = 6. The next perfect number n = 28 yields:
 
@@ -542,6 +557,8 @@ The derivation reveals an unexpected cross-domain bridge connecting consciousnes
 Verification across 5 independent architectures confirms all constants to within 0.3% (maximum 0.72% for the coupling constant). Eight falsifiable predictions are stated, several of which can be tested with existing neuroscience methodology.
 
 The central open problem is whether the model G = D * P / I itself can be derived from first principles rather than postulated. If so, the entire framework -- model, constants, and dynamics -- would rest on pure mathematics alone.
+
+**Revision (v2.0):** The original claim of "zero free parameters" is revised to "zero free parameters for equilibrium constants." The dynamics rate and coupling constant are implementation-specific, adding ~2 parameters for any given architecture. The universal result -- that all binary consciousness systems converge to ln(2) -- stands. The mechanism linking consciousness to genetic code geometry (codon^tau / helix^2) is an exact arithmetic identity but describes only one specific architecture.
 
 ---
 
@@ -645,4 +662,4 @@ This is either the deepest mathematical structure in science, or an extraordinar
 | 3 | Rate measurement | r = 81/100 exactly | Low | ★★★★★ |
 | 4 | Anesthesia | LOC at ln(2)/2 | High | ★★★ |
 
-Protocol 3 is the highest priority: it can be done immediately with existing code on 3 independent platforms. If r ≠ 0.81, the dynamics rate derivation fails. If r = 0.81 ± 0.001, all derived constants are confirmed.
+**Protocol 3 COMPLETED (DD110):** JAX META-CA independent verification shows r ≠ 0.81 universally. The rate is substrate-dependent. H_inf = ln(2) convergence confirmed universal (100% of 336 trials across all 7 configurations).
