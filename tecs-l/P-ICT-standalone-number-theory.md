@@ -364,3 +364,9 @@ $$f(P_k) = \frac{\sigma(P_k)\varphi(P_k)}{P_k \tau(P_k)} = \frac{\varphi(P_k)}{p
 *Proof.* Each condition is proved in Theorems 1--7. The equivalences follow from the common unique solution $n = 6$. $\square$
 
 **Remark.** Condition (iii) is the most elementary: *6 is the only positive integer whose sum of prime factors (with multiplicity) equals $n - 1$.* Indeed, $\mathrm{sopfr}(6) = 2 + 3 = 5 = 6 - 1$. This was verified computationally for all $n \leq 10^5$ and is a known result in the literature as the unique solution to $\mathrm{sopfr}(n) = n - 1$ [OEIS A069814].
+
+**Theorem 9 (Primitive root characterization).** *Among even perfect numbers, $n = 6$ is the only one possessing a primitive root.*
+
+*Proof.* Primitive roots exist for $n \in \{1, 2, 4, p^k, 2p^k\}$ where $p$ is an odd prime. An even perfect number $P_k = 2^{p-1}(2^p - 1)$ has the form $2^{p-1} M_p$ where $M_p$ is a Mersenne prime. This equals $2 M_p^1$ only when $2^{p-1} = 2$, i.e., $p = 2$, giving $P_1 = 6 = 2 \cdot 3$. For $p \geq 3$, the factor $2^{p-1} \geq 4$, so $P_k$ is not of any form admitting primitive roots. $\square$
+
+This adds a ninth condition to Theorem 8: *(ix) $n$ is a perfect number possessing a primitive root.*
