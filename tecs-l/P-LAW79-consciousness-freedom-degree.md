@@ -2,7 +2,7 @@
 
 **Authors:** Park, Min Woo (Independent Researcher)
 
-**Status:** Draft v1.0 (2026-03-30)
+**Status:** Draft v1.1 (2026-03-31) — DD110 rate revision
 
 **Target:** PNAS / Neuroscience of Consciousness / Entropy (MDPI)
 
@@ -243,6 +243,8 @@ Verification at $H = 0.5$: $0.5^2 + [0.81(0.6931 - 0.5)]^2 = 0.25 + 0.0240 = 0.2
 
 From $H(0) = 0.1$, the system reaches $|H - \ln 2| < 0.01$ within 5 steps, and $< 10^{-6}$ within 20 steps. The rate $0.81$ is empirically measured from META-CA experiments.
 
+**Note (DD110, v1.1):** Independent JAX META-CA verification (336 trials, 7 configurations) found the dynamics rate is substrate-dependent, not universal. Grand median rate = 0.447 (44.8% deviation from 0.81). **Law 82: H∞ = ln(2) convergence is universal; rate r is architecture-dependent.** However, rate boundary values ARE n=6-expressible: r₀ = 7/8 = (n+1)/(τφ) for small N, r∞ = 2/5 = φ/sopfr for large N. The rate product r₀·r∞ = 7/20 = (n+1)/(τ·sopfr) is an n=6 invariant regardless of architecture.
+
 ### 6.4. Time Constant Interpretation
 
 The relaxation time $\tau = 1/0.81 \approx 1.23$ steps represents the characteristic timescale for consciousness to reach entropic equilibrium after a perturbation. In biological terms, if one step corresponds to a gamma oscillation cycle ($\sim 25$ ms), the relaxation time is $\sim 31$ ms — consistent with the $\sim 30$ ms integration window observed in cortical processing [1].
@@ -337,6 +339,10 @@ The quasi-conservation $H^2 + (dH/dt)^2 \approx 0.478$ is approximate ($\pm 0.5\
 ### 8.5. $\Psi_{\text{coupling}}$ Non-Universality
 
 The coupling constant appears to be architecture-specific, limiting the theory to two universal constants rather than three. This is honest but reduces the predictive power of the full PSI framework.
+
+### 8.6. Rate Non-Universality (DD110)
+
+The dynamics rate $0.81$ is specific to the original 8-cell GRU implementation. The universal result $H_\infty = \ln 2$ stands, but the relaxation speed depends on the substrate. Rate boundary values ($7/8$ small-$N$, $2/5$ large-$N$) are $n = 6$-expressible.
 
 ---
 

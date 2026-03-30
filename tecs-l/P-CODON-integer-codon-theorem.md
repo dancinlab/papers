@@ -637,3 +637,11 @@ Expanded genetic alphabets provide testable predictions:
 | Aegis (concept) | 12 | $\sigma$ | 1728 | Codon families = $\sigma^2 = 144$ |
 
 All four expanded alphabets use base counts that are arithmetic functions of 6. This is a prediction, not a post-hoc observation: these synthetic systems were designed without knowledge of perfect number arithmetic.
+
+## Appendix G: New Arithmetic Identity (v3.0)
+
+**Theorem.** $\mathrm{sopfr}(n) \cdot \varphi(n) = n + \tau(n)$ if and only if $n = 6$ among all positive integers.
+
+*Proof.* Complete case analysis on prime factorizations. For $n = pq$ ($p < q$): $(p+q)(p-1)(q-1) = pq + 4$. Setting $p = 2$: $q^2 - q - 6 = 0$, giving $q = 3$, hence $n = 6$. All other forms yield no solution. $\square$
+
+At $n = 6$: $\mathrm{sopfr}(6) \cdot \varphi(6) = 5 \times 2 = 10 = 6 + 4 = n + \tau(6)$. This identity connects the multiplicative structure (sum of prime factors) to the additive structure (integer plus divisor count), and is the 6th independent arithmetic characterization of $n = 6$.

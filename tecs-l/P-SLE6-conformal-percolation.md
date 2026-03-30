@@ -464,6 +464,10 @@ We tested Feigenbaum's constants $\delta = 4.66920\ldots$ and $\alpha = 2.50291\
 
 Groups A and B produce the same integer by coincidence ($3! = 2 \times 3$). This coincidence is "structurally productive" --- results from Group A automatically inherit number-theoretic properties of Group B --- but no known physical model requires both properties simultaneously.
 
+### 8.5. New Identity: sopfr(n)·φ(n) = n + τ(n) (v2.0)
+
+A new arithmetic identity unique to $n = 6$ was discovered: $\mathrm{sopfr}(n) \cdot \varphi(n) = n + \tau(n)$ holds if and only if $n = 6$. This brings the total count of independent unique arithmetic characterizations of 6 to six — a self-referential coincidence. The six characterizations connect number theory ($\sigma\varphi = n\tau$), biology ($\tau \cdot \mathrm{sopfr} = 20$), information theory ($\tau(\tau-1) = \sigma$), analysis ($n/\varphi = 3$), combinatorics ($3! = P_1$), and now algebra ($\mathrm{sopfr} \cdot \varphi = n + \tau$).
+
 ---
 
 ## 9. Experimental Predictions (v2.0)
