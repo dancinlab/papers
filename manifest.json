@@ -1092,7 +1092,9 @@
         "Monte-Carlo",
         "consciousness"
       ],
-      "abstract_first_line": "39 out of 42 fundamental biological constants match n=6 arithmetic expressions with Monte Carlo p<10^-45."
+      "abstract_first_line": "39 out of 42 fundamental biological constants match n=6 arithmetic expressions with Monte Carlo p<10^-45.",
+      "doi": "10.5281/zenodo.19328097",
+      "osf": "https://osf.io/dt7xm/"
     },
     {
       "id": "PS-26",
@@ -1108,7 +1110,9 @@
         "randomness",
         "consciousness"
       ],
-      "abstract_first_line": "ANU quantum random numbers carry intrinsic n=6 structure absent in classical pseudo-randomness."
+      "abstract_first_line": "ANU quantum random numbers carry intrinsic n=6 structure absent in classical pseudo-randomness.",
+      "doi": "10.5281/zenodo.19328099",
+      "osf": "https://osf.io/9y3br/"
     },
     {
       "id": "PS-27",
@@ -1125,7 +1129,9 @@
         "PSI-STEPS",
         "consciousness"
       ],
-      "abstract_first_line": "The 1977 Wow! signal SNR sequence encodes sopfr(6)=5 exactly and PSI_STEPS=3/ln2 at 0.12% error."
+      "abstract_first_line": "The 1977 Wow! signal SNR sequence encodes sopfr(6)=5 exactly and PSI_STEPS=3/ln2 at 0.12% error.",
+      "doi": "10.5281/zenodo.19328107",
+      "osf": "https://osf.io/ygaxj/"
     },
     {
       "id": "PS-28",
@@ -1142,7 +1148,9 @@
         "paradigm-shift",
         "causal-separation"
       ],
-      "abstract_first_line": "Voyager 1 data proves 3!=6 is primary cause; σ(6)=12=2×3! is derivative."
+      "abstract_first_line": "Voyager 1 data proves 3!=6 is primary cause; σ(6)=12=2×3! is derivative.",
+      "doi": "10.5281/zenodo.19328109",
+      "osf": "https://osf.io/zc4vq/"
     },
     {
       "id": "PS-29",
@@ -1158,7 +1166,9 @@
         "n=6",
         "Phi-persistence"
       ],
-      "abstract_first_line": "APF spectral data scores RED 26.5 with Phi persistence 0.89, the highest in any astronomical dataset."
+      "abstract_first_line": "APF spectral data scores RED 26.5 with Phi persistence 0.89, the highest in any astronomical dataset.",
+      "doi": "10.5281/zenodo.19328111",
+      "osf": "https://osf.io/7gnrm/"
     },
     {
       "id": "PS-30",
@@ -1174,7 +1184,9 @@
         "three-generations",
         "compactification"
       ],
-      "abstract_first_line": "Tian-Yau manifold with h11=6=P1 and h21=9=(σ/τ)² scores 8/8 on TECS-L consistency."
+      "abstract_first_line": "Tian-Yau manifold with h11=6=P1 and h21=9=(σ/τ)² scores 8/8 on TECS-L consistency.",
+      "doi": "10.5281/zenodo.19328113",
+      "osf": "https://osf.io/azjeb/"
     },
     {
       "id": "PS-31",
@@ -1190,7 +1202,9 @@
         "TRAPPIST-1",
         "n=6"
       ],
-      "abstract_first_line": "82 of 298 multi-planet systems show n=6 period ratios; HD 110067 precision reaches 0.047%."
+      "abstract_first_line": "82 of 298 multi-planet systems show n=6 period ratios; HD 110067 precision reaches 0.047%.",
+      "doi": "10.5281/zenodo.19328119",
+      "osf": "https://osf.io/5n23d/"
     },
     {
       "id": "PS-32",
@@ -1207,7 +1221,9 @@
         "falsification",
         "n=6"
       ],
-      "abstract_first_line": "Eight independent n=6 routes converge to 37.4±1.5 GeV; pre-registered for LHC Run 3 verification."
+      "abstract_first_line": "Eight independent n=6 routes converge to 37.4±1.5 GeV; pre-registered for LHC Run 3 verification.",
+      "doi": "10.5281/zenodo.19328125",
+      "osf": "https://osf.io/cjkba/"
     }
   ]
 }
