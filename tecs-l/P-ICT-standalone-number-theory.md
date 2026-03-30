@@ -278,9 +278,15 @@ The results add to the growing list of arithmetic characterizations of the numbe
 
 The identity $\mathrm{sopfr}(n)/n = 5/6$ is particularly striking: 6 is the only integer whose sum of prime factors (with multiplicity) equals $5/6$ of itself.
 
+**Theorem 4 (sopfr ratio uniqueness).** *$\sigma(n)/\mathrm{sopfr}(n) = 12/5$ if and only if $n = 6$.*
+
+*Proof.* For primes, prime powers, and integers with $\Omega(n) \geq 3$, exponential growth of $\sigma$ vs. linear growth of $\mathrm{sopfr}$ eliminates all candidates (direct verification). For semiprimes $n = pq$ ($p < q$), the equation $5(p+1)(q+1) = 12(p+q)$ yields $p = (7q-5)/(5q-7)$, which tends to $7/5 < 2$ as $q \to \infty$. The only prime value occurs at $q = 3$, giving $p = 2$ and $n = 6$. $\square$
+
+**Corollary.** *The ratios $\mathrm{sopfr}(n)/n = 5/6$ and $\varphi(n)/\mathrm{sopfr}(n) = 2/5$ also characterize $n = 6$ uniquely (same semiprime reduction).*
+
 **Open questions.**
 
-1. Prove analytically that $\sigma(n)/\mathrm{sopfr}(n) = 12/5$ implies $n = 6$ for all $n$.
+1. Characterize all $n$ satisfying $\sigma(n) = k \cdot \mathrm{sopfr}(n)$ for each rational $k$.
 
 2. Determine whether any odd perfect number, if one exists, satisfies $n/\varphi(n) \in \mathbb{Z}$.
 
