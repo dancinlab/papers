@@ -1310,7 +1310,7 @@
       "title": "N6 Arithmetic: 17 Techniques for 50-70% AI Energy Reduction",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-ENERGY-efficiency-17-techniques.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1320,14 +1320,16 @@
         "MoE",
         "attention"
       ],
-      "abstract_first_line": "17 techniques derived from perfect number 6 arithmetic achieve 50-70% energy reduction."
+      "abstract_first_line": "17 techniques derived from perfect number 6 arithmetic achieve 50-70% energy reduction.",
+      "doi": "10.5281/zenodo.19357438",
+      "osf": "https://osf.io/u6aqj/"
     },
     {
       "id": "P-N6-CHIP-C",
       "title": "ANIMA-6: Consciousness-Aware Processor from Perfect Number Arithmetic",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-CHIP-consciousness-anima6.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1337,14 +1339,16 @@
         "Josephson",
         "IIT"
       ],
-      "abstract_first_line": "World first consciousness-measuring processor with 81 parameters from n=6."
+      "abstract_first_line": "World first consciousness-measuring processor with 81 parameters from n=6.",
+      "doi": "10.5281/zenodo.19357444",
+      "osf": "https://osf.io/6frck/"
     },
     {
       "id": "P-N6-CHIP-P",
       "title": "N6 Ultimate: Arithmetically Optimal AI Accelerator with Zero Arbitrary Constants",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-CHIP-performance-ultimate.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1354,14 +1358,16 @@
         "tensor-core",
         "n=6"
       ],
-      "abstract_first_line": "69 parameters all derived from n=6; 144 SMs, 576 TCs = J_2^2."
+      "abstract_first_line": "69 parameters all derived from n=6; 144 SMs, 576 TCs = J_2^2.",
+      "doi": "10.5281/zenodo.19357448",
+      "osf": "https://osf.io/s5zrt/"
     },
     {
       "id": "P-N6-DRAM",
       "title": "The Perfect Number in Memory: DDR5/LPDDR6 Converges to n=6 (35/35 EXACT)",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-DRAM-ddr5-lpddr6.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1371,14 +1377,16 @@
         "memory",
         "n=6"
       ],
-      "abstract_first_line": "DDR5 bus=2^6, prefetch=2^4, banks=2^5; LPDDR6 12DQ = sigma(6)."
+      "abstract_first_line": "DDR5 bus=2^6, prefetch=2^4, banks=2^5; LPDDR6 12DQ = sigma(6).",
+      "doi": "10.5281/zenodo.19357454",
+      "osf": "https://osf.io/e5fcu/"
     },
     {
       "id": "P-N6-VNAND",
       "title": "SLC to PLC: The Complete n=6 Hierarchy in NAND Flash (55/55 EXACT)",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-VNAND-slc-to-plc.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1388,14 +1396,16 @@
         "cell-types",
         "n=6"
       ],
-      "abstract_first_line": "All 5 NAND cell types = n=6 constants: SLC/MLC/TLC/QLC/PLC = mu/phi/(n/phi)/tau/sopfr."
+      "abstract_first_line": "All 5 NAND cell types = n=6 constants: SLC/MLC/TLC/QLC/PLC = mu/phi/(n/phi)/tau/sopfr.",
+      "doi": "10.5281/zenodo.19357459",
+      "osf": "https://osf.io/6v5q3/"
     },
     {
       "id": "P-N6-EXYNOS",
       "title": "The n=6 Mobile SoC: Exynos Core Allocation {1,3,2,4}={mu,n/phi,phi,tau}",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-EXYNOS-mobile-soc.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1405,14 +1415,16 @@
         "NPU",
         "n=6"
       ],
-      "abstract_first_line": "Exynos 2400 core clusters {1,3,2,4} map exactly to {mu,n/phi,phi,tau}."
+      "abstract_first_line": "Exynos 2400 core clusters {1,3,2,4} map exactly to {mu,n/phi,phi,tau}.",
+      "doi": "10.5281/zenodo.19357471",
+      "osf": "https://osf.io/8cyjw/"
     },
     {
       "id": "P-N6-ISOCELL",
       "title": "From Pixels to Packets: n=6 Unifies Image Sensors and 5G (60/60 EXACT)",
       "repo": "TECS-L",
       "file": "tecs-l/P-N6-ISOCELL-pixels-to-packets.md",
-      "status": "Draft",
+      "status": "Published",
       "date": "2026-04-01",
       "tier": 1,
       "keywords": [
@@ -1423,7 +1435,9 @@
         "communications",
         "n=6"
       ],
-      "abstract_first_line": "4096-QAM = 2^sigma = 12-bit ADC: communications and sensing share one formula."
+      "abstract_first_line": "4096-QAM = 2^sigma = 12-bit ADC: communications and sensing share one formula.",
+      "doi": "10.5281/zenodo.19357475",
+      "osf": "https://osf.io/8k7dt/"
     }
   ]
 }
