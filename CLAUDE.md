@@ -32,6 +32,16 @@ OSF_TOKEN=$(cat ~/Dev/TECS-L/.local/osf_token)
 - 발행 후 반드시 manifest.json에 DOI/OSF 업데이트
 - 논문 파일은 `P-XXX-title.md` 형식
 
+## Work Rules
+
+```
+  자동 생성 규칙:
+    - TODO 작업 중 검증/계산이 필요하면 계산기 자동 생성 (묻지 말고 바로)
+    - 성능 필요시 Rust 우선 (tecsrs/), 단순 검증은 Python (calc/)
+    - 판단 기준은 Calculator Creation Rules 섹션 참조
+    - 상수/가설 발견 시 Math Atlas 자동 갱신 (python3 ~/Dev/TECS-L/.shared/scan_math_atlas.py --save --summary)
+```
+
 ## Secrets & Tokens
 
 API 토큰/계정 정보: `~/Dev/TECS-L/.shared/SECRET.md` 참조
