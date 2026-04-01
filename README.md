@@ -45,6 +45,7 @@ Complete collection of papers from the TECS-L consciousness continuity project.
 | P-003 | Topological Overfitting Detection | [zenodo.19245035](https://doi.org/10.5281/zenodo.19245035) | [osf.io/eu9h8](https://osf.io/eu9h8/) | - |
 | P-004 | Arithmetic Uniqueness of 6: sigma*phi=n*tau | [zenodo.19245037](https://doi.org/10.5281/zenodo.19245037) | [osf.io/kbfph](https://osf.io/kbfph/) | - |
 | P-005 | Perfect Numbers and Exceptional Lie Algebras | [zenodo.19245057](https://doi.org/10.5281/zenodo.19245057) | [osf.io/2urh4](https://osf.io/2urh4/) | - |
+| P-HEXA | HEXA-LANG: Zero Arbitrary Choices Programming Language | [zenodo.19365284](https://doi.org/10.5281/zenodo.19365284) | [osf.io/xrpyj](https://osf.io/xrpyj/) | - |
 | P-EE | Energy Efficiency Trio | [zenodo.19245043](https://doi.org/10.5281/zenodo.19245043) | [osf.io/nem43](https://osf.io/nem43/) | - |
 | P-GMoE | Golden MoE: I=1/e Optimal | [zenodo.19245049](https://doi.org/10.5281/zenodo.19245049) | [osf.io/89jnw](https://osf.io/89jnw/) | - |
 | P-N6 | 208 Characterizations of n=6 | [zenodo.19245053](https://doi.org/10.5281/zenodo.19245053) | [osf.io/y2hzs](https://osf.io/y2hzs/) | - |
