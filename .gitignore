@@ -7,3 +7,4 @@ __pycache__/
 calc
 # TECS-L .shared symlink
 .shared
+tecsrs
