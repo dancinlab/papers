@@ -1,0 +1,134 @@
+# ============================================================
+# papers CI — markdown & manifest validation
+# ============================================================
+# CDO Troubleshooting:
+#   Issue: CI created 2026-04-03
+#   Scope: Lightweight checks for a documentation-only repo
+#   Rule: manifest.json must have _meta + papers array
+#   Rule: Paper directories (tecs-l, anima, sedi, brainwire) must exist
+# ============================================================
+
+name: papers-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ----------------------------------------------------------
+  # 1. Verify paper directories exist and count papers
+  # ----------------------------------------------------------
+  markdown-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify paper directories and count files
+        run: |
+          echo "=== Paper Directory Check ==="
+          status=0
+          for dir in tecs-l anima sedi brainwire; do
+            if [ -d "$dir" ]; then
+              count=$(find "$dir" -maxdepth 2 -name '*.md' | wc -l)
+              echo "  $dir/ : ${count} markdown files"
+            else
+              echo "  ERROR: $dir/ directory missing!"
+              status=1
+            fi
+          done
+          echo ""
+          total=$(find tecs-l anima sedi brainwire -maxdepth 2 -name '*.md' 2>/dev/null | wc -l)
+          echo "Total papers (md): ${total}"
+          exit $status
+
+  # ----------------------------------------------------------
+  # 2. Validate manifest.json is parseable and report stats
+  # ----------------------------------------------------------
+  manifest-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate manifest.json
+        run: |
+          echo "=== Manifest Validation ==="
+          if [ ! -f manifest.json ]; then
+            echo "ERROR: manifest.json not found!"
+            exit 1
+          fi
+
+          # Parse check
+          python3 -c "
+          import json, sys
+          with open('manifest.json') as f:
+              data = json.load(f)
+
+          # Basic structure checks
+          assert 'papers' in data, 'Missing papers array'
+          assert isinstance(data['papers'], list), 'papers must be an array'
+
+          count = len(data['papers'])
+          print(f'  Entries: {count}')
+
+          # Count by status
+          statuses = {}
+          for p in data['papers']:
+              s = p.get('status', 'Unknown')
+              statuses[s] = statuses.get(s, 0) + 1
+          for s, c in sorted(statuses.items()):
+              print(f'  {s}: {c}')
+
+          # Count by repo
+          repos = {}
+          for p in data['papers']:
+              r = p.get('repo', 'Unknown')
+              repos[r] = repos.get(r, 0) + 1
+          print()
+          for r, c in sorted(repos.items()):
+              print(f'  [{r}] {c} papers')
+
+          print(f'\nmanifest.json OK ({count} entries)')
+          "
+
+  # ----------------------------------------------------------
+  # 3. CDO validation — _meta block in JSON files
+  # ----------------------------------------------------------
+  cdo-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CDO JSON validation
+        run: |
+          echo "=== CDO _meta Validation ==="
+          python3 -c "
+          import json, glob, sys
+
+          json_files = glob.glob('**/*.json', recursive=True)
+          errors = 0
+          checked = 0
+
+          for path in sorted(json_files):
+              try:
+                  with open(path) as f:
+                      data = json.load(f)
+              except json.JSONDecodeError as e:
+                  print(f'  FAIL  {path}: invalid JSON — {e}')
+                  errors += 1
+                  continue
+
+              if not isinstance(data, dict):
+                  continue  # skip non-object JSON (arrays etc.)
+
+              checked += 1
+              if '_meta' not in data:
+                  print(f'  WARN  {path}: missing _meta block (CDO required)')
+              else:
+                  print(f'  OK    {path}')
+
+          print(f'\nChecked {checked} JSON file(s), {errors} parse error(s)')
+          if errors > 0:
+              sys.exit(1)
+          "
