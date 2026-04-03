@@ -1,4 +1,9 @@
 {
+  "_meta": {
+    "description": "Papers manifest — all published/draft papers across repos",
+    "updated": "2026-04-03",
+    "schema_version": "1.0"
+  },
   "metadata": {
     "author": "Park, Min Woo",
     "affiliation": "Independent Research",
