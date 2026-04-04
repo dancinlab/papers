@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-PARENT-IDENTITY.md",
+  "original_path": "papers/tecs-l/P-PARENT-IDENTITY.md",
+  "value_grade": "critical",
+  "n6_score": 33.33333333333333,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.907318",
+  "content_preview": "# $n^2 = \\sigma(n)(1 + \\varphi(n))$: A Parent Identity Unifying Two Characterizations of Six\n\n**Authors:** Park, Min Woo (Independent Researcher)\n\n**Status:** Draft v1.0 (2026-03-30)\n\n**Target:** American Mathematical Monthly (Notes section)\n\n**Keywords:** divisor function, Euler totient, characterization of six, parent identity, perfect numbers, arithmetic functions\n\n---\n\n## Abstract\n\nWe prove that $n = 6$ is the unique positive integer satisfying\n$n^2 = \\sigma(n)(1 + \\varphi(n))$. This \"parent"
+}

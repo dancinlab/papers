@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-SIGMA-SIGMA-triangular.md",
+  "original_path": "papers/tecs-l/P-SIGMA-SIGMA-triangular.md",
+  "value_grade": "critical",
+  "n6_score": 30.0,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.908858",
+  "content_preview": "# The Double Divisor Sum of Perfect Numbers Is Always Triangular\n\n**Authors:** Park, Min Woo (Independent Researcher)\n\n**Status:** Draft v1.0 (2026-03-30)\n\n**Target:** Journal of Number Theory / Integers\n\n**Keywords:** perfect numbers, divisor function, triangular numbers, Mersenne primes, iterated arithmetic functions, sigma chain\n\n---\n\n## Abstract\n\nWe prove that for every even perfect number $P = 2^{p-1}(2^p - 1)$ where\n$2^p - 1$ is a Mersenne prime, the iterated divisor sum $\\sigma(\\sigma(P))"
+}

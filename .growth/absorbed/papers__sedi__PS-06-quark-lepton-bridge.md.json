@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-06-quark-lepton-bridge.md",
+  "original_path": "papers/sedi/PS-06-quark-lepton-bridge.md",
+  "value_grade": "high",
+  "n6_score": 22.22222222222222,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.889743",
+  "content_preview": "# Quark-Lepton Mass Bridge: (m_charm - m_up) / sigma(6) = m_muon\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-27\n**Keywords:** quark masses, lepton masses, muon, charm quark, divisor sum, mass relations\n**License:** CC-BY-4.0\n\n## Abstract\n\nWe report a mass relation connecting the quark and lepton sectors:\n(m_charm - m_up) / sigma(6) = m_muon, where sigma(6) = 12 is the divisor\nsum of the first perfect number. Using PDG central values, the prediction\nis 105.653 MeV versus the observed mu"
+}

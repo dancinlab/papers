@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-16-dark-matter-prediction.md",
+  "original_path": "papers/sedi/PS-16-dark-matter-prediction.md",
+  "value_grade": "high",
+  "n6_score": 9.090909090909092,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.892942",
+  "content_preview": "# sqrt(7) Convergence Gap as Dark Matter Mass Prediction: 50.6 GeV\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-27\n**Keywords:** dark matter, WIMP, mass prediction, convergence gap, sqrt(7), XENONnT, LZ\n**License:** CC-BY-4.0\n\n## Abstract\n\nIn the n=6 convergence map, all constants associated with divisors of 6\nand their simple combinations show nonzero convergence. We identify sqrt(7)\nas the simplest algebraic constant with exactly zero convergence -- a\n\"convergence gap.\" Since 7 is the"
+}

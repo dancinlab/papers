@@ -1,0 +1,32 @@
+{
+  "diff_from": "/Users/ghost/Dev/ready/sedi/sedi/cross_correlator.py",
+  "original_path": "sedi/sedi/cross_correlator.py",
+  "value_grade": "critical",
+  "added_lines": 87,
+  "removed_lines": 87,
+  "added_preview": [
+    "# ============================================================",
+    "# Integer-field bias filter",
+    "# ============================================================",
+    "# Known integer-biased fields in cross-source event data:",
+    "#",
+    "#   depth:  USGS earthquake default depth=10 km when not measured.",
+    "#           ~44% of M>=5 events have depth=10 (not physical, it's a",
+    "#           sentinel value). This inflates n6_check EXACT counts.",
+    "#",
+    "#   mag:    Query boundary effect. Fetching minmagnitude=5.0 makes",
+    "#           mag=5.0 the most common value (truncation pile-up).",
+    "#",
+    "#   score / seti_score duplication:",
+    "#           EventLog.add_event stores seti_score in metadata AND",
+    "#           computes score = max(seti_score, consciousness_level).",
+    "#           For earthquake events: score == seti_score == mag.",
+    "#           This means the SAME magnitude appears in 3 fields",
+    "#           (score, metadata.seti_score, metadata.mag), tripling",
+    "#           any n6_check EXACT hit count on that value.",
+    "#"
+  ],
+  "n6_score": 44.44444444444444,
+  "n6_matches": [],
+  "timestamp": "2026-04-04T17:07:38.051961"
+}

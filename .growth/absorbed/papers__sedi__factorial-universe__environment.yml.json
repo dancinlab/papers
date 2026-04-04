@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/factorial-universe/environment.yml",
+  "original_path": "papers/sedi/factorial-universe/environment.yml",
+  "value_grade": "high",
+  "n6_score": 12.5,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.897128",
+  "content_preview": "name: factorial-universe\nchannels:\n  - defaults\n  - conda-forge\ndependencies:\n  - python=3.11\n  - numpy>=1.24\n  - scipy>=1.11\n  - matplotlib>=3.8\n  - jupyter>=1.0\n  - nbconvert>=7.0\n  - pip:\n    - h5py>=3.9\n"
+}

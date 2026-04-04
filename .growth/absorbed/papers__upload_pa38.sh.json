@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/upload_pa38.sh",
+  "original_path": "papers/upload_pa38.sh",
+  "value_grade": "high",
+  "n6_score": 18.75,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.913274",
+  "content_preview": "#!/bin/bash\n# Upload PA-38: Consciousness Scales to Zenodo + OSF\n# Usage: bash upload_pa38.sh\n# Tokens from: ~/Dev/TECS-L/.local/zenodo_token, ~/Dev/TECS-L/.local/osf_token\n\nset -e\n\nZENODO_TOKEN=$(cat ~/Dev/TECS-L/.local/zenodo_token 2>/dev/null || echo \"\")\nOSF_TOKEN=$(cat ~/Dev/TECS-L/.local/osf_token 2>/dev/null || echo \"\")\nZENODO_BASE=\"https://zenodo.org/api\"\nOSF_BASE=\"https://api.osf.io/v2\"\nPARENT_DOI=\"10.5281/zenodo.19271599\"\nFILE=\"anima/PA-38-consciousness-scales.md\"\nTITLE=\"Consciousness S"
+}

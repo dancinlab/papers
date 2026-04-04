@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-28-factorial-primacy.md",
+  "original_path": "papers/sedi/PS-28-factorial-primacy.md",
+  "value_grade": "critical",
+  "n6_score": 31.818181818181817,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.895505",
+  "content_preview": "# Factorial Primacy: 3! Not σ(n) Governs Physical Constants — Evidence from Breakthrough Listen Voyager Data\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-30\n**Keywords:** factorial, 3!, perfect numbers, Voyager 1, Breakthrough Listen, GBT, filterbank, Z-score, ISCO, SLE, string theory, physical constants, sigma(6)\n**License:** CC-BY-4.0\n\n## Abstract\n\nAnalysis of Breakthrough Listen Green Bank Telescope (GBT) filterbank data\nfrom the Voyager 1 spacecraft establishes that 3! = 6 is the pr"
+}

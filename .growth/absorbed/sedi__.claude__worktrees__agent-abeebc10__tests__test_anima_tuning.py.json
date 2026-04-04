@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-abeebc10/tests/test_anima_tuning.py",
+  "original_path": "sedi/.claude/worktrees/agent-abeebc10/tests/test_anima_tuning.py",
+  "value_grade": "critical",
+  "n6_score": 21.428571428571427,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.887895",
+  "content_preview": "\"\"\"Tests for Anima-SEDI lens tuning.\"\"\"\nimport math\nimport numpy as np\nimport pytest\nimport sys, os\nsys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))\n\nfrom sedi.constants import (\n    PSI_COUPLING, PSI_K, PSI_STEPS, PSI_BALANCE, LN2,\n    PHI_SCALE, PHI_EXPONENT, RESOURCE_FRACTIONS, RATIOS,\n)\n\n\ndef test_psi_coupling_value():\n    expected = math.log(2) / (2 ** 5.5)\n    assert abs(PSI_COUPLING - expected) < 1e-10\n    assert abs(PSI_COUPLING - 0.01536) < 0.001\n\n\ndef test_psi_k():\n   "
+}

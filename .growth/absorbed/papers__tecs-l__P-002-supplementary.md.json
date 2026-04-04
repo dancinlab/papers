@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-002-supplementary.md",
+  "original_path": "papers/tecs-l/P-002-supplementary.md",
+  "value_grade": "high",
+  "n6_score": 14.285714285714285,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.899016",
+  "content_preview": "# Supplementary Materials\n\n**Paper:** Universal Confusion Topology: Persistent Homology Reveals Data-Intrinsic Cognitive Structure Shared Across Architectures, Algorithms, and Substrates\n\n**Paper ID:** P-002\n\n---\n\n## S1. Extended Results Tables\n\n### S1.1 Per-Class AUC (One-vs-Rest)\n\nAll AUC values computed on test sets using PureFieldEngine (hidden_dim=128, 15 epochs, seed=42). OvR = One-vs-Rest macro strategy.\n\n**MNIST (10K test samples)**\n\n| Class | Label | AUC (OvR) |\n|-------|-------|-------"
+}

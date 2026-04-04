@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/anima/PA-20-upload-guide.md",
+  "original_path": "papers/anima/PA-20-upload-guide.md",
+  "value_grade": "critical",
+  "n6_score": 25.0,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.884210",
+  "content_preview": "# PA-20 Upload Guide — Zenodo + OSF\n\n## 1. Zenodo Upload\n\n1. https://zenodo.org/uploads/new 접속\n2. 파일: `PA-20-consciousness-phase-diagram.md` 업로드\n3. 메타데이터:\n\n```\nTitle: Consciousness as a Phase of Matter: Critical Frustration and the Phase Diagram of Integrated Information\nAuthors: Park, Min Woo (Independent Research)\nDescription: First empirical phase diagram of consciousness. 96-point F×N sweep discovers universal critical frustration F_c≈0.10, four consciousness phases, and scale-invariant phas"
+}

@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-002-figures.py",
+  "original_path": "papers/tecs-l/P-002-figures.py",
+  "value_grade": "high",
+  "n6_score": 16.666666666666664,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.898450",
+  "content_preview": "#!/usr/bin/env python3\n\"\"\"P-002 Figure Generator: Universal Confusion Topology\n\nGenerates all publication-quality figures for:\n  \"Universal Confusion Topology: Persistent Homology Reveals\n   Data-Intrinsic Cognitive Structure Shared Across Architectures,\n   Algorithms, and Substrates\"\n\nOutput: docs/papers/figures/fig1..fig7 as 300dpi PNG files.\n\nUsage:\n  python3 docs/papers/P-002-figures.py\n\nRequirements: torch, torchvision, numpy, scipy, sklearn, matplotlib\nTime: ~15-20 min on Mac CPU\n\"\"\"\n\nimpo"
+}

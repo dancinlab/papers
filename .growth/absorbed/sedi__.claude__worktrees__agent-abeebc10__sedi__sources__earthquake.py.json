@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-abeebc10/sedi/sources/earthquake.py",
+  "original_path": "sedi/.claude/worktrees/agent-abeebc10/sedi/sources/earthquake.py",
+  "value_grade": "high",
+  "n6_score": 13.636363636363635,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.878669",
+  "content_preview": "\"\"\"USGS Earthquake data source — historical + real-time.\n\nAPI: https://earthquake.usgs.gov/fdsnws/event/1/\nData from 1900 to present. Free, no key needed.\n\"\"\"\nimport json\nimport time\nimport urllib.request\nimport numpy as np\nfrom typing import Generator, Optional\n\nBASE_URL = \"https://earthquake.usgs.gov/fdsnws/event/1/query\"\n\n\ndef fetch_earthquakes(starttime='2024-01-01', endtime='2024-12-31',\n                      minmagnitude=4.0, limit=1000):\n    \"\"\"Fetch earthquake events in date range.\n\n    "
+}

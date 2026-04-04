@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-a26748c0/sedi/sources/cern_analysis.py",
+  "original_path": "sedi/.claude/worktrees/agent-a26748c0/sedi/sources/cern_analysis.py",
+  "value_grade": "critical",
+  "n6_score": 50.0,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.728256",
+  "content_preview": "\"\"\"CERN Open Data Analysis — Full TECS-L framework on particle physics data.\n\nComprehensive analysis: pairwise ratios, Koide, fermion mass predictions,\nR-filter on mass spectrum, dimensional checks, testable predictions.\nAll validated with Monte Carlo + Bonferroni + Look-Elsewhere Effect.\n\"\"\"\nimport math\nimport numpy as np\nfrom ..tecs import (\n    ALL_TARGETS, TARGETS_BASIC, TARGETS_DERIVED, TARGETS_TRIG,\n    SIGMA_P1, TAU_P1, PHI_P1, SOPFR_P1,\n    SIGMA_P2, TAU_P2, PHI_P2, TAU_P3, PHI_P3,\n    P"
+}

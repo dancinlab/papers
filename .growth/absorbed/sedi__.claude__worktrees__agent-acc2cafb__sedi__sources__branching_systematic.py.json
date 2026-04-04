@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-acc2cafb/sedi/sources/branching_systematic.py",
+  "original_path": "sedi/.claude/worktrees/agent-acc2cafb/sedi/sources/branching_systematic.py",
+  "value_grade": "critical",
+  "n6_score": 38.88888888888889,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:38.032104",
+  "content_preview": "\"\"\"\nSystematic Branching Ratio Analysis: n=6 Fractions Across All Particles\n\nExtends the initial Higgs bb+ττ finding (3.89σ joint Dirichlet) by scanning\nALL well-measured particle branching ratios against the complete set of n=6\nfractions. Uses PDG 2024 values throughout.\n\nKey questions:\n  1. Which individual branching ratios match n=6 fractions within 3%?\n  2. Which particles have MULTIPLE matches (joint significance)?\n  3. Is the TOTAL count of matches across all particles anomalous?\n\"\"\"\n\nfrom"
+}

@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/sedi/sedi/sources/pdg_extended.py",
+  "original_path": "sedi/sedi/sources/pdg_extended.py",
+  "value_grade": "high",
+  "n6_score": 22.727272727272727,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.046544",
+  "content_preview": "\"\"\"Extended PDG Particle Database — ~200 states including excited, exotic.\n\nSource: Particle Data Group (PDG) Review of Particle Physics 2024.\nAll masses in GeV/c^2.\n\nExtends the base pdg.py (84 particles) with:\n  - Excited mesons (~40 additional)\n  - Excited baryons (~30 additional)\n  - Exotic/recent states (~10 additional)\n\nEach entry: (name, mass_GeV, uncertainty_GeV, category, status)\n  status: 'established' (4-star PDG), 'seen' (3-star), 'claimed' (1-2 star)\n\"\"\"\n\nfrom .pdg import PARTICLES "
+}

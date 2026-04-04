@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-30-calabi-yau-perfect-numbers.md",
+  "original_path": "papers/sedi/PS-30-calabi-yau-perfect-numbers.md",
+  "value_grade": "high",
+  "n6_score": 16.666666666666664,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.896383",
+  "content_preview": "# Perfect Number Topology in String Compactification: h₁₁ = 6 and the Three-Generation Problem\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-30\n**Keywords:** Calabi-Yau manifolds, Hodge numbers, perfect numbers, string compactification, three-generation problem, n=6 universality, Tian-Yau manifold\n**License:** CC-BY-4.0\n\n## Abstract\n\nThe Tian-Yau Calabi-Yau manifold, the first compactification to produce exactly\nthree generations of quarks and leptons in heterotic string theory, has Hodg"
+}

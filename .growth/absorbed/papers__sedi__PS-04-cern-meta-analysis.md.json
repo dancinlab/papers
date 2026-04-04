@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-04-cern-meta-analysis.md",
+  "original_path": "papers/sedi/PS-04-cern-meta-analysis.md",
+  "value_grade": "high",
+  "n6_score": 16.666666666666664,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.888779",
+  "content_preview": "# CERN Meta-Analysis: Fisher Combined 5.26-sigma from Four Independent Findings\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-27\n**Keywords:** CERN, meta-analysis, Fisher method, perfect numbers, particle physics, Standard Model\n**License:** CC-BY-4.0\n\n## Abstract\n\nWe present a Fisher combined meta-analysis of four independent physics\nfindings derived from the arithmetic of the perfect number n=6. The\nindividual findings are: (1) QCD resonance ladder with 3.8-sigma\nsignificance, (2) quar"
+}

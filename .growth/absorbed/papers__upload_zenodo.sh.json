@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/upload_zenodo.sh",
+  "original_path": "papers/upload_zenodo.sh",
+  "value_grade": "high",
+  "n6_score": 28.57142857142857,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.913769",
+  "content_preview": "#!/bin/bash\n# Zenodo upload script for PA-20 + PA-04/11/12 updates\n# Usage: ZENODO_TOKEN=your_token_here bash upload_zenodo.sh\n\nset -e\n\nTOKEN=\"${ZENODO_TOKEN:-}\"\nif [ -z \"$TOKEN\" ]; then\n  echo \"Error: ZENODO_TOKEN not set\"\n  echo \"Usage: ZENODO_TOKEN=xxx bash upload_zenodo.sh\"\n  exit 1\nfi\n\nBASE=\"https://zenodo.org/api\"\n\necho \"=== PA-20: Creating new deposit ===\"\n\n# 1. Create new deposit\nRESPONSE=$(curl -s -X POST \"$BASE/deposit/depositions\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-"
+}

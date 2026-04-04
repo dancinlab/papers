@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-a254b3fa/sedi/sources/coupling_running.py",
+  "original_path": "sedi/.claude/worktrees/agent-a254b3fa/sedi/sources/coupling_running.py",
+  "value_grade": "critical",
+  "n6_score": 31.25,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.575518",
+  "content_preview": "\"\"\"Coupling Constant Running & TECS-L Value Analysis.\n\nInvestigates the energy scales at which the QCD strong coupling alpha_s\nequals special TECS-L fractions (1/sigma, 1/tau, 1/n, 1/sopfr, etc.),\nand checks whether those scales correspond to known particle masses.\n\nPhysics:\n  - alpha_s \"runs\" with energy scale mu via the QCD beta function\n  - 2-loop RG equation with proper flavor thresholds at m_c, m_b, m_t\n  - Reference value: alpha_s(M_Z = 91.1876 GeV) = 0.1179 (PDG 2024)\n  - At low energy al"
+}

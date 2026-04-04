@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-15-q-exclusion-ewsb.md",
+  "original_path": "papers/sedi/PS-15-q-exclusion-ewsb.md",
+  "value_grade": "critical",
+  "n6_score": 27.77777777777778,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.892358",
+  "content_preview": "# Q-Exclusion and Electroweak Symmetry Breaking: Three Unreachable Constants, Three Massive Bosons\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-27\n**Keywords:** electroweak symmetry breaking, Q-exclusion, massive gauge bosons, sqrt(2), sqrt(3), Euler-Mascheroni\n**License:** CC-BY-4.0\n\n## Abstract\n\nWe identify three constants that are Q-unreachable in the n=6 convergence\nmap -- {sqrt(2), sqrt(3), gamma} -- and propose a correspondence with the\nthree massive gauge bosons of the electrowea"
+}

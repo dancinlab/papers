@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/sedi/sedi/sources/quantum_hall.py",
+  "original_path": "sedi/sedi/sources/quantum_hall.py",
+  "value_grade": "critical",
+  "n6_score": 45.45454545454545,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.047261",
+  "content_preview": "\"\"\"Fractional Quantum Hall Effect -- n=6 arithmetic in topological phases.\n\nThe Fractional Quantum Hall Effect (FQHE) produces quantized Hall conductance\nsigma_xy = nu * e^2/h where nu is a rational filling fraction.  The observed\nfractions follow structured sequences (Laughlin, Jain) that are NOT random\nrationals -- they are constrained by topological order.\n\nTECS-L question: do FQHE filling fractions decompose into n=6 arithmetic?\n\nKey finding: ALL principal FQHE fractions (1/3, 2/5, 3/7, 2/3,"
+}

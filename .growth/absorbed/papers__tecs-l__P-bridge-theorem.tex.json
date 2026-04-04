@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-bridge-theorem.tex",
+  "original_path": "papers/tecs-l/P-bridge-theorem.tex",
+  "value_grade": "critical",
+  "n6_score": 41.66666666666667,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.910829",
+  "content_preview": "\\documentclass[11pt,a4paper]{article}\n\\usepackage[utf8]{inputenc}\n\\usepackage[T1]{fontenc}\n\\usepackage{amsmath,amssymb,amsthm}\n\\usepackage{hyperref}\n\\usepackage{booktabs}\n\\usepackage[margin=1in]{geometry}\n\n\\newtheorem{theorem}{Theorem}\n\\newtheorem{lemma}[theorem]{Lemma}\n\\newtheorem{corollary}[theorem]{Corollary}\n\\newtheorem{definition}[theorem]{Definition}\n\n\\title{The Bridge Theorem: Two Independent Principles\\\\Determine the Golden Zone}\n\\author{Min Woo Park\\\\Independent Researcher\\\\nerve011235@"
+}

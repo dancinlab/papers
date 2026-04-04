@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-a254b3fa/sedi-core/Cargo.toml",
+  "original_path": "sedi/.claude/worktrees/agent-a254b3fa/sedi-core/Cargo.toml",
+  "value_grade": "high",
+  "n6_score": 22.22222222222222,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.586817",
+  "content_preview": "[package]\nname = \"sedi_core\"\nversion = \"0.1.0\"\nedition = \"2021\"\ndescription = \"Rust acceleration core for SEDI real-time FFT processing\"\nlicense = \"MIT\"\n\n[lib]\nname = \"sedi_core\"\ncrate-type = [\"cdylib\"]\n\n[dependencies]\npyo3 = { version = \"0.22\", features = [\"extension-module\"] }\nrustfft = \"6.2\"\nnum-complex = \"0.4\"\n\n[features]\ndefault = [\"pyo3/auto-initialize\"]\n\n[profile.release]\nopt-level = 3\nlto = true\ncodegen-units = 1\n"
+}

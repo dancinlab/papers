@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-PRECISION-CONSTANTS.md",
+  "original_path": "papers/tecs-l/P-PRECISION-CONSTANTS.md",
+  "value_grade": "high",
+  "n6_score": 13.636363636363635,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.907898",
+  "content_preview": "# Precision Fundamental Constants from the Arithmetic of Six\n\n**Authors**: TECS-L Collaboration\n\n**Date**: March 2026\n\n**Status**: FRAMEWORK -- Contains testable predictions for JUNO, LiteBIRD, DUNE, Belle II\n\n**MSC 2020**: 11A25 (Arithmetic functions), 81V22 (Unified quantum theories), 85A40 (Cosmology), 92D20 (Protein sequences, DNA sequences)\n\n---\n\n## Abstract\n\nWe show that the unique solution $n=6$ of the arithmetic balance equation $\\sigma(n)\\cdot\\varphi(n) = n\\cdot\\tau(n)$ parameterizes **"
+}

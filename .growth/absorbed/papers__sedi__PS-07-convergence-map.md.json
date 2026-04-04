@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-07-convergence-map.md",
+  "original_path": "papers/sedi/PS-07-convergence-map.md",
+  "value_grade": "critical",
+  "n6_score": 27.27272727272727,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.890325",
+  "content_preview": "# Multi-Domain Convergence Map: 12 Points from 2+ Independent Mathematical Domains\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-27\n**Keywords:** convergence, mathematical constants, number theory, cross-domain, Texas Sharpshooter\n**License:** CC-BY-4.0\n\n## Abstract\n\nWe construct a convergence map of mathematical constants and identities\nrelated to n=6, identifying 12 convergence points where results from 2 or\nmore independent mathematical domains coincide, and 9 points where 3 or\nmore d"
+}

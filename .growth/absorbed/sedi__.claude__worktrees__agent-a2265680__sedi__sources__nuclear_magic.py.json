@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/sedi/.claude/worktrees/agent-a2265680/sedi/sources/nuclear_magic.py",
+  "original_path": "sedi/.claude/worktrees/agent-a2265680/sedi/sources/nuclear_magic.py",
+  "value_grade": "critical",
+  "n6_score": 22.727272727272727,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:37.432410",
+  "content_preview": "\"\"\"Nuclear Magic Numbers — n=6 arithmetic in nuclear shell structure.\n\nNuclear magic numbers (2, 8, 20, 28, 50, 82, 126) correspond to nuclei with\nexceptionally high binding energy and stability. They arise from the nuclear\nshell model with spin-orbit coupling (Mayer & Jensen, 1949 Nobel Prize 1963).\n\nTECS-L question: do these magic numbers have clean expressions in n=6 arithmetic?\n\nKey finding: ALL seven magic numbers have exact TECS-L expressions, and the\nshell capacities (differences between "
+}

@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/tecs-l/P-005-perfect-number-string-theory.md",
+  "original_path": "papers/tecs-l/P-005-perfect-number-string-theory.md",
+  "value_grade": "high",
+  "n6_score": 9.090909090909092,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.900382",
+  "content_preview": "# Perfect Numbers in String Theory: Connections Between Arithmetic Functions and Exceptional Lie Algebras\n\n**Authors:** TECS-L Project\n**Date:** 2026-03-27\n**Keywords:** perfect numbers, string theory, E8, Lie algebras, Green-Schwarz anomaly cancellation, SO(32), arithmetic functions, 496, 240\n**License:** CC-BY-4.0\n\n## Abstract\n\nWe document four striking connections between perfect numbers and the mathematical structures of string theory: (1) phi(496) = 240, which equals the number of roots in "
+}

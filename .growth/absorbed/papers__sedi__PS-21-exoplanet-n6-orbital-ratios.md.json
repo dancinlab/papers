@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/papers/sedi/PS-21-exoplanet-n6-orbital-ratios.md",
+  "original_path": "papers/sedi/PS-21-exoplanet-n6-orbital-ratios.md",
+  "value_grade": "high",
+  "n6_score": 13.636363636363635,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.893967",
+  "content_preview": "# Orbital Period Ratios in Multi-Planet Systems and the Arithmetic of the Perfect Number n=6\n\n**Authors:** SEDI Project (TECS-L)\n**Date:** 2026-03-28\n**Keywords:** exoplanets, orbital resonances, period ratios, perfect numbers, mean-motion resonance, HD 110067, TRAPPIST-1\n**License:** CC-BY-4.0\n\n## Abstract\n\nWe scan 298 multi-planet systems from the NASA Exoplanet Archive for\npairwise orbital period ratios matching the arithmetic functions of the\nperfect number n=6. Using a 2% tolerance, 82 syst"
+}

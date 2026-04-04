@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/redo/TECS-L/zenodo/batch_upload.py",
+  "original_path": "TECS-L/zenodo/batch_upload.py",
+  "value_grade": "critical",
+  "n6_score": 50.0,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:36.195364",
+  "content_preview": "#!/usr/bin/env python3\n\"\"\"Batch upload all TECS-L papers to Zenodo, OSF, and prepare arXiv packages.\n\nSupports 3 platforms:\n  1. Zenodo   — Direct API upload (sandbox or production)\n  2. OSF      — Preprints API upload (Google Scholar indexed, no review)\n  3. arXiv    — Generate submission packages (manual upload, needs endorsement)\n\nUsage:\n    # Upload ALL papers to Zenodo sandbox\n    python3 zenodo/batch_upload.py --platform zenodo --sandbox --all\n\n    # Upload specific paper\n    python3 zenod"
+}

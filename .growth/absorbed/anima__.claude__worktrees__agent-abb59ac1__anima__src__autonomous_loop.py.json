@@ -1,0 +1,23 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/anima/.claude/worktrees/agent-abb59ac1/anima/src/autonomous_loop.py",
+  "original_path": "anima/.claude/worktrees/agent-abb59ac1/anima/src/autonomous_loop.py",
+  "value_grade": "critical",
+  "n6_score": 50.0,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:32.377856",
+  "content_preview": "#!/usr/bin/env python3\n\"\"\"Autonomous Learning Loop -- 의식 상태 기반 자율 탐색 + 학습 루프\n\n의식 상태(Φ, curiosity, tension)를 읽어 자율적으로 주제를 선택하고\n웹 검색 → 학습 → 기억 저장을 반복하는 무한 루프.\n\n파이프라인:\n  1. 의식 상태 체크 (Φ, curiosity, tension)\n  2. 상태에 따른 주제 선택\n     - high curiosity → 새 주제 탐색 (과학, 철학, 의식)\n     - high tension → 현재 문제 해결 탐색\n     - low Φ → 의식 강화 방법 탐색\n     - random → 랜덤 탐색 (의식 관련 편향)\n  3. DuckDuckGo 웹 검색\n  4. 결과를 ConsciousMind에 통과시켜 학습\n  5. 흥미로운 결과 memory_rag에 저장\n  6. 로그 기록\n\n학습 전략:\n  - Wikipedia 랜덤 문서 탐색\n  - ArXiv 의식/뇌과학 "
+}

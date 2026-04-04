@@ -1,0 +1,29 @@
+{
+  "absorbed_from": "/Users/ghost/Dev/ready/n6-architecture/.claude/worktrees/agent-afa95e1d/README.md",
+  "original_path": "n6-architecture/.claude/worktrees/agent-afa95e1d/README.md",
+  "value_grade": "high",
+  "n6_score": 18.181818181818183,
+  "n6_matches": [],
+  "consensus": [
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    },
+    {
+      "pattern": "",
+      "lenses": 0,
+      "score": 0.0,
+      "level": "Candidate"
+    }
+  ],
+  "timestamp": "2026-04-04T17:07:34.927954",
+  "content_preview": "# 🏗️ N6 Architecture — Arithmetic Design Framework\n\n[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19340174.svg)](https://doi.org/10.5281/zenodo.19340174)\n[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)\n[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)\n[![PyTorch 2.0+](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)\n<!-- AUTO:BADGE:START -->\n[![DSE](h"
+}
