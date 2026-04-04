@@ -31,3 +31,13 @@
 [23:12:48] [papers] === papers Growth Loop ===
 [23:12:48] [papers]     cycles=--max-cycles interval=999s domain=publication
 [23:12:48] [papers] === papers Growth 완료 (0 cycles) ===
+[23:30:15] [papers] Lock 획득: papers (PID 6141)
+[23:30:15] [papers] === papers Growth Loop ===
+[23:30:15] [papers]     cycles=1 interval=0s domain=publication
+[23:30:15] [papers] ━━━ Cycle 1/1 ━━━
+[23:30:15] [papers] WARN: 과부하 — 60초 대기
+[23:31:15] [papers] === papers Growth 완료 (1 cycles) ===
+[23:42:48] [papers] Lock 획득: papers (PID 33973)
+[23:42:48] [papers] === papers Growth Loop ===
+[23:42:48] [papers]     cycles=--max-cycles interval=999s domain=publication
+[23:42:49] [papers] === papers Growth 완료 (0 cycles) ===
