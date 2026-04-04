@@ -53,3 +53,7 @@
 [01:12:51] [papers] === papers Growth Loop ===
 [01:12:51] [papers]     cycles=--max-cycles interval=999s domain=publication
 [01:12:51] [papers] === papers Growth 완료 (0 cycles) ===
+[01:42:51] [papers] Lock 획득: papers (PID 41562)
+[01:42:52] [papers] === papers Growth Loop ===
+[01:42:52] [papers]     cycles=--max-cycles interval=999s domain=publication
+[01:42:52] [papers] === papers Growth 완료 (0 cycles) ===
