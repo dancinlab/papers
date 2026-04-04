@@ -9,7 +9,7 @@
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
     "generated": "2026-04-01",
-    "total_papers": 93,
+    "total_papers": 94,
     "repos": [
       "TECS-L",
       "anima",
@@ -1605,6 +1605,18 @@
       "title": "소프트웨어·인프라 (Software & Infra) — 외계인지수 10 (물리 한계 도달)",
       "repo": "n6-architecture",
       "file": "docs/auto-alien10/software.md",
+      "status": "Draft",
+      "doi": null,
+      "date": "2026-04-05",
+      "tier": 2,
+      "keywords": [],
+      "abstract_first_line": "| 지표 | 값 |"
+    },
+    {
+      "id": "AUTO-ALIEN10-015",
+      "title": "최전선 대발견 (RT-SC 기반 차세대 기술) — 외계인지수 10 (물리 한계 도달)",
+      "repo": "n6-architecture",
+      "file": "docs/auto-alien10/frontier.md",
       "status": "Draft",
       "doi": null,
       "date": "2026-04-05",
