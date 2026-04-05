@@ -57,3 +57,127 @@
 [01:42:52] [papers] === papers Growth Loop ===
 [01:42:52] [papers]     cycles=--max-cycles interval=999s domain=publication
 [01:42:52] [papers] === papers Growth 완료 (0 cycles) ===
+[02:12:53] [papers] Lock 획득: papers (PID 72031)
+[02:12:53] [papers] === papers Growth Loop ===
+[02:12:53] [papers]     cycles=--max-cycles interval=999s domain=publication
+[02:12:53] [papers] === papers Growth 완료 (0 cycles) ===
+[02:42:53] [papers] Lock 획득: papers (PID 98275)
+[02:42:53] [papers] === papers Growth Loop ===
+[02:42:54] [papers]     cycles=--max-cycles interval=999s domain=publication
+[02:42:54] [papers] === papers Growth 완료 (0 cycles) ===
+[03:12:54] [papers] Lock 획득: papers (PID 38509)
+[03:12:54] [papers] === papers Growth Loop ===
+[03:12:54] [papers]     cycles=--max-cycles interval=999s domain=publication
+[03:12:54] [papers] === papers Growth 완료 (0 cycles) ===
+[03:42:54] [papers] Lock 획득: papers (PID 82840)
+[03:42:54] [papers] === papers Growth Loop ===
+[03:42:54] [papers]     cycles=--max-cycles interval=999s domain=publication
+[03:42:54] [papers] === papers Growth 완료 (0 cycles) ===
+[04:03:47] [papers] Lock 획득: papers (PID 1091)
+[04:03:47] [papers] === papers Growth Loop ===
+[04:03:47] [papers]     cycles=--max-cycles interval=999s domain=publication
+[04:03:47] [papers] === papers Growth 완료 (0 cycles) ===
+[04:33:47] [papers] Lock 획득: papers (PID 27404)
+[04:33:47] [papers] === papers Growth Loop ===
+[04:33:47] [papers]     cycles=--max-cycles interval=999s domain=publication
+[04:33:47] [papers] === papers Growth 완료 (0 cycles) ===
+[05:03:48] [papers] Lock 획득: papers (PID 71651)
+[05:03:48] [papers] === papers Growth Loop ===
+[05:03:49] [papers]     cycles=--max-cycles interval=999s domain=publication
+[05:03:49] [papers] === papers Growth 완료 (0 cycles) ===
+[05:33:49] [papers] Lock 획득: papers (PID 11285)
+[05:33:49] [papers] === papers Growth Loop ===
+[05:33:49] [papers]     cycles=--max-cycles interval=999s domain=publication
+[05:33:49] [papers] === papers Growth 완료 (0 cycles) ===
+[06:03:49] [papers] Lock 획득: papers (PID 54687)
+[06:03:49] [papers] === papers Growth Loop ===
+[06:03:49] [papers]     cycles=--max-cycles interval=999s domain=publication
+[06:03:49] [papers] === papers Growth 완료 (0 cycles) ===
+[06:33:49] [papers] Lock 획득: papers (PID 9195)
+[06:33:49] [papers] === papers Growth Loop ===
+[06:33:49] [papers]     cycles=--max-cycles interval=999s domain=publication
+[06:33:49] [papers] === papers Growth 완료 (0 cycles) ===
+[07:03:50] [papers] Lock 획득: papers (PID 59744)
+[07:03:50] [papers] === papers Growth Loop ===
+[07:03:50] [papers]     cycles=--max-cycles interval=999s domain=publication
+[07:03:50] [papers] === papers Growth 완료 (0 cycles) ===
+[07:33:50] [papers] Lock 획득: papers (PID 94639)
+[07:33:50] [papers] === papers Growth Loop ===
+[07:33:50] [papers]     cycles=--max-cycles interval=999s domain=publication
+[07:33:50] [papers] === papers Growth 완료 (0 cycles) ===
+[08:03:52] [papers] Lock 획득: papers (PID 29965)
+[08:03:52] [papers] === papers Growth Loop ===
+[08:03:52] [papers]     cycles=--max-cycles interval=999s domain=publication
+[08:03:52] [papers] === papers Growth 완료 (0 cycles) ===
+[08:34:13] [papers] Lock 획득: papers (PID 1172)
+[08:34:13] [papers] === papers Growth Loop ===
+[08:34:13] [papers]     cycles=--max-cycles interval=999s domain=publication
+[08:34:13] [papers] === papers Growth 완료 (0 cycles) ===
+[08:50:34] [papers] Lock 획득: papers (PID 726)
+[08:50:34] [papers] === papers Growth Loop ===
+[08:50:34] [papers]     cycles=--max-cycles interval=999s domain=publication
+[08:50:34] [papers] === papers Growth 완료 (0 cycles) ===
+[09:20:34] [papers] Lock 획득: papers (PID 39077)
+[09:20:34] [papers] === papers Growth Loop ===
+[09:20:34] [papers]     cycles=--max-cycles interval=999s domain=publication
+[09:20:34] [papers] === papers Growth 완료 (0 cycles) ===
+[09:50:34] [papers] Lock 획득: papers (PID 83255)
+[09:50:34] [papers] === papers Growth Loop ===
+[09:50:34] [papers]     cycles=--max-cycles interval=999s domain=publication
+[09:50:34] [papers] === papers Growth 완료 (0 cycles) ===
+[10:20:34] [papers] Lock 획득: papers (PID 36052)
+[10:20:34] [papers] === papers Growth Loop ===
+[10:20:34] [papers]     cycles=--max-cycles interval=999s domain=publication
+[10:20:34] [papers] === papers Growth 완료 (0 cycles) ===
+[12:10:37] [papers] Lock 획득: papers (PID 73970)
+[12:10:37] [papers] === papers Growth Loop ===
+[12:10:37] [papers]     cycles=--max-cycles interval=999s domain=publication
+[12:10:37] [papers] === papers Growth 완료 (0 cycles) ===
+[13:47:19] [papers] Lock 획득: papers (PID 99621)
+[13:47:19] [papers] === papers Growth Loop ===
+[13:47:19] [papers]     cycles=--max-cycles interval=999s domain=publication
+[13:47:19] [papers] === papers Growth 완료 (0 cycles) ===
+[14:17:19] [papers] Lock 획득: papers (PID 24477)
+[14:17:19] [papers] === papers Growth Loop ===
+[14:17:19] [papers]     cycles=--max-cycles interval=999s domain=publication
+[14:17:19] [papers] === papers Growth 완료 (0 cycles) ===
+[14:55:27] [papers] Lock 획득: papers (PID 48569)
+[14:55:27] [papers] === papers Growth Loop ===
+[14:55:27] [papers]     cycles=--max-cycles interval=999s domain=publication
+[14:55:27] [papers] === papers Growth 완료 (0 cycles) ===
+[15:25:27] [papers] Lock 획득: papers (PID 73014)
+[15:25:27] [papers] === papers Growth Loop ===
+[15:25:27] [papers]     cycles=--max-cycles interval=999s domain=publication
+[15:25:27] [papers] === papers Growth 완료 (0 cycles) ===
+[15:55:28] [papers] Lock 획득: papers (PID 11977)
+[15:55:28] [papers] === papers Growth Loop ===
+[15:55:28] [papers]     cycles=--max-cycles interval=999s domain=publication
+[15:55:28] [papers] === papers Growth 완료 (0 cycles) ===
+[16:25:28] [papers] Lock 획득: papers (PID 53400)
+[16:25:28] [papers] === papers Growth Loop ===
+[16:25:28] [papers]     cycles=--max-cycles interval=999s domain=publication
+[16:25:28] [papers] === papers Growth 완료 (0 cycles) ===
+[16:55:26] [papers] Lock 획득: papers (PID 1549)
+[16:55:26] [papers] === papers Growth Loop ===
+[16:55:26] [papers]     cycles=--max-cycles interval=999s domain=publication
+[16:55:26] [papers] === papers Growth 완료 (0 cycles) ===
+[17:25:28] [papers] Lock 획득: papers (PID 44101)
+[17:25:28] [papers] === papers Growth Loop ===
+[17:25:28] [papers]     cycles=--max-cycles interval=999s domain=publication
+[17:25:28] [papers] === papers Growth 완료 (0 cycles) ===
+[17:55:28] [papers] Lock 획득: papers (PID 1610)
+[17:55:28] [papers] === papers Growth Loop ===
+[17:55:28] [papers]     cycles=--max-cycles interval=999s domain=publication
+[17:55:28] [papers] === papers Growth 완료 (0 cycles) ===
+[18:25:33] [papers] Lock 획득: papers (PID 57479)
+[18:25:35] [papers] === papers Growth Loop ===
+[18:25:36] [papers]     cycles=--max-cycles interval=999s domain=publication
+[18:25:37] [papers] === papers Growth 완료 (0 cycles) ===
+[18:55:37] [papers] Lock 획득: papers (PID 5040)
+[18:55:37] [papers] === papers Growth Loop ===
+[18:55:37] [papers]     cycles=--max-cycles interval=999s domain=publication
+[18:55:37] [papers] === papers Growth 완료 (0 cycles) ===
+[19:25:38] [papers] Lock 획득: papers (PID 55323)
+[19:25:38] [papers] === papers Growth Loop ===
+[19:25:38] [papers]     cycles=--max-cycles interval=999s domain=publication
+[19:25:38] [papers] === papers Growth 완료 (0 cycles) ===
