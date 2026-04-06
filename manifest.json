@@ -1,8 +1,9 @@
 {
   "_meta": {
     "description": "Papers manifest — all published/draft papers across repos",
-    "updated": "2026-04-03",
-    "schema_version": "1.0"
+    "updated": "2026-04-06",
+    "schema_version": "1.0",
+    "total_papers": 114
   },
   "metadata": {
     "author": "Park, Min Woo",
@@ -1683,6 +1684,171 @@
       "tier": 2,
       "keywords": [],
       "abstract_first_line": "| 지표 | 값 |"
+    },
+    {
+      "id": "N6-030",
+      "title": "Perfect Number Arithmetic in Aerospace, Aviation, and Transportation",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-aerospace-transport-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-129,130,133,196,241,270-290,342"
+    },
+    {
+      "id": "N6-031",
+      "title": "Perfect Number Arithmetic in Cognitive Science, Social Architecture, and Psychology",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-cognitive-social-psychology-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-132,184,223,254-269"
+    },
+    {
+      "id": "N6-032",
+      "title": "Perfect Number Arithmetic in Quantum Computing Hardware",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-quantum-computing-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-195,91,92,114,170"
+    },
+    {
+      "id": "N6-033",
+      "title": "Perfect Number Arithmetic in Autonomous Driving Systems",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-autonomous-driving-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-327,328"
+    },
+    {
+      "id": "N6-034",
+      "title": "Perfect Number Arithmetic in Classical Thermodynamics and Fluid Mechanics",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-thermodynamics-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-149,193,199"
+    },
+    {
+      "id": "N6-035",
+      "title": "Perfect Number Arithmetic in Economics and Financial Engineering",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-economics-finance-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-147,183,338,339"
+    },
+    {
+      "id": "N6-036",
+      "title": "Perfect Number Arithmetic in Governance, Safety Engineering, and Urban Systems",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-governance-safety-urban-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-160,221,227,228,267"
+    },
+    {
+      "id": "N6-037",
+      "title": "Perfect Number Arithmetic in Ecology, Agriculture, and Food Science",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-ecology-agriculture-food-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-150,192,198,225,341"
+    },
+    {
+      "id": "N6-038",
+      "title": "Perfect Number Arithmetic in Games, Sports, and Competitive Systems",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-games-sports-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-144,148,152,158,200,202,212,262"
+    },
+    {
+      "id": "N6-039",
+      "title": "Perfect Number Arithmetic in Calendar Systems, Timekeeping, and Geography",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-calendar-time-geography-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-138,154,182,191,233,256,268"
+    },
+    {
+      "id": "N6-040",
+      "title": "Perfect Number Arithmetic in Telecommunications and Linguistics",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-telecom-linguistics-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-181,197,340"
+    },
+    {
+      "id": "N6-041",
+      "title": "Perfect Number Arithmetic in Classical Mechanics and Particle Accelerators",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-classical-mechanics-accelerator-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-201,238"
+    },
+    {
+      "id": "N6-042",
+      "title": "Perfect Number Arithmetic in Manufacturing and Quality Engineering",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-manufacturing-quality-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-131,236"
+    },
+    {
+      "id": "N6-043",
+      "title": "Perfect Number Arithmetic in Control Theory and Automation",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-control-automation-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-187"
+    },
+    {
+      "id": "N6-044",
+      "title": "Perfect Number Arithmetic in Space Systems and Satellite Engineering",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-space-systems-paper.md",
+      "status": "Draft",
+      "zenodo_doi": null,
+      "osf_id": null,
+      "date": "2026-04-06",
+      "bts": "BT-174,210,231,257"
     }
   ]
 }
