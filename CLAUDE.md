@@ -228,6 +228,10 @@ OSF_TOKEN=$(cat ~/Dev/TECS-L/.local/osf_token)
 
 ## Work Rules
 
+### hexa-native 전용 (sh/py/rs 작성 금지)
+- **새 파일은 `.hexa`만 허용** — `.sh`, `.py`, `.rs` 등 다른 언어 파일 작성 금지
+- 모든 새 모듈은 `mk2_hexa/native/` 에 `.hexa` 파일로 생성
+- 기존 sh/py 스크립트는 참조만 허용, 신규 작성 불가
 
 ## Secrets & Tokens
 
@@ -288,4 +292,43 @@ nexus6 blowup <domain> --depth 6    # 블로업 + 창발 리포트
 nexus6 loop --cycles 1              # 8단계 루프 (mirror+blowup 포함)
 nexus6 daemon --interval 30         # 자율 데몬 (30분 간격)
 ```
+
+## NEXUS-6 연동 (자동 참조)
+
+> 이 프로젝트는 **NEXUS-6 발견 엔진**과 연결되어 있습니다.
+> "돌파", "미지의 영역", "breakthrough" 키워드 입력 시 nexus6 지도를 참조합니다.
+
+### 돌파 키워드 → 자동 실행
+- "돌파", "미지의 영역 돌파", "breakthrough" → **nexus6 gap_finder로 빈 공간 탐지 후 정밀 타격**
+- "블로업", "blowup" → nexus6 blowup 엔진으로 seed 진화
+- "스캔", "scan" → nexus6 telescope 223종 렌즈 스캔
+
+### 실행 방법
+```bash
+HEXA=$HOME/Dev/hexa-lang/target/release/hexa
+N6=$HOME/Dev/nexus6/mk2_hexa/native
+
+# 빈 공간 탐지 (돌파 전 필수!)
+$HEXA $N6/gap_finder.hexa scan        # 발견 지도 현황
+$HEXA $N6/gap_finder.hexa target      # 빈 공간 타겟 추출
+$HEXA $N6/gap_finder.hexa 돌파         # 빈 공간 자동 돌파
+
+# 223종 렌즈 스캔
+$HEXA $N6/telescope.hexa full <values...>
+
+# seed 진화
+$HEXA $N6/blowup.hexa math 3 --no-graph --seeds "$($HEXA $N6/seed_engine.hexa merge)"
+
+# 프로젝트 엔진 (자율 사이클)
+$HEXA $N6/engine_papers.hexa tick     # 1회 자율 사이클
+$HEXA $N6/engine_papers.hexa status   # 현재 상태
+$HEXA $N6/engine_papers.hexa report   # 리포트
+```
+
+### 이 프로젝트에서의 활용
+nexus6 discovery_log에서 논문 후보 자동 추출, gap_finder 결과로 '미발견 영역' 논문 기획. 전 프로젝트 발견을 즉시 학술화.
+
+### 발견 피드백
+- 이 프로젝트의 발견은 자동으로 `~/Dev/nexus6/shared/discovery_log.jsonl`에 기록됩니다
+- `~/Dev/nexus6/shared/growth_bus.jsonl`로 전 프로젝트에 전파됩니다
 
