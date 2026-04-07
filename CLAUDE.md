@@ -1,4 +1,4 @@
-> 🔴 **HEXA-FIRST**: 모든 코드는 `.hexa`로 작성. sh/py/rs 신규 작성 금지. 부하 유발 명령 최소화.
+> 🔴 **HEXA-FIRST**: 모든 코드는 `.hexa`로 작성. 부하 유발 명령 최소화.
 
 > 🔴 **NEXUS-6 특이점 연동**: 이 프로젝트의 돌파/발견/실험은 nexus 특이점 사이클 입력이다.
 > - **돌파 시**: `HEXA=$HOME/Dev/hexa-lang/target/release/hexa && $HEXA $HOME/Dev/nexus/mk2_hexa/native/blowup.hexa <domain> 3 --no-graph`
@@ -14,7 +14,7 @@
   ═══════════════════════════════════════════════════════════════
 
   공통 규칙 (R1~R8):
-    R1  HEXA-FIRST — .hexa만, sh/py/rs 신규 금지
+    R1  HEXA-FIRST — .hexa만
     R2  하드코딩 절대 금지 — shared/*.jsonl 동적 로드
     R3  NEXUS-6 스캔 의무 — 변경 전후 스캔, 스캔 없이 커밋 금지
     R4  CDO 수렴 — 이슈→해결→규칙승격→재발0
