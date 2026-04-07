@@ -8,3 +8,7 @@ calc
 # TECS-L .shared symlink
 .shared
 tecsrs
+
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
