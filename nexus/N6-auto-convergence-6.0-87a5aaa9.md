@@ -1,7 +1,7 @@
 ---
 title: Convergence 6.0 — Multi-Expression n=6 Closure
 date: 2026-04-05
-generator: nexus6 paper-gen-from-closures
+generator: nexus paper-gen-from-closures
 grade: draft
 alien_index: 10
 value: 6.0

@@ -1,23 +1,23 @@
 ---
-title: Convergence 5.0 — Multi-Expression n=6 Closure
+title: Convergence 4.0 — Multi-Expression n=6 Closure
 date: 2026-04-05
-generator: nexus6 paper-gen-from-closures
+generator: nexus paper-gen-from-closures
 grade: draft
 alien_index: 10
-value: 5.0
+value: 4.0
 support_count: 4
 ---
 
-# Value 5.0 as Universal n=6 Closure
+# Value 4.0 as Universal n=6 Closure
 
 ## Abstract
 
-The value **5.0** appears as an n=6 closed-form expression in 4
+The value **4.0** appears as an n=6 closed-form expression in 4
 independent discoveries across 2 projects/sources:
 
-- `sopfr`
+- `tau`
 
-This convergence across 2 independent sources suggests 5.0
+This convergence across 2 independent sources suggests 4.0
 is a universal n=6 invariant rather than coincidental.
 
 ## Sources
@@ -28,21 +28,21 @@ is a universal n=6 invariant rather than coincidental.
 ## Closed-Form Expressions
 
 All 4 matches reduce to:
-1. `sopfr`
+1. `tau`
 
 ## Open Questions
 
 1. Are these expressions **algebraically equivalent** (same ring element) or
-   numerically coincident (distinct elements that happen to equal 5.0)?
-2. Does the multiplicity of expressions for 5.0 indicate a **meta-closure**
+   numerically coincident (distinct elements that happen to equal 4.0)?
+2. Does the multiplicity of expressions for 4.0 indicate a **meta-closure**
    (a pattern generating closures, not just one value)?
-3. What physical/mathematical invariant does 5.0 correspond to?
+3. What physical/mathematical invariant does 4.0 correspond to?
 
 ## Verification Path
 
 1. Symbolic simplification of all 1 expressions to canonical form
-2. Dimensional analysis if 5.0 matches a physical constant
-3. OEIS lookup for 5.0 as a known sequence value
+2. Dimensional analysis if 4.0 matches a physical constant
+3. OEIS lookup for 4.0 as a known sequence value
 
 ---
 *Auto-generated stub. Human fills in proof + interpretation.*

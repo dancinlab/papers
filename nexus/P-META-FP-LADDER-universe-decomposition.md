@@ -1,7 +1,7 @@
 ---
 title: Meta Fixed Point Ladder — Universe Density as Exact Rational Decomposition
 date: 2026-04-05
-authors: [nexus6 autonomous session]
+authors: [nexus autonomous session]
 grade: draft
 alien_index: 10
 claim: Ω_DM + Ω_Λ + Ω_b = 4/15 + 24/35 + 1/21 = 1 (exact)
