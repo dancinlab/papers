@@ -71,4 +71,4 @@
 - 발행 경로: `upload_zenodo.sh` (개별) / `upload_all_unpublished.sh` (일괄)
 
 ## 할일 (todo)
-- "todo", "할일" → `hexa-bin-actual $HOME/Dev/nexus/mk2_hexa/native/todo.hexa papers` 실행 후 **결과를 마크다운 텍스트로 직접 출력** (렌더링되는 표로)
+- "todo", "할일" → `hexa-bin-actual $HOME/Dev/nexus/mk2_hexa/native/todo.hexa papers` 실행 후 **결과를 마크다운 텍스트로 그대로 출력** (재포맷 금지)
