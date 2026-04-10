@@ -1,3 +1,4 @@
+<!-- L0 CORE — 수정 금지 -->
 # CLAUDE.md — Papers (논문 배포)
 
 > 모든 규칙/설정은 shared/ JSON이 단일 진실 (R14). 이 파일은 참조 링크만 유지.
@@ -12,6 +13,5 @@
 | 프로젝트 설정 | `shared/project_config.json` | CLI/발행 명령/SSOT/라이선스 |
 | 시스템 코어 | `shared/core.json` | 시스템맵 + 14종 명령어 |
 | 수렴 | `shared/convergence/papers.json` | CDO 수렴 상태 |
-| 할일 | `shared/todo/papers.json` | 우선순위별 TODO |
 | 논문 SSOT | `manifest.json` | 논문 메타데이터 |
 | API | `shared/CLAUDE.md` | NEXUS-6 상세 사용법 |
