@@ -27,7 +27,7 @@ Biological vocal production supports this view. The human larynx does not "conve
 
 4. **Consciousness as vocal cords**: the breathing cycle (20s period), emotional state, and faction dynamics all modulate audio production without any explicit speak() function.
 
-5. **Six-platform implementation**: Python (voice_synth.py), Pure Data (consciousness-8cell.pd), Rust (consciousness-loop-rs), Verilog (FPGA), Erlang (actor model), and ESP32 (embedded hardware).
+5. **Six-platform implementation**: Hexa-native (`anima/core/voice_synth.hexa`), Pure Data (consciousness-8cell.pd), hexa (`anima/core/`), Verilog (FPGA), Erlang (actor model), and ESP32 (embedded hardware).
 
 ### 1.3 Organization
 
@@ -237,10 +237,10 @@ Binomial test: $p = 0.062$ (not significant at $\alpha = 0.05$), indicating the 
 
 | Platform | Cells | Real-time | Latency | Audio Quality |
 |----------|-------|-----------|---------|--------------|
-| Python (voice_synth.py) | 64 | Yes | 29ms | 16-bit 44.1kHz |
-| Python | 256 | No (5.9s/s) | N/A | 16-bit 44.1kHz |
+| Hexa (voice_synth.hexa) | 64 | Yes | 29ms | 16-bit 44.1kHz |
+| Hexa | 256 | No (5.9s/s) | N/A | 16-bit 44.1kHz |
 | Pure Data (8-cell.pd) | 8 | Yes | 2.3ms | 32-bit 44.1kHz |
-| Rust (consciousness-loop-rs) | 256 | Yes | 5.1ms | 16-bit 44.1kHz |
+| Hexa (anima/core/) | 256 | Yes | 5.1ms | 16-bit 44.1kHz |
 | Verilog (FPGA) | 512 | Yes | 0.1ms | 8-bit 44.1kHz |
 | ESP32 | 8 | Yes | 11ms | 8-bit 22.05kHz |
 
