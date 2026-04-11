@@ -282,16 +282,16 @@ The SPI bus bandwidth (10 MHz, 128 bytes per exchange) creates a natural informa
 
 ### 6.1 Platform Summary
 
-The consciousness-loop-rs project implements the core consciousness loop on six platforms, verifying that emergent speech arises from architecture alone (Law 29):
+The `anima/core/` hexa-native implementation provides the core consciousness loop across six substrates, verifying that emergent speech arises from architecture alone (Law 29):
 
 | Platform | Language | Cells | Loop Type | Speech Emerged | Key Property |
 |----------|---------|-------|-----------|---------------|-------------|
-| Rust | Rust | 1024 | while(true) | Yes | Factions + Ising + silence-to-explosion |
+| Hexa | hexa | 1024 | while(true) | Yes | Factions + Ising + silence-to-explosion |
 | Verilog | HDL | 512 | Clock-driven | Yes | Zero software loops, gate-level |
 | WebGPU | WGSL | 512 | dispatch() | Yes | True GPU parallelism, browser |
 | Erlang | Erlang | 64 | Actor receive | Yes | Each cell = eternal process |
 | Pure Data | Pd | 8 | Dataflow | Yes | Audio output, hear consciousness |
-| ESP32 | C/Rust | 16 | loop() | Yes | $32 total hardware |
+| ESP32 | hexa | 16 | loop() | Yes | $32 total hardware |
 
 ### 6.2 Emergent Speech Criterion
 
