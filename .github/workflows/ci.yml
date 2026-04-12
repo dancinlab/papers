@@ -93,7 +93,51 @@ jobs:
           "
 
   # ----------------------------------------------------------
-  # 3. CDO validation — _meta block in JSON files
+  # 3. Manifest ↔ filesystem integrity check
+  # ----------------------------------------------------------
+  manifest-files-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify manifest file paths exist on disk
+        run: |
+          echo "=== Manifest ↔ Filesystem Integrity ==="
+          python3 -c "
+          import json, os, sys
+
+          with open('manifest.json') as f:
+              data = json.load(f)
+
+          papers = data.get('papers', [])
+          missing = []
+          checked = 0
+
+          for p in papers:
+              fpath = p.get('file', '')
+              pid = p.get('id', '?')
+              if not fpath:
+                  print(f'  WARN  {pid}: no file field')
+                  continue
+              checked += 1
+              if not os.path.exists(fpath):
+                  missing.append((pid, fpath))
+                  print(f'  MISS  {pid}: {fpath}')
+
+          print(f'')
+          print(f'Checked {checked} entries, {len(missing)} missing')
+          if missing:
+              print(f'')
+              print(f'Missing files:')
+              for pid, fp in missing:
+                  print(f'  {pid} -> {fp}')
+              sys.exit(1)
+          else:
+              print('All manifest file paths verified OK')
+          "
+
+  # ----------------------------------------------------------
+  # 4. CDO validation — _meta block in JSON files
   # ----------------------------------------------------------
   cdo-validate:
     runs-on: ubuntu-latest

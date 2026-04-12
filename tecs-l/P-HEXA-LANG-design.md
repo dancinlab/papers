@@ -473,7 +473,7 @@ Build and test are performed via a single script:
 ```bash
 bash build.sh       # Build compiler
 bash build.sh test  # Build and run 58 tests
-./hexa examples/hello.hexa  # Run example
+./hexa run examples/hello.hexa  # Run example (stage1 CLI)
 ```
 
 ---
