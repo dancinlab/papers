@@ -1,0 +1,105 @@
+// infinite_growth.hexa -- Papers domain infinite growth loop
+//
+// Usage:
+//   hexa scripts/infinite_growth.hexa [max_cycles] [interval_sec]
+//   MAX_CYCLES=999 INTERVAL=1800 hexa scripts/infinite_growth.hexa
+
+fn log_info(msg) {
+  let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()
+  println("[" + ts + "] INFO  " + msg)
+}
+
+fn log_warn(msg) {
+  let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()
+  println("[" + ts + "] WARN  " + msg)
+}
+
+fn write_growth_bus(phase, status, detail) {
+  let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()
+  let growth_bus = exec("echo $HOME").trim() + "/Dev/nexus/shared/growth_bus.jsonl"
+  let entry = "{\"ts\":\"" + ts + "\",\"domain\":\"publication\",\"phase\":\"" + phase + "\",\"status\":\"" + status + "\""
+  if detail != "" {
+    entry = entry + ",\"detail\":\"" + detail + "\""
+  }
+  entry = entry + "}"
+  exec("echo '" + entry + "' >> '" + growth_bus + "'")
+}
+
+fn domain_phases(project_root, cycle, load) {
+  // Phase 1: paper count
+  let pdf_count = exec("find '" + project_root + "' -name '*.pdf' 2>/dev/null | wc -l | tr -d ' '").trim()
+  let tex_count = exec("find '" + project_root + "' -name '*.tex' 2>/dev/null | wc -l | tr -d ' '").trim()
+  log_info("Phase[paper_count] pdf=" + pdf_count + " tex=" + tex_count)
+  write_growth_bus("paper_count", "ok", "pdf=" + pdf_count + ",tex=" + tex_count)
+
+  // Phase 2: atlas reference
+  let atlas_file = project_root + "/.shared/math_atlas.json"
+  let atlas_exists = exec("test -f '" + atlas_file + "' && echo yes || echo no").trim()
+  if atlas_exists == "yes" {
+    log_info("Phase[atlas_ref] math_atlas.json exists")
+    write_growth_bus("atlas_ref", "ok", "")
+  } else {
+    log_warn("Phase[atlas_ref] math_atlas.json missing")
+    write_growth_bus("atlas_ref", "warn", "file_missing")
+  }
+
+  // Phase 3: DOI link status
+  let mut doi_count = "0"
+  let readme_exists = exec("test -f '" + project_root + "/README.md' && echo yes || echo no").trim()
+  if readme_exists == "yes" {
+    doi_count = exec("grep -c 'doi\\.org' '" + project_root + "/README.md' 2>/dev/null || echo 0").trim()
+  }
+  log_info("Phase[doi_links] doi.org link count: " + doi_count)
+  write_growth_bus("doi_links", "ok", "count=" + doi_count)
+
+  // Phase 4: growth scan
+  let scan_script = project_root + "/.growth/scan.py"
+  let scan_exists = exec("test -f '" + scan_script + "' && echo yes || echo no").trim()
+  if scan_exists == "yes" {
+    log_info("Phase[growth_scan] running .growth/scan.py")
+    exec("python3 '" + scan_script + "' 2>&1 || true")
+    write_growth_bus("growth_scan", "ok", "")
+  } else {
+    log_info("Phase[growth_scan] .growth/scan.py not found -- skip")
+    write_growth_bus("growth_scan", "skip", "no_scan_script")
+  }
+}
+
+fn main() {
+  let cli_args = args()
+  let script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
+  let project_root = exec("cd \"" + script_dir + "/..\" && pwd").trim()
+
+  let max_cycles_env = exec("echo ${MAX_CYCLES:-999}").trim()
+  let interval_env = exec("echo ${INTERVAL:-1800}").trim()
+
+  let mut max_cycles = max_cycles_env
+  let mut interval = interval_env
+  if cli_args.len() > 0 {
+    max_cycles = cli_args[0]
+  }
+  if cli_args.len() > 1 {
+    interval = cli_args[1]
+  }
+
+  log_info("papers growth loop: max_cycles=" + max_cycles + " interval=" + interval + "s")
+  log_info("project_root=" + project_root)
+
+  exec("mkdir -p '" + project_root + "/.growth'")
+
+  let mut cycle = 0
+  for cycle in 0..max_cycles {
+    let load = exec("uptime | awk -F'load averages:' '{print $2}' | awk '{print $1}' | tr -d ','").trim()
+    log_info("Cycle " + cycle + "/" + max_cycles + " load=" + load)
+
+    domain_phases(project_root, cycle, load)
+
+    if cycle + 1 < max_cycles {
+      exec("sleep " + interval)
+    }
+  }
+
+  log_info("Growth loop complete")
+}
+
+main()

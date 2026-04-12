@@ -12,3 +12,16 @@ tecsrs
 .claude/*
 !.claude/settings.json
 !.claude/hooks/
+
+# Legacy scripts replaced by .hexa (kept on disk for P-002 launcher compatibility)
+scripts/sync_zenodo.py
+scripts/verify_dois.py
+scripts/infinite_growth.sh
+scripts/lib/growth_common.sh
+tecs-l/P-002-figures.py
+tecs-l/P-002-reproduction.py
+upload_all_unpublished.sh
+upload_n6_fusion.sh
+upload_n6_neuro.sh
+upload_pa38.sh
+upload_zenodo.sh

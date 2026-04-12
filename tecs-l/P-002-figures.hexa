@@ -1,0 +1,36 @@
+// P-002-figures.hexa -- Figure Generator: Universal Confusion Topology
+//
+// Generates all publication-quality figures for P-002.
+// Output: docs/papers/figures/fig1..fig7 as 300dpi PNG files.
+//
+// Usage:
+//   hexa tecs-l/P-002-figures.hexa
+//
+// Requirements: torch, torchvision, numpy, scipy, sklearn, matplotlib
+// Time: ~15-20 min on Mac CPU
+//
+// The Python computation (matplotlib/numpy/scipy/torch) runs via exec().
+// Source kept as P-002-figures.py in same directory for the heavy ML pipeline.
+
+fn main() {
+  let script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
+  let project_root = exec("cd \"" + script_dir + "/..\" && pwd").trim()
+  let py_script = script_dir + "/P-002-figures.py"
+
+  let py_exists = exec("test -f '" + py_script + "' && echo yes || echo no").trim()
+  if py_exists != "yes" {
+    println("ERROR: P-002-figures.py not found at " + py_script)
+    println("This .hexa launcher requires the Python computation file.")
+    return
+  }
+
+  println("P-002 Figure Generator (hexa launcher)")
+  println("  project_root: " + project_root)
+  println("  python_src:   " + py_script)
+  println("")
+
+  let result = exec("cd '" + project_root + "' && python3 '" + py_script + "'")
+  println(result)
+}
+
+main()

@@ -1,0 +1,78 @@
+// upload_zenodo.hexa -- Zenodo upload script (manifest.json based)
+//
+// Usage:
+//   ZENODO_TOKEN=xxx hexa upload_zenodo.hexa <PAPER_ID>
+//   ZENODO_TOKEN=xxx hexa upload_zenodo.hexa N6-NANOBOT
+//
+// Reads manifest.json for file/title/keywords/abstract, creates Zenodo deposit,
+// uploads, sets metadata, publishes. Outputs DOI.
+
+fn main() {
+  let token = exec("echo $ZENODO_TOKEN").trim()
+  if token == "" {
+    println("Error: ZENODO_TOKEN not set")
+    println("Usage: ZENODO_TOKEN=xxx hexa upload_zenodo.hexa <PAPER_ID>")
+    return
+  }
+
+  let cli_args = args()
+  let mut paper_id = "PA-20"
+  if cli_args.len() > 0 {
+    paper_id = cli_args[0]
+  }
+
+  let base = "https://zenodo.org/api"
+  let script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
+  let manifest = script_dir + "/manifest.json"
+
+  println("=== " + paper_id + " upload start ===")
+
+  let meta = exec("python3 - '" + manifest + "' '" + paper_id + "' <<'PYEOF'\nimport json, sys\nmanifest_path, pid = sys.argv[1], sys.argv[2]\nm = json.load(open(manifest_path))\nfor p in m.get('papers', []):\n    if p.get('id') == pid:\n        print(json.dumps({'file': p.get('file', ''), 'title': p.get('title', ''), 'abstract': p.get('abstract_first_line', ''), 'keywords': p.get('keywords', [])}, ensure_ascii=False))\n        sys.exit(0)\nprint('ERROR: paper id not found', file=sys.stderr)\nsys.exit(1)\nPYEOF").trim()
+
+  if meta == "" {
+    println("Error: " + paper_id + " not found in manifest.json")
+    return
+  }
+
+  let file = exec("echo '" + meta + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['file'])\"").trim()
+  let title = exec("echo '" + meta + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['title'])\"").trim()
+  let abstract_text = exec("echo '" + meta + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['abstract'])\"").trim()
+
+  let file_path = script_dir + "/" + file
+  let file_exists = exec("test -f '" + file_path + "' && echo yes || echo no").trim()
+  if file_exists != "yes" {
+    println("Error: file not found: " + file)
+    return
+  }
+
+  println("  file: " + file)
+  println("  title: " + title)
+
+  let response = exec("curl -s -X POST '" + base + "/deposit/depositions' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/json' -d '{}'")
+  let deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
+  let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
+  println("  Deposit ID: " + deposit_id)
+
+  let fname = exec("basename '" + file + "'").trim()
+  println("  upload: " + fname + " ...")
+  exec("curl -s -X PUT '" + bucket_url + "/" + fname + "' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file_path + "' > /dev/null")
+
+  let metadata_json = exec("python3 - '" + title + "' '" + abstract_text + "' '" + meta + "' <<'PYEOF'\nimport json, sys\ntitle, abstract, meta_str = sys.argv[1], sys.argv[2], sys.argv[3]\nmeta = json.loads(meta_str)\nkeywords = meta.get('keywords', []) or ['perfect number', 'n=6']\npayload = {'metadata': {'title': title, 'upload_type': 'publication', 'publication_type': 'preprint', 'description': abstract or title, 'creators': [{'name': 'Park, Min Woo', 'affiliation': 'Independent Research'}], 'keywords': keywords, 'license': 'cc-by-4.0', 'related_identifiers': [{'identifier': '10.5281/zenodo.19271599', 'relation': 'isPartOf', 'resource_type': 'other'}, {'identifier': 'https://github.com/need-singularity/papers', 'relation': 'isSupplementedBy', 'resource_type': 'other'}]}}\nprint(json.dumps(payload))\nPYEOF").trim()
+
+  println("  setting metadata...")
+  exec("curl -s -X PUT '" + base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/json' -d '" + metadata_json + "' > /dev/null")
+
+  println("  publish ...")
+  let publish = exec("curl -s -X POST '" + base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + token + "'")
+  let doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+
+  println("")
+  println("  DOI: " + doi)
+  println("  URL: https://doi.org/" + doi)
+  println("  Zenodo: https://zenodo.org/records/" + deposit_id)
+  println("")
+  println("=== " + paper_id + " upload complete ===")
+  println("Update manifest.json doi/zenodo_doi field to " + doi)
+}
+
+main()

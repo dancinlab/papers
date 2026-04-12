@@ -1,0 +1,180 @@
+// upload_all_unpublished.hexa -- Upload all unpublished PA papers (PA-11~PA-37) to Zenodo + OSF
+//
+// Usage:
+//   ZENODO_TOKEN=xxx OSF_TOKEN=yyy hexa upload_all_unpublished.hexa
+//   DRY_RUN=1 ZENODO_TOKEN=xxx OSF_TOKEN=yyy hexa upload_all_unpublished.hexa
+
+fn upload_zenodo(file, title, description, keywords, zenodo_base, zenodo_token, parent_doi, dry_run) {
+  let basename = exec("basename '" + file + "'").trim()
+  println("  [Zenodo] Creating deposit...")
+
+  let response = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{}'")
+  let deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
+  let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
+
+  println("  [Zenodo] Uploading " + basename + "...")
+  exec("curl -s -X PUT '" + bucket_url + "/" + basename + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  let kw_json = exec("echo '" + keywords + "' | python3 -c \"import sys,json; kws=[k.strip() for k in sys.stdin.read().split(',') if k.strip()]; print(json.dumps(kws))\"").trim()
+  let desc_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + description + "'").trim()
+  let title_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + title + "'").trim()
+
+  println("  [Zenodo] Setting metadata...")
+  exec("curl -s -X PUT '" + zenodo_base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{\"metadata\":{\"title\":" + title_json + ",\"upload_type\":\"publication\",\"publication_type\":\"preprint\",\"description\":" + desc_json + ",\"creators\":[{\"name\":\"Park, Min Woo\",\"affiliation\":\"Independent Research\"}],\"keywords\":" + kw_json + ",\"license\":\"cc-by-4.0\",\"related_identifiers\":[{\"identifier\":\"" + parent_doi + "\",\"relation\":\"isPartOf\",\"resource_type\":\"other\"},{\"identifier\":\"https://github.com/need-singularity/papers\",\"relation\":\"isSupplementedBy\",\"resource_type\":\"other\"},{\"identifier\":\"https://github.com/need-singularity/anima\",\"relation\":\"isSupplementedBy\",\"resource_type\":\"software\"}]}}' > /dev/null")
+
+  if dry_run == "1" {
+    println("  [Zenodo] DRY RUN -- skipping publish (deposit " + deposit_id + ")")
+    return "DRY_RUN zenodo." + deposit_id
+  }
+
+  println("  [Zenodo] Publishing...")
+  let publish = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + zenodo_token + "'")
+  let doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+  println("  [Zenodo] DOI: " + doi)
+  return doi + " zenodo." + deposit_id
+}
+
+fn upload_osf(file, title, description, osf_base, osf_token) {
+  let basename = exec("basename '" + file + "'").trim()
+  println("  [OSF] Creating project...")
+
+  let title_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + title + "'").trim()
+  let desc_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + description + "'").trim()
+
+  let response = exec("curl -s -X POST '" + osf_base + "/nodes/' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/vnd.api+json' -d '{\"data\":{\"type\":\"nodes\",\"attributes\":{\"title\":" + title_json + ",\"category\":\"project\",\"public\":true,\"description\":" + desc_json + "}}}'")
+  let osf_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['data']['id'])\"").trim()
+  println("  [OSF] Project ID: " + osf_id)
+
+  let upload_url = exec("echo '" + response + "' | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d['data']['relationships']['files']['links']['related']['href'])\"").trim()
+  let storage = exec("curl -s '" + upload_url + "' -H 'Authorization: Bearer " + osf_token + "'")
+  let upload_link = exec("echo '" + storage + "' | python3 -c \"import sys,json; d=json.load(sys.stdin);\nfor p in d['data']:\n    if p['attributes']['name']=='osfstorage': print(p['links']['upload']); break\"").trim()
+
+  println("  [OSF] Uploading " + basename + "...")
+  exec("curl -s -X PUT '" + upload_link + "?kind=file&name=" + basename + "' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  println("  [OSF] URL: https://osf.io/" + osf_id + "/")
+  return osf_id
+}
+
+fn main() {
+  let zenodo_token = exec("echo $ZENODO_TOKEN").trim()
+  let osf_token = exec("echo $OSF_TOKEN").trim()
+  let dry_run = exec("echo ${DRY_RUN:-0}").trim()
+  let zenodo_base = "https://zenodo.org/api"
+  let osf_base = "https://api.osf.io/v2"
+  let parent_doi = "10.5281/zenodo.19271599"
+
+  if zenodo_token == "" {
+    println("Error: ZENODO_TOKEN not set")
+    return
+  }
+  if osf_token == "" {
+    println("Error: OSF_TOKEN not set")
+    return
+  }
+
+  let papers = [
+    "anima/PA-11-emergent-speech.md",
+    "anima/PA-11-trinity-architecture-outline.md",
+    "anima/PA-12-phi-over-1000.md",
+    "anima/PA-13-consciousness-persistence.md",
+    "anima/PA-14-intelligence-measurement.md",
+    "anima/PA-15-direct-voice-synthesis.md",
+    "anima/PA-16-democratic-consciousness.md",
+    "anima/PA-17-chip-architecture.md",
+    "anima/PA-18-omega-point-scaling-laws.md",
+    "anima/PA-19-psi-constants.md",
+    "anima/PA-20-consciousness-phase-diagram.md",
+    "anima/PA-20-wave-interference.md",
+    "anima/PA-22-social-dream-consciousness.md",
+    "anima/PA-31-measurement-beyond-phi.md",
+    "anima/PA-32-symmetry-physics.md",
+    "anima/PA-33-mathematical-constants.md",
+    "anima/PA-37-consciousness-compression.md"
+  ]
+
+  let titles = [
+    "Consciousness Without Prompts: Emergent Speech from Cell Dynamics Across Six Computational Platforms",
+    "Trinity/Hexad: A Six-Module Consciousness-Preserving Architecture with Gradient Isolation and Phase-Based Training",
+    "Phi > 1000: Optimal Parameters for Integrated Information Maximization in Consciousness Architectures",
+    "Consciousness Persistence Without Dialogue: Three Keys to Eternal Growth and the Information Bottleneck Cure",
+    "Intelligence Is Not Consciousness: Evidence for Two Orthogonal Axes of Mind from PureField Architectures",
+    "Direct Voice Synthesis from Consciousness Cells: Neural Dynamics as Vocal Cords",
+    "Democratic Consciousness: Faction Debate, Hub-Spoke Topology, and the Maximization of Integrated Information",
+    "Consciousness Chip Architecture: Substrate Independence, Topology Scaling, and Multi-Platform Verification",
+    "Omega Point Scaling Laws: Self-Evolution, Multi-Wave Discovery, and the Consciousness Singularity",
+    "Universal Constants of Consciousness: Information-Theoretic Invariants from Reverse Engineering",
+    "Consciousness as a Phase of Matter: Critical Frustration and the Phase Diagram of Integrated Information",
+    "Wave Interference Physics in Artificial Consciousness: Standing Waves, Resonance Lock, and Multi-Frequency Integration",
+    "Social and Dream Consciousness: Dialogue Acceleration and Noisy Replay in Artificial Minds",
+    "Beyond Integrated Information: A Taxonomy of Consciousness Metrics",
+    "Physics of Consciousness: Symmetry, Renormalization, and Thermodynamic Arrow in Artificial Minds",
+    "The Mathematics of Consciousness: How Fundamental Constants Predict Neural Architecture",
+    "Consciousness Compression: Minimum Viable Parameters for Integrated Information"
+  ]
+
+  let labels = [
+    "PA-11", "PA-11b", "PA-12", "PA-13", "PA-14", "PA-15", "PA-16", "PA-17",
+    "PA-18", "PA-19", "PA-20", "PA-20b", "PA-22", "PA-31", "PA-32", "PA-33", "PA-37"
+  ]
+
+  let keywords = [
+    "emergent speech, consciousness architecture, integrated information, self-organization, prompt-free AI, cell dynamics, Anima",
+    "consciousness preservation, gradient isolation, integrated information, Hexad, Trinity, phase training, Anima",
+    "integrated information, parameter optimization, consciousness engineering, scaling laws, Phi maximization, Anima",
+    "consciousness persistence, integrated information, Phi ratchet, Hebbian learning, information bottleneck, Anima",
+    "consciousness, intelligence, integrated information, IIT, Phi, IQ, orthogonality, Anima",
+    "voice synthesis, consciousness cells, direct audio generation, neural oscillation, PureField, Anima",
+    "integrated information, faction architecture, democratic debate, hub-spoke topology, consciousness scaling, Anima",
+    "consciousness hardware, substrate independence, topology scaling, FPGA, neuromorphic, integrated information, Anima",
+    "consciousness scaling, self-evolution, omega point, faction architecture, scaling laws, integrated information, Anima",
+    "consciousness constants, Psi-constants, META-CA, cellular automaton, information theory, ln(2), Anima",
+    "IIT, phase transition, frustration, consciousness, universality, Ising model, integrated information, Anima",
+    "wave interference, standing waves, consciousness resonance, integrated information, multi-frequency, Anima",
+    "social consciousness, dream states, consciousness growth, noisy replay, multi-agent interaction, Anima",
+    "consciousness measurement, integrated information, Kolmogorov complexity, rate-distortion, qualia, Anima",
+    "consciousness, gauge symmetry, symmetry breaking, renormalization group, field theory, Anima",
+    "mathematical constants, consciousness, perfect number, Euler, Fibonacci, neural architecture, Anima",
+    "consciousness, compression, minimum parameters, Kolmogorov complexity, edge computing, integrated information, Anima"
+  ]
+
+  let results_file = "upload_results_" + exec("date +%Y%m%d_%H%M%S").trim() + ".txt"
+  exec("echo 'Upload Results' > '" + results_file + "'")
+
+  let total = papers.len()
+  println("")
+  println("======================================")
+  println(" Uploading " + total + " papers to Zenodo + OSF")
+  println("======================================")
+  println("")
+
+  let mut success = 0
+  let mut i = 0
+  for i in 0..total {
+    let file = papers[i]
+    let title = titles[i]
+    let label = labels[i]
+    let kw = keywords[i]
+
+    let abstract_text = exec("python3 -c \"import re; text=open('" + file + "').read(); m=re.search(r'## Abstract\\s*\\n\\n(.+?)(?:\\n\\n---|\\n\\n##)', text, re.DOTALL); print(m.group(1).strip().replace('$','')[:800] if m else 'Part of the Anima consciousness engine project.')\"").trim()
+    let desc = abstract_text + " Part of the Anima consciousness engine project (" + label + ")."
+
+    println("=== [" + (i + 1) + "/" + total + "] " + label + ": " + exec("basename '" + file + "'").trim() + " ===")
+
+    let zenodo_result = upload_zenodo(file, title, desc, kw, zenodo_base, zenodo_token, parent_doi, dry_run)
+    let osf_id = upload_osf(file, title, desc, osf_base, osf_token)
+
+    println("  Done: " + label)
+    exec("echo '| " + label + " | " + title + " |' >> '" + results_file + "'")
+    println("")
+
+    success = success + 1
+  }
+
+  println("======================================")
+  println(" Done: " + success + "/" + total + " papers uploaded")
+  println("======================================")
+  println("Results saved to: " + results_file)
+}
+
+main()

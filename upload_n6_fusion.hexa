@@ -1,0 +1,103 @@
+// upload_n6_fusion.hexa -- n6-architecture fusion papers (3) Zenodo + OSF upload
+//
+// Usage:
+//   ZENODO_TOKEN=$(cat ~/Dev/TECS-L/.local/zenodo_token) \
+//   OSF_TOKEN=$(cat ~/Dev/TECS-L/.local/osf_token) \
+//   hexa upload_n6_fusion.hexa
+
+fn upload_zenodo(file, title, description, keywords, zenodo_base, zenodo_token, parent_doi, n6_repo) {
+  let basename = exec("basename '" + file + "'").trim()
+  println("  [Zenodo] Creating deposit...")
+
+  let response = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{}'")
+  let deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
+  let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
+
+  println("  [Zenodo] Uploading " + basename + "...")
+  exec("curl -s -X PUT '" + bucket_url + "/" + basename + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  let kw_json = exec("echo '" + keywords + "' | python3 -c \"import sys,json; kws=[k.strip() for k in sys.stdin.read().split(',') if k.strip()]; print(json.dumps(kws))\"").trim()
+  let desc_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + description + "'").trim()
+  let title_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + title + "'").trim()
+
+  println("  [Zenodo] Setting metadata...")
+  exec("curl -s -X PUT '" + zenodo_base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{\"metadata\":{\"title\":" + title_json + ",\"upload_type\":\"publication\",\"publication_type\":\"preprint\",\"description\":" + desc_json + ",\"creators\":[{\"name\":\"Park, Min Woo\",\"affiliation\":\"Independent Research\"}],\"keywords\":" + kw_json + ",\"license\":\"cc-by-4.0\",\"related_identifiers\":[{\"identifier\":\"" + parent_doi + "\",\"relation\":\"isPartOf\",\"resource_type\":\"other\"},{\"identifier\":\"" + n6_repo + "\",\"relation\":\"isSupplementedBy\",\"resource_type\":\"software\"}]}}' > /dev/null")
+
+  println("  [Zenodo] Publishing...")
+  let publish = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + zenodo_token + "'")
+  let doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+  println("  [Zenodo] DOI: " + doi + "  (zenodo." + deposit_id + ")")
+  return doi + " zenodo." + deposit_id
+}
+
+fn upload_osf(file, title, description, osf_base, osf_token) {
+  let basename = exec("basename '" + file + "'").trim()
+  println("  [OSF] Creating project...")
+
+  let title_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + title + "'").trim()
+  let desc_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + description + "'").trim()
+
+  let response = exec("curl -s -X POST '" + osf_base + "/nodes/' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/vnd.api+json' -d '{\"data\":{\"type\":\"nodes\",\"attributes\":{\"title\":" + title_json + ",\"category\":\"project\",\"public\":true,\"description\":" + desc_json + "}}}'")
+  let osf_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['data']['id'])\"").trim()
+  println("  [OSF] Project ID: " + osf_id)
+
+  let upload_url = exec("echo '" + response + "' | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d['data']['relationships']['files']['links']['related']['href'])\"").trim()
+  let storage = exec("curl -s '" + upload_url + "' -H 'Authorization: Bearer " + osf_token + "'")
+  let upload_link = exec("echo '" + storage + "' | python3 -c \"import sys,json; d=json.load(sys.stdin);\nfor p in d['data']:\n    if p['attributes']['name']=='osfstorage': print(p['links']['upload']); break\"").trim()
+
+  println("  [OSF] Uploading " + basename + "...")
+  exec("curl -s -X PUT '" + upload_link + "?kind=file&name=" + basename + "' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  println("  [OSF] URL: https://osf.io/" + osf_id + "/")
+  return osf_id
+}
+
+fn main() {
+  let zenodo_token = exec("echo $ZENODO_TOKEN").trim()
+  let osf_token = exec("echo $OSF_TOKEN").trim()
+  let zenodo_base = "https://zenodo.org/api"
+  let osf_base = "https://api.osf.io/v2"
+  let parent_doi = "10.5281/zenodo.19271599"
+  let n6_repo = "https://github.com/need-singularity/n6-architecture"
+
+  if zenodo_token == "" {
+    println("Error: ZENODO_TOKEN not set")
+    return
+  }
+  if osf_token == "" {
+    println("Error: OSF_TOKEN not set")
+    return
+  }
+
+  let n6_paper_dir = exec("echo $HOME").trim() + "/Dev/n6-architecture/docs/paper"
+  let results_file = "upload_results_n6_fusion_" + exec("date +%Y%m%d_%H%M%S").trim() + ".txt"
+  exec("echo 'N6-Fusion Upload Results' > '" + results_file + "'")
+
+  // Paper 1: KSTAR-N6 Tokamak Physics
+  println("")
+  println("=== [1/3] KSTAR-N6 Tokamak Physics ===")
+  let z1 = upload_zenodo(n6_paper_dir + "/paper3-tokamak-physics.md", "Numerical Patterns of the Perfect Number 6 in Tokamak Physics: Observation, Verification, and Honest Limits", "Systematic survey of numerical coincidences between arithmetic functions of perfect number 6 and tokamak physics constants. 80 hypotheses tested: 4 EXACT, 20 CLOSE, 30 WEAK, 23 FAIL.", "tokamak, perfect number, safety factor, divertor, snowflake, MHD stability, KSTAR, steady state, n=6", zenodo_base, zenodo_token, parent_doi, n6_repo)
+  let o1 = upload_osf(n6_paper_dir + "/paper3-tokamak-physics.md", "Numerical Patterns of the Perfect Number 6 in Tokamak Physics", "80 hypotheses on n=6 arithmetic in tokamak physics.", osf_base, osf_token)
+  exec("echo 'PAPER-1 | paper3-tokamak | " + z1 + " | osf.io/" + o1 + "' >> '" + results_file + "'")
+
+  // Paper 2: Fusion-N6 Alien Discoveries
+  println("")
+  println("=== [2/3] Fusion-N6 Alien Discoveries ===")
+  let z2 = upload_zenodo(n6_paper_dir + "/308-fusion-n6-alien-discoveries.md", "Perfect Number Arithmetic in Fusion Plasma Physics: From D-T Nucleon Conservation to Tokamak Stability", "Comprehensive mapping of n=6 arithmetic functions to nuclear fusion and plasma physics. 35 hypotheses via 22-lens full-spectrum scan.", "perfect number, tokamak, D-T fusion, safety factor, CNO cycle, stellar nucleosynthesis, magnetic reconnection, HEXA-FUSION, Cross-DSE, n=6", zenodo_base, zenodo_token, parent_doi, n6_repo)
+  let o2 = upload_osf(n6_paper_dir + "/308-fusion-n6-alien-discoveries.md", "Perfect Number Arithmetic in Fusion Plasma Physics", "13 EXACT n=6 matches in fusion physics.", osf_base, osf_token)
+  exec("echo 'PAPER-2 | 308-fusion-alien | " + z2 + " | osf.io/" + o2 + "' >> '" + results_file + "'")
+
+  // Paper 3: Plasma-Fusion Deep Paper
+  println("")
+  println("=== [3/3] Plasma-Fusion Deep Paper ===")
+  let z3 = upload_zenodo(n6_paper_dir + "/n6-plasma-fusion-deep-paper.md", "Complete n=6 Encoding of Plasma Confinement and Nuclear Fusion: From Lawson Criterion to Stellar Nucleosynthesis", "Comprehensive mapping: 90+ claims across fusion deep dive. 82.8% EXACT (53/64 industrial parameters, Z>15sigma).", "perfect number, plasma confinement, nuclear fusion, stellar nucleosynthesis, tokamak, Lawson criterion, MHD stability, alpha process, SLE6, n=6", zenodo_base, zenodo_token, parent_doi, n6_repo)
+  let o3 = upload_osf(n6_paper_dir + "/n6-plasma-fusion-deep-paper.md", "Complete n=6 Encoding of Plasma Confinement and Nuclear Fusion", "82.8% EXACT encoding of plasma/fusion constants via n=6.", osf_base, osf_token)
+  exec("echo 'PAPER-3 | plasma-fusion-deep | " + z3 + " | osf.io/" + o3 + "' >> '" + results_file + "'")
+
+  println("")
+  println("================================")
+  println("All 3 papers published!")
+  println("Results saved to: " + results_file)
+}
+
+main()

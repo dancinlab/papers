@@ -1,0 +1,205 @@
+// sync_zenodo.hexa -- Fetch metadata from Zenodo API and sync with local tracking.
+//
+// Usage:
+//   hexa scripts/sync_zenodo.hexa              # full sync, writes metadata.json
+//   hexa scripts/sync_zenodo.hexa --dry-run    # preview only, no file writes
+//   hexa scripts/sync_zenodo.hexa --verbose    # show per-record details
+
+fn main() {
+  let cli_args = args()
+
+  let flags = ""
+  let i = 0
+  for i in 0..cli_args.len() {
+    if cli_args[i] == "--dry-run" || cli_args[i] == "--verbose" || cli_args[i] == "-v" {
+      flags = flags + " " + cli_args[i]
+    }
+    if cli_args[i] == "--limit" && i + 1 < cli_args.len() {
+      flags = flags + " --limit " + cli_args[i + 1]
+    }
+  }
+
+  let script_dir = exec("dirname \"$(readlink -f \"$0\" 2>/dev/null || echo \"$0\")\"").trim()
+  let repo_root = exec("cd \"" + script_dir + "/..\" && pwd").trim()
+
+  let py_code = "
+import argparse, json, os, re, sys, time, urllib.error, urllib.request
+from datetime import datetime, timezone
+
+REPO_ROOT = '" + repo_root + "'
+README_PATH = os.path.join(REPO_ROOT, 'README.md')
+MANIFEST_PATH = os.path.join(REPO_ROOT, 'manifest.json')
+METADATA_OUT = os.path.join(REPO_ROOT, 'zenodo_metadata.json')
+ZENODO_API = 'https://zenodo.org/api/records/{record_id}'
+REQUEST_DELAY = 1.0
+
+def extract_zenodo_ids_from_readme(readme_path):
+    entries = []
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    pattern = re.compile(
+        r'\\|\\s*\\**([A-Z]+-[\\w]+(?:-[\\w]+)*)\\**\\s*\\|'
+        r'\\s*\\**([^|]+?)\\**\\s*\\|'
+        r'\\s*\\[zenodo\\.(\\d+)\\]'
+    )
+    for m in pattern.finditer(content):
+        paper_id = m.group(1).strip()
+        title = m.group(2).strip()
+        record_id = m.group(3).strip()
+        entries.append({'paper_id': paper_id, 'local_title': title, 'record_id': record_id, 'doi': f'10.5281/zenodo.{record_id}'})
+    return entries
+
+def extract_zenodo_ids_from_manifest(manifest_path):
+    if not os.path.exists(manifest_path):
+        return {}
+    with open(manifest_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    manifest_map = {}
+    for paper in data.get('papers', []):
+        doi = paper.get('doi', '')
+        m = re.search(r'zenodo\\.(\\d+)', doi)
+        if m:
+            manifest_map[m.group(1)] = {'id': paper.get('id'), 'title': paper.get('title'), 'date': paper.get('date'), 'status': paper.get('status')}
+    return manifest_map
+
+def fetch_zenodo_record(record_id):
+    url = ZENODO_API.format(record_id=record_id)
+    req = urllib.request.Request(url, headers={'Accept': 'application/json'})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+        return {'record_id': str(data.get('id', record_id)), 'doi': data.get('doi', ''), 'title': data.get('metadata', {}).get('title', ''), 'publication_date': data.get('metadata', {}).get('publication_date', ''), 'creators': [c.get('name', '') for c in data.get('metadata', {}).get('creators', [])], 'license': data.get('metadata', {}).get('license', {}).get('id', ''), 'access_right': data.get('metadata', {}).get('access_right', ''), 'version': data.get('metadata', {}).get('version', ''), 'views': data.get('stats', {}).get('views', 0), 'downloads': data.get('stats', {}).get('downloads', 0), 'fetched_at': datetime.now(timezone.utc).isoformat()}
+    except urllib.error.HTTPError as e:
+        return {'record_id': record_id, 'error': f'HTTP {e.code}: {e.reason}'}
+    except urllib.error.URLError as e:
+        return {'record_id': record_id, 'error': f'URL error: {e.reason}'}
+    except Exception as e:
+        return {'record_id': record_id, 'error': str(e)}
+
+def compare_metadata(local_entry, zenodo_data, manifest_info=None):
+    mismatches = []
+    if 'error' in zenodo_data:
+        mismatches.append(f'  FETCH ERROR: {zenodo_data[\"error\"]}')
+        return mismatches
+    zen_title = zenodo_data.get('title', '')
+    local_title = local_entry.get('local_title', '')
+    if local_title and zen_title and local_title.lower() != zen_title.lower():
+        if local_title.lower() not in zen_title.lower():
+            mismatches.append(f'  TITLE MISMATCH:\\n    local:  {local_title}\\n    zenodo: {zen_title}')
+    zen_doi = zenodo_data.get('doi', '')
+    local_doi = local_entry.get('doi', '')
+    if local_doi and zen_doi and local_doi != zen_doi:
+        mismatches.append(f'  DOI MISMATCH: local={local_doi}, zenodo={zen_doi}')
+    if manifest_info:
+        man_date = manifest_info.get('date', '')
+        zen_date = zenodo_data.get('publication_date', '')
+        if man_date and zen_date and man_date != zen_date:
+            mismatches.append(f'  DATE MISMATCH: manifest={man_date}, zenodo={zen_date}')
+    return mismatches
+
+def main():
+    parser = argparse.ArgumentParser(description='Sync paper metadata from Zenodo API')
+    parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--verbose', '-v', action='store_true')
+    parser.add_argument('--limit', type=int, default=0)
+    args = parser.parse_args()
+    print(f'Reading {README_PATH} ...')
+    readme_entries = extract_zenodo_ids_from_readme(README_PATH)
+    print(f'  Found {len(readme_entries)} papers with Zenodo IDs in README.md')
+    manifest_map = extract_zenodo_ids_from_manifest(MANIFEST_PATH)
+    print(f'  Found {len(manifest_map)} papers in manifest.json')
+    if not readme_entries:
+        print('ERROR: No Zenodo entries found in README.md')
+        sys.exit(1)
+    with open(README_PATH, 'r', encoding='utf-8') as f:
+        readme_text = f.read()
+    claimed_match = re.search(r'\\*\\*Total:\\s*(\\d+)\\s*papers\\*\\*', readme_text)
+    claimed_total = int(claimed_match.group(1)) if claimed_match else None
+    section_counts = re.findall(r'(TECS-L|anima|SEDI):\\s*(\\d+)\\s*papers', readme_text)
+    section_sum = sum(int(c) for _, c in section_counts) if section_counts else None
+    print(f'\\n--- Count Analysis ---')
+    print(f'  README claimed total: {claimed_total}')
+    print(f'  Section breakdown sum: {section_sum}')
+    print(f'  Actual table entries:  {len(readme_entries)}')
+    print(f'  Manifest entries:      {len(manifest_map)}')
+    if claimed_total and claimed_total != len(readme_entries):
+        print(f'  WARNING: Claimed {claimed_total} but found {len(readme_entries)} in tables')
+    if section_sum and section_sum != len(readme_entries):
+        print(f'  WARNING: Section sum {section_sum} != table entries {len(readme_entries)}')
+    desc_94 = re.search(r'\\((\\d+)\\s*papers\\)', readme_text)
+    if desc_94:
+        desc_count = int(desc_94.group(1))
+        if desc_count != len(readme_entries):
+            print(f'  WARNING: Project description says {desc_count} but {len(readme_entries)} tracked')
+    entries_to_fetch = readme_entries
+    if args.limit > 0:
+        entries_to_fetch = entries_to_fetch[:args.limit]
+    print(f'\\nFetching {len(entries_to_fetch)} records from Zenodo API ...')
+    if args.dry_run:
+        print('  (DRY RUN: will not write any files)\\n')
+    results = []
+    mismatches_found = 0
+    errors_found = 0
+    for i, entry in enumerate(entries_to_fetch):
+        record_id = entry['record_id']
+        paper_id = entry['paper_id']
+        if args.verbose:
+            print(f'  [{i+1}/{len(entries_to_fetch)}] {paper_id} -> zenodo.{record_id} ... ', end='', flush=True)
+        zenodo_data = fetch_zenodo_record(record_id)
+        if 'error' in zenodo_data:
+            errors_found += 1
+            if args.verbose:
+                print(f'ERROR: {zenodo_data[\"error\"]}')
+        else:
+            if args.verbose:
+                print(f'OK ({zenodo_data.get(\"views\", 0)} views, {zenodo_data.get(\"downloads\", 0)} downloads)')
+        manifest_info = manifest_map.get(record_id)
+        diffs = compare_metadata(entry, zenodo_data, manifest_info)
+        if diffs:
+            mismatches_found += 1
+        results.append({'paper_id': paper_id, 'record_id': record_id, 'local_title': entry['local_title'], 'zenodo': zenodo_data, 'mismatches': diffs})
+        if i < len(entries_to_fetch) - 1:
+            time.sleep(REQUEST_DELAY)
+    print(f'\\n{\"=\"*60}')
+    print('SYNC REPORT')
+    print(f'{\"=\"*60}')
+    print(f'  Total fetched:   {len(results)}')
+    print(f'  Successful:      {len(results) - errors_found}')
+    print(f'  Errors:          {errors_found}')
+    print(f'  Mismatches:      {mismatches_found}')
+    if mismatches_found > 0:
+        print('\\n--- Mismatches ---')
+        for r in results:
+            if r['mismatches']:
+                print(f'\\n{r[\"paper_id\"]} (zenodo.{r[\"record_id\"]}):')
+                for m in r['mismatches']:
+                    print(m)
+    if errors_found > 0:
+        print('\\n--- Errors ---')
+        for r in results:
+            zen = r['zenodo']
+            if 'error' in zen:
+                print(f'  {r[\"paper_id\"]} (zenodo.{r[\"record_id\"]}): {zen[\"error\"]}')
+    total_views = sum(r['zenodo'].get('views', 0) for r in results if 'error' not in r['zenodo'])
+    total_downloads = sum(r['zenodo'].get('downloads', 0) for r in results if 'error' not in r['zenodo'])
+    print('\\n--- Aggregate Stats ---')
+    print(f'  Total views:     {total_views}')
+    print(f'  Total downloads: {total_downloads}')
+    if not args.dry_run:
+        output = {'_meta': {'description': 'Zenodo metadata cache -- auto-generated by sync_zenodo.hexa', 'synced_at': datetime.now(timezone.utc).isoformat(), 'total_records': len(results), 'errors': errors_found, 'mismatches': mismatches_found}, 'stats': {'total_views': total_views, 'total_downloads': total_downloads}, 'records': results}
+        with open(METADATA_OUT, 'w', encoding='utf-8') as f:
+            json.dump(output, f, indent=2, ensure_ascii=False)
+        print(f'\\nMetadata written to {METADATA_OUT}')
+    else:
+        print(f'\\nDRY RUN: Would write metadata to {METADATA_OUT}')
+    sys.exit(1 if errors_found > 0 else 0)
+
+if __name__ == '__main__':
+    main()
+"
+
+  let result = exec("python3 -c '" + py_code + "'" + flags)
+  println(result)
+}
+
+main()

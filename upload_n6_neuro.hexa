@@ -1,0 +1,81 @@
+// upload_n6_neuro.hexa -- HEXA-NEURO BCI paper Zenodo + OSF upload
+//
+// Usage:
+//   ZENODO_TOKEN=$(cat ~/Dev/TECS-L/.local/zenodo_token) \
+//   OSF_TOKEN=$(cat ~/Dev/TECS-L/.local/osf_token) \
+//   hexa upload_n6_neuro.hexa
+
+fn main() {
+  let zenodo_token = exec("echo $ZENODO_TOKEN").trim()
+  let osf_token = exec("echo $OSF_TOKEN").trim()
+  let zenodo_base = "https://zenodo.org/api"
+  let osf_base = "https://api.osf.io/v2"
+  let parent_doi = "10.5281/zenodo.19271599"
+  let n6_repo = "https://github.com/need-singularity/n6-architecture"
+
+  if zenodo_token == "" {
+    println("Error: ZENODO_TOKEN not set")
+    println("Usage: ZENODO_TOKEN=$(cat ~/Dev/TECS-L/.local/zenodo_token) OSF_TOKEN=$(cat ~/Dev/TECS-L/.local/osf_token) hexa upload_n6_neuro.hexa")
+    return
+  }
+  if osf_token == "" {
+    println("Error: OSF_TOKEN not set")
+    return
+  }
+
+  let file = "n6-hexa-neuro-bci-paper.md"
+  let title = "HEXA-NEURO: A Non-Invasive Brain-Computer Interface Architecture Derived from Perfect Number Arithmetic (n=6)"
+  let description = "We present HEXA-NEURO, a brain-computer interface architecture where all 176 design parameters across 23 neuroscience categories are uniquely determined by the arithmetic of the perfect number n=6."
+  let keywords = "brain-computer interface, perfect number, n=6 arithmetic, non-invasive BCI, room-temperature superconductor, AI wearable, neuroprosthetics, EEG, Parkinson, Alzheimer, cortical decoding, Transformer decoder"
+
+  let results_file = "upload_results_n6_neuro_" + exec("date +%Y%m%d_%H%M%S").trim() + ".txt"
+  exec("echo 'N6-NEURO Upload Results' > '" + results_file + "'")
+
+  // Zenodo
+  println("PAPER: HEXA-NEURO BCI")
+  println("  [Zenodo] Creating deposit...")
+
+  let response = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{}'")
+  let deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
+  let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
+
+  println("  [Zenodo] Uploading " + file + "...")
+  exec("curl -s -X PUT '" + bucket_url + "/" + file + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  let kw_json = exec("echo '" + keywords + "' | python3 -c \"import sys,json; kws=[k.strip() for k in sys.stdin.read().split(',') if k.strip()]; print(json.dumps(kws))\"").trim()
+  let desc_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + description + "'").trim()
+  let title_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + title + "'").trim()
+
+  println("  [Zenodo] Setting metadata...")
+  exec("curl -s -X PUT '" + zenodo_base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{\"metadata\":{\"title\":" + title_json + ",\"upload_type\":\"publication\",\"publication_type\":\"preprint\",\"description\":" + desc_json + ",\"creators\":[{\"name\":\"Park, Min Woo\",\"affiliation\":\"Independent Research\"}],\"keywords\":" + kw_json + ",\"license\":\"cc-by-4.0\",\"related_identifiers\":[{\"identifier\":\"" + parent_doi + "\",\"relation\":\"isPartOf\",\"resource_type\":\"other\"},{\"identifier\":\"" + n6_repo + "\",\"relation\":\"isSupplementedBy\",\"resource_type\":\"software\"}]}}' > /dev/null")
+
+  println("  [Zenodo] Publishing...")
+  let publish = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + zenodo_token + "'")
+  let doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+  println("  [Zenodo] DOI: " + doi + "  (zenodo." + deposit_id + ")")
+  exec("echo '" + doi + " zenodo." + deposit_id + "' >> '" + results_file + "'")
+
+  // OSF
+  println("  [OSF] Creating project...")
+  let osf_resp = exec("curl -s -X POST '" + osf_base + "/nodes/' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/vnd.api+json' -d '{\"data\":{\"type\":\"nodes\",\"attributes\":{\"title\":" + title_json + ",\"category\":\"project\",\"public\":true,\"description\":" + desc_json + "}}}'")
+  let osf_id = exec("echo '" + osf_resp + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['data']['id'])\"").trim()
+  println("  [OSF] Project ID: " + osf_id)
+
+  let upload_link = exec("curl -s '" + osf_base + "/nodes/" + osf_id + "/files/osfstorage/' -H 'Authorization: Bearer " + osf_token + "' | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d['data'][0]['links']['upload'] if d.get('data') else d['links']['upload'])\" 2>/dev/null || echo 'https://files.osf.io/v1/resources/" + osf_id + "/providers/osfstorage/'").trim()
+
+  println("  [OSF] Uploading " + file + "...")
+  exec("curl -s -X PUT '" + upload_link + "?kind=file&name=" + file + "' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null 2>&1")
+
+  println("  [OSF] URL: https://osf.io/" + osf_id + "/")
+  exec("echo '" + doi + " zenodo." + deposit_id + " | osf.io/" + osf_id + "' >> '" + results_file + "'")
+
+  println("")
+  println("================================")
+  println("DONE!")
+  println("  Zenodo DOI: " + doi)
+  println("  OSF URL: https://osf.io/" + osf_id + "/")
+  println("  Results: " + results_file)
+  println("================================")
+}
+
+main()

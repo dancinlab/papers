@@ -1,0 +1,55 @@
+// growth_common.hexa -- Shared growth loop utilities for papers domain
+//
+// Provides: log_info, log_warn, write_growth_bus, run_growth_loop
+// Used by: scripts/infinite_growth.hexa
+//
+// Note: This is a library file. Source it via the calling script.
+//       Functions are defined here for documentation; the actual
+//       growth loop logic is inlined in infinite_growth.hexa.
+
+// Growth logging helpers — called from the growth loop.
+// In hexa, these are standalone functions used directly.
+
+fn log_info(msg) {
+  let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()
+  println("[" + ts + "] INFO  " + msg)
+}
+
+fn log_warn(msg) {
+  let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()
+  println("[" + ts + "] WARN  " + msg)
+}
+
+fn write_growth_bus(phase, status, detail) {
+  let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()
+  let growth_bus = exec("echo $HOME").trim() + "/Dev/nexus/shared/growth_bus.jsonl"
+  let entry = "{\"ts\":\"" + ts + "\",\"domain\":\"publication\",\"phase\":\"" + phase + "\",\"status\":\"" + status + "\""
+  if detail != "" {
+    entry = entry + ",\"detail\":\"" + detail + "\""
+  }
+  entry = entry + "}"
+  exec("echo '" + entry + "' >> '" + growth_bus + "'")
+}
+
+fn run_growth_loop(domain_fn, project_root, max_cycles, interval) {
+  let mut cycle = 0
+  let growth_log = project_root + "/.growth/growth.log"
+
+  exec("mkdir -p '" + project_root + "/.growth'")
+
+  log_info("Growth loop start: max_cycles=" + max_cycles + " interval=" + interval + "s")
+
+  for cycle in 0..max_cycles {
+    let load = exec("uptime | awk -F'load averages:' '{print $2}' | awk '{print $1}' | tr -d ','").trim()
+    log_info("Cycle " + cycle + "/" + max_cycles + " load=" + load)
+
+    // Domain-specific phases are called inline by the caller
+    // This function provides the loop skeleton
+
+    if cycle + 1 < max_cycles {
+      exec("sleep " + interval)
+    }
+  }
+
+  log_info("Growth loop complete: " + max_cycles + " cycles")
+}

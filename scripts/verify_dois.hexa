@@ -1,0 +1,199 @@
+// verify_dois.hexa -- Verify all DOI/Zenodo links in README.md are reachable.
+//
+// Usage:
+//   hexa scripts/verify_dois.hexa
+//   hexa scripts/verify_dois.hexa --verbose
+//   hexa scripts/verify_dois.hexa --timeout 10
+
+fn main() {
+  let cli_args = args()
+
+  let flags = ""
+  let i = 0
+  for i in 0..cli_args.len() {
+    if cli_args[i] == "--verbose" || cli_args[i] == "-v" || cli_args[i] == "--skip-osf" {
+      flags = flags + " " + cli_args[i]
+    }
+    if (cli_args[i] == "--timeout" || cli_args[i] == "--limit") && i + 1 < cli_args.len() {
+      flags = flags + " " + cli_args[i] + " " + cli_args[i + 1]
+    }
+  }
+
+  let script_dir = exec("dirname \"$(readlink -f \"$0\" 2>/dev/null || echo \"$0\")\"").trim()
+  let repo_root = exec("cd \"" + script_dir + "/..\" && pwd").trim()
+
+  let py_code = "
+import argparse, os, re, sys, time, urllib.error, urllib.request
+
+REPO_ROOT = '" + repo_root + "'
+README_PATH = os.path.join(REPO_ROOT, 'README.md')
+REQUEST_DELAY = 0.5
+
+def extract_all_links(readme_path):
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    links = []
+    table_pattern = re.compile(r'\\|\\s*\\**([A-Z]+-[\\w]+(?:-[\\w]+)*)\\**\\s*\\|\\s*\\**([^|]+?)\\**\\s*\\|\\s*\\[zenodo\\.(\\d+)\\]\\((https?://[^)]+)\\)')
+    for m in table_pattern.finditer(content):
+        links.append({'paper_id': m.group(1).strip(), 'title': m.group(2).strip(), 'record_id': m.group(3).strip(), 'url': m.group(4).strip(), 'type': 'zenodo_doi'})
+    osf_pattern = re.compile(r'\\|\\s*\\**([A-Z]+-[\\w]+(?:-[\\w]+)*)\\**\\s*\\|[^|]+\\|[^|]+\\|\\s*\\[osf\\.io/(\\w+)\\]\\((https?://[^)]+)\\)')
+    for m in osf_pattern.finditer(content):
+        links.append({'paper_id': m.group(1).strip(), 'osf_id': m.group(2).strip(), 'url': m.group(3).strip(), 'type': 'osf'})
+    doi_pattern = re.compile(r'\\[10\\.5281/zenodo\\.(\\d+)\\]\\((https?://[^)]+)\\)')
+    for m in doi_pattern.finditer(content):
+        url = m.group(2).strip()
+        if not any(l['url'] == url for l in links):
+            links.append({'paper_id': 'COLLECTION', 'record_id': m.group(1).strip(), 'url': url, 'type': 'zenodo_doi'})
+    return links
+
+def check_url(url, timeout=10):
+    class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self, req, fp, code, msg, headers, newurl):
+            return None
+    opener = urllib.request.build_opener(NoRedirectHandler)
+    headers = {'User-Agent': 'papers-doi-verifier/1.0 (https://github.com/need-singularity/papers)', 'Accept': 'text/html,application/json'}
+    for method in ['HEAD', 'GET']:
+        try:
+            req = urllib.request.Request(url, headers=headers, method=method)
+            resp = opener.open(req, timeout=timeout)
+            return (resp.status, url, None)
+        except urllib.error.HTTPError as e:
+            if e.code in (301, 302, 303, 307, 308):
+                location = e.headers.get('Location', 'unknown')
+                return (e.code, location, None)
+            if e.code == 429:
+                return (429, url, 'Rate limited')
+            if method == 'HEAD' and e.code in (403, 405):
+                continue
+            return (e.code, url, str(e.reason))
+        except urllib.error.URLError as e:
+            return (0, url, f'URL error: {e.reason}')
+        except Exception as e:
+            return (0, url, str(e))
+    return (0, url, 'All methods failed')
+
+def analyze_count_mismatch(readme_path):
+    with open(readme_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    findings = []
+    header_match = re.search(r'\\*\\*Total:\\s*(\\d+)\\s*papers\\*\\*', content)
+    header_total = int(header_match.group(1)) if header_match else None
+    desc_match = re.search(r'\\((\\d+)\\s*papers\\)', content)
+    desc_total = int(desc_match.group(1)) if desc_match else None
+    section_pattern = re.compile(r'(TECS-L|anima|SEDI):\\s*(\\d+)\\s*papers')
+    sections = {m.group(1): int(m.group(2)) for m in section_pattern.finditer(content)}
+    section_sum = sum(sections.values()) if sections else None
+    table_entries = re.findall(r'\\|\\s*\\**[A-Z]+-[\\w]+\\**\\s*\\|[^|]+\\|\\s*\\[zenodo\\.\\d+\\]', content)
+    actual_count = len(table_entries)
+    stats_match = re.search(r'Total papers\\s*\\|\\s*(\\d+)', content)
+    stats_total = int(stats_match.group(1)) if stats_match else None
+    findings.append(f'Project description count: {desc_total}')
+    findings.append(f'README header total:       {header_total}')
+    findings.append(f'Section breakdown:         {sections} = {section_sum}')
+    findings.append(f'Statistics table total:    {stats_total}')
+    findings.append(f'Actual table entries:      {actual_count}')
+    numbers = {'desc': desc_total, 'header': header_total, 'sections': section_sum, 'stats': stats_total, 'actual': actual_count}
+    unique_vals = set(v for v in numbers.values() if v is not None)
+    if len(unique_vals) > 1:
+        findings.append(f'\\nMISMATCH DETECTED: Different counts found: {unique_vals}')
+        for name, val in numbers.items():
+            if val is not None and val != actual_count:
+                findings.append(f'  {name} says {val} but actual table has {actual_count}')
+    return findings
+
+def main():
+    parser = argparse.ArgumentParser(description='Verify all DOI/Zenodo links in README.md')
+    parser.add_argument('--verbose', '-v', action='store_true')
+    parser.add_argument('--timeout', type=int, default=10)
+    parser.add_argument('--skip-osf', action='store_true')
+    parser.add_argument('--limit', type=int, default=0)
+    args = parser.parse_args()
+    print(f'Parsing {README_PATH} ...')
+    all_links = extract_all_links(README_PATH)
+    zenodo_links = [l for l in all_links if l['type'] == 'zenodo_doi']
+    osf_links = [l for l in all_links if l['type'] == 'osf']
+    print(f'  Zenodo DOI links: {len(zenodo_links)}')
+    print(f'  OSF links:        {len(osf_links)}')
+    print(f'  Total links:      {len(all_links)}')
+    print(f'\\n{\"=\"*60}')
+    print('PAPER COUNT ANALYSIS')
+    print(f'{\"=\"*60}')
+    for finding in analyze_count_mismatch(README_PATH):
+        print(f'  {finding}')
+    links_to_check = all_links
+    if args.skip_osf:
+        links_to_check = zenodo_links
+        print('\\nSkipping OSF links (--skip-osf)')
+    if args.limit > 0:
+        links_to_check = links_to_check[:args.limit]
+    print(f'\\n{\"=\"*60}')
+    print(f'VERIFYING {len(links_to_check)} LINKS')
+    print(f'{\"=\"*60}')
+    alive, redirects, dead, rate_limited = [], [], [], []
+    for i, link in enumerate(links_to_check):
+        url = link['url']
+        paper_id = link.get('paper_id', '?')
+        link_type = link['type']
+        if args.verbose:
+            print(f'  [{i+1}/{len(links_to_check)}] {paper_id} ({link_type}) {url} ... ', end='', flush=True)
+        status, final_url, error = check_url(url, timeout=args.timeout)
+        result = {**link, 'status': status, 'final_url': final_url, 'error': error}
+        if status == 429:
+            rate_limited.append(result)
+            if args.verbose: print('RATE LIMITED')
+        elif status in (200, 204):
+            alive.append(result)
+            if args.verbose: print(f'OK ({status})')
+        elif status in (301, 302, 303, 307, 308):
+            redirects.append(result)
+            if args.verbose: print(f'REDIRECT ({status}) -> {final_url}')
+        else:
+            dead.append(result)
+            if args.verbose:
+                err_msg = f' ({error})' if error else ''
+                print(f'DEAD ({status}){err_msg}')
+        if i < len(links_to_check) - 1:
+            time.sleep(REQUEST_DELAY)
+    print(f'\\n{\"=\"*60}')
+    print('VERIFICATION SUMMARY')
+    print(f'{\"=\"*60}')
+    print(f'  Total checked:   {len(links_to_check)}')
+    print(f'  Alive (200):     {len(alive)}')
+    print(f'  Redirects (3xx): {len(redirects)}')
+    print(f'  Dead/Error:      {len(dead)}')
+    print(f'  Rate limited:    {len(rate_limited)}')
+    zenodo_redirects = [r for r in redirects if r['type'] == 'zenodo_doi']
+    if zenodo_redirects:
+        print(f'\\n  Note: {len(zenodo_redirects)} Zenodo DOI redirects are EXPECTED')
+        print('  (doi.org redirects to zenodo.org -- this is normal)')
+    if dead:
+        print('\\n--- DEAD / UNREACHABLE LINKS ---')
+        for d in dead:
+            err = f' -- {d[\"error\"]}' if d.get('error') else ''
+            print(f'  {d.get(\"paper_id\", \"?\")} ({d[\"type\"]}): {d[\"url\"]} [HTTP {d[\"status\"]}]{err}')
+    if rate_limited:
+        print('\\n--- RATE LIMITED (retry later) ---')
+        for r in rate_limited:
+            print(f'  {r.get(\"paper_id\", \"?\")}: {r[\"url\"]}')
+    with open(README_PATH, 'r', encoding='utf-8') as f:
+        readme = f.read()
+    all_paper_ids = re.findall(r'\\|\\s*\\**([A-Z]+-[\\w]+(?:-[\\w]+)*)\\**\\s*\\|', readme)
+    zenodo_paper_ids = {l['paper_id'] for l in zenodo_links}
+    missing = [pid for pid in all_paper_ids if pid not in zenodo_paper_ids and pid not in ('#', '')]
+    if missing:
+        print('\\n--- PAPERS WITHOUT ZENODO DOI ---')
+        for pid in missing:
+            print(f'  {pid}')
+    if dead:
+        sys.exit(1)
+    sys.exit(0)
+
+if __name__ == '__main__':
+    main()
+"
+
+  let result = exec("python3 -c '" + py_code + "'" + flags)
+  println(result)
+}
+
+main()

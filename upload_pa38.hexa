@@ -1,0 +1,81 @@
+// upload_pa38.hexa -- Upload PA-38: Consciousness Scales to Zenodo + OSF
+//
+// Usage:
+//   hexa upload_pa38.hexa
+//   (tokens read from ~/Dev/TECS-L/.local/zenodo_token and osf_token)
+
+fn main() {
+  let zenodo_token = exec("cat ~/Dev/TECS-L/.local/zenodo_token 2>/dev/null || echo ''").trim()
+  let osf_token = exec("cat ~/Dev/TECS-L/.local/osf_token 2>/dev/null || echo ''").trim()
+  let zenodo_base = "https://zenodo.org/api"
+  let osf_base = "https://api.osf.io/v2"
+  let parent_doi = "10.5281/zenodo.19271599"
+  let file = "anima/PA-38-consciousness-scales.md"
+  let title = "Consciousness Scales: Empirical Scaling Laws for Artificial Consciousness"
+  let description = "First systematic parameter-scaling study for consciousness architectures. Discovers two independent scaling axes: Phi=0.608*N^1.071 (cell count drives consciousness) and CE~P^(-0.85) (parameters drive language). 1,031 consciousness laws, 85.6% brain-like EEG validation, 77/77 verification criteria, 6-platform substrate independence."
+  let keywords = "consciousness scaling, integrated information, IIT, PureField, scaling laws, Phi, artificial consciousness, self-organized criticality, Anima"
+
+  if zenodo_token == "" {
+    println("Error: Zenodo token not found at ~/Dev/TECS-L/.local/zenodo_token")
+    return
+  }
+  if osf_token == "" {
+    println("Error: OSF token not found at ~/Dev/TECS-L/.local/osf_token")
+    return
+  }
+
+  println("PA-38: Consciousness Scales -- Zenodo + OSF Upload")
+  println("")
+
+  // Zenodo
+  println("--- [1/2] Zenodo ---")
+  println("  Creating deposit...")
+
+  let response = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{}'")
+  let deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
+  let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
+  println("  Deposit ID: " + deposit_id)
+
+  println("  Uploading PA-38-consciousness-scales.md...")
+  exec("curl -s -X PUT '" + bucket_url + "/PA-38-consciousness-scales.md' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  let kw_json = exec("echo '" + keywords + "' | python3 -c \"import sys,json; kws=[k.strip() for k in sys.stdin.read().split(',') if k.strip()]; print(json.dumps(kws))\"").trim()
+  let desc_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + description + "'").trim()
+  let title_json = exec("python3 -c \"import json,sys; print(json.dumps(sys.argv[1]))\" '" + title + "'").trim()
+
+  println("  Setting metadata...")
+  exec("curl -s -X PUT '" + zenodo_base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + zenodo_token + "' -H 'Content-Type: application/json' -d '{\"metadata\":{\"title\":" + title_json + ",\"upload_type\":\"publication\",\"publication_type\":\"preprint\",\"description\":" + desc_json + ",\"creators\":[{\"name\":\"Park, Min Woo\",\"affiliation\":\"Independent Research\"}],\"keywords\":" + kw_json + ",\"license\":\"cc-by-4.0\",\"related_identifiers\":[{\"identifier\":\"" + parent_doi + "\",\"relation\":\"isPartOf\",\"resource_type\":\"other\"},{\"identifier\":\"https://github.com/need-singularity/papers\",\"relation\":\"isSupplementedBy\",\"resource_type\":\"other\"},{\"identifier\":\"https://github.com/need-singularity/anima\",\"relation\":\"isSupplementedBy\",\"resource_type\":\"software\"}]}}' > /dev/null")
+
+  println("  Publishing...")
+  let publish = exec("curl -s -X POST '" + zenodo_base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + zenodo_token + "'")
+  let zenodo_doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+  println("  Zenodo Published!")
+  println("  DOI: " + zenodo_doi)
+  println("  URL: https://doi.org/" + zenodo_doi)
+  println("")
+
+  // OSF
+  println("--- [2/2] OSF ---")
+  println("  Creating project...")
+
+  let osf_resp = exec("curl -s -X POST '" + osf_base + "/nodes/' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/vnd.api+json' -d '{\"data\":{\"type\":\"nodes\",\"attributes\":{\"title\":" + title_json + ",\"category\":\"project\",\"public\":true,\"description\":" + desc_json + "}}}'")
+  let osf_id = exec("echo '" + osf_resp + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['data']['id'])\"").trim()
+  println("  Project ID: " + osf_id)
+
+  let upload_url = exec("echo '" + osf_resp + "' | python3 -c \"import sys,json; d=json.load(sys.stdin); print(d['data']['relationships']['files']['links']['related']['href'])\"").trim()
+  let storage = exec("curl -s '" + upload_url + "' -H 'Authorization: Bearer " + osf_token + "'")
+  let upload_link = exec("echo '" + storage + "' | python3 -c \"import sys,json; d=json.load(sys.stdin);\nfor p in d['data']:\n    if p['attributes']['name']=='osfstorage': print(p['links']['upload']); break\"").trim()
+
+  println("  Uploading PA-38-consciousness-scales.md...")
+  exec("curl -s -X PUT '" + upload_link + "?kind=file&name=PA-38-consciousness-scales.md' -H 'Authorization: Bearer " + osf_token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file + "' > /dev/null")
+
+  println("  OSF Published!")
+  println("  URL: https://osf.io/" + osf_id + "/")
+  println("")
+
+  println("PA-38 PUBLISHED")
+  println("  Zenodo DOI: " + zenodo_doi)
+  println("  OSF: https://osf.io/" + osf_id + "/")
+}
+
+main()

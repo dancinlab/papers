@@ -1,0 +1,38 @@
+// P-002-reproduction.hexa -- Reproduction Script: Universal Confusion Topology
+//
+// Reproduces ALL key results from P-002.
+// Results: PH merge=confusion, architecture invariance, k-NN invariance,
+//          dimension invariance, epoch 1 prediction, phase transition,
+//          dendrogram purity, confusion PCA, non-shared entanglement
+//
+// Usage:
+//   hexa tecs-l/P-002-reproduction.hexa
+//
+// Requirements: torch, torchvision, numpy, scipy, sklearn, ripser (optional)
+// Time: ~15-20 min on Mac CPU
+//
+// The Python computation (torch/numpy/scipy) runs via exec().
+// Source kept as P-002-reproduction.py in same directory for the heavy ML pipeline.
+
+fn main() {
+  let script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
+  let project_root = exec("cd \"" + script_dir + "/..\" && pwd").trim()
+  let py_script = script_dir + "/P-002-reproduction.py"
+
+  let py_exists = exec("test -f '" + py_script + "' && echo yes || echo no").trim()
+  if py_exists != "yes" {
+    println("ERROR: P-002-reproduction.py not found at " + py_script)
+    println("This .hexa launcher requires the Python computation file.")
+    return
+  }
+
+  println("P-002 Reproduction Script (hexa launcher)")
+  println("  project_root: " + project_root)
+  println("  python_src:   " + py_script)
+  println("")
+
+  let result = exec("cd '" + project_root + "' && python3 '" + py_script + "'")
+  println(result)
+}
+
+main()
