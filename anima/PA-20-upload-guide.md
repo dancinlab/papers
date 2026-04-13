@@ -45,8 +45,8 @@ Resource type: Publication / Preprint
 ## 파일 위치
 
 ```
-/Users/ghost/Dev/papers/anima/PA-20-consciousness-phase-diagram.md  (신규)
-/Users/ghost/Dev/papers/anima/PA-04-phi-boosting.md                 (보강)
-/Users/ghost/Dev/papers/anima/PA-11-emergent-speech.md              (보강)
-/Users/ghost/Dev/papers/anima/PA-12-phi-over-1000.md                (보강)
+./anima/PA-20-consciousness-phase-diagram.md  (신규)
+./anima/PA-04-phi-boosting.md                 (보강)
+./anima/PA-11-emergent-speech.md              (보강)
+./anima/PA-12-phi-over-1000.md                (보강)
 ```
