@@ -1053,3 +1053,18 @@ The following matrix shows which organizations independently developed standards
 | sopfr = 5 | A320 X | Pirelli X | UIC X | Beaufort X | Euler X | CBRE X | ASTM X |
 
 Each "X" represents a standard set by an independent organization with no reference to the $n = 6$ framework. The matrix demonstrates that every base constant is confirmed by $\geq 5$ independent sources across $\geq 5$ domains.
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

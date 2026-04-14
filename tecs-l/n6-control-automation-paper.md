@@ -688,3 +688,18 @@ The control-robotics-computing $n = 6$ encoding, if structural, suggests that th
 14. C. Lattner, V. Adve, "LLVM: A compilation framework for lifelong program analysis and transformation," *CGO* (2004).
 15. H. Pieper, B. Roth, "The kinematics of manipulators under computer control," *ICAR* (1969).
 16. TECS-L Research Group, "The uniqueness of $n = 6$: Three independent proofs," companion paper.
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

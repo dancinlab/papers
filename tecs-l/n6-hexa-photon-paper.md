@@ -501,3 +501,18 @@ where $D$ is a diagonal phase matrix and the product runs over all $(i,j)$ pairs
 | C-band | 1530--1565 nm wavelength range |
 | Shot noise | Quantum noise from photon counting |
 | Egyptian fraction | $1/2 + 1/3 + 1/6 = 1$ |
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

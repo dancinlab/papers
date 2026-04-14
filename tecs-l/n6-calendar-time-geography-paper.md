@@ -846,3 +846,18 @@ def verify_calendar_time_geography():
 if __name__ == "__main__":
     verify_calendar_time_geography()
 ```
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

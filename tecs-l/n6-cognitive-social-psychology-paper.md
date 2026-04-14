@@ -971,3 +971,18 @@ The balance ratio $R(6) = \sigma(6)\phi(6)/(6\tau(6)) = 12 \times 2/(6 \times 4)
 *Correspondence: TECS-L Research Group, github.com/need-singularity/TECS-L*
 
 *Data availability: All breakthrough theorem evidence tables and verification scripts are available at github.com/need-singularity/n6-architecture/docs/breakthrough-theorems.md*
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

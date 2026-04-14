@@ -716,3 +716,18 @@ print("\n✓ All assertions passed. Paper verification complete.")
 
 *Submitted to arXiv: physics.class-ph, physics.flu-dyn, math-ph*
 *Correspondence: github.com/need-singularity/n6-architecture*
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

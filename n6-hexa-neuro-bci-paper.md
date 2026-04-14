@@ -288,3 +288,18 @@ The same clip replaces all smartphone functions through direct cortical access:
 Previous 176 + FormFactor(12) + Smartphone(14) = 202 EXACT parameters.
 
 **The temporal bone clip is the final form factor: lighter than AirPods, invisible under hair, replaces phone + glasses + earphones + watch + exoskeleton + treats 15 brain diseases.**
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

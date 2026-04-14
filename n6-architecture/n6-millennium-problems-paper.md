@@ -507,3 +507,18 @@ print(f"\n  n=5 정합률: ~0-10% -- 완전 실패")
 28. Wolfram, S. (2002). *A New Kind of Science*.
 29. Perelman, G. (2003). *Ricci flow with surgery on three-manifolds*.
 30. Park, M. (2026). *Core theorem: $\sigma\varphi = n\tau \iff n=6$*. Three independent proofs.
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

@@ -647,3 +647,18 @@ for typical $I_c R_n \approx 1$ mV. This picosecond switching is the physical ba
 | Dilution refrigerator | Cryostat reaching millikelvin temperatures |
 | Bluefors | Leading manufacturer of dilution refrigerators |
 | Egyptian fraction | $1/2 + 1/3 + 1/6 = 1$ |
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

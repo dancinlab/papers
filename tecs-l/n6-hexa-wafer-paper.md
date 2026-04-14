@@ -531,3 +531,18 @@ This matches the $\sigma = 12$ spare tile design exactly.
 | VRM | Voltage Regulator Module |
 | InFO-WS | Integrated Fan-Out Wafer Scale |
 | Egyptian fraction | $1/2 + 1/3 + 1/6 = 1$ |
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

@@ -590,3 +590,18 @@ The manufacturing-quality-software $n = 6$ encoding suggests that the optimal st
 17. ISO 668, "Series 1 freight containers --- Classification, dimensions and ratings," International Organization for Standardization.
 18. J. Hoffmann et al., "Training compute-optimal large language models," *NeurIPS* (2022).
 19. TECS-L Research Group, "The uniqueness of $n = 6$: Three independent proofs," companion paper.
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

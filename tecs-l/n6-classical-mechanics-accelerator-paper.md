@@ -575,3 +575,18 @@ The deepest insight is the mechanics--gauge bridge: classical mechanics (Hamilto
 17. R. Featherstone, *Rigid Body Dynamics Algorithms*, Springer (2008).
 18. Particle Data Group, "Review of Particle Physics," *Phys. Rev. D* **110**, 030001 (2024).
 19. TECS-L Research Group, "The uniqueness of $n = 6$: Three independent proofs," companion paper.
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

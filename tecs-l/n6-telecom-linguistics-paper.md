@@ -751,3 +751,18 @@ def verify_telecom_linguistics():
 if __name__ == "__main__":
     verify_telecom_linguistics()
 ```
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

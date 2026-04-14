@@ -4,30 +4,83 @@
 //   ZENODO_TOKEN=xxx hexa upload_zenodo.hexa <PAPER_ID>
 //   ZENODO_TOKEN=xxx hexa upload_zenodo.hexa N6-NANOBOT
 //
+// Flags (added 2026-04-14, VERIFY-P2-1 / VERIFY-P2-2):
+//   --check-only <paper.md>   Run PP2 gate only, print PASS/FAIL, exit. NO upload.
+//   --skip-pp2-gate           Bypass PP2 verify markers check (warning logged).
+//   --dry-run                 Skip the actual Zenodo publish AND skip manifest write.
+//                             Prints would-be manifest delta instead.
+//
+// PP2 gate (pre-upload): scripts/pp2_gate.py -- blocks papers missing
+//   ```python fenced block AND >=1 marker (@register, ossification_loop, N/N OK, N62).
+//   Precedent: shared/discovery/papers_pp2_audit_2026-04-14.json.
+//
+// PP3 hook (post-upload): scripts/manifest_update.py update -- marks entry
+//   Published, fills doi/zenodo_record/published_at, atomic write.
+//
 // Reads manifest.json for file/title/keywords/abstract, creates Zenodo deposit,
 // uploads, sets metadata, publishes. Outputs DOI.
 
 fn main() {
-  let token = exec("echo $ZENODO_TOKEN").trim()
-  if token == "" {
-    println("Error: ZENODO_TOKEN not set")
-    println("Usage: ZENODO_TOKEN=xxx hexa upload_zenodo.hexa <PAPER_ID>")
-    return
-  }
-
   let cli_args = args()
-  let mut paper_id = "PA-20"
-  if cli_args.len() > 0 {
-    paper_id = cli_args[0]
-  }
-
-  let base = "https://zenodo.org/api"
   let script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
   let manifest = script_dir + "/manifest.json"
 
-  println("=== " + paper_id + " upload start ===")
+  // ─── flag parsing (hexa args() = [hexa_bin, script, user_args...]) ───
+  let mut paper_id = ""
+  let mut skip_pp2 = false
+  let mut dry_run = false
+  let mut check_only = false
+  let mut check_only_target = ""
+  let mut i = 2
+  while i < cli_args.len() {
+    let a = cli_args[i]
+    if a == "--skip-pp2-gate" {
+      skip_pp2 = true
+    } else if a == "--dry-run" {
+      dry_run = true
+    } else if a == "--check-only" {
+      check_only = true
+      if i + 1 < cli_args.len() {
+        check_only_target = cli_args[i + 1]
+        i = i + 1
+      }
+    } else if paper_id == "" {
+      paper_id = a
+    }
+    i = i + 1
+  }
 
-  let meta = exec("python3 - '" + manifest + "' '" + paper_id + "' <<'PYEOF'\nimport json, sys\nmanifest_path, pid = sys.argv[1], sys.argv[2]\nm = json.load(open(manifest_path))\nfor p in m.get('papers', []):\n    if p.get('id') == pid:\n        print(json.dumps({'file': p.get('file', ''), 'title': p.get('title', ''), 'abstract': p.get('abstract_first_line', ''), 'keywords': p.get('keywords', [])}, ensure_ascii=False))\n        sys.exit(0)\nprint('ERROR: paper id not found', file=sys.stderr)\nsys.exit(1)\nPYEOF").trim()
+  // ─── --check-only short-circuit (no token, no upload) ───
+  if check_only {
+    if check_only_target == "" {
+      println("Error: --check-only requires <paper.md> argument")
+      return
+    }
+    let gate_cmd = "/opt/homebrew/bin/python3 '" + script_dir + "/scripts/pp2_gate.py' --check-only '" + check_only_target + "' 2>&1; echo \"__EXIT__$?\""
+    let gate_out = exec(gate_cmd)
+    println(gate_out)
+    return
+  }
+
+  let token = exec("echo $ZENODO_TOKEN").trim()
+  if token == "" && dry_run == false {
+    println("Error: ZENODO_TOKEN not set")
+    println("Usage: ZENODO_TOKEN=xxx hexa upload_zenodo.hexa <PAPER_ID> [--dry-run] [--skip-pp2-gate]")
+    return
+  }
+
+  if paper_id == "" {
+    paper_id = "PA-20"
+  }
+
+  let base = "https://zenodo.org/api"
+
+  println("=== " + paper_id + " upload start ===")
+  if dry_run {
+    println("  [DRY-RUN] no Zenodo API calls, no manifest write")
+  }
+
+  let meta = exec("python3 - '" + manifest + "' '" + paper_id + "' <<'PYEOF'\nimport json, sys\nmanifest_path, pid = sys.argv[1], sys.argv[2]\nm = json.load(open(manifest_path))\nfor p in m.get('papers', []):\n    if p.get('id') == pid:\n        print(json.dumps({'file': p.get('file', '') or p.get('source', ''), 'title': p.get('title', ''), 'abstract': p.get('abstract_first_line', ''), 'keywords': p.get('keywords', [])}, ensure_ascii=False))\n        sys.exit(0)\nprint('ERROR: paper id not found', file=sys.stderr)\nsys.exit(1)\nPYEOF").trim()
 
   if meta == "" {
     println("Error: " + paper_id + " not found in manifest.json")
@@ -48,31 +101,69 @@ fn main() {
   println("  file: " + file)
   println("  title: " + title)
 
-  let response = exec("curl -s -X POST '" + base + "/deposit/depositions' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/json' -d '{}'")
-  let deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
-  let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
-  println("  Deposit ID: " + deposit_id)
+  // ─── PP2 verify-code gate (VERIFY-P2-1) ───
+  println("  [PP2-GATE] checking verification markers ...")
+  let mut gate_flags = "--check-only"
+  if skip_pp2 {
+    gate_flags = "--skip"
+  }
+  let gate_cmd = "/opt/homebrew/bin/python3 '" + script_dir + "/scripts/pp2_gate.py' " + gate_flags + " '" + file_path + "' > /tmp/pp2_gate.out 2> /tmp/pp2_gate.err; echo $?"
+  let gate_exit = exec(gate_cmd).trim()
+  let gate_stdout = exec("cat /tmp/pp2_gate.out 2>/dev/null").trim()
+  let gate_stderr = exec("cat /tmp/pp2_gate.err 2>/dev/null").trim()
+  if gate_stdout != "" { println("  " + gate_stdout) }
+  if gate_exit != "0" && skip_pp2 == false {
+    println("  [PP2-GATE] BLOCK — upload aborted")
+    if gate_stderr != "" { println(gate_stderr) }
+    println("  Use --skip-pp2-gate to bypass (will be logged as warning).")
+    return
+  }
+  if skip_pp2 {
+    println("  [PP2-GATE] WARNING: bypass active (--skip-pp2-gate)")
+    if gate_stderr != "" { println(gate_stderr) }
+  }
 
-  let fname = exec("basename '" + file + "'").trim()
-  println("  upload: " + fname + " ...")
-  exec("curl -s -X PUT '" + bucket_url + "/" + fname + "' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file_path + "' > /dev/null")
+  // ─── Zenodo upload (skipped under --dry-run) ───
+  let mut deposit_id = "DRY_RUN_DEPOSIT"
+  let mut doi = "10.5281/zenodo.DRY_RUN"
 
-  let metadata_json = exec("python3 - '" + title + "' '" + abstract_text + "' '" + meta + "' <<'PYEOF'\nimport json, sys\ntitle, abstract, meta_str = sys.argv[1], sys.argv[2], sys.argv[3]\nmeta = json.loads(meta_str)\nkeywords = meta.get('keywords', []) or ['perfect number', 'n=6']\npayload = {'metadata': {'title': title, 'upload_type': 'publication', 'publication_type': 'preprint', 'description': abstract or title, 'creators': [{'name': 'Park, Min Woo', 'affiliation': 'Independent Research'}], 'keywords': keywords, 'license': 'cc-by-4.0', 'related_identifiers': [{'identifier': '10.5281/zenodo.19271599', 'relation': 'isPartOf', 'resource_type': 'other'}, {'identifier': 'https://github.com/need-singularity/papers', 'relation': 'isSupplementedBy', 'resource_type': 'other'}]}}\nprint(json.dumps(payload))\nPYEOF").trim()
+  if dry_run == false {
+    let response = exec("curl -s -X POST '" + base + "/deposit/depositions' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/json' -d '{}'")
+    deposit_id = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['id'])\"").trim()
+    let bucket_url = exec("echo '" + response + "' | python3 -c \"import sys,json; print(json.load(sys.stdin)['links']['bucket'])\"").trim()
+    println("  Deposit ID: " + deposit_id)
 
-  println("  setting metadata...")
-  exec("curl -s -X PUT '" + base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/json' -d '" + metadata_json + "' > /dev/null")
+    let fname = exec("basename '" + file + "'").trim()
+    println("  upload: " + fname + " ...")
+    exec("curl -s -X PUT '" + bucket_url + "/" + fname + "' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/octet-stream' --data-binary @'" + file_path + "' > /dev/null")
 
-  println("  publish ...")
-  let publish = exec("curl -s -X POST '" + base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + token + "'")
-  let doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+    let metadata_json = exec("python3 - '" + title + "' '" + abstract_text + "' '" + meta + "' <<'PYEOF'\nimport json, sys\ntitle, abstract, meta_str = sys.argv[1], sys.argv[2], sys.argv[3]\nmeta = json.loads(meta_str)\nkeywords = meta.get('keywords', []) or ['perfect number', 'n=6']\npayload = {'metadata': {'title': title, 'upload_type': 'publication', 'publication_type': 'preprint', 'description': abstract or title, 'creators': [{'name': 'Park, Min Woo', 'affiliation': 'Independent Research'}], 'keywords': keywords, 'license': 'cc-by-4.0', 'related_identifiers': [{'identifier': '10.5281/zenodo.19271599', 'relation': 'isPartOf', 'resource_type': 'other'}, {'identifier': 'https://github.com/need-singularity/papers', 'relation': 'isSupplementedBy', 'resource_type': 'other'}]}}\nprint(json.dumps(payload))\nPYEOF").trim()
+
+    println("  setting metadata...")
+    exec("curl -s -X PUT '" + base + "/deposit/depositions/" + deposit_id + "' -H 'Authorization: Bearer " + token + "' -H 'Content-Type: application/json' -d '" + metadata_json + "' > /dev/null")
+
+    println("  publish ...")
+    let publish = exec("curl -s -X POST '" + base + "/deposit/depositions/" + deposit_id + "/actions/publish' -H 'Authorization: Bearer " + token + "'")
+    doi = exec("echo '" + publish + "' | python3 -c \"import sys,json; print(json.load(sys.stdin).get('doi','ERROR'))\"").trim()
+  } else {
+    println("  [DRY-RUN] skipping Zenodo create/upload/publish")
+  }
 
   println("")
   println("  DOI: " + doi)
   println("  URL: https://doi.org/" + doi)
   println("  Zenodo: https://zenodo.org/records/" + deposit_id)
   println("")
+
+  // ─── PP3 manifest update hook (VERIFY-P2-2) ───
+  println("  [PP3-HOOK] manifest update ...")
+  let mut hook_flags = ""
+  if dry_run { hook_flags = " --dry-run" }
+  let hook_cmd = "/opt/homebrew/bin/python3 '" + script_dir + "/scripts/manifest_update.py' update --paper-id '" + paper_id + "' --doi '" + doi + "' --zenodo-id '" + deposit_id + "' --file '" + file + "' --title '" + title + "'" + hook_flags + " 2>&1"
+  let hook_out = exec(hook_cmd)
+  println(hook_out)
+
   println("=== " + paper_id + " upload complete ===")
-  println("Update manifest.json doi/zenodo_doi field to " + doi)
 }
 
 main()

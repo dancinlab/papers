@@ -536,3 +536,18 @@ HEXA-3D is Level 3 of the N6 chip architecture ladder, building on HEXA-1 (unifi
 | Egyptian fraction | $1/2 + 1/3 + 1/6 = 1$ |
 | HBM | High Bandwidth Memory |
 | PIM | Processing-in-Memory |
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

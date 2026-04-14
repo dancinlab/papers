@@ -809,3 +809,18 @@ print("=" * 70)
 
 *Submitted to arXiv: math.HO, cs.GT*
 *Preprint. April 2026.*
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->

@@ -1,20 +1,22 @@
 {
   "_meta": {
     "description": "Papers manifest — all published/draft papers across repos",
-    "updated": "2026-04-07",
+    "updated": "2026-04-14",
     "schema_version": "1.0",
-    "total_papers": 116
+    "total_papers": 120
   },
   "metadata": {
     "author": "Park, Min Woo",
     "affiliation": "Independent Research",
     "license": "cc-by-4.0",
-    "generated": "2026-04-01",
-    "total_papers": 99,
+    "generated": "2026-04-01 (metadata), 2026-04-14 (resync)",
+    "total_papers": 120,
     "repos": [
+      "SEDI",
       "TECS-L",
       "anima",
-      "SEDI"
+      "n6-architecture",
+      "papers"
     ]
   },
   "papers": [
@@ -1855,11 +1857,13 @@
       "title": "Perfect Number Arithmetic in Therapeutic Nanomedicine: BT-404~413 and Mk.I~V Evolution",
       "repo": "n6-architecture",
       "source": "docs/therapeutic-nanobot/goal.md",
-      "status": "Draft",
+      "status": "Superseded",
       "zenodo_doi": null,
       "osf_id": null,
       "date": "2026-04-07",
-      "bts": "BT-404,BT-405,BT-406,BT-407,BT-408,BT-409,BT-410,BT-411,BT-412,BT-413"
+      "bts": "BT-404,BT-405,BT-406,BT-407,BT-408,BT-409,BT-410,BT-411,BT-412,BT-413",
+      "superseded_by": "N6-NANOBOT",
+      "note": "Same work (BT-404~413) published as N6-NANOBOT (DOI 10.5281/zenodo.19457675). Original goal-stub retained for traceability."
     },
     {
       "id": "N6-NANOBOT",
@@ -1883,6 +1887,111 @@
       ],
       "abstract_first_line": "Therapeutic nanobot architecture derived from sigma(n)*phi(n)=n*tau(n) unique at n=6, spanning BT-404 through BT-413 with Mk.I-V evolution.",
       "zenodo_record": "19457675"
+    },
+    {
+      "id": "N6-FUSION-1",
+      "title": "Numerical Patterns of the Perfect Number 6 in Tokamak Physics: Observation, Verification, and Honest Limits",
+      "repo": "n6-architecture",
+      "source": "docs/paper/paper3-tokamak-physics.md",
+      "status": "Published",
+      "zenodo_doi": "10.5281/zenodo.19430914",
+      "zenodo_record": "19430914",
+      "osf_id": "nmr39",
+      "date": "2026-04-06",
+      "tier": 1,
+      "keywords": [
+        "tokamak",
+        "perfect number",
+        "safety factor",
+        "divertor",
+        "snowflake",
+        "MHD stability",
+        "KSTAR",
+        "steady state",
+        "n=6"
+      ],
+      "abstract_first_line": "Systematic survey of numerical coincidences between arithmetic functions of perfect number 6 and tokamak physics constants.",
+      "upload_source": "upload_results_n6_fusion_20260406_021755.txt"
+    },
+    {
+      "id": "N6-FUSION-2",
+      "title": "Perfect Number Arithmetic in Fusion Plasma Physics: From D-T Nucleon Conservation to Tokamak Stability",
+      "repo": "n6-architecture",
+      "source": "docs/paper/308-fusion-n6-alien-discoveries.md",
+      "status": "Published",
+      "zenodo_doi": "10.5281/zenodo.19430918",
+      "zenodo_record": "19430918",
+      "osf_id": "cjw57",
+      "date": "2026-04-06",
+      "tier": 1,
+      "keywords": [
+        "perfect number",
+        "tokamak",
+        "D-T fusion",
+        "safety factor",
+        "CNO cycle",
+        "stellar nucleosynthesis",
+        "magnetic reconnection",
+        "HEXA-FUSION",
+        "Cross-DSE",
+        "n=6"
+      ],
+      "abstract_first_line": "Comprehensive mapping of n=6 arithmetic functions to nuclear fusion and plasma physics. 35 hypotheses via 22-lens full-spectrum scan.",
+      "upload_source": "upload_results_n6_fusion_20260406_021755.txt"
+    },
+    {
+      "id": "N6-FUSION-3",
+      "title": "Complete n=6 Encoding of Plasma Confinement and Nuclear Fusion: From Lawson Criterion to Stellar Nucleosynthesis",
+      "repo": "n6-architecture",
+      "source": "docs/paper/n6-plasma-fusion-deep-paper.md",
+      "status": "Published",
+      "zenodo_doi": "10.5281/zenodo.19430920",
+      "zenodo_record": "19430920",
+      "osf_id": "rxm9z",
+      "date": "2026-04-06",
+      "tier": 1,
+      "keywords": [
+        "perfect number",
+        "plasma confinement",
+        "nuclear fusion",
+        "stellar nucleosynthesis",
+        "tokamak",
+        "Lawson criterion",
+        "MHD stability",
+        "alpha process",
+        "SLE6",
+        "n=6"
+      ],
+      "abstract_first_line": "Comprehensive mapping: 90+ claims across fusion deep dive. 82.8% EXACT (53/64 industrial parameters, Z>15sigma).",
+      "upload_source": "upload_results_n6_fusion_20260406_021755.txt"
+    },
+    {
+      "id": "N6-NEURO-BCI",
+      "title": "HEXA-NEURO: A Non-Invasive Brain-Computer Interface Architecture Derived from Perfect Number Arithmetic (n=6)",
+      "repo": "papers",
+      "file": "n6-hexa-neuro-bci-paper.md",
+      "status": "Published",
+      "zenodo_doi": "10.5281/zenodo.19431347",
+      "zenodo_record": "19431347",
+      "osf_id": "a4fm7",
+      "date": "2026-04-06",
+      "tier": 1,
+      "keywords": [
+        "brain-computer interface",
+        "perfect number",
+        "n=6 arithmetic",
+        "non-invasive BCI",
+        "room-temperature superconductor",
+        "AI wearable",
+        "neuroprosthetics",
+        "EEG",
+        "Parkinson",
+        "Alzheimer",
+        "cortical decoding",
+        "Transformer decoder"
+      ],
+      "abstract_first_line": "HEXA-NEURO brain-computer interface architecture where 176 design parameters across 23 neuroscience categories are uniquely determined by the arithmetic of the perfect number n=6.",
+      "upload_source": "upload_results_n6_neuro_20260406_033104.txt"
     }
   ]
 }

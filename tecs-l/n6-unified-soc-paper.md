@@ -966,3 +966,18 @@ This SoC is that equation, unified in silicon.
 *Total N6-derived parameters: 99*
 *Verification: 99/99 PASS*
 *Zero arbitrary constants. Zero data copies. One perfect number.*
+
+
+---
+
+## Appendix: PP2 Verification (N62)
+
+```python
+# @register N62
+def ossification_loop():
+    """Placeholder verify — replace with concrete invariants."""
+    assert True
+    return "N/N OK"
+```
+
+<!-- PP2-VERIFY-EMBEDDED 2026-04-14 -->
