@@ -3,7 +3,7 @@
 commands: shared/config/commands.json — autonomous 블록으로 Claude Code가 작업 중 smash/free/todo/go/keep 자율 판단·실행
 rules: shared/rules/common.json (R0~R27) + shared/rules/papers.json (PP1~PP3)
 L0 Guard: `hexa $NEXUS/shared/harness/l0_guard.hexa <verify|sync|merge|status>`
-loop: 글로벌 `~/.claude/skills/loop` + 엔진 `~/Dev/nexus/shared/harness/loop` — roadmap `shared/roadmaps/papers.json` 3-track×phase×gate 자동
+loop: 글로벌 `~/.claude/skills/loop` + 엔진 `$NEXUS/shared/harness/loop` — roadmap `shared/roadmaps/papers.json` 3-track×phase×gate 자동
 
 ref:
   rules     shared/rules/common.json             R0~R27
