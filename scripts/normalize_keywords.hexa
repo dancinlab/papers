@@ -1,0 +1,100 @@
+// normalize_keywords.hexa -- Apply keyword alias map to manifest.json
+// + emit keyword_index.json (canonical_keyword -> [paper_ids]).
+//
+// Usage:
+//   hexa scripts/normalize_keywords.hexa --dry-run
+//   hexa scripts/normalize_keywords.hexa
+
+fn main() {
+  let cli_args = args()
+  let flags = ""
+  let i = 0
+  for i in 0..cli_args.len() {
+    if cli_args[i] == "--dry-run" {
+      flags = flags + " --dry-run"
+    }
+  }
+
+  let script_dir = exec("dirname \"$(readlink -f \"$0\" 2>/dev/null || echo \"$0\")\"").trim()
+  let repo_root  = exec("cd \"" + script_dir + "/..\" && pwd").trim()
+
+  let sh = "
+REPO_ROOT='" + repo_root + "'
+FLAGS='" + flags + "'
+/usr/bin/python3 - \"$REPO_ROOT\" $FLAGS <<'PYEOF'
+import json, os, sys, tempfile, datetime as _dt
+
+REPO_ROOT = sys.argv[1]
+DRY = '--dry-run' in sys.argv[2:]
+MANIFEST = os.path.join(REPO_ROOT, 'manifest.json')
+ALIASES  = os.path.join(REPO_ROOT, 'scripts', 'keyword_aliases.json')
+INDEX    = os.path.join(REPO_ROOT, 'keyword_index.json')
+TODAY    = _dt.date.today().isoformat()
+
+def _load(p):
+    with open(p, 'r', encoding='utf-8') as fh: return json.load(fh)
+
+def _atomic(path, data):
+    d = os.path.dirname(os.path.abspath(path)) or '.'
+    fd, tmp = tempfile.mkstemp(prefix='.tmp.', suffix='.json', dir=d)
+    try:
+        with os.fdopen(fd, 'w', encoding='utf-8') as fh:
+            json.dump(data, fh, indent=2, ensure_ascii=False); fh.write('\\n')
+            fh.flush(); os.fsync(fh.fileno())
+        os.replace(tmp, path)
+    except Exception:
+        try: os.unlink(tmp)
+        except OSError: pass
+        raise
+
+manifest = _load(MANIFEST)
+aliases  = _load(ALIASES).get('aliases', {})
+alias_lo = {k.lower(): v for k, v in aliases.items()}
+
+stats = {'papers': 0, 'kw_before': 0, 'kw_after': 0, 'mapped': 0, 'deduped': 0}
+for p in manifest.get('papers', []):
+    kws = p.get('keywords') or []
+    stats['papers'] += 1; stats['kw_before'] += len(kws)
+    seen, seen_set = [], set()
+    for kw in kws:
+        canon = alias_lo.get(kw.strip().lower(), kw.strip())
+        if canon != kw: stats['mapped'] += 1
+        if canon in seen_set: stats['deduped'] += 1; continue
+        seen_set.add(canon); seen.append(canon)
+    p['keywords'] = seen
+    stats['kw_after'] += len(seen)
+
+idx = {}
+for p in manifest.get('papers', []):
+    pid = p.get('id', '')
+    if not pid: continue
+    for kw in p.get('keywords') or []:
+        idx.setdefault(kw, []).append(pid)
+for kw in list(idx.keys()):
+    idx[kw] = sorted(set(idx[kw]))
+
+idx_doc = {
+  '_meta': {
+    'description': 'Keyword -> paper_id inverse index (O(1) cross-ref)',
+    'updated': TODAY, 'schema_version': '1.0',
+    'total_keywords': len(idx),
+    'total_papers': len(manifest.get('papers', [])),
+  },
+  'index': dict(sorted(idx.items(), key=lambda x: (-len(x[1]), x[0]))),
+}
+manifest.setdefault('_meta', {})['updated'] = TODAY
+
+summary = {'mode': 'normalize_keywords', 'stats': stats,
+           'index_entries': len(idx),
+           'manifest_path': MANIFEST, 'index_path': INDEX,
+           'dry_run': DRY}
+print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+if not DRY:
+    _atomic(MANIFEST, manifest)
+    _atomic(INDEX, idx_doc)
+PYEOF
+"
+  let result = exec(sh)
+  print(result)
+}

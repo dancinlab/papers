@@ -1,7 +1,7 @@
 {
   "_meta": {
     "description": "Papers manifest — all published/draft papers across repos",
-    "updated": "2026-04-14",
+    "updated": "2026-04-20",
     "schema_version": "1.0",
     "total_papers": 120
   },
@@ -152,7 +152,7 @@
       "keywords": [
         "perfect-numbers",
         "number-theory",
-        "arithmetic-characterizations",
+        "arithmetic-functions",
         "n=6"
       ],
       "abstract_first_line": "208 proven characterizations of perfect number 6 across divisor functions."
@@ -307,7 +307,7 @@
       "tier": 1,
       "keywords": [
         "perfect-numbers",
-        "arithmetic-identities",
+        "arithmetic-functions",
         "uniqueness",
         "n=6"
       ],
@@ -926,7 +926,7 @@
       "tier": 2,
       "keywords": [
         "exoplanets",
-        "orbital-resonances",
+        "orbital-resonance",
         "period-ratios",
         "perfect-numbers"
       ],
@@ -1079,7 +1079,7 @@
         "consciousness",
         "fifth-revolution",
         "falsification",
-        "voyager",
+        "Voyager",
         "quantum-vacuum"
       ],
       "abstract_first_line": "The first perfect number n=6=3! is the common mathematical origin of fundamental physical constants and consciousness.",
@@ -1247,8 +1247,8 @@
         "SU(5)",
         "Monster group",
         "Moonshine",
-        "perfect numbers",
-        "Lie algebras",
+        "perfect-numbers",
+        "lie-algebras",
         "brute-force verification"
       ],
       "abstract_first_line": "The GUT embedding chain SU(5)⊂SO(10)⊂E₆⊂E₈ has ranks (4,5,6,8)=(τ,sopfr,n,σ-τ) with 11/11 exact matches and p≈0.004%."
@@ -1287,10 +1287,10 @@
       "keywords": [
         "TCP",
         "DNS",
-        "twin primes",
+        "twin-primes",
         "Internet",
-        "network protocol",
-        "perfect numbers"
+        "network-protocol",
+        "perfect-numbers"
       ],
       "abstract_first_line": "TCP 11 states (σ-μ) and DNS 13 roots (σ+μ) form twin primes summing to 24 = core theorem value."
     },
@@ -1304,12 +1304,12 @@
       "date": "2026-04-07",
       "tier": 1,
       "keywords": [
-        "Riemann zeta",
-        "Bernoulli numbers",
-        "BCS theory",
-        "modular forms",
-        "perfect numbers",
-        "vacuum energy"
+        "Riemann-zeta",
+        "Bernoulli-numbers",
+        "BCS-theory",
+        "modular-forms",
+        "perfect-numbers",
+        "vacuum-energy"
       ],
       "abstract_first_line": "ζ(2)=π²/6, ζ(-1)=-1/12, and BCS 12/(7ζ(3)) generate n=6 arithmetic at three independent evaluation points."
     },
@@ -1696,7 +1696,8 @@
       "zenodo_doi": "10.5281/zenodo.19438203",
       "osf_id": "jf829",
       "date": "2026-04-06",
-      "bts": "BT-129,130,133,196,241,270-290,342"
+      "bts": "BT-129,130,133,196,241,270-290,342",
+      "keywords": []
     },
     {
       "id": "N6-031",
@@ -1707,7 +1708,8 @@
       "zenodo_doi": "10.5281/zenodo.19438205",
       "osf_id": "28xp6",
       "date": "2026-04-06",
-      "bts": "BT-132,184,223,254-269"
+      "bts": "BT-132,184,223,254-269",
+      "keywords": []
     },
     {
       "id": "N6-032",
@@ -1718,7 +1720,8 @@
       "zenodo_doi": "10.5281/zenodo.19438210",
       "osf_id": "9aq6c",
       "date": "2026-04-06",
-      "bts": "BT-195,91,92,114,170"
+      "bts": "BT-195,91,92,114,170",
+      "keywords": []
     },
     {
       "id": "N6-033",
@@ -1729,7 +1732,8 @@
       "zenodo_doi": "10.5281/zenodo.19438214",
       "osf_id": "47x93",
       "date": "2026-04-06",
-      "bts": "BT-327,328"
+      "bts": "BT-327,328",
+      "keywords": []
     },
     {
       "id": "N6-034",
@@ -1740,7 +1744,8 @@
       "zenodo_doi": "10.5281/zenodo.19438216",
       "osf_id": "nwvb9",
       "date": "2026-04-06",
-      "bts": "BT-149,193,199"
+      "bts": "BT-149,193,199",
+      "keywords": []
     },
     {
       "id": "N6-035",
@@ -1751,7 +1756,8 @@
       "zenodo_doi": "10.5281/zenodo.19438221",
       "osf_id": "2jbyh",
       "date": "2026-04-06",
-      "bts": "BT-147,183,338,339"
+      "bts": "BT-147,183,338,339",
+      "keywords": []
     },
     {
       "id": "N6-036",
@@ -1762,7 +1768,8 @@
       "zenodo_doi": "10.5281/zenodo.19438229",
       "osf_id": "urhk2",
       "date": "2026-04-06",
-      "bts": "BT-160,221,227,228,267"
+      "bts": "BT-160,221,227,228,267",
+      "keywords": []
     },
     {
       "id": "N6-037",
@@ -1773,7 +1780,8 @@
       "zenodo_doi": "10.5281/zenodo.19438231",
       "osf_id": "f658m",
       "date": "2026-04-06",
-      "bts": "BT-150,192,198,225,341"
+      "bts": "BT-150,192,198,225,341",
+      "keywords": []
     },
     {
       "id": "N6-038",
@@ -1784,7 +1792,8 @@
       "zenodo_doi": "10.5281/zenodo.19438235",
       "osf_id": "ytajx",
       "date": "2026-04-06",
-      "bts": "BT-144,148,152,158,200,202,212,262"
+      "bts": "BT-144,148,152,158,200,202,212,262",
+      "keywords": []
     },
     {
       "id": "N6-039",
@@ -1795,7 +1804,8 @@
       "zenodo_doi": "10.5281/zenodo.19438237",
       "osf_id": "nsfuz",
       "date": "2026-04-06",
-      "bts": "BT-138,154,182,191,233,256,268"
+      "bts": "BT-138,154,182,191,233,256,268",
+      "keywords": []
     },
     {
       "id": "N6-040",
@@ -1806,7 +1816,8 @@
       "zenodo_doi": "10.5281/zenodo.19438243",
       "osf_id": "dk96n",
       "date": "2026-04-06",
-      "bts": "BT-181,197,340"
+      "bts": "BT-181,197,340",
+      "keywords": []
     },
     {
       "id": "N6-041",
@@ -1817,7 +1828,8 @@
       "zenodo_doi": "10.5281/zenodo.19438246",
       "osf_id": "mjpg4",
       "date": "2026-04-06",
-      "bts": "BT-201,238"
+      "bts": "BT-201,238",
+      "keywords": []
     },
     {
       "id": "N6-042",
@@ -1828,7 +1840,8 @@
       "zenodo_doi": "10.5281/zenodo.19438249",
       "osf_id": "qhwn5",
       "date": "2026-04-06",
-      "bts": "BT-131,236"
+      "bts": "BT-131,236",
+      "keywords": []
     },
     {
       "id": "N6-043",
@@ -1839,7 +1852,8 @@
       "zenodo_doi": "10.5281/zenodo.19438254",
       "osf_id": "w6ztu",
       "date": "2026-04-06",
-      "bts": "BT-187"
+      "bts": "BT-187",
+      "keywords": []
     },
     {
       "id": "N6-044",
@@ -1850,7 +1864,8 @@
       "zenodo_doi": "10.5281/zenodo.19438256",
       "osf_id": "kvcyj",
       "date": "2026-04-06",
-      "bts": "BT-174,210,231,257"
+      "bts": "BT-174,210,231,257",
+      "keywords": []
     },
     {
       "id": "N6-045",
@@ -1863,7 +1878,8 @@
       "date": "2026-04-07",
       "bts": "BT-404,BT-405,BT-406,BT-407,BT-408,BT-409,BT-410,BT-411,BT-412,BT-413",
       "superseded_by": "N6-NANOBOT",
-      "note": "Same work (BT-404~413) published as N6-NANOBOT (DOI 10.5281/zenodo.19457675). Original goal-stub retained for traceability."
+      "note": "Same work (BT-404~413) published as N6-NANOBOT (DOI 10.5281/zenodo.19457675). Original goal-stub retained for traceability.",
+      "keywords": []
     },
     {
       "id": "N6-NANOBOT",
@@ -1877,13 +1893,13 @@
       "date": "2026-04-08",
       "tier": 2,
       "keywords": [
-        "perfect number",
+        "perfect-numbers",
         "n=6",
-        "therapeutic nanobot",
+        "therapeutic-nanobot",
         "BT-404",
         "BT-413",
-        "drug delivery",
-        "medical nanotechnology"
+        "drug-delivery",
+        "medical-nanotechnology"
       ],
       "abstract_first_line": "Therapeutic nanobot architecture derived from sigma(n)*phi(n)=n*tau(n) unique at n=6, spanning BT-404 through BT-413 with Mk.I-V evolution.",
       "zenodo_record": "19457675"
@@ -1901,13 +1917,13 @@
       "tier": 1,
       "keywords": [
         "tokamak",
-        "perfect number",
-        "safety factor",
+        "perfect-numbers",
+        "safety-factor",
         "divertor",
         "snowflake",
-        "MHD stability",
+        "MHD-stability",
         "KSTAR",
-        "steady state",
+        "steady-state",
         "n=6"
       ],
       "abstract_first_line": "Systematic survey of numerical coincidences between arithmetic functions of perfect number 6 and tokamak physics constants.",
@@ -1925,13 +1941,13 @@
       "date": "2026-04-06",
       "tier": 1,
       "keywords": [
-        "perfect number",
+        "perfect-numbers",
         "tokamak",
-        "D-T fusion",
-        "safety factor",
-        "CNO cycle",
-        "stellar nucleosynthesis",
-        "magnetic reconnection",
+        "D-T-fusion",
+        "safety-factor",
+        "CNO-cycle",
+        "stellar-nucleosynthesis",
+        "magnetic-reconnection",
         "HEXA-FUSION",
         "Cross-DSE",
         "n=6"
@@ -1951,14 +1967,14 @@
       "date": "2026-04-06",
       "tier": 1,
       "keywords": [
-        "perfect number",
-        "plasma confinement",
-        "nuclear fusion",
-        "stellar nucleosynthesis",
+        "perfect-numbers",
+        "plasma-confinement",
+        "nuclear-fusion",
+        "stellar-nucleosynthesis",
         "tokamak",
-        "Lawson criterion",
-        "MHD stability",
-        "alpha process",
+        "Lawson-criterion",
+        "MHD-stability",
+        "alpha-process",
         "SLE6",
         "n=6"
       ],
@@ -1977,18 +1993,18 @@
       "date": "2026-04-06",
       "tier": 1,
       "keywords": [
-        "brain-computer interface",
-        "perfect number",
-        "n=6 arithmetic",
-        "non-invasive BCI",
-        "room-temperature superconductor",
-        "AI wearable",
+        "brain-computer-interface",
+        "perfect-numbers",
+        "n=6",
+        "non-invasive-BCI",
+        "room-temperature-superconductor",
+        "AI-wearable",
         "neuroprosthetics",
         "EEG",
         "Parkinson",
         "Alzheimer",
-        "cortical decoding",
-        "Transformer decoder"
+        "cortical-decoding",
+        "Transformer-decoder"
       ],
       "abstract_first_line": "HEXA-NEURO brain-computer interface architecture where 176 design parameters across 23 neuroscience categories are uniquely determined by the arithmetic of the perfect number n=6.",
       "upload_source": "upload_results_n6_neuro_20260406_033104.txt"

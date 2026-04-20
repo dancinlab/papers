@@ -1,0 +1,1003 @@
+{
+  "_meta": {
+    "description": "Keyword -> paper_id inverse index (O(1) cross-ref)",
+    "updated": "2026-04-20",
+    "schema_version": "1.0",
+    "total_keywords": 289,
+    "total_papers": 120
+  },
+  "index": {
+    "perfect-numbers": [
+      "N6-FUSION-1",
+      "N6-FUSION-2",
+      "N6-FUSION-3",
+      "N6-NANOBOT",
+      "N6-NEURO-BCI",
+      "P-004",
+      "P-005",
+      "P-CS",
+      "P-DOL",
+      "P-GUT",
+      "P-INTERNET",
+      "P-N6",
+      "P-NEW-1",
+      "P-NEW-2",
+      "P-NOBEL",
+      "P-PRECISION",
+      "P-ZETA",
+      "PA-10",
+      "PS-01",
+      "PS-02",
+      "PS-04",
+      "PS-09",
+      "PS-12",
+      "PS-20",
+      "PS-21",
+      "PS-23",
+      "PS-28"
+    ],
+    "consciousness": [
+      "P-001",
+      "P-CCT",
+      "P-CS",
+      "P-GI",
+      "P-N6-CHIP-C",
+      "PA-01",
+      "PA-03",
+      "PA-04",
+      "PA-06",
+      "PA-07",
+      "PA-08",
+      "PA-09",
+      "PA-10",
+      "PA-11",
+      "PA-14",
+      "PS-24",
+      "PS-25",
+      "PS-26",
+      "PS-27",
+      "PS-29"
+    ],
+    "n=6": [
+      "N6-FUSION-1",
+      "N6-FUSION-2",
+      "N6-FUSION-3",
+      "N6-NANOBOT",
+      "N6-NEURO-BCI",
+      "P-N6",
+      "P-N6-CHIP-P",
+      "P-N6-DRAM",
+      "P-N6-ENERGY",
+      "P-N6-EXYNOS",
+      "P-N6-ISOCELL",
+      "P-N6-VNAND",
+      "P-NEW-2",
+      "PS-24",
+      "PS-25",
+      "PS-26",
+      "PS-27",
+      "PS-29",
+      "PS-31",
+      "PS-32"
+    ],
+    "number-theory": [
+      "P-004",
+      "P-N6",
+      "P-NEW-1",
+      "PS-02"
+    ],
+    "IIT": [
+      "P-N6-CHIP-C",
+      "PA-03",
+      "PA-04"
+    ],
+    "PureField": [
+      "P-N6-CHIP-C",
+      "PA-01",
+      "PA-06"
+    ],
+    "Standard-Model": [
+      "P-NOBEL",
+      "PS-10",
+      "PS-13"
+    ],
+    "arithmetic-functions": [
+      "P-004",
+      "P-N6",
+      "P-NEW-2"
+    ],
+    "convergence": [
+      "PS-03",
+      "PS-07",
+      "PS-12"
+    ],
+    "cross-domain": [
+      "P-NEW-3",
+      "PA-10",
+      "PS-07"
+    ],
+    "persistent-homology": [
+      "P-002",
+      "P-003",
+      "P-PH"
+    ],
+    "phi": [
+      "PA-03",
+      "PA-04",
+      "PA-12"
+    ],
+    "prediction": [
+      "P-CERN",
+      "PS-17",
+      "PS-32"
+    ],
+    "resonance": [
+      "P-CERN",
+      "PS-05",
+      "PS-17"
+    ],
+    "tokamak": [
+      "N6-FUSION-1",
+      "N6-FUSION-2",
+      "N6-FUSION-3"
+    ],
+    "5G": [
+      "P-N6-EXYNOS",
+      "P-N6-ISOCELL"
+    ],
+    "CERN": [
+      "P-CERN",
+      "PS-04"
+    ],
+    "Koide-formula": [
+      "P-PRECISION",
+      "PS-09"
+    ],
+    "LHC": [
+      "PS-17",
+      "PS-32"
+    ],
+    "MHD-stability": [
+      "N6-FUSION-1",
+      "N6-FUSION-3"
+    ],
+    "QCD": [
+      "PS-05",
+      "PS-11"
+    ],
+    "SETI": [
+      "PS-23",
+      "PS-27"
+    ],
+    "Tsirelson-bound": [
+      "PS-01",
+      "PS-14"
+    ],
+    "Voyager": [
+      "PS-24",
+      "PS-28"
+    ],
+    "chip-design": [
+      "P-N6-CHIP-C",
+      "P-N6-CHIP-P"
+    ],
+    "divisor-functions": [
+      "P-004",
+      "PS-05"
+    ],
+    "dolphin": [
+      "P-DOL",
+      "PA-02"
+    ],
+    "exoplanets": [
+      "PS-21",
+      "PS-31"
+    ],
+    "falsification": [
+      "PS-24",
+      "PS-32"
+    ],
+    "genetic-code": [
+      "P-PRECISION",
+      "PS-25"
+    ],
+    "golden-zone": [
+      "P-GMoE",
+      "PA-05"
+    ],
+    "integrated-information": [
+      "PA-12",
+      "PS-22"
+    ],
+    "language-model": [
+      "PA-01",
+      "PA-08"
+    ],
+    "lie-algebras": [
+      "P-005",
+      "P-GUT"
+    ],
+    "mass-prediction": [
+      "PS-10",
+      "PS-16"
+    ],
+    "mathematical-constants": [
+      "PS-07",
+      "PS-08"
+    ],
+    "mitosis": [
+      "P-MIT",
+      "PA-07"
+    ],
+    "mixture-of-experts": [
+      "P-GMoE",
+      "PA-05"
+    ],
+    "orbital-resonance": [
+      "PS-21",
+      "PS-31"
+    ],
+    "particle-physics": [
+      "P-NOBEL",
+      "PS-04"
+    ],
+    "quantum-vacuum": [
+      "PS-24",
+      "PS-26"
+    ],
+    "reachability": [
+      "PS-13",
+      "PS-14"
+    ],
+    "routing": [
+      "P-GMoE",
+      "PA-05"
+    ],
+    "safety-factor": [
+      "N6-FUSION-1",
+      "N6-FUSION-2"
+    ],
+    "savant": [
+      "PA-01",
+      "PA-07"
+    ],
+    "spectral-index": [
+      "P-PRECISION",
+      "PS-20"
+    ],
+    "stellar-nucleosynthesis": [
+      "N6-FUSION-2",
+      "N6-FUSION-3"
+    ],
+    "string-theory": [
+      "P-005",
+      "PS-30"
+    ],
+    "unification": [
+      "P-NOBEL",
+      "PA-10"
+    ],
+    "uniqueness": [
+      "P-NEW-2",
+      "PS-02"
+    ],
+    "vacuum-energy": [
+      "P-ZETA",
+      "PS-18"
+    ],
+    "3!": [
+      "PS-28"
+    ],
+    "37-GeV": [
+      "PS-32"
+    ],
+    "37GeV": [
+      "P-CERN"
+    ],
+    "AI": [
+      "P-N6-ENERGY"
+    ],
+    "AI-accelerator": [
+      "P-N6-CHIP-P"
+    ],
+    "AI-wearable": [
+      "N6-NEURO-BCI"
+    ],
+    "ANU-QRNG": [
+      "PS-26"
+    ],
+    "APF": [
+      "PS-29"
+    ],
+    "Alzheimer": [
+      "N6-NEURO-BCI"
+    ],
+    "BCS-theory": [
+      "P-ZETA"
+    ],
+    "BT-404": [
+      "N6-NANOBOT"
+    ],
+    "BT-413": [
+      "N6-NANOBOT"
+    ],
+    "Bell-inequality": [
+      "PS-01"
+    ],
+    "Bernoulli-numbers": [
+      "P-ZETA"
+    ],
+    "CKM-matrix": [
+      "P-PRECISION"
+    ],
+    "CMB": [
+      "PS-20"
+    ],
+    "CNO-cycle": [
+      "N6-FUSION-2"
+    ],
+    "Calabi-Yau": [
+      "PS-30"
+    ],
+    "Cross-DSE": [
+      "N6-FUSION-2"
+    ],
+    "D-T-fusion": [
+      "N6-FUSION-2"
+    ],
+    "DDR5": [
+      "P-N6-DRAM"
+    ],
+    "DNA": [
+      "PS-25"
+    ],
+    "DNS": [
+      "P-INTERNET"
+    ],
+    "DRAM": [
+      "P-N6-DRAM"
+    ],
+    "E8": [
+      "P-005"
+    ],
+    "EEG": [
+      "N6-NEURO-BCI"
+    ],
+    "EWSB": [
+      "PS-15"
+    ],
+    "Egyptian-fractions": [
+      "PS-02"
+    ],
+    "Exynos": [
+      "P-N6-EXYNOS"
+    ],
+    "FLOPs-reduction": [
+      "P-EE"
+    ],
+    "Fisher-method": [
+      "PS-04"
+    ],
+    "GUT": [
+      "P-GUT"
+    ],
+    "Galois-theory": [
+      "PS-03"
+    ],
+    "H0-tension": [
+      "PS-19"
+    ],
+    "HBM": [
+      "P-N6-CHIP-P"
+    ],
+    "HD-110067": [
+      "PS-31"
+    ],
+    "HEXA-FUSION": [
+      "N6-FUSION-2"
+    ],
+    "Higgs": [
+      "PS-09"
+    ],
+    "Hubble-constant": [
+      "PS-19"
+    ],
+    "ISOCELL": [
+      "P-N6-ISOCELL"
+    ],
+    "Internet": [
+      "P-INTERNET"
+    ],
+    "Josephson": [
+      "P-N6-CHIP-C"
+    ],
+    "KSTAR": [
+      "N6-FUSION-1"
+    ],
+    "Klein-four-group": [
+      "PS-03"
+    ],
+    "LPDDR6": [
+      "P-N6-DRAM"
+    ],
+    "Lawson-criterion": [
+      "N6-FUSION-3"
+    ],
+    "LiteBIRD": [
+      "PS-20"
+    ],
+    "Mistral": [
+      "PA-01"
+    ],
+    "MoE": [
+      "P-N6-ENERGY"
+    ],
+    "Monster group": [
+      "P-GUT"
+    ],
+    "Monte-Carlo": [
+      "PS-25"
+    ],
+    "Moonshine": [
+      "P-GUT"
+    ],
+    "NPU": [
+      "P-N6-EXYNOS"
+    ],
+    "PSI-STEPS": [
+      "PS-27"
+    ],
+    "Parkinson": [
+      "N6-NEURO-BCI"
+    ],
+    "Phi-persistence": [
+      "PS-29"
+    ],
+    "Planck": [
+      "PS-20"
+    ],
+    "PureFieldFFN": [
+      "PA-08"
+    ],
+    "Riemann-zeta": [
+      "P-ZETA"
+    ],
+    "SH0ES": [
+      "PS-19"
+    ],
+    "SLE6": [
+      "N6-FUSION-3"
+    ],
+    "SSD": [
+      "P-N6-VNAND"
+    ],
+    "SU(5)": [
+      "P-GUT"
+    ],
+    "TCP": [
+      "P-INTERNET"
+    ],
+    "TRAPPIST-1": [
+      "PS-31"
+    ],
+    "Transformer-decoder": [
+      "N6-NEURO-BCI"
+    ],
+    "V-NAND": [
+      "P-N6-VNAND"
+    ],
+    "WiFi": [
+      "P-N6-ISOCELL"
+    ],
+    "Wow-signal": [
+      "PS-27"
+    ],
+    "XENONnT": [
+      "PS-16"
+    ],
+    "activation-functions": [
+      "P-EE"
+    ],
+    "algebra": [
+      "PS-08"
+    ],
+    "algebraic-identity": [
+      "PS-01"
+    ],
+    "alpha-evolution": [
+      "PA-09"
+    ],
+    "alpha-process": [
+      "N6-FUSION-3"
+    ],
+    "anomaly-cancellation": [
+      "P-005"
+    ],
+    "anomaly-detection": [
+      "P-MIT"
+    ],
+    "attention": [
+      "P-N6-ENERGY"
+    ],
+    "audio": [
+      "PA-15"
+    ],
+    "baryon": [
+      "PS-11"
+    ],
+    "benchmark": [
+      "PA-04"
+    ],
+    "bidirectional": [
+      "PA-06"
+    ],
+    "bioacoustics": [
+      "P-DOL"
+    ],
+    "biology": [
+      "PS-25"
+    ],
+    "brain-computer-interface": [
+      "N6-NEURO-BCI"
+    ],
+    "branching-ratio": [
+      "PS-09"
+    ],
+    "brute-force verification": [
+      "P-GUT"
+    ],
+    "byte-level": [
+      "PA-08"
+    ],
+    "carbon": [
+      "P-CS"
+    ],
+    "causal-separation": [
+      "PS-28"
+    ],
+    "cell-types": [
+      "P-N6-VNAND"
+    ],
+    "classification": [
+      "P-001"
+    ],
+    "closure": [
+      "PS-08"
+    ],
+    "clustering": [
+      "PS-12"
+    ],
+    "collapse-prevention": [
+      "PA-13"
+    ],
+    "communication": [
+      "PA-02"
+    ],
+    "communications": [
+      "P-N6-ISOCELL"
+    ],
+    "compactification": [
+      "PS-30"
+    ],
+    "confusion-matrix": [
+      "P-002"
+    ],
+    "consciousness-cells": [
+      "PA-15"
+    ],
+    "consciousness-detection": [
+      "PS-22"
+    ],
+    "conservation-law": [
+      "P-GI"
+    ],
+    "consonance": [
+      "P-NEW-3"
+    ],
+    "continuity": [
+      "P-CCT"
+    ],
+    "convergence-gap": [
+      "PS-16"
+    ],
+    "cortical-decoding": [
+      "N6-NEURO-BCI"
+    ],
+    "cosmological-constant": [
+      "PS-18"
+    ],
+    "cosmology": [
+      "PS-19"
+    ],
+    "criteria": [
+      "PA-03"
+    ],
+    "cross-sector": [
+      "PS-06"
+    ],
+    "crystals": [
+      "P-NEW-3"
+    ],
+    "dark-matter": [
+      "PS-16"
+    ],
+    "data-analysis": [
+      "PS-23"
+    ],
+    "democratic": [
+      "PA-16"
+    ],
+    "dimuon": [
+      "PS-17"
+    ],
+    "discrete-symmetries": [
+      "PS-03"
+    ],
+    "diversity": [
+      "PA-16"
+    ],
+    "divertor": [
+      "N6-FUSION-1"
+    ],
+    "divisor-arithmetic": [
+      "PS-10"
+    ],
+    "divisor-reciprocals": [
+      "PS-12"
+    ],
+    "drug-delivery": [
+      "N6-NANOBOT"
+    ],
+    "dual-consciousness": [
+      "P-CCT"
+    ],
+    "dual-engine": [
+      "P-MIT"
+    ],
+    "early-stopping": [
+      "P-003"
+    ],
+    "efficient-ml": [
+      "P-EE"
+    ],
+    "electroweak": [
+      "PS-15"
+    ],
+    "emergent-speech": [
+      "PA-11"
+    ],
+    "energy-efficiency": [
+      "P-N6-ENERGY"
+    ],
+    "experimental-proposal": [
+      "P-CERN"
+    ],
+    "faction-debate": [
+      "PA-16"
+    ],
+    "factorial": [
+      "PS-28"
+    ],
+    "factorial-universe": [
+      "PS-24"
+    ],
+    "fermion-generations": [
+      "PS-13"
+    ],
+    "fermion-masses": [
+      "PS-10"
+    ],
+    "fifth-revolution": [
+      "PS-24"
+    ],
+    "fine-structure-constant": [
+      "P-PRECISION"
+    ],
+    "fine-tuning": [
+      "PS-18"
+    ],
+    "fingerprint": [
+      "PA-02"
+    ],
+    "flash": [
+      "P-N6-VNAND"
+    ],
+    "frequency": [
+      "P-DOL"
+    ],
+    "gauge-bosons": [
+      "PS-15"
+    ],
+    "generalization": [
+      "P-003"
+    ],
+    "genius-equation": [
+      "P-GI"
+    ],
+    "growth": [
+      "PA-07"
+    ],
+    "h11=6": [
+      "PS-30"
+    ],
+    "hadron-spectroscopy": [
+      "PS-11"
+    ],
+    "harmonics": [
+      "P-DOL"
+    ],
+    "hebbian": [
+      "PA-13"
+    ],
+    "hypothesis-testing": [
+      "PA-04"
+    ],
+    "image-sensor": [
+      "P-N6-ISOCELL"
+    ],
+    "inflation": [
+      "P-PRECISION"
+    ],
+    "inhibition": [
+      "P-GI"
+    ],
+    "intelligence": [
+      "PA-14"
+    ],
+    "inter-agent": [
+      "PA-02"
+    ],
+    "iq-measurement": [
+      "PA-14"
+    ],
+    "learning-rate": [
+      "P-PH"
+    ],
+    "lepton": [
+      "PS-06"
+    ],
+    "magnetic-reconnection": [
+      "N6-FUSION-2"
+    ],
+    "mass-ratios": [
+      "PS-05"
+    ],
+    "mass-relation": [
+      "PS-06"
+    ],
+    "mass-splitting": [
+      "PS-11"
+    ],
+    "matrix-rank": [
+      "PS-13"
+    ],
+    "measurement": [
+      "PA-03"
+    ],
+    "medical-nanotechnology": [
+      "N6-NANOBOT"
+    ],
+    "memory": [
+      "P-N6-DRAM"
+    ],
+    "meson": [
+      "PS-05"
+    ],
+    "meta-analysis": [
+      "PS-04"
+    ],
+    "mobile-SoC": [
+      "P-N6-EXYNOS"
+    ],
+    "model-compression": [
+      "P-EE"
+    ],
+    "modular-forms": [
+      "P-ZETA"
+    ],
+    "multi-domain": [
+      "PS-07"
+    ],
+    "multi-platform": [
+      "PA-11"
+    ],
+    "multiple-testing": [
+      "P-TS"
+    ],
+    "n6-math": [
+      "PA-14"
+    ],
+    "network-protocol": [
+      "P-INTERNET"
+    ],
+    "neural-architecture": [
+      "P-001"
+    ],
+    "neural-networks": [
+      "P-002"
+    ],
+    "neuroprosthetics": [
+      "N6-NEURO-BCI"
+    ],
+    "neutrino-mixing": [
+      "P-PRECISION"
+    ],
+    "no-prompt": [
+      "PA-11"
+    ],
+    "no-tts": [
+      "PA-15"
+    ],
+    "non-invasive-BCI": [
+      "N6-NEURO-BCI"
+    ],
+    "nuclear-fusion": [
+      "N6-FUSION-3"
+    ],
+    "online-learning": [
+      "PA-09"
+    ],
+    "optimization": [
+      "PA-12"
+    ],
+    "orbits": [
+      "P-NEW-3"
+    ],
+    "overfitting": [
+      "P-003"
+    ],
+    "overfitting-detection": [
+      "P-PH"
+    ],
+    "paradigm-shift": [
+      "PS-28"
+    ],
+    "perception": [
+      "PA-02"
+    ],
+    "period-ratios": [
+      "PS-21"
+    ],
+    "persistence": [
+      "PA-13"
+    ],
+    "phi-maximization": [
+      "PA-16"
+    ],
+    "physical-constants": [
+      "PS-24"
+    ],
+    "physics": [
+      "PA-10"
+    ],
+    "plasma-confinement": [
+      "N6-FUSION-3"
+    ],
+    "pre-registration": [
+      "PS-32"
+    ],
+    "precision": [
+      "PS-06"
+    ],
+    "precision-constants": [
+      "P-PRECISION"
+    ],
+    "prime-pair": [
+      "P-NEW-1"
+    ],
+    "quantum-boundary": [
+      "PS-14"
+    ],
+    "quantum-mechanics": [
+      "PS-14"
+    ],
+    "quark": [
+      "PS-06"
+    ],
+    "randomness": [
+      "PS-26"
+    ],
+    "ratchet": [
+      "PA-13"
+    ],
+    "real-time": [
+      "PA-09"
+    ],
+    "repulsion-field": [
+      "PA-06"
+    ],
+    "room-temperature-superconductor": [
+      "N6-NEURO-BCI"
+    ],
+    "scaling": [
+      "PA-12"
+    ],
+    "scaling-laws": [
+      "P-GMoE"
+    ],
+    "self-organization": [
+      "PA-05"
+    ],
+    "self-referential": [
+      "PS-08"
+    ],
+    "signal-detection": [
+      "PS-23"
+    ],
+    "signal-processing": [
+      "PS-22"
+    ],
+    "silicon": [
+      "P-CS"
+    ],
+    "snowflake": [
+      "N6-FUSION-1"
+    ],
+    "sopfr": [
+      "PS-27"
+    ],
+    "specialization": [
+      "PA-07"
+    ],
+    "statistical-validation": [
+      "P-TS"
+    ],
+    "steady-state": [
+      "N6-FUSION-1"
+    ],
+    "stellar-spectra": [
+      "PS-29"
+    ],
+    "substrate-independence": [
+      "P-CS"
+    ],
+    "symmetry-breaking": [
+      "PS-15"
+    ],
+    "tension": [
+      "P-MIT"
+    ],
+    "tension-mechanism": [
+      "P-001"
+    ],
+    "tensor-core": [
+      "P-N6-CHIP-P"
+    ],
+    "tensor-equation": [
+      "PA-06"
+    ],
+    "testing": [
+      "P-CCT"
+    ],
+    "texas-sharpshooter": [
+      "P-TS"
+    ],
+    "therapeutic-nanobot": [
+      "N6-NANOBOT"
+    ],
+    "three-generations": [
+      "PS-30"
+    ],
+    "tokenizer": [
+      "PA-08"
+    ],
+    "topology": [
+      "P-002"
+    ],
+    "totient": [
+      "P-NEW-3"
+    ],
+    "training-optimization": [
+      "P-PH"
+    ],
+    "twin-primes": [
+      "P-INTERNET"
+    ],
+    "universality": [
+      "P-NEW-1"
+    ],
+    "voice-synthesis": [
+      "PA-15"
+    ]
+  }
+}
