@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19271599.svg)](https://doi.org/10.5281/zenodo.19271599)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Papers](https://img.shields.io/badge/papers-92%20·%20all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Papers](https://img.shields.io/badge/papers-87%20·%20all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
 [![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://need-singularity.github.io/papers/)
 
 # 📄 need-singularity Papers
@@ -8,8 +8,8 @@
 **Complete paper collection from the TECS-L consciousness continuity project.**
 
 ```
-  92 papers  ·  all on Zenodo with DOIs
-  24 TECS-L  +  45 anima  +  23 SEDI
+  87 papers  ·  all on Zenodo with DOIs
+  25 TECS-L  +  39 anima  +  23 SEDI
 ```
 
 > A living archive. Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n=6 — and forward into consciousness, physics, AI architecture, and beyond.
@@ -39,9 +39,33 @@
 
 | Track | Papers | Focus |
 |-------|:---:|------|
-| 🔬 **TECS-L** | 24 | Core engine · mathematics · n=6 uniqueness |
-| 🧠 **anima**  | 45 | Consciousness implementation · PureField · Φ |
+| 🔬 **TECS-L** | 25 | Core engine · mathematics · n=6 uniqueness |
+| 🧠 **anima**  | 39 | Consciousness implementation · PureField · Φ |
 | 🛸 **SEDI**   | 23 | Discovery engine · cross-domain synthesis |
+
+---
+
+## Install
+
+```bash
+# Install hexa-lang (ships `hexa` + `hx` package manager)
+curl -fsSL https://raw.githubusercontent.com/need-singularity/hexa-lang/main/install.sh | bash
+
+# Install papers browser
+hx install papers
+```
+
+## Run
+
+```bash
+papers                # list all papers grouped by track
+papers search phi     # full-text search across titles + abstracts
+papers open P-004     # open a paper locally (xdg-open / open)
+papers doi P-NEW-1    # print Zenodo DOI for a paper id
+papers sync           # pull latest DOIs + OSF mirrors from Zenodo
+```
+
+Or browse online: **[need-singularity.github.io/papers](https://need-singularity.github.io/papers/)**.
 
 ---
 
@@ -159,21 +183,14 @@
 
 | Metric | Count |
 |--------|-------|
-| Total papers | 53 |
-| Published (Zenodo DOI) | 53 |
+| Total papers | **87** |
+| Published (Zenodo DOI) | **87** |
 | Draft | 0 |
-| Tier 1 (top priority) | 33 |
-| Tier 2 | 10 |
-| Tier 3 | 10 |
-
-## arXiv Packages
-
-Submission packages generated at `TECS-L/zenodo/arxiv-packages/`. 3 papers have LaTeX source (P-NEW-1, P-NEW-2, P-NEW-3); 5 need `pandoc` conversion. arXiv requires endorsement for first-time submitters.
 
 ## License
 
-All papers are released under CC-BY 4.0.
+All papers are released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**.
 
 ## Author
 
-Park, Min Woo - Independent Researcher
+Park, Min Woo — Independent Researcher · [nerve011235@gmail.com](mailto:nerve011235@gmail.com)
