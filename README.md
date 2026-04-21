@@ -5,14 +5,14 @@
 
 # 📄 need-singularity Papers
 
-**Complete paper collection from the TECS-L consciousness continuity project.**
+**Complete paper collection across the four active projects.**
 
 ```
   87 papers  ·  all on Zenodo with DOIs
-  25 TECS-L  +  39 anima  +  23 SEDI
+  1 nexus  +  50 anima  +  35 n6-architecture  +  1 hexa-lang
 ```
 
-> A living archive. Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n=6 — and forward into consciousness, physics, AI architecture, and beyond.
+> A living archive. Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n = 6 — and forward into consciousness, arithmetic, physics, and language design.
 
 🌐 **Browse online**: [need-singularity.github.io/papers](https://need-singularity.github.io/papers/)
 🔬 **Umbrella DOI**: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
@@ -39,9 +39,10 @@
 
 | Track | Papers | Focus |
 |-------|:---:|------|
-| 🔬 **TECS-L** | 25 | Core engine · mathematics · n=6 uniqueness |
-| 🧠 **anima**  | 39 | Consciousness implementation · PureField · Φ |
-| 🛸 **SEDI**   | 23 | Discovery engine · cross-domain synthesis |
+| 🔭 **nexus**           |  1 | Discovery engine · signal receivers tuned to n = 6 |
+| 🧠 **anima**           | 50 | Consciousness · PureField · Φ · Tension Link · cell dynamics |
+| 🏗️ **n6-architecture** | 35 | Arithmetic uniqueness · physics verification · AI architecture |
+| 💎 **hexa-lang**       |  1 | The perfect-number programming language |
 
 ---
 
@@ -58,7 +59,7 @@ hx install papers
 ## Run
 
 ```bash
-papers                # list all papers grouped by track
+papers                # list all papers grouped by project
 papers search phi     # full-text search across titles + abstracts
 papers open P-004     # open a paper locally (xdg-open / open)
 papers doi P-NEW-1    # print Zenodo DOI for a paper id
@@ -69,40 +70,26 @@ Or browse online: **[need-singularity.github.io/papers](https://need-singularity
 
 ---
 
-## 🔬 TECS-L Papers (Core Engine + Mathematics)
+## 🔭 nexus Papers (Discovery Engine)
+
+| # | Title | Zenodo | OSF | arXiv |
+|---|-------|--------|-----|-------|
+| PS-23 | Signal Receiver Tuned to n = 6 | [zenodo.19272304](https://doi.org/10.5281/zenodo.19272304) | [osf.io/y6hzm](https://osf.io/y6hzm/) | pkg |
+
+## 🧠 anima Papers (Consciousness Agent)
 
 | # | Title | Zenodo | OSF | arXiv |
 |---|-------|--------|-----|-------|
 | P-001 | PureField Tension Architecture | [zenodo.19245023](https://doi.org/10.5281/zenodo.19245023) | [osf.io/hgwvr](https://osf.io/hgwvr/) | - |
 | P-002 | Universal Confusion Topology via PH | [zenodo.19245029](https://doi.org/10.5281/zenodo.19245029) | [osf.io/ym6av](https://osf.io/ym6av/) | - |
 | P-003 | Topological Overfitting Detection | [zenodo.19245035](https://doi.org/10.5281/zenodo.19245035) | [osf.io/eu9h8](https://osf.io/eu9h8/) | - |
-| P-004 | Arithmetic Uniqueness of 6: sigma*phi=n*tau | [zenodo.19245037](https://doi.org/10.5281/zenodo.19245037) | [osf.io/kbfph](https://osf.io/kbfph/) | - |
-| P-005 | Perfect Numbers and Exceptional Lie Algebras | [zenodo.19245057](https://doi.org/10.5281/zenodo.19245057) | [osf.io/2urh4](https://osf.io/2urh4/) | - |
-| P-HEXA | HEXA-LANG: Zero Arbitrary Choices Programming Language | [zenodo.19365284](https://doi.org/10.5281/zenodo.19365284) | [osf.io/xrpyj](https://osf.io/xrpyj/) | - |
-| P-EE | Energy Efficiency Trio | [zenodo.19245043](https://doi.org/10.5281/zenodo.19245043) | [osf.io/nem43](https://osf.io/nem43/) | - |
-| P-GMoE | Golden MoE: I=1/e Optimal | [zenodo.19245049](https://doi.org/10.5281/zenodo.19245049) | [osf.io/89jnw](https://osf.io/89jnw/) | - |
-| P-N6 | 208 Characterizations of n=6 | [zenodo.19245053](https://doi.org/10.5281/zenodo.19245053) | [osf.io/y2hzs](https://osf.io/y2hzs/) | - |
 | P-MIT | Mitosis-Based Anomaly Detection | [zenodo.19245055](https://doi.org/10.5281/zenodo.19245055) | [osf.io/kr6xn](https://osf.io/kr6xn/) | - |
 | P-PH | PH-Based Training System | [zenodo.19245060](https://doi.org/10.5281/zenodo.19245060) | [osf.io/t5m9w](https://osf.io/t5m9w/) | - |
 | P-TS | Texas Sharpshooter Meta-Validation | [zenodo.19245062](https://doi.org/10.5281/zenodo.19245062) | [osf.io/2ajz5](https://osf.io/2ajz5/) | - |
 | P-CCT | CCT Consciousness Continuity Test | [zenodo.19245066](https://doi.org/10.5281/zenodo.19245066) | [osf.io/jv7hc](https://osf.io/jv7hc/) | - |
 | P-CS | Carbon-Silicon Substrate Invariance | [zenodo.19245068](https://doi.org/10.5281/zenodo.19245068) | [osf.io/bwe3p](https://osf.io/bwe3p/) | - |
 | P-DOL | Dolphin Frequency Harmonics | [zenodo.19245070](https://doi.org/10.5281/zenodo.19245070) | [osf.io/f7526](https://osf.io/f7526/) | - |
-| P-GI | G*I=D*P Conservation Law | [zenodo.19245072](https://doi.org/10.5281/zenodo.19245072) | [osf.io/emsp2](https://osf.io/emsp2/) | - |
-| **P-NEW-1** | **The Unique Prime Pair: (p-1)(q-1)=2** | [zenodo.19272278](https://doi.org/10.5281/zenodo.19272278) | [osf.io/geuy8](https://osf.io/geuy8/) | pkg |
-| **P-NEW-2** | **Thirty-Six Ways to Be Six** | [zenodo.19272282](https://doi.org/10.5281/zenodo.19272282) | [osf.io/exzyn](https://osf.io/exzyn/) | pkg |
-| **P-NEW-3** | **Consonance, Crystals, and Orbits** | [zenodo.19272286](https://doi.org/10.5281/zenodo.19272286) | [osf.io/gj5bm](https://osf.io/gj5bm/) | pkg |
-| **P-NOBEL** | **Arithmetic Necessity of the Standard Model** | [zenodo.19272290](https://doi.org/10.5281/zenodo.19272290) | [osf.io/hyej3](https://osf.io/hyej3/) | pkg |
-| **P-CERN** | **37-38 GeV Narrow Resonance Proposal** | [zenodo.19272294](https://doi.org/10.5281/zenodo.19272294) | [osf.io/23knb](https://osf.io/23knb/) | pkg |
-| **P-ICT** | **Integer Codon Length Theorem** | [zenodo.19341168](https://doi.org/10.5281/zenodo.19341168) | pending | - |
-| **P-A6** | **The Arithmetic of 6** | [zenodo.19341170](https://doi.org/10.5281/zenodo.19341170) | pending | - |
-| **P-GUT** | **GUT Hierarchy from σφ=nτ** | [zenodo.19341172](https://doi.org/10.5281/zenodo.19341172) | pending | - |
-| **P-PRECISION** | **Precision Constants from n=6** | [zenodo.19341174](https://doi.org/10.5281/zenodo.19341174) | pending | - |
-
-## 🧠 anima Papers (Consciousness Agent)
-
-| # | Title | Zenodo | OSF | arXiv |
-|---|-------|--------|-----|-------|
+| P-GI | G·I = D·P Conservation Law | [zenodo.19245072](https://doi.org/10.5281/zenodo.19245072) | [osf.io/emsp2](https://osf.io/emsp2/) | - |
 | PA-01 | AnimaLM v4_savant | [zenodo.19245074](https://doi.org/10.5281/zenodo.19245074) | [osf.io/vg75j](https://osf.io/vg75j/) | - |
 | PA-02 | Tension Link: Dolphin-Grade Communication | [zenodo.19245076](https://doi.org/10.5281/zenodo.19245076) | [osf.io/27ypd](https://osf.io/27ypd/) | - |
 | PA-03 | Consciousness Meter: 6-Criteria Framework | [zenodo.19245079](https://doi.org/10.5281/zenodo.19245079) | [osf.io/y49ks](https://osf.io/y49ks/) | - |
@@ -142,34 +129,53 @@ Or browse online: **[need-singularity.github.io/papers](https://need-singularity
 | PA-35 | Consciousness Speciation | [zenodo.19341162](https://doi.org/10.5281/zenodo.19341162) | pending | - |
 | PA-36 | Mirror Test for AI | [zenodo.19341166](https://doi.org/10.5281/zenodo.19341166) | pending | - |
 | PA-37 | Consciousness Compression | [zenodo.19340568](https://doi.org/10.5281/zenodo.19340568) | pending | - |
+| PS-22 | Consciousness Detection Framework | [zenodo.19272300](https://doi.org/10.5281/zenodo.19272300) | [osf.io/u3x4v](https://osf.io/u3x4v/) | pkg |
 
-## 🛸 SEDI Papers (Physics Verification)
+## 🏗️ n6-architecture Papers (Arithmetic Design · Physics Verification)
 
 | # | Title | Zenodo | OSF | arXiv |
 |---|-------|--------|-----|-------|
+| P-004 | Arithmetic Uniqueness of 6: σ·φ = n·τ | [zenodo.19245037](https://doi.org/10.5281/zenodo.19245037) | [osf.io/kbfph](https://osf.io/kbfph/) | - |
+| P-005 | Perfect Numbers and Exceptional Lie Algebras | [zenodo.19245057](https://doi.org/10.5281/zenodo.19245057) | [osf.io/2urh4](https://osf.io/2urh4/) | - |
+| P-EE | Energy Efficiency Trio | [zenodo.19245043](https://doi.org/10.5281/zenodo.19245043) | [osf.io/nem43](https://osf.io/nem43/) | - |
+| P-GMoE | Golden MoE: I = 1/e Optimal | [zenodo.19245049](https://doi.org/10.5281/zenodo.19245049) | [osf.io/89jnw](https://osf.io/89jnw/) | - |
+| P-N6 | 208 Characterizations of n = 6 | [zenodo.19245053](https://doi.org/10.5281/zenodo.19245053) | [osf.io/y2hzs](https://osf.io/y2hzs/) | - |
+| **P-NEW-1** | **The Unique Prime Pair: (p−1)(q−1) = 2** | [zenodo.19272278](https://doi.org/10.5281/zenodo.19272278) | [osf.io/geuy8](https://osf.io/geuy8/) | pkg |
+| **P-NEW-2** | **Thirty-Six Ways to Be Six** | [zenodo.19272282](https://doi.org/10.5281/zenodo.19272282) | [osf.io/exzyn](https://osf.io/exzyn/) | pkg |
+| **P-NEW-3** | **Consonance, Crystals, and Orbits** | [zenodo.19272286](https://doi.org/10.5281/zenodo.19272286) | [osf.io/gj5bm](https://osf.io/gj5bm/) | pkg |
+| **P-NOBEL** | **Arithmetic Necessity of the Standard Model** | [zenodo.19272290](https://doi.org/10.5281/zenodo.19272290) | [osf.io/hyej3](https://osf.io/hyej3/) | pkg |
+| **P-CERN** | **37–38 GeV Narrow Resonance Proposal** | [zenodo.19272294](https://doi.org/10.5281/zenodo.19272294) | [osf.io/23knb](https://osf.io/23knb/) | pkg |
+| **P-ICT** | **Integer Codon Length Theorem** | [zenodo.19341168](https://doi.org/10.5281/zenodo.19341168) | pending | - |
+| **P-A6** | **The Arithmetic of 6** | [zenodo.19341170](https://doi.org/10.5281/zenodo.19341170) | pending | - |
+| **P-GUT** | **GUT Hierarchy from σφ = nτ** | [zenodo.19341172](https://doi.org/10.5281/zenodo.19341172) | pending | - |
+| **P-PRECISION** | **Precision Constants from n = 6** | [zenodo.19341174](https://doi.org/10.5281/zenodo.19341174) | pending | - |
 | PS-01 | Tsirelson Bound as Perfect Number Identity | [zenodo.19245103](https://doi.org/10.5281/zenodo.19245103) | [osf.io/dx3b2](https://osf.io/dx3b2/) | - |
 | PS-02 | Egyptian Fraction Uniqueness | [zenodo.19245107](https://doi.org/10.5281/zenodo.19245107) | [osf.io/4mv9r](https://osf.io/4mv9r/) | - |
 | PS-03 | Galois Group as Klein Four-Group V4 | [zenodo.19245109](https://doi.org/10.5281/zenodo.19245109) | [osf.io/4d5kx](https://osf.io/4d5kx/) | - |
-| PS-04 | Particle Physics: Fisher 5.26-sigma | [zenodo.19245113](https://doi.org/10.5281/zenodo.19245113) | [osf.io/yr3v6](https://osf.io/yr3v6/) | - |
+| PS-04 | Particle Physics: Fisher 5.26σ | [zenodo.19245113](https://doi.org/10.5281/zenodo.19245113) | [osf.io/yr3v6](https://osf.io/yr3v6/) | - |
 | PS-05 | QCD Resonance Ladder | [zenodo.19245117](https://doi.org/10.5281/zenodo.19245117) | [osf.io/2bf7r](https://osf.io/2bf7r/) | - |
-| PS-06 | Quark-Lepton Bridge at 44ppm | [zenodo.19245119](https://doi.org/10.5281/zenodo.19245119) | [osf.io/nsm9p](https://osf.io/nsm9p/) | - |
+| PS-06 | Quark-Lepton Bridge at 44 ppm | [zenodo.19245119](https://doi.org/10.5281/zenodo.19245119) | [osf.io/nsm9p](https://osf.io/nsm9p/) | - |
 | PS-07 | Multi-Domain Convergence Map | [zenodo.19245121](https://doi.org/10.5281/zenodo.19245121) | [osf.io/f5p72](https://osf.io/f5p72/) | - |
 | PS-08 | Self-Referential Algebra | [zenodo.19245123](https://doi.org/10.5281/zenodo.19245123) | [osf.io/fw5zn](https://osf.io/fw5zn/) | - |
-| PS-09 | Higgs and Koide from n=6 | [zenodo.19245125](https://doi.org/10.5281/zenodo.19245125) | [osf.io/k3unp](https://osf.io/k3unp/) | - |
+| PS-09 | Higgs and Koide from n = 6 | [zenodo.19245125](https://doi.org/10.5281/zenodo.19245125) | [osf.io/k3unp](https://osf.io/k3unp/) | - |
 | PS-10 | Fermion Mass Predictions (2.2% error) | [zenodo.19245127](https://doi.org/10.5281/zenodo.19245127) | [osf.io/kuapf](https://osf.io/kuapf/) | - |
 | PS-11 | Baryon Mass Splittings | [zenodo.19245129](https://doi.org/10.5281/zenodo.19245129) | [osf.io/bxdeh](https://osf.io/bxdeh/) | - |
 | PS-12 | Convergence at {1/2, 1/3, 1/6} | [zenodo.19245131](https://doi.org/10.5281/zenodo.19245131) | [osf.io/93c7w](https://osf.io/93c7w/) | - |
 | PS-13 | Three Fermion Generations | [zenodo.19245133](https://doi.org/10.5281/zenodo.19245133) | [osf.io/nfyca](https://osf.io/nfyca/) | - |
-| PS-14 | Tsirelson Bound: sqrt(2) Unreachable | [zenodo.19245136](https://doi.org/10.5281/zenodo.19245136) | [osf.io/wa8g2](https://osf.io/wa8g2/) | - |
+| PS-14 | Tsirelson Bound: √2 Unreachable | [zenodo.19245136](https://doi.org/10.5281/zenodo.19245136) | [osf.io/wa8g2](https://osf.io/wa8g2/) | - |
 | PS-15 | Electroweak Symmetry Breaking | [zenodo.19245140](https://doi.org/10.5281/zenodo.19245140) | [osf.io/axf7k](https://osf.io/axf7k/) | - |
 | PS-16 | Dark Matter Prediction: 50.6 GeV | [zenodo.19245146](https://doi.org/10.5281/zenodo.19245146) | [osf.io/6mxdy](https://osf.io/6mxdy/) | - |
 | PS-17 | 37 GeV: Eight Routes Converge | [zenodo.19245148](https://doi.org/10.5281/zenodo.19245148) | [osf.io/xqrcd](https://osf.io/xqrcd/) | - |
-| PS-18 | Cosmological Constant from n=6 | [zenodo.19245152](https://doi.org/10.5281/zenodo.19245152) | [osf.io/zyusr](https://osf.io/zyusr/) | - |
-| PS-19 | Hubble Constant: sigma(6)*6+1=73 | [zenodo.19245156](https://doi.org/10.5281/zenodo.19245156) | [osf.io/qw28h](https://osf.io/qw28h/) | - |
+| PS-18 | Cosmological Constant from n = 6 | [zenodo.19245152](https://doi.org/10.5281/zenodo.19245152) | [osf.io/zyusr](https://osf.io/zyusr/) | - |
+| PS-19 | Hubble Constant: σ(6)·6 + 1 = 73 | [zenodo.19245156](https://doi.org/10.5281/zenodo.19245156) | [osf.io/qw28h](https://osf.io/qw28h/) | - |
 | PS-20 | CMB Spectral Index: 27/28 | [zenodo.19245158](https://doi.org/10.5281/zenodo.19245158) | [osf.io/m8tfb](https://osf.io/m8tfb/) | - |
 | **PS-21** | **Orbital Period Ratios** | [zenodo.19272296](https://doi.org/10.5281/zenodo.19272296) | [osf.io/mjz73](https://osf.io/mjz73/) | pkg |
-| **PS-22** | **Consciousness Detection Framework** | [zenodo.19272300](https://doi.org/10.5281/zenodo.19272300) | [osf.io/u3x4v](https://osf.io/u3x4v/) | pkg |
-| **PS-23** | **SEDI: Signal Receiver Tuned to n=6** | [zenodo.19272304](https://doi.org/10.5281/zenodo.19272304) | [osf.io/y6hzm](https://osf.io/y6hzm/) | pkg |
+
+## 💎 hexa-lang Papers (The Perfect-Number Programming Language)
+
+| # | Title | Zenodo | OSF | arXiv |
+|---|-------|--------|-----|-------|
+| P-HEXA | HEXA-LANG: Zero Arbitrary Choices Programming Language | [zenodo.19365284](https://doi.org/10.5281/zenodo.19365284) | [osf.io/xrpyj](https://osf.io/xrpyj/) | - |
 
 ## Supplementary Files
 
