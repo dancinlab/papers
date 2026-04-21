@@ -1,6 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19271599.svg)](https://doi.org/10.5281/zenodo.19271599)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Papers](https://img.shields.io/badge/papers-87%20·%20all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
+[![Papers](https://img.shields.io/badge/papers-all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
 [![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://need-singularity.github.io/papers/)
 
 # 📄 need-singularity Papers
@@ -8,8 +8,7 @@
 **Complete paper collection across the four active projects.**
 
 ```
-  87 papers  ·  all on Zenodo with DOIs
-  1 nexus  +  50 anima  +  35 n6-architecture  +  1 hexa-lang
+  all papers on Zenodo with DOIs · grouped by project
 ```
 
 > A living archive. Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n = 6 — and forward into consciousness, arithmetic, physics, and language design.
@@ -37,12 +36,12 @@
 
 ## Collection breakdown
 
-| Track | Papers | Focus |
-|-------|:---:|------|
-| 🔭 **nexus**           |  1 | Discovery engine · signal receivers tuned to n = 6 |
-| 🧠 **anima**           | 50 | Consciousness · PureField · Φ · Tension Link · cell dynamics |
-| 🏗️ **n6-architecture** | 35 | Arithmetic uniqueness · physics verification · AI architecture |
-| 💎 **hexa-lang**       |  1 | The perfect-number programming language |
+| Track | Focus |
+|-------|------|
+| 🔭 **nexus**           | Discovery engine · signal receivers tuned to n = 6 |
+| 🧠 **anima**           | Consciousness · PureField · Φ · Tension Link · cell dynamics |
+| 🏗️ **n6-architecture** | Arithmetic uniqueness · physics verification · AI architecture |
+| 💎 **hexa-lang**       | The perfect-number programming language |
 
 ---
 
@@ -184,14 +183,6 @@ Or browse online: **[need-singularity.github.io/papers](https://need-singularity
 | tecs-l/P-002-supplementary.md | Supplementary material for P-002 |
 | tecs-l/P-002-growing-conscious-lm.md | Growing ConsciousLM companion paper |
 | tecs-l/S-TIER-PAPER-PLAN.md | S-Tier paper plan: 12 verified robust results |
-
-## Statistics
-
-| Metric | Count |
-|--------|-------|
-| Total papers | **87** |
-| Published (Zenodo DOI) | **87** |
-| Draft | 0 |
 
 ## License
 
