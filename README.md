@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19271599.svg)](https://doi.org/10.5281/zenodo.19271599)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19271599-blue?logo=zenodo&logoColor=white)](https://doi.org/10.5281/zenodo.19271599)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Papers](https://img.shields.io/badge/papers-all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
 [![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://need-singularity.github.io/papers/)
