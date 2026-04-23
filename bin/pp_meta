@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# papers/bin/pp_meta — shim for tool/pp_meta.hexa (scanner dispatcher).
+exec "$HOME/core/hexa-lang/hexa" "$(cd "$(dirname "$0")/.." && pwd)/tool/pp_meta.hexa" "$@"

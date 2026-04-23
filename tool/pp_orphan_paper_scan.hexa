@@ -1,0 +1,77 @@
+// papers/tool/pp_orphan_paper_scan.hexa — B2.
+//
+// Two-way drift detection:
+//   (1) manifest entry references a file that doesn't exist  (dangling_file)
+//   (2) *.md files under project dirs (anima/ nexus/ n6-architecture/ ...)
+//       not registered in manifest (unregistered_paper)
+// Emits both lists; exit 1 if any drift found.
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+fn _manifest_path() -> string { return _root() + "/manifest.json" }
+
+fn _selftest() -> int {
+    let p = _manifest_path()
+    let e = to_string(exec("test -f '" + p + "' && echo y || echo n")).trim()
+    if e != "y" { eprintln("pp_orphan_paper_scan: manifest missing"); return 1 }
+    println("pp_orphan_paper_scan: selftest PASS")
+    return 0
+}
+
+fn _scan() -> int {
+    let root = _root()
+    let py = "python3 - <<PY\n"
+           + "import json, os\n"
+           + "root = '" + root + "'\n"
+           + "d = json.load(open(root + '/manifest.json'))\n"
+           + "# 1) dangling files (manifest → no file on disk)\n"
+           + "dangling = []\n"
+           + "declared_files = set()\n"
+           + "for e in d.get('papers', []):\n"
+           + "    fp = e.get('file','')\n"
+           + "    if not fp: continue\n"
+           + "    declared_files.add(os.path.normpath(fp))\n"
+           + "    full = os.path.join(root, fp)\n"
+           + "    if not os.path.exists(full):\n"
+           + "        dangling.append((e.get('id','?'), fp))\n"
+           + "# 2) unregistered papers (md under project dirs, not in manifest)\n"
+           + "unreg = []\n"
+           + "project_dirs = ['anima','nexus','n6-architecture','brainwire','sedi','tecs-l']\n"
+           + "for pd in project_dirs:\n"
+           + "    base = os.path.join(root, pd)\n"
+           + "    if not os.path.isdir(base): continue\n"
+           + "    for dirpath, _, files in os.walk(base):\n"
+           + "        for fn in files:\n"
+           + "            if not fn.endswith('.md'): continue\n"
+           + "            rel = os.path.relpath(os.path.join(dirpath, fn), root)\n"
+           + "            if os.path.normpath(rel) not in declared_files:\n"
+           + "                unreg.append(rel)\n"
+           + "print(f'pp_orphan_paper_scan: dangling={len(dangling)} unregistered={len(unreg)}')\n"
+           + "if dangling:\n"
+           + "    print('  ── dangling (manifest → no file) ──')\n"
+           + "    for d_ in dangling[:20]: print(f'    {d_[0]:20}  {d_[1]}')\n"
+           + "    if len(dangling) > 20: print(f'    ... +{len(dangling)-20} more')\n"
+           + "if unreg:\n"
+           + "    print('  ── unregistered (file → no manifest entry) ──')\n"
+           + "    for u in unreg[:20]: print(f'    {u}')\n"
+           + "    if len(unreg) > 20: print(f'    ... +{len(unreg)-20} more')\n"
+           + "import sys; sys.exit(1 if (dangling or unreg) else 0)\n"
+           + "PY\n"
+    let r = exec_with_status(py)
+    println(to_string(r[0]))
+    return r[1]
+}
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut i = 2
+    while i < len(av) { args.push(av[i]); i = i + 1 }
+    if len(args) >= 1 && args[0] == "--selftest" { exit(_selftest()) }
+    exit(_scan())
+}

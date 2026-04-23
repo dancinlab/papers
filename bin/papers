@@ -212,6 +212,99 @@ _cmd_pull() {
     _die "pull: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md A2."
 }
 
+# E1-style cross-repo import: sync source repo's papers/ into this repo.
+# Usage: papers import-from <repo> [--dry-run]
+#   - reads $HOME/core/<repo>/papers/*.md (recursive .md)
+#   - missing files → copy to papers/<repo>/<rel-path>
+#   - missing manifest entries → append (status=draft, repo=<repo>)
+_cmd_import_from() {
+    [ $# -ge 1 ] || _die "import-from: repo required"
+    local repo="$1"; shift
+    local dry=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --dry-run) dry=1; shift ;;
+            *) shift ;;
+        esac
+    done
+    local src="$HOME/core/$repo/papers"
+    [ -d "$src" ] || _die "source dir not found: $src"
+    local dst_base="$PAPERS_ROOT/$repo"
+    mkdir -p "$dst_base"
+    python3 -c "
+import json, os, shutil, sys, hashlib
+src, repo, root, dry = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4])
+manifest_path = os.path.join(root, 'manifest.json')
+d = json.load(open(manifest_path))
+papers = d.setdefault('papers', [])
+declared = {os.path.normpath(p.get('file','')) for p in papers if p.get('file')}
+copied = 0
+appended = 0
+skipped = 0
+new_entries = []
+for dirpath, _, files in os.walk(src):
+    for fn in files:
+        if not fn.endswith('.md'): continue
+        full = os.path.join(dirpath, fn)
+        rel_in_src = os.path.relpath(full, src)
+        rel_in_dst = os.path.join(repo, rel_in_src)
+        dst_full = os.path.join(root, rel_in_dst)
+        norm_rel = os.path.normpath(rel_in_dst)
+        # Copy file if dst missing
+        if not os.path.exists(dst_full):
+            if dry:
+                pass
+            else:
+                os.makedirs(os.path.dirname(dst_full), exist_ok=True)
+                shutil.copy2(full, dst_full)
+            copied += 1
+        else:
+            skipped += 1
+        # Append manifest entry if missing
+        if norm_rel not in declared:
+            # Generate ID from path hash + prefix
+            h = hashlib.sha1(norm_rel.encode()).hexdigest()[:8]
+            # Try to extract title from file frontmatter or first heading
+            title = ''
+            try:
+                with open(full, 'r') as f:
+                    head = f.read(2000)
+                for line in head.splitlines():
+                    s = line.strip()
+                    if s.startswith('# '):
+                        title = s[2:].strip()[:200]
+                        break
+                    if s.startswith('title:'):
+                        title = s.split(':',1)[1].strip().strip('\"').strip(\"'\")[:200]
+                        break
+            except Exception:
+                pass
+            entry = {
+                'id': f'{repo[:3].upper()}-imported-{h}',
+                'title': title or os.path.splitext(fn)[0],
+                'repo': repo,
+                'file': norm_rel,
+                'status': 'draft',
+                'doi': '',
+                'date': '',
+                'tier': 3,
+                'keywords': [],
+                'abstract_first_line': ''
+            }
+            new_entries.append(entry)
+            appended += 1
+if not dry:
+    papers.extend(new_entries)
+    d['papers'] = papers
+    # Update meta
+    meta = d.setdefault('_meta', {})
+    meta['last_import'] = {'repo': repo, 'added': appended}
+    with open(manifest_path, 'w') as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+print(f'import-from {repo}: copied={copied} appended={appended} skipped(existing)={skipped} dry={dry}')
+" "$src" "$repo" "$PAPERS_ROOT" "$dry"
+}
+
 _cmd_search() {
     _die "search: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md C2."
 }
@@ -225,8 +318,9 @@ usage:
   papers cite      <paper-id> [--format bibtex|apa|ieee|cff|ris] [--copy]
   papers validate  <paper-id>
   papers publish   <paper-id> [--sandbox] [--dry-run] [--skip-pp2]
-  papers pull      <doi>      (Phase 2, not impl)
-  papers search    <query>    (Phase 2, not impl)
+  papers pull        <doi>               (Phase 2, not impl)
+  papers search      <query>             (Phase 2, not impl)
+  papers import-from <repo> [--dry-run]  sync sister repo's papers/*.md into this repo
 
 credentials:
   papers publish reads Zenodo token via  secret get zenodo.token
@@ -242,12 +336,13 @@ EOF
 }
 
 case "${1:-help}" in
-    list)     shift; _cmd_list "$@" ;;
-    cite)     shift; _cmd_cite "$@" ;;
-    validate) shift; _cmd_validate "$@" ;;
-    publish)  shift; _cmd_publish "$@" ;;
-    pull)     shift; _cmd_pull "$@" ;;
-    search)   shift; _cmd_search "$@" ;;
+    list)        shift; _cmd_list "$@" ;;
+    cite)        shift; _cmd_cite "$@" ;;
+    validate)    shift; _cmd_validate "$@" ;;
+    publish)     shift; _cmd_publish "$@" ;;
+    pull)        shift; _cmd_pull "$@" ;;
+    search)      shift; _cmd_search "$@" ;;
+    import-from) shift; _cmd_import_from "$@" ;;
     help|-h|--help) _cmd_help ;;
-    *)        _die "unknown command '$1'. try: papers help" ;;
+    *)           _die "unknown command '$1'. try: papers help" ;;
 esac

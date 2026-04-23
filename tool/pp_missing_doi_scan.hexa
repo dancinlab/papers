@@ -1,0 +1,55 @@
+// papers/tool/pp_missing_doi_scan.hexa — B1.
+//
+// Finds manifest entries where status="Published" but doi="" or malformed.
+// Emits list; exit 1 if any offender found.
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _manifest_path() -> string { return _home() + "/core/papers/manifest.json" }
+
+fn _selftest() -> int {
+    // Smoke: dispatcher can parse + run without crash on empty path.
+    let path = _manifest_path()
+    let exists = to_string(exec("test -f '" + path + "' && echo y || echo n")).trim()
+    if exists != "y" {
+        eprintln("pp_missing_doi_scan: manifest not found at " + path)
+        return 1
+    }
+    println("pp_missing_doi_scan: selftest PASS")
+    return 0
+}
+
+fn _scan() -> int {
+    let path = _manifest_path()
+    let py = "python3 - <<PY\n"
+           + "import json\n"
+           + "d = json.load(open('" + path + "'))\n"
+           + "offenders = []\n"
+           + "for e in d.get('papers', []):\n"
+           + "    st = e.get('status','')\n"
+           + "    doi = e.get('doi','')\n"
+           + "    if st.lower() == 'published':\n"
+           + "        if not doi or not doi.startswith('10.'):\n"
+           + "            offenders.append((e.get('id','?'), doi or '(empty)', e.get('title','')[:60]))\n"
+           + "print(f'pp_missing_doi_scan: {len(offenders)} offender(s)')\n"
+           + "for o in offenders:\n"
+           + "    print(f'  {o[0]:20}  doi={o[1]:25}  {o[2]}')\n"
+           + "import sys; sys.exit(1 if offenders else 0)\n"
+           + "PY\n"
+    let r = exec_with_status(py)
+    println(to_string(r[0]))
+    return r[1]
+}
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut i = 2
+    while i < len(av) { args.push(av[i]); i = i + 1 }
+    if len(args) >= 1 && args[0] == "--selftest" { exit(_selftest()) }
+    exit(_scan())
+}
