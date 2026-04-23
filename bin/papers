@@ -208,6 +208,69 @@ _cmd_publish() {
         "$HEXA_BIN" "${PAPERS_ROOT}/upload_zenodo.hexa" "${upload_args[@]}"
 }
 
+# Register unregistered in-place .md files under project dirs.
+# Usage: papers register-orphans [--dry-run]
+_cmd_register_orphans() {
+    local dry=0
+    while [ $# -gt 0 ]; do
+        case "$1" in --dry-run) dry=1; shift ;; *) shift ;; esac
+    done
+    python3 -c "
+import json, os, sys, hashlib
+root = sys.argv[1]
+dry = int(sys.argv[2])
+manifest_path = os.path.join(root, 'manifest.json')
+d = json.load(open(manifest_path))
+papers = d.setdefault('papers', [])
+declared = {os.path.normpath(p.get('file','')) for p in papers if p.get('file')}
+project_dirs = ['anima','nexus','n6-architecture','brainwire','sedi','tecs-l']
+appended = 0
+new_entries = []
+for pd in project_dirs:
+    base = os.path.join(root, pd)
+    if not os.path.isdir(base): continue
+    for dirpath, _, files in os.walk(base):
+        for fn in files:
+            if not fn.endswith('.md'): continue
+            full = os.path.join(dirpath, fn)
+            rel = os.path.relpath(full, root)
+            norm = os.path.normpath(rel)
+            if norm in declared: continue
+            # Extract title from first '# ' heading or frontmatter
+            title = ''
+            try:
+                head = open(full, 'r').read(2000)
+                for line in head.splitlines():
+                    s = line.strip()
+                    if s.startswith('# '):
+                        title = s[2:].strip()[:200]; break
+                    if s.startswith('title:'):
+                        title = s.split(':',1)[1].strip().strip('\"').strip(\"'\")[:200]; break
+            except Exception: pass
+            h = hashlib.sha1(norm.encode()).hexdigest()[:8]
+            entry = {
+                'id': f'{pd[:3].upper()}-orphan-{h}',
+                'title': title or os.path.splitext(fn)[0],
+                'repo': pd,
+                'file': norm,
+                'status': 'draft',
+                'doi': '',
+                'date': '',
+                'tier': 3,
+                'keywords': [],
+                'abstract_first_line': ''
+            }
+            new_entries.append(entry)
+            appended += 1
+if not dry:
+    papers.extend(new_entries)
+    d['papers'] = papers
+    with open(manifest_path, 'w') as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+print(f'register-orphans: appended={appended} dry={dry}')
+" "$PAPERS_ROOT" "$dry"
+}
+
 _cmd_pull() {
     _die "pull: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md A2."
 }
@@ -253,11 +316,19 @@ for dirpath, _, files in os.walk(src):
         # Copy file if dst missing
         if not os.path.exists(dst_full):
             if dry:
-                pass
+                copied += 1
             else:
-                os.makedirs(os.path.dirname(dst_full), exist_ok=True)
-                shutil.copy2(full, dst_full)
-            copied += 1
+                try:
+                    os.makedirs(os.path.dirname(dst_full), exist_ok=True)
+                    shutil.copy2(full, dst_full)
+                    copied += 1
+                except (PermissionError, OSError) as ex:
+                    # raw#8 F1/F3 sandbox denials or other write failures —
+                    # skip the file but continue (manifest entry will point
+                    # to a missing file, caught later by pp_orphan_paper_scan).
+                    print(f'  SKIP (write blocked): {rel_in_src} — {ex.__class__.__name__}', file=sys.stderr)
+                    skipped += 1
+                    continue
         else:
             skipped += 1
         # Append manifest entry if missing
@@ -321,6 +392,7 @@ usage:
   papers pull        <doi>               (Phase 2, not impl)
   papers search      <query>             (Phase 2, not impl)
   papers import-from <repo> [--dry-run]  sync sister repo's papers/*.md into this repo
+  papers register-orphans [--dry-run]    register in-place unregistered .md files to manifest
 
 credentials:
   papers publish reads Zenodo token via  secret get zenodo.token
@@ -342,7 +414,8 @@ case "${1:-help}" in
     publish)     shift; _cmd_publish "$@" ;;
     pull)        shift; _cmd_pull "$@" ;;
     search)      shift; _cmd_search "$@" ;;
-    import-from) shift; _cmd_import_from "$@" ;;
+    import-from)      shift; _cmd_import_from "$@" ;;
+    register-orphans) shift; _cmd_register_orphans "$@" ;;
     help|-h|--help) _cmd_help ;;
     *)           _die "unknown command '$1'. try: papers help" ;;
 esac
