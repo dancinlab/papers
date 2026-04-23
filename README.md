@@ -2,6 +2,7 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Papers](https://img.shields.io/badge/papers-all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
 [![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://need-singularity.github.io/papers/)
+[![Discord](https://img.shields.io/badge/discord-join-5865F2.svg?logo=discord&logoColor=white)](https://discord.gg/u2spd3wwU)
 
 # 📄 need-singularity Papers
 
