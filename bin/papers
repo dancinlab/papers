@@ -1,0 +1,253 @@
+#!/usr/bin/env bash
+# papers/bin/papers — unified CLI for paper library, Phase 1 foundation.
+#
+# Subcommands (Phase 1):
+#   list      [--status S] [--project P] [--tier T] [--json]
+#   cite      <paper-id> [--format bibtex|apa|ieee|cff|ris] [--copy]
+#   validate  <paper-id>
+#   publish   <paper-id> [--sandbox] [--dry-run] [--skip-pp2]
+#   pull      <doi>                                     # stub — Phase 2
+#   search    "<query>"                                 # stub — Phase 2
+#   help
+#
+# Credential access via sister CLI:
+#   TOKEN=$(secret get zenodo.token)
+#
+# Source SSOT:
+#   manifest.json         — canonical paper list (120+ entries)
+#   upload_zenodo.hexa    — legacy publish impl (wrapped here)
+set -euo pipefail
+
+PAPERS_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+MANIFEST="${PAPERS_ROOT}/manifest.json"
+SECRET_BIN="${HOME}/core/secret/bin/secret"
+HEXA_BIN="${HOME}/core/hexa-lang/hexa"
+
+_die() { echo "papers: $*" >&2; exit 2; }
+_secret() {
+    [ -x "$SECRET_BIN" ] || _die "secret CLI not found at $SECRET_BIN"
+    "$SECRET_BIN" "$@"
+}
+
+_cmd_list() {
+    local status="" project="" tier="" as_json=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --status)  status="$2"; shift 2 ;;
+            --project) project="$2"; shift 2 ;;
+            --tier)    tier="$2"; shift 2 ;;
+            --json)    as_json=1; shift ;;
+            *)         shift ;;
+        esac
+    done
+    python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1]))
+status = sys.argv[2]
+project = sys.argv[3]
+tier = sys.argv[4]
+as_json = int(sys.argv[5])
+rows = []
+for e in d.get('papers', []):
+    if status and e.get('status','') != status: continue
+    if project and e.get('repo','') != project: continue
+    if tier and str(e.get('tier','')) != tier: continue
+    rows.append(e)
+if as_json:
+    print(json.dumps(rows, ensure_ascii=False, indent=2))
+else:
+    # box-draw table
+    widths = [18, 10, 10, 5, 68]
+    def line(c1,c2,c3,c4):
+        return c1 + c2.join([c3*w for w in widths]) + c4
+    def cell(vals):
+        return '│' + '│'.join([f' {str(v)[:w-2]:<{w-2}} ' for v,w in zip(vals, widths)]) + '│'
+    print(line('┌','┬','─','┐'))
+    print(cell(['id','status','repo','tier','title']))
+    print(line('├','┼','─','┤'))
+    for i,e in enumerate(rows):
+        print(cell([e.get('id','?'), e.get('status','?'), e.get('repo','?'),
+                    e.get('tier','?'), e.get('title','')]))
+    print(line('└','┴','─','┘'))
+    print(f'total: {len(rows)} / {len(d.get(\"papers\",[]))}')
+" "$MANIFEST" "$status" "$project" "$tier" "$as_json"
+}
+
+_cmd_cite() {
+    [ $# -ge 1 ] || _die "cite: paper-id required"
+    local pid="$1"; shift
+    local fmt="bibtex"
+    local copy=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --format) fmt="$2"; shift 2 ;;
+            --copy)   copy=1; shift ;;
+            *)        shift ;;
+        esac
+    done
+    local out
+    out=$(python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1]))
+pid = sys.argv[2]
+fmt = sys.argv[3]
+e = next((x for x in d.get('papers',[]) if x.get('id') == pid), None)
+if e is None:
+    print(f'paper id not found: {pid}', file=sys.stderr); sys.exit(1)
+title   = e.get('title','')
+doi     = e.get('doi','')
+date    = e.get('date','')
+year    = date[:4] if date else ''
+author  = e.get('authors','') or 'need-singularity'
+repo    = e.get('repo','')
+if fmt == 'bibtex':
+    key = pid.replace('-','').lower()
+    print(f'@article{{{key},')
+    print(f'  title   = {{{title}}},')
+    print(f'  author  = {{{author}}},')
+    print(f'  year    = {{{year}}},')
+    print(f'  doi     = {{{doi}}},')
+    print(f'  url     = {{https://doi.org/{doi}}},')
+    print(f'  note    = {{{repo}}}')
+    print('}')
+elif fmt == 'apa':
+    print(f'{author} ({year}). {title}. Zenodo. https://doi.org/{doi}')
+elif fmt == 'ieee':
+    print(f'{author}, \"{title},\" Zenodo, {year}. doi: {doi}.')
+elif fmt == 'ris':
+    print('TY  - JOUR')
+    print(f'TI  - {title}')
+    print(f'AU  - {author}')
+    print(f'PY  - {year}')
+    print(f'DO  - {doi}')
+    print('ER  -')
+elif fmt == 'cff':
+    print('cff-version: 1.2.0')
+    print(f'title: {title}')
+    print(f'authors:')
+    print(f'  - name: {author}')
+    print(f'date-released: {date}')
+    print(f'doi: {doi}')
+else:
+    print(f'unknown format: {fmt}', file=sys.stderr); sys.exit(1)
+" "$MANIFEST" "$pid" "$fmt")
+    if [ "$copy" -eq 1 ] && command -v pbcopy >/dev/null; then
+        echo -n "$out" | pbcopy
+        echo "copied to clipboard:" >&2
+    fi
+    echo "$out"
+}
+
+_cmd_validate() {
+    [ $# -ge 1 ] || _die "validate: paper-id required"
+    python3 -c "
+import json, os, sys
+d = json.load(open(sys.argv[1]))
+pid = sys.argv[2]
+root = sys.argv[3]
+e = next((x for x in d.get('papers',[]) if x.get('id') == pid), None)
+if e is None:
+    print(f'E0 paper id not found: {pid}'); sys.exit(1)
+errs = []
+warns = []
+# Required fields
+for k in ['id','title','repo','status']:
+    if not e.get(k): errs.append(f'E1 missing field: {k}')
+# File exists
+fp = e.get('file','')
+if fp:
+    full = os.path.join(root, fp)
+    if not os.path.exists(full): errs.append(f'E2 file not found: {fp}')
+# DOI format
+doi = e.get('doi','')
+if doi and not doi.startswith('10.'):
+    errs.append(f'E3 DOI malformed: {doi}')
+# Published should have DOI
+if e.get('status') == 'published' and not doi:
+    errs.append('E4 status=published but no DOI')
+# Abstract presence (warn)
+if not e.get('abstract_first_line'):
+    warns.append('W1 abstract_first_line empty')
+# Keywords (warn)
+if not e.get('keywords'):
+    warns.append('W2 keywords empty')
+# Tier (warn)
+if e.get('tier') is None:
+    warns.append('W3 tier not set')
+for x in errs: print(x)
+for x in warns: print(x)
+print(f'--- validate {pid}: errors={len(errs)} warnings={len(warns)}')
+sys.exit(1 if errs else 0)
+" "$MANIFEST" "$1" "$PAPERS_ROOT"
+}
+
+_cmd_publish() {
+    [ $# -ge 1 ] || _die "publish: paper-id required"
+    local pid="$1"; shift
+    local sandbox=0 dry_run=0 skip_pp2=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --sandbox)    sandbox=1; shift ;;
+            --dry-run)    dry_run=1; shift ;;
+            --skip-pp2)   skip_pp2=1; shift ;;
+            *)            shift ;;
+        esac
+    done
+    # Pull token from secret CLI
+    local tkey="zenodo.token"
+    [ "$sandbox" -eq 1 ] && tkey="zenodo.sandbox_token"
+    local token
+    token=$(_secret get "$tkey" 2>/dev/null) || _die "no $tkey in secret store. run: echo '<tok>' | secret set $tkey"
+    [ -n "$token" ] || _die "$tkey is empty — set a value first"
+    echo "papers publish: target=$([ $sandbox -eq 1 ] && echo sandbox || echo production) dry_run=$dry_run"
+    # Delegate to legacy upload_zenodo.hexa (wrapped)
+    local upload_args=("$pid")
+    [ "$dry_run" -eq 1 ] && upload_args+=("--dry-run")
+    [ "$skip_pp2" -eq 1 ] && upload_args+=("--skip-pp2-gate")
+    ZENODO_TOKEN="$token" \
+        "$HEXA_BIN" "${PAPERS_ROOT}/upload_zenodo.hexa" "${upload_args[@]}"
+}
+
+_cmd_pull() {
+    _die "pull: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md A2."
+}
+
+_cmd_search() {
+    _die "search: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md C2."
+}
+
+_cmd_help() {
+    cat <<EOF
+papers — paper library CLI (Phase 1)
+
+usage:
+  papers list      [--status S] [--project P] [--tier T] [--json]
+  papers cite      <paper-id> [--format bibtex|apa|ieee|cff|ris] [--copy]
+  papers validate  <paper-id>
+  papers publish   <paper-id> [--sandbox] [--dry-run] [--skip-pp2]
+  papers pull      <doi>      (Phase 2, not impl)
+  papers search    <query>    (Phase 2, not impl)
+
+credentials:
+  papers publish reads Zenodo token via  secret get zenodo.token
+  set with:      echo '<token>' | secret set zenodo.token
+  sandbox mode:  echo '<token>' | secret set zenodo.sandbox_token
+
+examples:
+  papers list --status draft --project anima
+  papers cite pa-n6-fusion-2026 --format bibtex
+  papers validate pa-n6-fusion-2026
+  papers publish pa-n6-fusion-2026 --sandbox --dry-run
+EOF
+}
+
+case "${1:-help}" in
+    list)     shift; _cmd_list "$@" ;;
+    cite)     shift; _cmd_cite "$@" ;;
+    validate) shift; _cmd_validate "$@" ;;
+    publish)  shift; _cmd_publish "$@" ;;
+    pull)     shift; _cmd_pull "$@" ;;
+    search)   shift; _cmd_search "$@" ;;
+    help|-h|--help) _cmd_help ;;
+    *)        _die "unknown command '$1'. try: papers help" ;;
+esac

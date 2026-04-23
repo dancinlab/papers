@@ -25,3 +25,13 @@ upload_n6_fusion.sh
 upload_n6_neuro.sh
 upload_pa38.sh
 upload_zenodo.sh
+
+# Phase 1 CLI — local runtime state / caches
+.hook-commands/
+CLAUDE.md.bak
+state/cache/
+state/*.tmp
+*.credentials
+*.credentials.*
+# Never commit local-override creds — use secret repo instead:
+#   papers publish calls `secret get zenodo.token` at runtime.
