@@ -1,0 +1,294 @@
+#!hexa strict
+// papers/tool/papers_cross_repo_lint.hexa — own 9 verify (cross-repo publish canonical)
+//
+// @tool(slug="papers_cross_repo_lint", desc="sister repo (anima/n6/hexa-lang/airgenome/nexus/hive) zenodo+osf publish 잔재 검출 → BLOCK/WARN 분류 + papers CLI 위임 강제 (own 9 papers-cross-repo-publish-canonical, papers@6b670f9)")
+// @usage(hexa run /Users/ghost/core/papers/tool/papers_cross_repo_lint.hexa [--report|--json|--strict|--selftest])
+// @omega-saturation-exempt("scan limited to 6 sister repos at /Users/ghost/core/{anima,n6-architecture,hexa-lang,airgenome,nexus,hive}; bounded by find -type f")
+// @exit_codes(0=PASS or WARN-only, 1=BLOCK or --strict-with-WARN, 2=usage error)
+//
+// CLASSIFICATION
+//   BLOCK: tool/*.hexa OR *.sh OR *.py with literal "zenodo.org/api"|"api.osf.io"|"ZENODO_TOKEN"|"OSF_TOKEN"
+//          (papers/ self 및 archive 하위 제외)
+//   WARN:  *zenodo* / *osf* 파일명 (proposal/audit/atlas markdown/json), API caller 아닌 read-only 잔재
+//   SKIP:  archive/_deprecated/, _absorbed/, build/, state/, .cache/, .git/, dist/, node_modules/
+//   EXEMPT: papers repo + void repo (own 9 SSH-terminal scope 제외)
+//
+// raw 91 C3 DECLARED LIMITS
+//   L1. 동적 URL 합성 ("${ZENODO_BASE}/api/...") caller 검출 못함 (literal grep 만)
+//   L2. 비-hexa 도구 (.rs/.go) 는 raw 9 hexa-only 별 사안
+//   L3. void repo 는 own 9 명시 제외
+//   L4. WARN classification 은 파일명만 보므로 false-positive 가능 (실제 read-only doc 인지 판정 안 함)
+//
+// raw 99 hive-CLI canonical: bin/papers cross-repo-lint dispatch (별도 verb)
+// raw 65 idempotent: same input → same output (find sort 결과 stable, jsonl append 만)
+// raw 77 audit ledger: state/papers_cross_repo_audit/audit.jsonl
+// raw 80 sentinel: __PAPERS_CROSS_REPO_LINT_RESULT__ PASS|WARN|BLOCK
+
+const SISTER_REPOS: array = ["anima", "n6-architecture", "hexa-lang", "airgenome", "nexus", "hive"]
+
+// ─── shell helpers ────────────────────────────────────────────────────────
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _core() -> string { return _home() + "/core" }
+
+fn _papers_root() -> string { return _core() + "/papers" }
+
+fn _iso_now() -> string {
+    return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim()
+}
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _dir_exists(p: string) -> bool {
+    let r = to_string(exec("test -d " + _sh_q(p) + " && echo y || echo n")).trim()
+    return r == "y"
+}
+
+// raw 77 audit ledger append
+fn _audit_append(repo: string, verdict: string, count: int, sample: string) {
+    let dir = _papers_root() + "/state/papers_cross_repo_audit"
+    let _mk = exec("mkdir -p " + _sh_q(dir))
+    let log = dir + "/audit.jsonl"
+    let ts = _iso_now()
+    // shell-escape safe one-liner via printf + jq; fallback if jq absent
+    let py = "python3 - <<'PYEOF'\n"
+           + "import json\n"
+           + "row = {'ts': " + _sh_q(ts) + ",\n"
+           + "       'tool': 'papers_cross_repo_lint',\n"
+           + "       'classifier_version': 'papers_cross_repo_lint.v1',\n"
+           + "       'repo': " + _sh_q(repo) + ",\n"
+           + "       'verdict': " + _sh_q(verdict) + ",\n"
+           + "       'count': " + to_string(count) + ",\n"
+           + "       'sample': " + _sh_q(sample) + "}\n"
+           + "open(" + _sh_q(log) + ", 'a').write(json.dumps(row, ensure_ascii=False) + '\\n')\n"
+           + "PYEOF\n"
+    let _ = exec(py)
+}
+
+// ─── scan logic ────────────────────────────────────────────────────────────
+
+const FIND_EXCLUDES: string = " -not -path '*/archive/*' -not -path '*/_absorbed/*' -not -path '*/_deprecated/*' -not -path '*/build/*' -not -path '*/state/*' -not -path '*/.cache/*' -not -path '*/.git/*' -not -path '*/dist/*' -not -path '*/node_modules/*' -not -path '*/.claude/worktrees/*' -not -path '*/.venv*/*' -not -path '*/venv/*' -not -path '*/.pyenv/*' -not -path '*/.poetry/*' -not -path '*/site-packages/*' -not -path '*/target/*' -not -path '*/__pycache__/*' "
+
+// BLOCK candidates: hexa/sh/py with literal API caller
+fn _scan_block(repo: string) -> array {
+    let base = _core() + "/" + repo
+    if !_dir_exists(base) { return [] }
+    let cmd = "find " + _sh_q(base) + " -type f"
+            + " \\( -name '*.hexa' -o -name '*.sh' -o -name '*.py' \\) "
+            + FIND_EXCLUDES
+            + " -print0 2>/dev/null"
+            + " | xargs -0 grep -l -E 'zenodo\\.org/api|api\\.osf\\.io|ZENODO_TOKEN|OSF_TOKEN' 2>/dev/null"
+            + " | sort"
+    let out = to_string(exec(cmd)).trim()
+    if len(out) == 0 { return [] }
+    return out.split("\n")
+}
+
+// WARN candidates: *zenodo* / *osf* 파일명, BLOCK 카테고리 외
+fn _scan_warn(repo: string) -> array {
+    let base = _core() + "/" + repo
+    if !_dir_exists(base) { return [] }
+    let cmd = "find " + _sh_q(base) + " -type f"
+            + " \\( -name '*zenodo*' -o -name '*osf*' \\) "
+            + FIND_EXCLUDES
+            + " 2>/dev/null | sort"
+    let out = to_string(exec(cmd)).trim()
+    if len(out) == 0 { return [] }
+    return out.split("\n")
+}
+
+// 두 set 의 차집합 (warn - block) — BLOCK 으로 이미 잡힌 건 WARN 에서 제거
+fn _diff_set(warn: array, block: array) -> array {
+    let mut out = []
+    let mut i = 0
+    while i < len(warn) {
+        let w = warn[i]
+        let mut hit = false
+        let mut j = 0
+        while j < len(block) {
+            if block[j] == w { hit = true; j = len(block) }
+            j = j + 1
+        }
+        if !hit { out = out + [w] }
+        i = i + 1
+    }
+    return out
+}
+
+// ─── reporting ─────────────────────────────────────────────────────────────
+
+fn _print_repo_section(repo: string, block: array, warn: array, json_mode: bool) {
+    if json_mode { return }
+    println("--- " + repo + " ---")
+    if len(block) == 0 && len(warn) == 0 {
+        println("  (none)")
+        return
+    }
+    if len(block) > 0 {
+        println("  BLOCK: " + to_string(len(block)))
+        let mut x = 0
+        let cap = 5
+        while x < len(block) && x < cap {
+            println("    " + block[x])
+            x = x + 1
+        }
+        if len(block) > cap {
+            println("    ... and " + to_string(len(block) - cap) + " more")
+        }
+    }
+    if len(warn) > 0 {
+        println("  WARN: " + to_string(len(warn)))
+        let mut x = 0
+        let cap = 5
+        while x < len(warn) && x < cap {
+            println("    " + warn[x])
+            x = x + 1
+        }
+        if len(warn) > cap {
+            println("    ... and " + to_string(len(warn) - cap) + " more")
+        }
+    }
+}
+
+fn _emit_json(per_repo: array) {
+    // per_repo 는 [{repo, block:[...], warn:[...]}] 의 평면 표현
+    // 단순 stringify
+    print("{\"tool\":\"papers_cross_repo_lint\",\"classifier_version\":\"papers_cross_repo_lint.v1\",\"sister_repos\":[")
+    let mut i = 0
+    while i < len(per_repo) {
+        if i > 0 { print(",") }
+        let row = per_repo[i]
+        print("{\"repo\":\"" + row[0] + "\",\"block\":" + row[1] + ",\"warn\":" + row[2] + "}")
+        i = i + 1
+    }
+    println("]}")
+}
+
+// ─── main runner ───────────────────────────────────────────────────────────
+
+fn run_lint(strict: bool, json_mode: bool) -> int {
+    if !json_mode {
+        println("[papers_cross_repo_lint] own 9 papers-cross-repo-publish-canonical (papers@6b670f9)")
+        println("  scope: 6 sister repos (void excluded by own 9)")
+        println("")
+    }
+    let mut total_block = 0
+    let mut total_warn = 0
+    let mut json_rows = []
+    let mut i = 0
+    while i < len(SISTER_REPOS) {
+        let repo = SISTER_REPOS[i]
+        let block = _scan_block(repo)
+        let warn_raw = _scan_warn(repo)
+        let warn = _diff_set(warn_raw, block)
+        _print_repo_section(repo, block, warn, json_mode)
+        total_block = total_block + len(block)
+        total_warn = total_warn + len(warn)
+        // audit ledger
+        let v = if len(block) > 0 { "BLOCK" }
+                else if len(warn) > 0 { "WARN" }
+                else { "PASS" }
+        let sample = if len(block) > 0 { block[0] }
+                     else if len(warn) > 0 { warn[0] }
+                     else { "" }
+        _audit_append(repo, v, len(block) + len(warn), sample)
+        // json prep
+        if json_mode {
+            // 단순 array of strings flat-stringified — quick output
+            json_rows = json_rows + [[repo, "[" + to_string(len(block)) + "]", "[" + to_string(len(warn)) + "]"]]
+        }
+        i = i + 1
+    }
+    if json_mode { _emit_json(json_rows) }
+    else {
+        println("")
+        println("[summary] BLOCK=" + to_string(total_block) + " WARN=" + to_string(total_warn))
+    }
+    let verdict = if total_block > 0 { "BLOCK" }
+                  else if total_warn > 0 && strict { "BLOCK" }
+                  else if total_warn > 0 { "WARN" }
+                  else { "PASS" }
+    println("__PAPERS_CROSS_REPO_LINT_RESULT__ " + verdict)
+    if verdict == "BLOCK" { return 1 }
+    return 0
+}
+
+// ─── selftest (idempotency check + papers self exempt verify) ─────────────
+
+fn run_selftest() -> int {
+    println("[papers_cross_repo_lint --selftest]")
+    println("  fixture-1: papers/ self exempt — papers repo NOT in SISTER_REPOS")
+    let mut found = false
+    let mut i = 0
+    while i < len(SISTER_REPOS) {
+        if SISTER_REPOS[i] == "papers" { found = true }
+        i = i + 1
+    }
+    if found {
+        println("    FAIL: papers in SISTER_REPOS (own 9 violation — papers exempt)")
+        println("__PAPERS_CROSS_REPO_LINT_SELFTEST__ FAIL")
+        return 1
+    }
+    println("    PASS")
+    println("  fixture-2: void/ exempt — void repo NOT in SISTER_REPOS")
+    let mut found_void = false
+    let mut k = 0
+    while k < len(SISTER_REPOS) {
+        if SISTER_REPOS[k] == "void" { found_void = true }
+        k = k + 1
+    }
+    if found_void {
+        println("    FAIL: void in SISTER_REPOS (own 9 명시 제외 위반)")
+        println("__PAPERS_CROSS_REPO_LINT_SELFTEST__ FAIL")
+        return 1
+    }
+    println("    PASS")
+    println("  fixture-3: scan idempotent — two consecutive runs same verdict")
+    let r1 = run_lint(false, true)
+    let r2 = run_lint(false, true)
+    if r1 != r2 {
+        println("    FAIL: rc1=" + to_string(r1) + " rc2=" + to_string(r2))
+        println("__PAPERS_CROSS_REPO_LINT_SELFTEST__ FAIL")
+        return 1
+    }
+    println("    PASS (rc=" + to_string(r1) + ")")
+    println("__PAPERS_CROSS_REPO_LINT_SELFTEST__ PASS (3 fixtures)")
+    return 0
+}
+
+// ─── argv ─────────────────────────────────────────────────────────────────
+
+fn _has_arg(args: array, target: string) -> bool {
+    let mut i = 0
+    while i < len(args) {
+        if args[i] == target { return true }
+        i = i + 1
+    }
+    return false
+}
+
+fn main() {
+    let a = _args
+    let strict = _has_arg(a, "--strict")
+    let json_mode = _has_arg(a, "--json")
+    let selftest = _has_arg(a, "--selftest")
+    if _has_arg(a, "-h") || _has_arg(a, "--help") {
+        println("usage: hexa run tool/papers_cross_repo_lint.hexa [--report|--json|--strict|--selftest]")
+        println("")
+        println("own 9 papers-cross-repo-publish-canonical verify")
+        println("  --report   default human-readable")
+        println("  --json     compact JSON output")
+        println("  --strict   exit 1 on any WARN (default: only BLOCK exits 1)")
+        println("  --selftest 3 fixtures (papers/void exempt + idempotent)")
+        return
+    }
+    if selftest { exit(run_selftest()) }
+    exit(run_lint(strict, json_mode))
+}

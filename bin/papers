@@ -223,6 +223,13 @@ _cmd_sync() {
 
 # papers lint — call tool/papers_lint.hexa if present (other agent's deliverable).
 # Falls back to a built-in minimal lint that runs validate across all entries.
+# papers cross-repo-lint — call tool/papers_cross_repo_lint.hexa (own 9 verify, papers@6b670f9).
+_cmd_cross_repo_lint() {
+    local tool="${PAPERS_ROOT}/tool/papers_cross_repo_lint.hexa"
+    [ -f "$tool" ] || _die "tool/papers_cross_repo_lint.hexa not present"
+    _hexa "$tool" "$@"
+    return $?
+}
 _cmd_lint() {
     local tool="${PAPERS_ROOT}/tool/papers_lint.hexa"
     if [ -f "$tool" ]; then
@@ -560,6 +567,7 @@ core verbs:
   papers search    "<query>" [--json] [--limit N]     (operators: AND OR NOT)
   papers sync      [--dry-run] [--verbose] [--limit N]
   papers lint                                          (delegates to tool/papers_lint.hexa)
+  papers cross-repo-lint [--report|--json|--strict|--selftest] (own 9 sister-repo publish 잔재 검출)
   papers scan      <list|meta|all|missing-doi|orphan|...>
   papers secret    <get|set|list> <key> [value]
 
@@ -601,6 +609,7 @@ case "${1:-help}" in
     search)      shift; _cmd_search "$@" ;;
     sync)        shift; _cmd_sync "$@" ;;
     lint)        shift; _cmd_lint "$@" ;;
+    cross-repo-lint) shift; _cmd_cross_repo_lint "$@" ;;
     scan)        shift; _cmd_scan "$@" ;;
     secret)      shift; _cmd_secret "$@" ;;
     import-from)      shift; _cmd_import_from "$@" ;;

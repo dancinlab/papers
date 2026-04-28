@@ -79,7 +79,7 @@ own 9 new "papers-cross-repo-publish-canonical"
         single-entry-point invariant (raw 99 sister) + manifest atomic write (raw 65) +
         DOI invariant (own 5) 가 cross-repo SSOT 형성. .workspace papers.cli/papers.manifest
         resource canonical entry 선언 (2026-04-28 사용자 directive).
-  verify hexa run tool/papers_cross_repo_lint.hexa  # 신규 도구 (별도 cycle)
+  verify hexa run tool/papers_cross_repo_lint.hexa  # 2026-04-29 land (chflags uchg, 294 LoC, 6 sister scan, BLOCK/WARN classifier v1)
   on_fail warn
   promoted-at 2026-04-28
   note sister repos에 grandfather 잔재 존재 — archive/marker migration 완료 후 block 격상.
