@@ -525,8 +525,14 @@ print(f'register-orphans: appended={appended} dry={dry}')
 " "$PAPERS_ROOT" "$dry"
 }
 
+# Phase 2 verb 7 — pull paper metadata from a remote DOI provider.
+# Usage: papers pull <doi> [--dry-run] [--paper-id <id>]
+# Dispatches to tool/doi_pull.hexa.
 _cmd_pull() {
-    _die "pull: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md A2."
+    [ $# -ge 1 ] || _die "pull: <doi> required (e.g. 10.5281/zenodo.19245023)"
+    local tool="${PAPERS_ROOT}/tool/doi_pull.hexa"
+    [ -f "$tool" ] || _die "tool/doi_pull.hexa not present"
+    _hexa "$tool" "$@"
 }
 
 # E1-style cross-repo import: sync source repo's papers/ into this repo.
@@ -630,8 +636,15 @@ print(f'import-from {repo}: copied={copied} appended={appended} skipped(existing
 " "$src" "$repo" "$PAPERS_ROOT" "$dry"
 }
 
+# Phase 2 verb 8 — full-text search over manifest.
+# Usage: papers search "<query>" [--json] [--limit N]
+#   operators (uppercase only): AND OR NOT
+# Dispatches to tool/keyword_search.hexa.
 _cmd_search() {
-    _die "search: not yet implemented (Phase 2). See docs/papers_meta_engine_brainstorm_20260423.md C2."
+    [ $# -ge 1 ] || _die "search: <query> required (try: papers search \"phi AND consciousness\")"
+    local tool="${PAPERS_ROOT}/tool/keyword_search.hexa"
+    [ -f "$tool" ] || _die "tool/keyword_search.hexa not present"
+    _hexa "$tool" "$@"
 }
 
 _cmd_help() {
@@ -645,8 +658,8 @@ core verbs:
   papers validate  <paper-id>
   papers verify    [--verbose] [--timeout N] [--skip-osf]
   papers publish   <paper-id> [--target zenodo|osf|all] [--sandbox] [--dry-run] [--skip-pp2]
-  papers pull      <doi>                              (Phase 2, not impl)
-  papers search    "<query>"                          (Phase 2, not impl)
+  papers pull      <doi> [--dry-run] [--paper-id <id>]
+  papers search    "<query>" [--json] [--limit N]     (operators: AND OR NOT)
   papers sync      [--dry-run] [--verbose] [--limit N]
   papers lint                                          (delegates to tool/papers_lint.hexa)
   papers scan      <list|meta|all|missing-doi|orphan|...>
@@ -674,6 +687,8 @@ examples:
   papers verify
   papers sync --dry-run
   papers secret get zenodo.token
+  papers pull 10.5281/zenodo.19245023 --dry-run
+  papers search "phi AND consciousness" --limit 5
 EOF
 }
 

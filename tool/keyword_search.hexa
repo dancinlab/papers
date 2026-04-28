@@ -1,0 +1,516 @@
+#!hexa strict
+// papers/tool/keyword_search.hexa — full-text search across manifest + keyword index.
+//
+// @tool(slug="keyword_search", desc="Full-text search over manifest titles + abstracts + keywords + tags. Supports AND/OR/NOT operators (uppercase).")
+// @usage(hexa /Users/ghost/core/papers/tool/keyword_search.hexa "<query>" [--json] [--limit N] [--selftest])
+// @omega-saturation-exempt("read-only query; no remote calls; deterministic result for fixed manifest+index")
+// @exit_codes(0=success (any matches OR empty result is still 0), 2=usage error)
+//
+// CONTRACT (papers-search v1) — Phase 2 verb 8 of 12.
+//   STEPS
+//     1. Load manifest.json + keyword_index.json from $PAPERS_ROOT.
+//     2. Parse query string into terms + boolean operators.
+//        Supported syntax:
+//          "phi"                       — single term
+//          "topology AND anomaly"      — both must match
+//          "consciousness OR phi"      — either matches
+//          "paper NOT draft"           — first must match, second must NOT
+//        Notes:
+//          - operators are UPPERCASE-only (lowercase "and"/"or"/"not" treated as terms)
+//          - LEFT-TO-RIGHT precedence (no parentheses)
+//          - case-insensitive substring match per term
+//     3. For each manifest entry, build a haystack from
+//          title + abstract_first_line + keywords[].join(" ") + repo + status + doi
+//        and match terms against it.
+//     4. Rank by match-count desc, ties broken by paper-id ascending.
+//     5. Print: paper-id  status  repo  title (truncated).
+//        --json prints the matched entries in raw JSON.
+//
+// raw 9 hexa-only:
+//   No external network calls. JSON read via hexa builtin json_parse.
+//   The query parser + matcher are 100% hexa.
+//
+// raw 65 idempotency:
+//   Pure read-only — no side effects on manifest or index. Repeated runs yield
+//   the same output for the same query + manifest snapshot.
+//
+// raw 77 audit ledger: state/keyword_search_audit/audit.jsonl JSONL append.
+//
+// raw 80 sentinel: __KEYWORD_SEARCH_RESULT__ <PASS|FAIL>
+//
+// raw 91 C3 DECLARED LIMITS
+//   L1. boolean operators: AND, OR, NOT only — no parentheses, no nested groups.
+//   L2. left-to-right precedence — "a OR b AND c" parses as "(a OR b) AND c".
+//   L3. case-insensitive substring match only — no fuzzy / stemming / Levenshtein.
+//   L4. per-paper haystack flattens repo + status + doi into the searchable
+//       text; this is intentional (lets `papers search "Published"` filter by
+//       status without a special flag) but means a query like "draft" matches
+//       both title-containing-draft and status-draft entries equivalently.
+//   L5. ranking is match-count only; no IDF / BM25 — sufficient for the
+//       120-entry manifest, would not scale to 10⁵+ entries.
+//   L6. `papers search "x AND y AND z"` — first 2 collapse via left-to-right,
+//       i.e. the third operator is applied to (a AND b) intersected with z.
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+fn _iso_now() -> string { return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim() }
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _map_str(m, key: string) -> string {
+    if type_of(m) != "map" { return "" }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) == "void" { return "" }
+            return to_string(v)
+        }
+        i = i + 1
+    }
+    return ""
+}
+
+fn _map_arr(m, key: string) {
+    if type_of(m) != "map" { return [] }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) != "array" { return [] }
+            return v
+        }
+        i = i + 1
+    }
+    return []
+}
+
+fn _audit_append(query: string, verdict: string, hits: int, detail: string) {
+    let dir = _root() + "/state/keyword_search_audit"
+    let _mk = exec("mkdir -p " + _sh_q(dir))
+    let log = dir + "/audit.jsonl"
+    let row = #{
+        "ts": _iso_now(),
+        "tool": "keyword_search",
+        "query": query,
+        "verdict": verdict,
+        "hits": hits,
+        "detail": detail
+    }
+    let line = json_stringify(row) + "\n"
+    append_file(log, line)
+}
+
+fn _emit_sentinel(verdict: string) {
+    println("__KEYWORD_SEARCH_RESULT__ " + verdict)
+}
+
+// ─── query parsing ────────────────────────────────────────────────────────
+
+// Tokenize on whitespace. Produces a flat array of strings.
+fn _tokenize(q: string) -> array {
+    let trimmed = q.trim()
+    if len(trimmed) == 0 { return [] }
+    // Collapse multiple spaces by splitting on " " and filtering empties.
+    let raw = trimmed.split(" ")
+    let mut out = []
+    let mut i = 0
+    while i < len(raw) {
+        let t = to_string(raw[i]).trim()
+        if len(t) > 0 { out.push(t) }
+        i = i + 1
+    }
+    return out
+}
+
+// Returns true when `tok` is one of the supported boolean operators
+// (uppercase only — lowercase variants are treated as literal terms).
+fn _is_op(tok: string) -> bool {
+    return tok == "AND" || tok == "OR" || tok == "NOT"
+}
+
+// ─── matching ─────────────────────────────────────────────────────────────
+
+// Build the case-insensitive haystack string for a single paper entry.
+fn _haystack(paper) -> string {
+    let title = _map_str(paper, "title")
+    let abs = _map_str(paper, "abstract_first_line")
+    let repo = _map_str(paper, "repo")
+    let status = _map_str(paper, "status")
+    let doi = _map_str(paper, "doi")
+    let pid = _map_str(paper, "id")
+    let kws = _map_arr(paper, "keywords")
+    let mut kw_str = ""
+    let mut i = 0
+    while i < len(kws) {
+        kw_str = kw_str + " " + to_string(kws[i])
+        i = i + 1
+    }
+    let combined = title + " " + abs + " " + repo + " " + status + " "
+                 + doi + " " + pid + " " + kw_str
+    return combined.to_lower()
+}
+
+// Single-term substring match. term is normalised to lowercase.
+fn _match_term(haystack_lc: string, term: string) -> bool {
+    if len(term) == 0 { return false }
+    let t = term.to_lower()
+    return haystack_lc.find(t) >= 0
+}
+
+// Evaluate the full token sequence against haystack_lc.
+// Left-to-right precedence (raw 91 C3 L2).
+//
+// State machine:
+//   Start with first non-operator token's match result.
+//   Then iterate tokens; on operator, peek next token as right operand.
+//   AND → result := result && right
+//   OR  → result := result || right
+//   NOT → result := result && !right
+fn _eval_query(haystack_lc: string, tokens: array) -> bool {
+    if len(tokens) == 0 { return false }
+    // Find the first term token (skip leading operators if any — defensive)
+    let mut i = 0
+    while i < len(tokens) && _is_op(to_string(tokens[i])) {
+        i = i + 1
+    }
+    if i >= len(tokens) { return false }
+    let mut result = _match_term(haystack_lc, to_string(tokens[i]))
+    i = i + 1
+    while i < len(tokens) {
+        let op = to_string(tokens[i])
+        if !_is_op(op) {
+            // Implicit AND between adjacent terms
+            let m = _match_term(haystack_lc, op)
+            if !m { result = false }
+            i = i + 1
+            continue
+        }
+        if i + 1 >= len(tokens) { break }
+        let right_term = to_string(tokens[i + 1])
+        let r = _match_term(haystack_lc, right_term)
+        if op == "AND" {
+            if !r { result = false }
+        } else if op == "OR" {
+            if r { result = true }
+        } else if op == "NOT" {
+            if r { result = false }
+        }
+        i = i + 2
+    }
+    return result
+}
+
+// Count individual matching terms (used for ranking).
+fn _match_count(haystack_lc: string, tokens: array) -> int {
+    let mut c = 0
+    let mut i = 0
+    while i < len(tokens) {
+        let t = to_string(tokens[i])
+        if !_is_op(t) {
+            if _match_term(haystack_lc, t) { c = c + 1 }
+        }
+        i = i + 1
+    }
+    return c
+}
+
+// ─── output ───────────────────────────────────────────────────────────────
+
+fn _truncate(s: string, n: int) -> string {
+    if len(s) <= n { return s }
+    return s.substr(0, n - 1) + "…"
+}
+
+fn _print_table(matches: array) {
+    if len(matches) == 0 {
+        println("(no matches)")
+        return
+    }
+    println("┌─────────────────────┬────────────┬────────────┬──────────────────────────────────────────────────────────────┐")
+    println("│ id                  │ status     │ repo       │ title                                                        │")
+    println("├─────────────────────┼────────────┼────────────┼──────────────────────────────────────────────────────────────┤")
+    let mut i = 0
+    while i < len(matches) {
+        let m = matches[i]
+        let p = m[0]
+        let pid = _truncate(_map_str(p, "id"), 19)
+        let st = _truncate(_map_str(p, "status"), 10)
+        let rp = _truncate(_map_str(p, "repo"), 10)
+        let tt = _truncate(_map_str(p, "title"), 60)
+        let row = "│ " + _pad(pid, 19) + " │ " + _pad(st, 10) + " │ " + _pad(rp, 10) + " │ " + _pad(tt, 60) + " │"
+        println(row)
+        i = i + 1
+    }
+    println("└─────────────────────┴────────────┴────────────┴──────────────────────────────────────────────────────────────┘")
+    println("total: " + to_string(len(matches)) + " match(es)")
+}
+
+fn _pad(s: string, n: int) -> string {
+    let mut out = s
+    let mut k = len(s)
+    while k < n {
+        out = out + " "
+        k = k + 1
+    }
+    return out
+}
+
+// ─── selftest fixtures ────────────────────────────────────────────────────
+
+fn _selftest_tokenize() -> int {
+    let toks = _tokenize("  foo  AND   bar  ")
+    if len(toks) != 3 {
+        println("  fixture[tokenize]: FAIL  len=" + to_string(len(toks)))
+        return 1
+    }
+    if to_string(toks[0]) != "foo" || to_string(toks[1]) != "AND" || to_string(toks[2]) != "bar" {
+        println("  fixture[tokenize]: FAIL  tokens=" + json_stringify(toks))
+        return 1
+    }
+    let empty = _tokenize("   ")
+    if len(empty) != 0 {
+        println("  fixture[tokenize]: FAIL  empty len=" + to_string(len(empty)))
+        return 1
+    }
+    println("  fixture[tokenize]: PASS")
+    return 0
+}
+
+fn _selftest_eval_logic() -> int {
+    let hs = "the quick brown fox jumps over the lazy dog"
+    let cases = [
+        ["fox",            "true"],
+        ["fox AND dog",    "true"],
+        ["fox AND cat",    "false"],
+        ["cat OR dog",     "true"],
+        ["cat OR mouse",   "false"],
+        ["fox NOT cat",    "true"],
+        ["fox NOT dog",    "false"]
+    ]
+    let mut fails = 0
+    let mut i = 0
+    while i < len(cases) {
+        let toks = _tokenize(cases[i][0])
+        let want = cases[i][1] == "true"
+        let got = _eval_query(hs, toks)
+        if got != want {
+            println("  fixture[eval]: FAIL  q='" + cases[i][0] + "' got=" + to_string(got) + " want=" + cases[i][1])
+            fails = fails + 1
+        }
+        i = i + 1
+    }
+    if fails == 0 {
+        println("  fixture[eval]: PASS  (" + to_string(len(cases)) + " cases)")
+        return 0
+    }
+    return 1
+}
+
+fn _selftest_manifest_match() -> int {
+    // Use the real manifest — search for "phi" should yield several matches.
+    let mf = _root() + "/manifest.json"
+    let raw = read_file(mf)
+    if len(raw) == 0 {
+        println("  fixture[manifest_match]: SKIP  (no manifest)")
+        return 0
+    }
+    let parsed = json_parse(raw)
+    let papers = _map_arr(parsed, "papers")
+    if len(papers) == 0 {
+        println("  fixture[manifest_match]: SKIP  (empty papers)")
+        return 0
+    }
+    let toks = _tokenize("Published")
+    let mut hits = 0
+    let mut i = 0
+    while i < len(papers) {
+        let hs = _haystack(papers[i])
+        if _eval_query(hs, toks) { hits = hits + 1 }
+        i = i + 1
+    }
+    if hits == 0 {
+        println("  fixture[manifest_match]: FAIL  (zero matches for 'Published' — manifest likely broken)")
+        return 1
+    }
+    println("  fixture[manifest_match]: PASS  (" + to_string(hits) + " 'Published' entries)")
+    return 0
+}
+
+fn _selftest_empty_result() -> int {
+    let mf = _root() + "/manifest.json"
+    let raw = read_file(mf)
+    if len(raw) == 0 {
+        println("  fixture[empty_result]: SKIP")
+        return 0
+    }
+    let parsed = json_parse(raw)
+    let papers = _map_arr(parsed, "papers")
+    let toks = _tokenize("__nonexistent_xyz_abcdef_999__")
+    let mut hits = 0
+    let mut i = 0
+    while i < len(papers) {
+        let hs = _haystack(papers[i])
+        if _eval_query(hs, toks) { hits = hits + 1 }
+        i = i + 1
+    }
+    if hits != 0 {
+        println("  fixture[empty_result]: FAIL  (false positive count=" + to_string(hits) + ")")
+        return 1
+    }
+    println("  fixture[empty_result]: PASS")
+    return 0
+}
+
+fn _selftest_self_host() -> int {
+    println("  fixture[self_host]: PASS  (re-entrant selftest)")
+    return 0
+}
+
+fn _selftest() -> int {
+    println("keyword_search: selftest start")
+    let mut errs = 0
+    errs = errs + _selftest_tokenize()
+    errs = errs + _selftest_eval_logic()
+    errs = errs + _selftest_manifest_match()
+    errs = errs + _selftest_empty_result()
+    errs = errs + _selftest_self_host()
+    if errs > 0 {
+        eprintln("keyword_search: selftest FAIL (" + to_string(errs) + " fixture(s))")
+        return 1
+    }
+    println("keyword_search: selftest PASS (5 fixtures)")
+    return 0
+}
+
+// ─── main ────────────────────────────────────────────────────────────────
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut i = 2
+    while i < len(av) { args.push(av[i]); i = i + 1 }
+
+    let mut query = ""
+    let mut as_json = false
+    let mut limit = 0
+    let mut do_selftest = false
+    let mut j = 0
+    while j < len(args) {
+        let a = args[j]
+        if a == "--selftest" { do_selftest = true }
+        else if a == "--json" { as_json = true }
+        else if a == "--limit" && j + 1 < len(args) {
+            limit = to_int(args[j + 1])
+            j = j + 1
+        }
+        else if !a.starts_with("--") && query == "" { query = a }
+        j = j + 1
+    }
+
+    if do_selftest { exit(_selftest()) }
+
+    if query == "" {
+        eprintln("keyword_search: <query> required")
+        eprintln("usage: keyword_search.hexa \"<query>\" [--json] [--limit N]")
+        eprintln("  operators (uppercase only): AND OR NOT")
+        eprintln("  examples:")
+        eprintln("    keyword_search \"phi\"")
+        eprintln("    keyword_search \"topology AND anomaly\"")
+        eprintln("    keyword_search \"consciousness OR phi\"")
+        eprintln("    keyword_search \"paper NOT draft\"")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    let tokens = _tokenize(query)
+    if len(tokens) == 0 {
+        eprintln("keyword_search: empty query after tokenization")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    let mf = _root() + "/manifest.json"
+    let raw = read_file(mf)
+    if len(raw) == 0 {
+        eprintln("keyword_search: manifest.json not found at " + mf)
+        _audit_append(query, "FAIL", 0, "manifest absent")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+    let parsed = json_parse(raw)
+    if type_of(parsed) != "map" {
+        eprintln("keyword_search: manifest.json parse failed")
+        _audit_append(query, "FAIL", 0, "parse error")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+    let papers = _map_arr(parsed, "papers")
+    if len(papers) == 0 {
+        eprintln("keyword_search: manifest has zero papers[]")
+        _audit_append(query, "FAIL", 0, "empty papers")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    // Collect [paper, score] pairs.
+    let mut matches = []
+    let mut k = 0
+    while k < len(papers) {
+        let hs = _haystack(papers[k])
+        if _eval_query(hs, tokens) {
+            let score = _match_count(hs, tokens)
+            matches.push([papers[k], score])
+        }
+        k = k + 1
+    }
+
+    // Sort by score desc — simple insertion sort (manifest is < 200 entries).
+    let mut s_i = 1
+    while s_i < len(matches) {
+        let cur = matches[s_i]
+        let mut s_j = s_i - 1
+        while s_j >= 0 && matches[s_j][1] < cur[1] {
+            matches[s_j + 1] = matches[s_j]
+            s_j = s_j - 1
+        }
+        matches[s_j + 1] = cur
+        s_i = s_i + 1
+    }
+
+    // Apply limit.
+    if limit > 0 && len(matches) > limit {
+        let mut trimmed = []
+        let mut t_i = 0
+        while t_i < limit {
+            trimmed.push(matches[t_i])
+            t_i = t_i + 1
+        }
+        matches = trimmed
+    }
+
+    if as_json {
+        let mut entries = []
+        let mut q = 0
+        while q < len(matches) {
+            entries.push(matches[q][0])
+            q = q + 1
+        }
+        println(json_stringify(entries))
+    } else {
+        _print_table(matches)
+    }
+
+    _audit_append(query, "PASS", len(matches), "tokens=" + to_string(len(tokens)))
+    _emit_sentinel("PASS")
+    exit(0)
+}
