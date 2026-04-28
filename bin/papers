@@ -648,6 +648,10 @@ _cmd_search() {
 }
 
 _cmd_help() {
+    # subcommand alias map (lint rule 7 cli-help-discoverable canonical names):
+    #   import_from        → papers import-from
+    #   register_orphans   → papers register-orphans
+    #   fix_doi_gap        → papers fix-doi-gap
     cat <<EOF
 papers — paper library CLI (12-verb dispatch, design da47e40)
 
