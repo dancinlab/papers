@@ -245,11 +245,24 @@ _cmd_publish() {
     [ -n "$token" ] || _die "$tkey is empty — set a value first"
     echo "papers publish: target=zenodo$([ $sandbox -eq 1 ] && echo /sandbox || echo /production) dry_run=$dry_run"
     local upload_args=("$pid")
+    [ "$sandbox" -eq 1 ] && upload_args+=("--sandbox")
     [ "$dry_run" -eq 1 ] && upload_args+=("--dry-run")
     [ "$skip_pp2" -eq 1 ] && upload_args+=("--skip-pp2-gate")
+    # 2026-04-28 routing: dispatch to tool/zenodo_publish.hexa (hexa-native,
+    # python3-free hot path, 4/4 selftest PASS) instead of the legacy
+    # upload_zenodo.hexa (root-level, 5 residual python3 sites + PP2/PP3
+    # disabled stubs). Fallback to legacy if the new tool is missing
+    # (chflags / packaging mishap).
+    local zenodo_tool="${PAPERS_ROOT}/tool/zenodo_publish.hexa"
+    if [ ! -f "$zenodo_tool" ]; then
+        echo "papers publish: WARN tool/zenodo_publish.hexa not present, falling back to upload_zenodo.hexa" >&2
+        zenodo_tool="${PAPERS_ROOT}/upload_zenodo.hexa"
+    fi
     # HEXA_LOCAL=1: docker safe-landing bypass (see _hexa() rationale).
+    # ZENODO_TOKEN is exported for the legacy fallback; the new tool fetches
+    # via `secret get zenodo.{token,sandbox_token}` directly from --sandbox.
     ZENODO_TOKEN="$token" HEXA_LOCAL=1 \
-        "$HEXA_BIN" "${PAPERS_ROOT}/upload_zenodo.hexa" "${upload_args[@]}"
+        "$HEXA_BIN" "$zenodo_tool" "${upload_args[@]}"
 }
 
 # Print one entry from manifest by id. --field F prints just one field.
