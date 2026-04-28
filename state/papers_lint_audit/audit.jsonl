@@ -30,3 +30,13 @@
 {"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
 {"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: fix_doi_gap, import_from, register_orphans"}
 {"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 8, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 3 core tools carry uchg flag"}
+{"ts": "2026-04-28T14:21:56Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-04-28T14:22:02Z", "tool": "papers_lint", "rule": 1, "verdict": "FAIL", "path": "/Users/ghost/core/papers", "detail": "_test_prettyprint: non snake_case"}
+{"ts": "2026-04-28T14:22:02Z", "tool": "papers_lint", "rule": 8, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 3 core tools carry uchg flag"}
+{"ts": "2026-04-28T14:24:52Z", "tool": "papers_lint", "rule": 5, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all DOIs valid"}
+{"ts": "2026-04-28T14:24:52Z", "tool": "papers_lint", "rule": 1, "verdict": "FAIL", "path": "/Users/ghost/core/papers", "detail": "_test_prettyprint: non snake_case"}
+{"ts": "2026-04-28T14:24:53Z", "tool": "papers_lint", "rule": 2, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "bin/ single entry papers"}
+{"ts": "2026-04-28T14:24:53Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-04-28T14:24:53Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: fix_doi_gap, import_from, register_orphans"}
+{"ts": "2026-04-28T14:25:46Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
+{"ts": "2026-04-28T14:25:46Z", "tool": "papers_lint", "rule": 8, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 3 core tools carry uchg flag"}

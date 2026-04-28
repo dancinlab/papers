@@ -30,3 +30,18 @@
 {"ts":"","tool":"zenodo_publish","paper_id":"N6-030","step":"publish","verdict":"DRY_RUN","detail":"no API calls performed"}
 {"ts":"2026-04-28T14:05:39Z","tool":"zenodo_publish","paper_id":"P-001","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
 {"ts":"2026-04-28T14:05:40Z","tool":"zenodo_publish","paper_id":"P-001","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245023"}
+{"ts":"2026-04-28T14:16:15Z","tool":"zenodo_publish","paper_id":"P-001","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:16Z","tool":"zenodo_publish","paper_id":"P-001","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245023"}
+{"ts":"2026-04-28T14:16:16Z","tool":"zenodo_publish","paper_id":"P-001","step":"start","verdict":"INFO","detail":"sandbox=false dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:16Z","tool":"zenodo_publish","paper_id":"P-001","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245023"}
+{"ts":"2026-04-28T14:16:16Z","tool":"zenodo_publish","paper_id":"PA-01","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:17Z","tool":"zenodo_publish","paper_id":"PA-01","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245074"}
+{"ts":"2026-04-28T14:16:17Z","tool":"zenodo_publish","paper_id":"N6-030","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:17Z","tool":"zenodo_publish","paper_id":"N6-030","step":"metadata","verdict":"OK","detail":"/tmp/zenodo_meta_N6-030.json"}
+{"ts":"2026-04-28T14:16:17Z","tool":"zenodo_publish","paper_id":"N6-030","step":"publish","verdict":"DRY_RUN","detail":"no API calls performed"}
+{"ts":"2026-04-28T14:16:19Z","tool":"zenodo_publish","paper_id":"P-001","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:19Z","tool":"zenodo_publish","paper_id":"P-001","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245023"}
+{"ts":"2026-04-28T14:16:27Z","tool":"zenodo_publish","paper_id":"P-001","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:27Z","tool":"zenodo_publish","paper_id":"P-001","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245023"}
+{"ts":"2026-04-28T14:16:33Z","tool":"zenodo_publish","paper_id":"P-001","step":"start","verdict":"INFO","detail":"sandbox=true dry_run=true metadata_only=false"}
+{"ts":"2026-04-28T14:16:33Z","tool":"zenodo_publish","paper_id":"P-001","step":"idempotency","verdict":"SKIP","detail":"doi=10.5281/zenodo.19245023"}
