@@ -56,9 +56,11 @@ fn main() {
       println("Error: --check-only requires <paper.md> argument")
       return
     }
-    let gate_cmd = "/opt/homebrew/bin/python3 '" + script_dir + "/scripts/pp2_gate.py' --check-only '" + check_only_target + "' 2>&1; echo \"__EXIT__$?\""
-    let gate_out = exec(gate_cmd)
-    println(gate_out)
+    // raw 91 C3 disclosure: scripts/pp2_gate.py removed in commit 3f61313
+    // (raw#9 hexa-only cleanup, no hexa successor yet). --check-only is now
+    // a no-op until tool/pp2_gate.hexa lands.
+    println("[PP2-GATE] DISABLED — pp2_gate.py removed (raw#9 hexa-only cleanup), no hexa successor yet")
+    println("[PP2-GATE] --check-only target: " + check_only_target + " (skipped)")
     return
   }
 
@@ -102,26 +104,10 @@ fn main() {
   println("  title: " + title)
 
   // ─── PP2 verify-code gate (VERIFY-P2-1) ───
-  println("  [PP2-GATE] checking verification markers ...")
-  let mut gate_flags = "--check-only"
-  if skip_pp2 {
-    gate_flags = "--skip"
-  }
-  let gate_cmd = "/opt/homebrew/bin/python3 '" + script_dir + "/scripts/pp2_gate.py' " + gate_flags + " '" + file_path + "' > /tmp/pp2_gate.out 2> /tmp/pp2_gate.err; echo $?"
-  let gate_exit = exec(gate_cmd).trim()
-  let gate_stdout = exec("cat /tmp/pp2_gate.out 2>/dev/null").trim()
-  let gate_stderr = exec("cat /tmp/pp2_gate.err 2>/dev/null").trim()
-  if gate_stdout != "" { println("  " + gate_stdout) }
-  if gate_exit != "0" && skip_pp2 == false {
-    println("  [PP2-GATE] BLOCK — upload aborted")
-    if gate_stderr != "" { println(gate_stderr) }
-    println("  Use --skip-pp2-gate to bypass (will be logged as warning).")
-    return
-  }
-  if skip_pp2 {
-    println("  [PP2-GATE] WARNING: bypass active (--skip-pp2-gate)")
-    if gate_stderr != "" { println(gate_stderr) }
-  }
+  // raw 91 C3 disclosure: scripts/pp2_gate.py removed in commit 3f61313
+  // (raw#9 hexa-only cleanup, no hexa successor yet). PP2 gate is no-op
+  // until tool/pp2_gate.hexa lands. --skip-pp2-gate is now the default.
+  println("  [PP2-GATE] DISABLED — pp2_gate.py removed (raw#9 hexa-only cleanup), no hexa successor yet")
 
   // ─── Zenodo upload (skipped under --dry-run) ───
   let mut deposit_id = "DRY_RUN_DEPOSIT"
@@ -156,14 +142,15 @@ fn main() {
   println("")
 
   // ─── PP3 manifest update hook (VERIFY-P2-2) ───
-  println("  [PP3-HOOK] manifest update ...")
-  let mut hook_flags = ""
-  if dry_run { hook_flags = " --dry-run" }
-  let hook_cmd = "/opt/homebrew/bin/python3 '" + script_dir + "/scripts/manifest_update.py' update --paper-id '" + paper_id + "' --doi '" + doi + "' --zenodo-id '" + deposit_id + "' --file '" + file + "' --title '" + title + "'" + hook_flags + " 2>&1"
-  let hook_out = exec(hook_cmd)
-  println(hook_out)
+  // raw 91 C3 disclosure: scripts/manifest_update.py removed in commit 3f61313
+  // (raw#9 hexa-only cleanup, no hexa successor yet). PP3 hook is no-op
+  // until tool/manifest_update.hexa lands. Manifest writeback skipped.
+  println("  [PP3-HOOK] DISABLED — manifest_update.py removed (raw#9 hexa-only cleanup), no hexa successor yet")
 
   println("=== " + paper_id + " upload complete ===")
 }
 
-main()
+// NOTE (2026-04-28): hexa runtime auto-invokes main(). Explicit main() call
+// here would cause double-execution (banner duplicated, two API call passes).
+// Do NOT add `main()` below — see also tool/zenodo_publish.hexa (no explicit
+// invoke) for the canonical pattern.

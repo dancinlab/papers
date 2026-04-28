@@ -82,76 +82,140 @@ fn _sh_q(s: string) -> string {
     return "'" + s.replace("'", "'\\''") + "'"
 }
 
+// Safe-string accessor for json_parse-derived map fields.
+// Returns "" when the field is missing (avoiding the runtime's
+// to_string(void)=="void" footgun).
+fn _map_str(m, key: string) -> string {
+    if type_of(m) != "map" { return "" }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) == "void" { return "" }
+            return to_string(v)
+        }
+        i = i + 1
+    }
+    return ""
+}
+
+// Safe-array accessor for json_parse-derived map fields.
+// Returns [] when the field is missing or not an array.
+fn _map_arr(m, key: string) {
+    if type_of(m) != "map" { return [] }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) != "array" { return [] }
+            return v
+        }
+        i = i + 1
+    }
+    return []
+}
+
 fn _audit_append(step: string, paper_id: string, verdict: string, detail: string) {
+    // 2026-04-28 fix: hexa-native JSONL append (was python3 heredoc).
+    // raw 9 hexa-only. Uses append_file builtin for atomicity-of-line.
     let dir = _root() + "/state/zenodo_publish_audit"
     let _mk = exec("mkdir -p " + _sh_q(dir))
     let log = dir + "/audit.jsonl"
-    let py = "python3 - <<'PYEOF'\n"
-           + "import json\n"
-           + "row = {'ts': " + _sh_q(_iso_now()) + ",\n"
-           + "       'tool': 'zenodo_publish',\n"
-           + "       'paper_id': " + _sh_q(paper_id) + ",\n"
-           + "       'step': " + _sh_q(step) + ",\n"
-           + "       'verdict': " + _sh_q(verdict) + ",\n"
-           + "       'detail': " + _sh_q(detail) + "}\n"
-           + "open(" + _sh_q(log) + ", 'a').write(json.dumps(row, ensure_ascii=False) + '\\n')\n"
-           + "PYEOF\n"
-    let _ = exec(py)
+    let row = #{
+        "ts": _iso_now(),
+        "tool": "zenodo_publish",
+        "paper_id": paper_id,
+        "step": step,
+        "verdict": verdict,
+        "detail": detail
+    }
+    let line = json_stringify(row) + "\n"
+    append_file(log, line)
 }
 
 // Returns JSON line of paper-id metadata, or "" if not found.
+//
+// 2026-04-28 fix: hexa-native parse via read_file + json_parse builtins.
+// Eliminates python3 dependency for the hot lookup path (raw 9 hexa-only).
+// External-facing return shape unchanged: a JSON string with the same keys.
 fn _lookup_paper(paper_id: string) -> string {
     let mf = _root() + "/manifest.json"
-    let py = "python3 - <<'PYEOF' " + _sh_q(mf) + " " + _sh_q(paper_id) + "\n"
-           + "import json, sys\n"
-           + "mf, pid = sys.argv[1], sys.argv[2]\n"
-           + "d = json.load(open(mf))\n"
-           + "for e in d.get('papers', []):\n"
-           + "    if e.get('id') == pid:\n"
-           + "        out = {'id': e.get('id'),\n"
-           + "               'title': e.get('title',''),\n"
-           + "               'file': e.get('file','') or e.get('source',''),\n"
-           + "               'description': e.get('abstract_first_line',''),\n"
-           + "               'keywords': e.get('keywords', []),\n"
-           + "               'date': e.get('date',''),\n"
-           + "               'doi': e.get('doi',''),\n"
-           + "               'status': e.get('status',''),\n"
-           + "               'repo': e.get('repo','')}\n"
-           + "        print(json.dumps(out, ensure_ascii=False))\n"
-           + "        sys.exit(0)\n"
-           + "sys.exit(0)\n"
-           + "PYEOF\n"
-    return to_string(exec(py)).trim()
+    let content = read_file(mf)
+    if len(content) == 0 { return "" }
+    let parsed = json_parse(content)
+    if type_of(parsed) != "map" { return "" }
+    let papers = _map_arr(parsed, "papers")
+    let mut i = 0
+    while i < len(papers) {
+        let e = papers[i]
+        let eid = _map_str(e, "id")
+        if eid == paper_id {
+            let mut file_v = _map_str(e, "file")
+            if file_v == "" {
+                file_v = _map_str(e, "source")
+            }
+            let kw_v = _map_arr(e, "keywords")
+            let out = #{
+                "id": eid,
+                "title": _map_str(e, "title"),
+                "file": file_v,
+                "description": _map_str(e, "abstract_first_line"),
+                "keywords": kw_v,
+                "date": _map_str(e, "date"),
+                "doi": _map_str(e, "doi"),
+                "status": _map_str(e, "status"),
+                "repo": _map_str(e, "repo")
+            }
+            return json_stringify(out)
+        }
+        i = i + 1
+    }
+    return ""
+}
+
+// Hexa-native field accessor for the projection JSON returned by
+// _lookup_paper. Returns "" if the field is missing or empty.
+fn _info_field(info: string, field: string) -> string {
+    if len(info) == 0 { return "" }
+    let p = json_parse(info)
+    return _map_str(p, field)
 }
 
 // Build Zenodo deposition metadata JSON from paper info dict (JSON line input).
 // Writes the deposition JSON to /tmp/zenodo_meta_<pid>.json and returns the path.
+//
+// 2026-04-28 fix: hexa-native JSON build via json_parse + json_stringify +
+// write_file (was python3 heredoc). Same on-disk shape as before.
 fn _build_metadata(paper_json: string, paper_id: string) -> string {
     let out_path = "/tmp/zenodo_meta_" + paper_id + ".json"
-    let py = "python3 - <<'PYEOF' " + _sh_q(out_path) + "\n"
-           + "import json, sys\n"
-           + "out_path = sys.argv[1]\n"
-           + "p = json.loads(" + _sh_q(paper_json) + ")\n"
-           + "meta = {\n"
-           + "    'metadata': {\n"
-           + "        'title': p.get('title','(untitled)'),\n"
-           + "        'description': p.get('description') or 'See manuscript for abstract.',\n"
-           + "        'upload_type': 'publication',\n"
-           + "        'publication_type': 'workingpaper',\n"
-           + "        'publication_date': p.get('date') or '',\n"
-           + "        'keywords': p.get('keywords') or [],\n"
-           + "        'creators': [{'name': 'n6 / hexa-weave team'}],\n"
-           + "        'access_right': 'open',\n"
-           + "        'license': 'cc-by-4.0'\n"
-           + "    }\n"
-           + "}\n"
-           + "# Strip empty publication_date — Zenodo rejects empty string\n"
-           + "if not meta['metadata']['publication_date']:\n"
-           + "    del meta['metadata']['publication_date']\n"
-           + "open(out_path,'w').write(json.dumps(meta, ensure_ascii=False, indent=2))\n"
-           + "print(out_path)\n"
-           + "PYEOF\n"
-    return to_string(exec(py)).trim()
+    let p = json_parse(paper_json)
+    let mut title = _map_str(p, "title")
+    if title == "" { title = "(untitled)" }
+    let mut desc = _map_str(p, "description")
+    if desc == "" { desc = "See manuscript for abstract." }
+    let date = _map_str(p, "date")
+    let kws = _map_arr(p, "keywords")
+    let creators = [#{"name": "n6 / hexa-weave team"}]
+    // Build inner metadata; only attach publication_date when non-empty
+    // (Zenodo rejects empty string).
+    let mut inner = #{
+        "title": title,
+        "description": desc,
+        "upload_type": "publication",
+        "publication_type": "workingpaper",
+        "keywords": kws,
+        "creators": creators,
+        "access_right": "open",
+        "license": "cc-by-4.0"
+    }
+    if date != "" {
+        inner["publication_date"] = date
+    }
+    let meta = #{"metadata": inner}
+    write_file(out_path, json_stringify(meta))
+    return out_path
 }
 
 fn _fetch_token(sandbox: bool) -> string {
@@ -256,6 +320,11 @@ fn _publish_deposit(token: string, base: string, dep_id: string) -> string {
 }
 
 fn _writeback_doi(paper_id: string, doi: string) -> int {
+    // raw 91 honest C3: writeback retains python3 heredoc to preserve
+    // manifest.json's 2-space indent pretty-print. hexa builtin
+    // json_stringify emits compact form which would reformat the entire
+    // file — out of scope for the publish hot-path. Only invoked on a
+    // successful real (non-dry-run) publish.
     let mf = _root() + "/manifest.json"
     let py = "python3 - <<'PYEOF' " + _sh_q(mf) + " " + _sh_q(paper_id) + " " + _sh_q(doi) + "\n"
            + "import json, sys\n"
@@ -296,9 +365,20 @@ fn _selftest_missing_id() -> int {
 
 fn _selftest_dry_run_metadata() -> int {
     // Pick first paper from manifest and run metadata builder; ensure file written.
+    // 2026-04-28 fix: hexa-native (was python3 -c).
     let mf = _root() + "/manifest.json"
-    let pyget = "python3 -c \"import json; d=json.load(open('" + mf + "')); ps=d.get('papers',[]); print(ps[0].get('id','') if ps else '')\""
-    let pid = to_string(exec(pyget)).trim()
+    let raw = read_file(mf)
+    if len(raw) == 0 {
+        println("  fixture[dry_run_metadata]: SKIP (manifest empty)")
+        return 0
+    }
+    let parsed = json_parse(raw)
+    let papers = _map_arr(parsed, "papers")
+    if len(papers) == 0 {
+        println("  fixture[dry_run_metadata]: SKIP (manifest empty)")
+        return 0
+    }
+    let pid = _map_str(papers[0], "id")
     if pid == "" {
         println("  fixture[dry_run_metadata]: SKIP (manifest empty)")
         return 0
@@ -315,9 +395,12 @@ fn _selftest_dry_run_metadata() -> int {
         return 1
     }
     // Verify the metadata is parseable JSON and contains 'metadata.title'.
-    let chk = to_string(exec("python3 -c \"import json; d=json.load(open('" + path + "')); print('OK' if d.get('metadata',{}).get('title') else 'NO')\"")).trim()
+    let written = read_file(path)
+    let written_p = json_parse(written)
+    let inner = written_p.metadata
+    let title = _map_str(inner, "title")
     let _cleanup = exec("rm -f " + _sh_q(path))
-    if chk != "OK" {
+    if title == "" {
         println("  fixture[dry_run_metadata]: FAIL  (metadata.title missing)")
         return 1
     }
@@ -404,11 +487,14 @@ fn main() {
     println("zenodo_publish: " + paper_id + " resolved")
 
     // raw 65 idempotency: status already Published with zenodo DOI
-    let py_status = "python3 -c \"import json,sys; d=json.loads(sys.argv[1]); print((d.get('status') or '') + '|' + (d.get('doi') or ''))\" " + _sh_q(info)
-    let st_doi = to_string(exec(py_status)).trim().split("|")
-    if len(st_doi) >= 2 && st_doi[0].lower() == "published" && st_doi[1].starts_with("10.5281/zenodo.") {
-        println("zenodo_publish: already Published with DOI " + st_doi[1] + " — skip (raw 65 idempotency)")
-        _audit_append("idempotency", paper_id, "SKIP", "doi=" + st_doi[1])
+    // 2026-04-28 fix: hexa-native field access (was python3 + .lower() —
+    // .lower() is not a hexa builtin method, runtime issued
+    // "CODEGEN ERROR: unknown builtin method: lower"; correct name is to_lower()).
+    let cur_status = _info_field(info, "status")
+    let cur_doi = _info_field(info, "doi")
+    if cur_status.to_lower() == "published" && cur_doi.starts_with("10.5281/zenodo.") {
+        println("zenodo_publish: already Published with DOI " + cur_doi + " — skip (raw 65 idempotency)")
+        _audit_append("idempotency", paper_id, "SKIP", "doi=" + cur_doi)
         _emit_sentinel("SKIP")
         exit(0)
     }
@@ -428,7 +514,11 @@ fn main() {
     // Step 3: token
     let token = _fetch_token(sandbox)
     if token == "" {
-        eprintln("zenodo_publish: secret get zenodo." + (sandbox ? "sandbox_token" : "token") + " returned empty")
+        // 2026-04-28 fix: ternary "?:" not supported by hexa parser —
+        // expanded to if/else.
+        let mut tkey = "token"
+        if sandbox { tkey = "sandbox_token" }
+        eprintln("zenodo_publish: secret get zenodo." + tkey + " returned empty")
         _audit_append("token", paper_id, "FAIL", "secret missing")
         _emit_sentinel("FAIL")
         exit(2)
@@ -437,8 +527,8 @@ fn main() {
     let base = _api_base(sandbox)
 
     // Step 4: idempotency — existing draft?
-    let py_title = "python3 -c \"import json,sys; print(json.loads(sys.argv[1]).get('title',''))\" " + _sh_q(info)
-    let title = to_string(exec(py_title)).trim()
+    // 2026-04-28 fix: hexa-native field extraction (was python3 -c).
+    let title = _info_field(info, "title")
     let existing = _existing_draft(token, base, title)
     let mut dep_id = ""
     let mut bucket = ""
@@ -472,8 +562,8 @@ fn main() {
 
     // Step 6: file upload (skipped if --metadata-only)
     if !metadata_only {
-        let py_file = "python3 -c \"import json,sys; print(json.loads(sys.argv[1]).get('file',''))\" " + _sh_q(info)
-        let file_rel = to_string(exec(py_file)).trim()
+        // 2026-04-28 fix: hexa-native field extraction (was python3 -c).
+        let file_rel = _info_field(info, "file")
         if file_rel == "" {
             eprintln("zenodo_publish: manifest entry has no file/source")
             _audit_append("upload", paper_id, "FAIL", "no file in manifest")

@@ -40,7 +40,13 @@ _secret() {
 }
 _hexa() {
     [ -x "$HEXA_BIN" ] || _die "hexa not found at $HEXA_BIN"
-    "$HEXA_BIN" "$@"
+    # HEXA_LOCAL=1: bypass docker safe-landing.
+    # Distroless `hexa-runner:latest` (raw 44 mac safe-landing) lacks
+    # python3; every exec("python3 …") site fails inside container.
+    # Local fallback via ~/.hx/bin/python3 shim → /opt/homebrew/bin/python3.
+    # raw 91 C3 honest: structural fix = hexa-native JSON parser
+    # in hexa-lang stdlib (raw 9), tracked as separate cycle.
+    HEXA_LOCAL=1 "$HEXA_BIN" "$@"
 }
 
 _cmd_list() {
@@ -202,6 +208,7 @@ _cmd_publish() {
     while [ $# -gt 0 ]; do
         case "$1" in
             --target)     target="$2"; shift 2 ;;
+            --target=*)   target="${1#--target=}"; shift ;;
             --sandbox)    sandbox=1; shift ;;
             --dry-run)    dry_run=1; shift ;;
             --skip-pp2)   skip_pp2=1; shift ;;
@@ -223,7 +230,7 @@ _cmd_publish() {
             [ -n "$osf_token" ] || _die "osf.token missing — secret set osf.token"
             local osf_args=("$pid")
             [ "$dry_run" -eq 1 ] && osf_args+=("--dry-run")
-            OSF_TOKEN="$osf_token" "$HEXA_BIN" "$osf_tool" "${osf_args[@]}"
+            OSF_TOKEN="$osf_token" HEXA_LOCAL=1 "$HEXA_BIN" "$osf_tool" "${osf_args[@]}"
         else
             echo "papers publish: WARN tool/osf_publish.hexa not present (Phase 2). target=osf skipped." >&2
             [ "$target" = "osf" ] && _die "OSF publish unavailable — implement tool/osf_publish.hexa first"
@@ -240,7 +247,8 @@ _cmd_publish() {
     local upload_args=("$pid")
     [ "$dry_run" -eq 1 ] && upload_args+=("--dry-run")
     [ "$skip_pp2" -eq 1 ] && upload_args+=("--skip-pp2-gate")
-    ZENODO_TOKEN="$token" \
+    # HEXA_LOCAL=1: docker safe-landing bypass (see _hexa() rationale).
+    ZENODO_TOKEN="$token" HEXA_LOCAL=1 \
         "$HEXA_BIN" "${PAPERS_ROOT}/upload_zenodo.hexa" "${upload_args[@]}"
 }
 

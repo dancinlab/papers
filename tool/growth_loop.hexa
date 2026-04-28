@@ -102,4 +102,6 @@ fn main() {
   log_info("Growth loop complete")
 }
 
-main()
+// main() — hexa runtime auto-invokes top-level main(); explicit call removed
+//          to avoid double-execution (raw 91 C3 disclosure from upload_zenodo
+//          fix cycle 2026-04-28).
