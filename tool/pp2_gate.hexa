@@ -1,0 +1,537 @@
+#!hexa strict
+// papers/tool/pp2_gate.hexa — PP2 verify-code embed gate (hexa-native)
+//
+// @tool(slug="pp2_gate", desc="PP2 verify-code embed gate: scan a paper .md file for the canonical PP2 verification block (```python fenced + structural marker) before Zenodo publish.")
+// @usage(hexa /Users/ghost/core/papers/tool/pp2_gate.hexa <paper.md> [--check-only] [--skip] [--json] [--selftest])
+// @omega-saturation-exempt("single-file regex scan; bounded in O(file_size) per pass")
+// @exit_codes(0=PASS or --skip used, 1=FAIL markers missing, 2=usage/io error)
+//
+// Migrated from scripts/pp2_gate.py (deleted in commit 3f61313 raw#9 hexa-only
+// cleanup). External contract preserved: same flags, same exit codes, same
+// stdout report shape. Internal implementation is now hexa-native; python3
+// dependency reduced to zero on the gate hot-path.
+//
+// CONTRACT (papers-pp2-gate v1)
+//   PP2 markers (precedent: shared/discovery/papers_pp2_audit_2026-04-14.json):
+//     - ```python ... ```      (executable verification block — required)
+//     - @register              (verification function decorator)
+//     - ossification_loop      (canonical verify function name)
+//     - N/N OK                 (pass sentinel)
+//     - N62                    (marker id)
+//
+//   PASS  = python fenced block present AND >= 1 structural marker.
+//   FAIL  = python block missing OR structural markers all missing.
+//   ERROR = file not found / IO failure (exit 2).
+//
+//   Stdout (default mode): "[PP2-GATE] PASS|FAIL <path> py=<n> markers=<a,b>".
+//   Stderr (on FAIL):       human-readable diagnostic + suggested embed.
+//   --json:                 single-line JSON blob with all scan fields.
+//   --skip:                 reports FAIL/PASS but always exits 0 (logged WARN).
+//   --check-only:           short report; same exit code semantics as default.
+//
+// raw 9 hexa-only:
+//   read_file + string scanning — no python3 invocation on the hot path.
+//   The audit-ledger writeback uses hexa-native append_file as well.
+//
+// raw 65 idempotent:
+//   Re-running on the same input file yields byte-identical stdout and
+//   appends one new audit row (timestamp differs by design).
+//
+// raw 77 audit ledger:
+//   state/pp2_gate_audit/audit.jsonl JSONL append on every invocation
+//   (one row per paper checked).
+//
+// raw 80 sentinel:
+//   Last stdout line is "__PP2_GATE_RESULT__ PASS|FAIL|SKIP".
+//
+// raw 91 C3 DECLARED LIMITS
+//   L1. PP2 marker set is fixed to the 4 substrings + ```python fenced regex
+//       (per audit 2026-04-14). New marker classes require contract bump.
+//   L2. Python-block detection is substring match for "```python" (case
+//       sensitive). "```Python" or "```py" are NOT counted (legacy parity).
+//   L3. Marker scan is plain substring; markers inside fenced code comments
+//       count the same as prose mentions (false positives possible but
+//       intentional — matches the audit precedent's lenient policy).
+//   L4. UTF-8 / encoding errors fall through to FAIL with reason=io_error;
+//       there is no transcoding fallback.
+//   L5. --json output is a single line of compact JSON (no pretty-print);
+//       downstream consumers must json_parse it.
+//   L6. Selftest writes synthetic fixtures under /tmp/pp2_gate_selftest_<pid>;
+//       does not touch live papers/ tree (raw 95 self-host fixpoint preserved).
+//   L7. Self-host fixpoint asserts the tool can scan its own source without
+//       crashing; it does NOT assert PASS (this file legitimately lacks the
+//       N62 marker constellation since it is a tool, not a paper).
+
+// ─── shell + io helpers ───────────────────────────────────────────────────
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+
+fn _iso_now() -> string {
+    return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim()
+}
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _file_exists(p: string) -> bool {
+    let r = to_string(exec("test -f " + _sh_q(p) + " && echo y || echo n")).trim()
+    return r == "y"
+}
+
+// raw 77 audit ledger append (hexa-native, raw 9)
+fn _audit_append(paper_path: string, verdict: string, py_blocks: int,
+                 markers: array, reason: string) {
+    let dir = _root() + "/state/pp2_gate_audit"
+    let _mk = exec("mkdir -p " + _sh_q(dir))
+    let log = dir + "/audit.jsonl"
+    let row = #{
+        "ts": _iso_now(),
+        "tool": "pp2_gate",
+        "paper": paper_path,
+        "verdict": verdict,
+        "py_block_count": py_blocks,
+        "markers_found": markers,
+        "reason": reason
+    }
+    let line = json_stringify(row) + "\n"
+    append_file(log, line)
+}
+
+// ─── PP2 scan core ────────────────────────────────────────────────────────
+
+fn _markers_list() -> array {
+    return ["@register", "ossification_loop", "N/N OK", "N62"]
+}
+
+// Count occurrences of needle in haystack via repeated find — hexa string
+// builtins do not expose a regex .findall, so we substring-walk. Counts the
+// literal "```python" header (case sensitive, legacy parity).
+fn _count_substring(haystack: string, needle: string) -> int {
+    if len(needle) == 0 { return 0 }
+    if len(haystack) == 0 { return 0 }
+    let mut n = 0
+    let mut start = 0
+    while true {
+        let idx = haystack.index_of(needle, start)
+        if idx < 0 { break }
+        n = n + 1
+        start = idx + len(needle)
+    }
+    return n
+}
+
+// Scan one paper file. Returns map with keys:
+//   path, exists, has_py_block, py_block_count, markers_found, pass, reason
+fn _scan(path: string) {
+    let mut out = #{
+        "path": path,
+        "exists": false,
+        "has_py_block": false,
+        "py_block_count": 0,
+        "markers_found": [],
+        "pass": false,
+        "reason": "file_not_found"
+    }
+    if !_file_exists(path) {
+        return out
+    }
+    let text = read_file(path)
+    if type_of(text) == "void" {
+        out["reason"] = "io_error"
+        return out
+    }
+    let body = to_string(text)
+    let py_count = _count_substring(body, "```python")
+    let mut found = []
+    let markers = _markers_list()
+    let mut i = 0
+    while i < len(markers) {
+        let m = markers[i]
+        if body.index_of(m, 0) >= 0 {
+            found.push(m)
+        }
+        i = i + 1
+    }
+    let has_py = py_count > 0
+    let has_marker = len(found) > 0
+    let passed = has_py && has_marker
+    let mut reason = "ok"
+    if !passed {
+        if !has_py && !has_marker {
+            reason = "no_python_block_and_no_marker"
+        } else if !has_py {
+            reason = "no_python_block"
+        } else {
+            reason = "no_marker"
+        }
+    }
+    out["exists"] = true
+    out["has_py_block"] = has_py
+    out["py_block_count"] = py_count
+    out["markers_found"] = found
+    out["pass"] = passed
+    out["reason"] = reason
+    return out
+}
+
+// ─── reporting ────────────────────────────────────────────────────────────
+
+fn _markers_join(found: array) -> string {
+    if len(found) == 0 { return "(none)" }
+    let mut s = ""
+    let mut i = 0
+    while i < len(found) {
+        if i > 0 { s = s + ", " }
+        s = s + to_string(found[i])
+        i = i + 1
+    }
+    return s
+}
+
+fn _markers_csv(found: array) -> string {
+    if len(found) == 0 { return "-" }
+    let mut s = ""
+    let mut i = 0
+    while i < len(found) {
+        if i > 0 { s = s + "," }
+        s = s + to_string(found[i])
+        i = i + 1
+    }
+    return s
+}
+
+fn _embed_template_lines() -> array {
+    return [
+        "## Appendix: PP2 Verification (N62)",
+        "",
+        "```python",
+        "# @register N62",
+        "def ossification_loop():",
+        "    # ... verify invariants ...",
+        "    assert True  # N/N checks",
+        "    return \"N/N OK\"",
+        "```"
+    ]
+}
+
+fn _emit_fail_message(result) {
+    let path = _map_str_safe(result, "path")
+    let reason = _map_str_safe(result, "reason")
+    let py_n = _map_int_safe(result, "py_block_count")
+    let found = _map_arr_safe(result, "markers_found")
+    eprintln("[PP2-GATE] FAIL: verification markers missing")
+    eprintln("  path: " + path)
+    eprintln("  reason: " + reason)
+    eprintln("  python_blocks: " + to_string(py_n))
+    eprintln("  markers_found: " + _markers_join(found))
+    eprintln("")
+    eprintln("  Precedent: shared/discovery/papers_pp2_audit_2026-04-14.json")
+    eprintln("  Required: python fenced block AND >=1 of @register, ossification_loop, N/N OK, N62")
+    eprintln("")
+    eprintln("  Suggested embed (append to paper):")
+    let lines = _embed_template_lines()
+    let mut i = 0
+    while i < len(lines) {
+        let tl = to_string(lines[i])
+        if len(tl) == 0 {
+            eprintln("")
+        } else {
+            eprintln("  " + tl)
+        }
+        i = i + 1
+    }
+    eprintln("")
+    eprintln("  Bypass (explicit, logged): --skip")
+}
+
+// ─── safe map accessors (defensive against missing keys) ─────────────────
+
+fn _map_str_safe(m, key: string) -> string {
+    if type_of(m) != "map" { return "" }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) == "void" { return "" }
+            return to_string(v)
+        }
+        i = i + 1
+    }
+    return ""
+}
+
+fn _map_int_safe(m, key: string) -> int {
+    if type_of(m) != "map" { return 0 }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) == "void" { return 0 }
+            return to_string(v).parse_int()
+        }
+        i = i + 1
+    }
+    return 0
+}
+
+fn _map_arr_safe(m, key: string) {
+    if type_of(m) != "map" { return [] }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) != "array" { return [] }
+            return v
+        }
+        i = i + 1
+    }
+    return []
+}
+
+fn _map_bool_safe(m, key: string) -> bool {
+    if type_of(m) != "map" { return false }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) == "void" { return false }
+            return to_string(v) == "true"
+        }
+        i = i + 1
+    }
+    return false
+}
+
+fn _emit_sentinel(verdict: string) {
+    println("__PP2_GATE_RESULT__ " + verdict)
+}
+
+// ─── selftest fixtures (raw 95 self-host fixpoint) ────────────────────────
+
+fn _write_fixture(path: string, content: string) {
+    write_file(path, content)
+}
+
+fn _fixture_pass_baseline(base: string) -> string {
+    let p = base + "/pass.md"
+    let body = "# Sample Paper\n\n"
+              + "Verification appendix below.\n\n"
+              + "```python\n"
+              + "# @register N62\n"
+              + "def ossification_loop():\n"
+              + "    return \"N/N OK\"\n"
+              + "```\n"
+    _write_fixture(p, body)
+    return p
+}
+
+fn _fixture_fail_no_python(base: string) -> string {
+    let p = base + "/fail_no_python.md"
+    let body = "# Sample Paper\n\n"
+              + "Mentions @register and N62 in prose only — no fenced block.\n"
+              + "ossification_loop is named but not executable.\n"
+              + "N/N OK should be a pass sentinel inside python.\n"
+    _write_fixture(p, body)
+    return p
+}
+
+fn _fixture_fail_no_marker(base: string) -> string {
+    let p = base + "/fail_no_marker.md"
+    let body = "# Sample Paper\n\n"
+              + "```python\n"
+              + "print('hello')\n"
+              + "```\n"
+    _write_fixture(p, body)
+    return p
+}
+
+fn _fixture_fail_empty(base: string) -> string {
+    let p = base + "/fail_empty.md"
+    _write_fixture(p, "# Empty\n")
+    return p
+}
+
+fn _bool_label(b: bool) -> string {
+    if b { return "PASS" }
+    return "FAIL"
+}
+
+fn _selftest_one(label: string, path: string, expect_pass: bool) -> int {
+    let r = _scan(path)
+    let got = _map_bool_safe(r, "pass")
+    if got == expect_pass {
+        println("  fixture[" + label + "]: PASS  (verdict="
+                + _bool_label(got) + ")")
+        return 0
+    }
+    let reason = _map_str_safe(r, "reason")
+    let py_n = _map_int_safe(r, "py_block_count")
+    let found = _map_arr_safe(r, "markers_found")
+    println("  fixture[" + label + "]: FAIL  (expected="
+            + _bool_label(expect_pass)
+            + " got=" + _bool_label(got)
+            + " reason=" + reason
+            + " py=" + to_string(py_n)
+            + " markers=" + _markers_csv(found) + ")")
+    return 1
+}
+
+fn _selftest() -> int {
+    println("pp2_gate: selftest start")
+    let pid = to_string(exec("echo $$")).trim()
+    let base = "/tmp/pp2_gate_selftest_" + pid
+    let _rm = exec("rm -rf " + _sh_q(base))
+    let _mk = exec("mkdir -p " + _sh_q(base))
+    let mut errs = 0
+    let p1 = _fixture_pass_baseline(base)
+    let p2 = _fixture_fail_no_python(base)
+    let p3 = _fixture_fail_no_marker(base)
+    let p4 = _fixture_fail_empty(base)
+    errs = errs + _selftest_one("pass_baseline",   p1, true)
+    errs = errs + _selftest_one("fail_no_python",  p2, false)
+    errs = errs + _selftest_one("fail_no_marker",  p3, false)
+    errs = errs + _selftest_one("fail_empty",      p4, false)
+    // file_not_found case
+    let r5 = _scan(base + "/does_not_exist.md")
+    if _map_bool_safe(r5, "exists") == false
+       && _map_str_safe(r5, "reason") == "file_not_found" {
+        println("  fixture[file_not_found]: PASS  (exists=false reason=file_not_found)")
+    } else {
+        println("  fixture[file_not_found]: FAIL")
+        errs = errs + 1
+    }
+    // raw 95 self-host fixpoint: gate must not crash on its own source.
+    // Expectation: this tool file is NOT a paper, so verdict should be FAIL
+    // (no PP2 markers in tool source), but the scan itself must complete.
+    let self_path = _root() + "/tool/pp2_gate.hexa"
+    let rs = _scan(self_path)
+    if _map_bool_safe(rs, "exists") {
+        println("  fixture[self_host]: PASS  (scan completed without internal error)")
+    } else {
+        println("  fixture[self_host]: FAIL  (could not read own source)")
+        errs = errs + 1
+    }
+    let _cleanup = exec("rm -rf " + _sh_q(base))
+    if errs > 0 {
+        eprintln("pp2_gate: selftest FAIL (" + to_string(errs) + " fixture(s))")
+        return 1
+    }
+    println("pp2_gate: selftest PASS (4 fixtures + file_not_found + self_host)")
+    return 0
+}
+
+// ─── main ────────────────────────────────────────────────────────────────
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut k = 2
+    while k < len(av) { args.push(av[k]); k = k + 1 }
+
+    let mut paper = ""
+    let mut check_only = false
+    let mut skip_mode = false
+    let mut json_mode = false
+    let mut do_selftest = false
+    let mut j = 0
+    while j < len(args) {
+        let a = args[j]
+        if a == "--selftest" {
+            do_selftest = true
+        } else if a == "--check-only" {
+            check_only = true
+        } else if a == "--skip" {
+            skip_mode = true
+        } else if a == "--json" {
+            json_mode = true
+        } else if !a.starts_with("--") && paper == "" {
+            paper = a
+        }
+        j = j + 1
+    }
+
+    if do_selftest { exit(_selftest()) }
+
+    if paper == "" {
+        eprintln("pp2_gate: paper path required")
+        eprintln("usage: pp2_gate.hexa <paper.md> [--check-only] [--skip] [--json] [--selftest]")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    let result = _scan(paper)
+    let exists = _map_bool_safe(result, "exists")
+    if !exists {
+        eprintln("[PP2-GATE] ERROR: file not found: " + paper)
+        _audit_append(paper, "ERROR", 0, [], "file_not_found")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    let passed = _map_bool_safe(result, "pass")
+    let py_n = _map_int_safe(result, "py_block_count")
+    let found = _map_arr_safe(result, "markers_found")
+    let reason = _map_str_safe(result, "reason")
+
+    // raw 77 audit ledger append (one row per invocation)
+    let mut verdict_for_audit = "FAIL"
+    if passed {
+        verdict_for_audit = "PASS"
+    } else if skip_mode {
+        verdict_for_audit = "SKIP"
+    }
+    _audit_append(paper, verdict_for_audit, py_n, found, reason)
+
+    if check_only {
+        let mut tag = "FAIL"
+        if passed { tag = "PASS" }
+        println("[PP2-GATE] " + tag + " " + paper
+                + " py=" + to_string(py_n)
+                + " markers=" + _markers_csv(found))
+        if !passed { _emit_fail_message(result) }
+        _emit_sentinel(tag)
+        if passed { exit(0) }
+        exit(1)
+    }
+
+    if json_mode {
+        let row = #{
+            "path": paper,
+            "exists": true,
+            "has_py_block": _map_bool_safe(result, "has_py_block"),
+            "py_block_count": py_n,
+            "markers_found": found,
+            "pass": passed,
+            "reason": reason
+        }
+        println(json_stringify(row))
+    }
+
+    if passed {
+        if !json_mode { println("[PP2-GATE] PASS " + paper) }
+        _emit_sentinel("PASS")
+        exit(0)
+    }
+
+    // FAIL path
+    if skip_mode {
+        eprintln("[PP2-GATE] WARN skip-bypass active for " + paper)
+        eprintln("[PP2-GATE] WARN reason=" + reason)
+        _emit_sentinel("SKIP")
+        exit(0)
+    }
+    _emit_fail_message(result)
+    _emit_sentinel("FAIL")
+    exit(1)
+}

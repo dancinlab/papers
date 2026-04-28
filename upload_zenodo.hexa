@@ -22,7 +22,15 @@
 
 fn main() {
   let cli_args = args()
-  let script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
+  // 2026-04-28 fix: prior `dirname "$0"` heuristic resolved to cwd, not the
+  // script's actual directory. Use argv[1] (the script path the runtime
+  // launched) to derive a reliable script_dir for tool/* lookups.
+  let mut script_dir = exec("cd \"$(dirname \"$0\")\" && pwd").trim()
+  if cli_args.len() >= 2 {
+    let script_path = cli_args[1]
+    let derived = exec("dirname '" + script_path.replace("'", "'\\''") + "'").trim()
+    if derived != "" && derived != "." { script_dir = derived }
+  }
   let manifest = script_dir + "/manifest.json"
 
   // ─── flag parsing (hexa args() = [hexa_bin, script, user_args...]) ───
@@ -56,11 +64,13 @@ fn main() {
       println("Error: --check-only requires <paper.md> argument")
       return
     }
-    // raw 91 C3 disclosure: scripts/pp2_gate.py removed in commit 3f61313
-    // (raw#9 hexa-only cleanup, no hexa successor yet). --check-only is now
-    // a no-op until tool/pp2_gate.hexa lands.
-    println("[PP2-GATE] DISABLED — pp2_gate.py removed (raw#9 hexa-only cleanup), no hexa successor yet")
-    println("[PP2-GATE] --check-only target: " + check_only_target + " (skipped)")
+    // raw 91 C3 RESOLVED: tool/pp2_gate.hexa is the hexa-native successor of
+    // scripts/pp2_gate.py (removed in commit 3f61313). Delegate via exec.
+    let gate_path = script_dir + "/tool/pp2_gate.hexa"
+    let gate_cmd = "hexa '" + gate_path + "' --check-only '"
+                 + check_only_target.replace("'", "'\\''") + "' 2>&1; echo \"__PP2_GATE_EXIT__$?\""
+    let gate_out = exec(gate_cmd)
+    println(gate_out.trim())
     return
   }
 
@@ -104,10 +114,22 @@ fn main() {
   println("  title: " + title)
 
   // ─── PP2 verify-code gate (VERIFY-P2-1) ───
-  // raw 91 C3 disclosure: scripts/pp2_gate.py removed in commit 3f61313
-  // (raw#9 hexa-only cleanup, no hexa successor yet). PP2 gate is no-op
-  // until tool/pp2_gate.hexa lands. --skip-pp2-gate is now the default.
-  println("  [PP2-GATE] DISABLED — pp2_gate.py removed (raw#9 hexa-only cleanup), no hexa successor yet")
+  // raw 91 C3 RESOLVED: tool/pp2_gate.hexa is the hexa-native successor of
+  // scripts/pp2_gate.py (removed in commit 3f61313). Delegate via exec and
+  // gate the upload on its sentinel line.
+  if skip_pp2 {
+    println("  [PP2-GATE] WARN skip-pp2-gate active (bypass logged)")
+  } else {
+    let gate_path = script_dir + "/tool/pp2_gate.hexa"
+    let gate_cmd = "hexa '" + gate_path + "' '"
+                 + file_path.replace("'", "'\\''") + "' 2>&1; echo \"__PP2_GATE_EXIT__$?\""
+    let gate_out = exec(gate_cmd).trim()
+    println("  " + gate_out.replace("\n", "\n  "))
+    if gate_out.index_of("__PP2_GATE_RESULT__ PASS", 0) < 0 {
+      println("  [PP2-GATE] BLOCK upload aborted (use --skip-pp2-gate to bypass)")
+      return
+    }
+  }
 
   // ─── Zenodo upload (skipped under --dry-run) ───
   let mut deposit_id = "DRY_RUN_DEPOSIT"
