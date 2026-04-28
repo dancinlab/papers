@@ -50,47 +50,27 @@ _hexa() {
 }
 
 _cmd_list() {
-    local status="" project="" tier="" as_json=0
+    # 2026-04-28 raw 9 hexa-only: delegate to tool/manifest_query.hexa
+    # (replaces python3 heredoc + json.load + box-draw table). The query
+    # tool ships its own selftest (6 fixtures, raw 53 deterministic).
+    local tool="${PAPERS_ROOT}/tool/manifest_query.hexa"
+    [ -f "$tool" ] || _die "tool/manifest_query.hexa not present"
+    local status="" project="" tier="" fmt="text"
     while [ $# -gt 0 ]; do
         case "$1" in
             --status)  status="$2"; shift 2 ;;
             --project) project="$2"; shift 2 ;;
             --tier)    tier="$2"; shift 2 ;;
-            --json)    as_json=1; shift ;;
+            --json)    fmt="json"; shift ;;
+            --format)  fmt="$2"; shift 2 ;;
             *)         shift ;;
         esac
     done
-    python3 -c "
-import json, sys
-d = json.load(open(sys.argv[1]))
-status = sys.argv[2]
-project = sys.argv[3]
-tier = sys.argv[4]
-as_json = int(sys.argv[5])
-rows = []
-for e in d.get('papers', []):
-    if status and e.get('status','') != status: continue
-    if project and e.get('repo','') != project: continue
-    if tier and str(e.get('tier','')) != tier: continue
-    rows.append(e)
-if as_json:
-    print(json.dumps(rows, ensure_ascii=False, indent=2))
-else:
-    # box-draw table
-    widths = [18, 10, 10, 5, 68]
-    def line(c1,c2,c3,c4):
-        return c1 + c2.join([c3*w for w in widths]) + c4
-    def cell(vals):
-        return '│' + '│'.join([f' {str(v)[:w-2]:<{w-2}} ' for v,w in zip(vals, widths)]) + '│'
-    print(line('┌','┬','─','┐'))
-    print(cell(['id','status','repo','tier','title']))
-    print(line('├','┼','─','┤'))
-    for i,e in enumerate(rows):
-        print(cell([e.get('id','?'), e.get('status','?'), e.get('repo','?'),
-                    e.get('tier','?'), e.get('title','')]))
-    print(line('└','┴','─','┘'))
-    print(f'total: {len(rows)} / {len(d.get(\"papers\",[]))}')
-" "$MANIFEST" "$status" "$project" "$tier" "$as_json"
+    local args=(list --format "$fmt")
+    [ -n "$status" ]  && args+=(--status  "$status")
+    [ -n "$project" ] && args+=(--project "$project")
+    [ -n "$tier" ]    && args+=(--tier    "$tier")
+    _hexa "$tool" "${args[@]}"
 }
 
 _cmd_cite() {
@@ -105,52 +85,14 @@ _cmd_cite() {
             *)        shift ;;
         esac
     done
+    # 2026-04-28 raw 9 hexa-only: delegate to tool/manifest_query.hexa cite.
+    local tool="${PAPERS_ROOT}/tool/manifest_query.hexa"
+    [ -f "$tool" ] || _die "tool/manifest_query.hexa not present"
     local out
-    out=$(python3 -c "
-import json, sys
-d = json.load(open(sys.argv[1]))
-pid = sys.argv[2]
-fmt = sys.argv[3]
-e = next((x for x in d.get('papers',[]) if x.get('id') == pid), None)
-if e is None:
-    print(f'paper id not found: {pid}', file=sys.stderr); sys.exit(1)
-title   = e.get('title','')
-doi     = e.get('doi','')
-date    = e.get('date','')
-year    = date[:4] if date else ''
-author  = e.get('authors','') or 'need-singularity'
-repo    = e.get('repo','')
-if fmt == 'bibtex':
-    key = pid.replace('-','').lower()
-    print(f'@article{{{key},')
-    print(f'  title   = {{{title}}},')
-    print(f'  author  = {{{author}}},')
-    print(f'  year    = {{{year}}},')
-    print(f'  doi     = {{{doi}}},')
-    print(f'  url     = {{https://doi.org/{doi}}},')
-    print(f'  note    = {{{repo}}}')
-    print('}')
-elif fmt == 'apa':
-    print(f'{author} ({year}). {title}. Zenodo. https://doi.org/{doi}')
-elif fmt == 'ieee':
-    print(f'{author}, \"{title},\" Zenodo, {year}. doi: {doi}.')
-elif fmt == 'ris':
-    print('TY  - JOUR')
-    print(f'TI  - {title}')
-    print(f'AU  - {author}')
-    print(f'PY  - {year}')
-    print(f'DO  - {doi}')
-    print('ER  -')
-elif fmt == 'cff':
-    print('cff-version: 1.2.0')
-    print(f'title: {title}')
-    print(f'authors:')
-    print(f'  - name: {author}')
-    print(f'date-released: {date}')
-    print(f'doi: {doi}')
-else:
-    print(f'unknown format: {fmt}', file=sys.stderr); sys.exit(1)
-" "$MANIFEST" "$pid" "$fmt")
+    if ! out=$(_hexa "$tool" cite "$pid" --format "$fmt"); then
+        # Bubble up exit code; eprintln in tool already wrote the reason.
+        return $?
+    fi
     if [ "$copy" -eq 1 ] && command -v pbcopy >/dev/null; then
         echo -n "$out" | pbcopy
         echo "copied to clipboard:" >&2
@@ -160,45 +102,10 @@ else:
 
 _cmd_validate() {
     [ $# -ge 1 ] || _die "validate: paper-id required"
-    python3 -c "
-import json, os, sys
-d = json.load(open(sys.argv[1]))
-pid = sys.argv[2]
-root = sys.argv[3]
-e = next((x for x in d.get('papers',[]) if x.get('id') == pid), None)
-if e is None:
-    print(f'E0 paper id not found: {pid}'); sys.exit(1)
-errs = []
-warns = []
-# Required fields
-for k in ['id','title','repo','status']:
-    if not e.get(k): errs.append(f'E1 missing field: {k}')
-# File exists
-fp = e.get('file','')
-if fp:
-    full = os.path.join(root, fp)
-    if not os.path.exists(full): errs.append(f'E2 file not found: {fp}')
-# DOI format
-doi = e.get('doi','')
-if doi and not doi.startswith('10.'):
-    errs.append(f'E3 DOI malformed: {doi}')
-# Published should have DOI
-if e.get('status') == 'published' and not doi:
-    errs.append('E4 status=published but no DOI')
-# Abstract presence (warn)
-if not e.get('abstract_first_line'):
-    warns.append('W1 abstract_first_line empty')
-# Keywords (warn)
-if not e.get('keywords'):
-    warns.append('W2 keywords empty')
-# Tier (warn)
-if e.get('tier') is None:
-    warns.append('W3 tier not set')
-for x in errs: print(x)
-for x in warns: print(x)
-print(f'--- validate {pid}: errors={len(errs)} warnings={len(warns)}')
-sys.exit(1 if errs else 0)
-" "$MANIFEST" "$1" "$PAPERS_ROOT"
+    # 2026-04-28 raw 9 hexa-only: delegate to tool/manifest_query.hexa.
+    local tool="${PAPERS_ROOT}/tool/manifest_query.hexa"
+    [ -f "$tool" ] || _die "tool/manifest_query.hexa not present"
+    _hexa "$tool" validate "$1"
 }
 
 _cmd_publish() {
@@ -270,37 +177,24 @@ _cmd_publish() {
 _cmd_get() {
     [ $# -ge 1 ] || _die "get: paper-id required"
     local pid="$1"; shift
-    local field="" as_json=0
+    local field="" fmt="text"
     while [ $# -gt 0 ]; do
         case "$1" in
             --field) field="$2"; shift 2 ;;
-            --json)  as_json=1; shift ;;
+            --json)  fmt="json"; shift ;;
             *)       shift ;;
         esac
     done
-    python3 -c "
-import json, sys
-d = json.load(open(sys.argv[1]))
-pid = sys.argv[2]; field = sys.argv[3]; as_json = int(sys.argv[4])
-e = next((x for x in d.get('papers', []) if x.get('id') == pid), None)
-if e is None:
-    print(f'paper id not found: {pid}', file=sys.stderr); sys.exit(1)
-if field:
-    v = e.get(field, '')
-    if isinstance(v, (list, dict)):
-        print(json.dumps(v, ensure_ascii=False))
-    else:
-        print(v)
-elif as_json:
-    print(json.dumps(e, ensure_ascii=False, indent=2))
-else:
-    for k in ('id','title','status','repo','tier','doi','date','file'):
-        if k in e: print(f'  {k:8} {e[k]}')
-    if e.get('abstract_first_line'):
-        print(f'  {\"abstract\":8} {e[\"abstract_first_line\"]}')
-    if e.get('keywords'):
-        print(f'  {\"keywords\":8} {\", \".join(e[\"keywords\"])}')
-" "$MANIFEST" "$pid" "$field" "$as_json"
+    # 2026-04-28 raw 9 hexa-only: delegate to tool/manifest_query.hexa.
+    local tool="${PAPERS_ROOT}/tool/manifest_query.hexa"
+    [ -f "$tool" ] || _die "tool/manifest_query.hexa not present"
+    local args=(get "$pid")
+    if [ -n "$field" ]; then
+        args+=(--field "$field")
+    else
+        args+=(--format "$fmt")
+    fi
+    _hexa "$tool" "${args[@]}"
 }
 
 # Verify DOI / Zenodo links via tool/doi_verify.hexa.

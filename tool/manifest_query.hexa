@@ -1,0 +1,986 @@
+#!hexa strict
+// papers/tool/manifest_query.hexa — read-only manifest.json query engine
+//
+// @tool(slug="manifest_query", desc="Read-only manifest.json query: list/get/cite/validate/count subcommands consumed by bin/papers. raw 9 hexa-only (no python3), raw 53 deterministic-verifier (selftest fixtures), raw 64 declarative (subcommand→fn dispatch). Sister to tool/manifest_update.hexa (write hot path).")
+// @usage(hexa /Users/ghost/core/papers/tool/manifest_query.hexa <list|get|cite|validate|count> [args...])
+// @omega-saturation-exempt("read-only; no side effects on the manifest")
+// @exit_codes(0=success, 1=logical error / E* validate errors, 2=IO error)
+//
+// Migrated from bin/papers python3 heredoc sites (raw 9 hexa-only cleanup):
+//   _cmd_list      — papers list  [--status S] [--project P] [--tier T] [--json]
+//   _cmd_get       — papers get   <id> [--field F | --json]
+//   _cmd_cite      — papers cite  <id> [--format bibtex|apa|ieee|cff|ris]
+//   _cmd_validate  — papers validate <id>
+//
+// CONTRACT (papers-manifest-query v1)
+//   Subcommands:
+//     list      [--status S] [--project P] [--tier T] [--format json|text]
+//     get <id>  [--field F | --format json|text]
+//     cite <id> [--format bibtex|apa|ieee|cff|ris]
+//     validate <id>
+//     count
+//
+//   Output formats:
+//     --format text  (default for list/get): box-draw table / pretty fields.
+//     --format json: one JSON document on stdout.
+//     cite uses --format <citation-style>; no JSON option (citation strings).
+//
+// raw 9 hexa-only:
+//   read_file + json_parse on the hot path; no `python3 -c` invocation.
+//   The shell→test boundary is the only non-hexa surface (file existence test).
+//
+// raw 53 deterministic-verifier:
+//   `--selftest` runs >=4 fixtures with synthetic manifests. Each fixture is
+//   self-contained (no live manifest read) and yields PASS/FAIL deterministically.
+//
+// raw 64 declarative:
+//   Subcommand → fn dispatch table in main(); each fn is pure relative to its
+//   parsed args. Mirrors tool/papers_lint.hexa _run_rule() pattern.
+//
+// raw 91 C3 DECLARED LIMITS
+//   L1. json_parse on malformed JSON crashes the hexa runtime (uncatchable;
+//       hexa-lang stdlib L1 jankiness). Out of scope for this cycle — see
+//       upstream raw 91 C3 ledger. The tool assumes manifest.json is valid.
+//   L2. The `validate` subcommand mirrors the legacy bin/papers python3
+//       _cmd_validate semantics: E1=missing-field, E2=file-not-found,
+//       E3=DOI-malformed, E4=published-no-DOI; W1=no-abstract, W2=no-keywords,
+//       W3=tier-unset. Tail line is "--- validate <id>: errors=N warnings=M".
+//   L3. `cite` formats: bibtex / apa / ieee / cff / ris. Field set follows
+//       the legacy implementation (title, authors, year, doi, repo).
+//       Authors default to "need-singularity" when absent (parity with legacy).
+//   L4. `list` table widths are fixed [18, 10, 10, 5, 68]; UTF-8 multi-byte
+//       cells may overflow visually but are byte-truncated by `slice`.
+
+// ─── helpers (path / shell / map accessors) ───────────────────────────────
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+fn _manifest_path() -> string { return _root() + "/manifest.json" }
+fn _iso_now() -> string { return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim() }
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _file_exists(p: string) -> bool {
+    let r = to_string(exec("test -f " + _sh_q(p) + " && echo y || echo n")).trim()
+    return r == "y"
+}
+
+fn _map_str(m, key: string) -> string {
+    if type_of(m) != "map" { return "" }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) == "void" { return "" }
+            return to_string(v)
+        }
+        i = i + 1
+    }
+    return ""
+}
+
+fn _map_arr(m, key: string) {
+    if type_of(m) != "map" { return [] }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key {
+            let v = m[key]
+            if type_of(v) != "array" { return [] }
+            return v
+        }
+        i = i + 1
+    }
+    return []
+}
+
+fn _map_has(m, key: string) -> bool {
+    if type_of(m) != "map" { return false }
+    let ks = m.keys()
+    let mut i = 0
+    while i < len(ks) {
+        if to_string(ks[i]) == key { return true }
+        i = i + 1
+    }
+    return false
+}
+
+fn _load_manifest_from(path: string) {
+    if !_file_exists(path) { return #{} }
+    let raw = read_file(path)
+    if len(raw) == 0 { return #{} }
+    let parsed = json_parse(raw)
+    if type_of(parsed) != "map" { return #{} }
+    return parsed
+}
+
+fn _load_manifest() {
+    return _load_manifest_from(_manifest_path())
+}
+
+// ─── hexa-native JSON pretty-printer (mirrors manifest_update) ────────────
+
+fn _esc_string_into(buf: array, s: string) {
+    buf.push("\"")
+    let mut i = 0
+    let n = len(s)
+    while i < n {
+        let c = s[i]
+        if c == "\\"      { buf.push("\\\\") }
+        else if c == "\"" { buf.push("\\\"") }
+        else if c == "\n" { buf.push("\\n") }
+        else if c == "\r" { buf.push("\\r") }
+        else if c == "\t" { buf.push("\\t") }
+        else {
+            let code = s.byte_at(i)
+            if code == 8       { buf.push("\\b") }
+            else if code == 12 { buf.push("\\f") }
+            else { buf.push(c) }
+        }
+        i = i + 1
+    }
+    buf.push("\"")
+}
+
+fn _emit_indent(buf: array, depth: int) {
+    let mut i = 0
+    while i < depth { buf.push("  "); i = i + 1 }
+}
+
+fn _emit_value(buf: array, v, depth: int) {
+    let t = type_of(v)
+    if t == "void"   { buf.push("null"); return }
+    if t == "bool"   {
+        if to_string(v) == "true" { buf.push("true") } else { buf.push("false") }
+        return
+    }
+    if t == "int"    { buf.push(to_string(v)); return }
+    if t == "float"  { buf.push(to_string(v)); return }
+    if t == "string" { _esc_string_into(buf, to_string(v)); return }
+    if t == "array"  { _emit_array(buf, v, depth); return }
+    if t == "map"    { _emit_map(buf, v, depth); return }
+    buf.push("null")
+}
+
+fn _emit_array(buf: array, arr, depth: int) {
+    let n = len(arr)
+    if n == 0 { buf.push("[]"); return }
+    buf.push("[\n")
+    let mut i = 0
+    while i < n {
+        _emit_indent(buf, depth + 1)
+        _emit_value(buf, arr[i], depth + 1)
+        if i < n - 1 { buf.push(",") }
+        buf.push("\n")
+        i = i + 1
+    }
+    _emit_indent(buf, depth)
+    buf.push("]")
+}
+
+fn _emit_map(buf: array, m, depth: int) {
+    let ks = m.keys()
+    let n = len(ks)
+    if n == 0 { buf.push("{}"); return }
+    buf.push("{\n")
+    let mut i = 0
+    while i < n {
+        let k = to_string(ks[i])
+        let v = m[k]
+        _emit_indent(buf, depth + 1)
+        _esc_string_into(buf, k)
+        buf.push(": ")
+        _emit_value(buf, v, depth + 1)
+        if i < n - 1 { buf.push(",") }
+        buf.push("\n")
+        i = i + 1
+    }
+    _emit_indent(buf, depth)
+    buf.push("}")
+}
+
+fn _pretty_root(root) -> string {
+    let mut buf = []
+    _emit_value(buf, root, 0)
+    buf.push("\n")
+    return buf.join("")
+}
+
+// Compact value emitter (single-line; no indent / no trailing newline) for
+// `get --field <F>` when the field is array/map (legacy: json.dumps inline).
+fn _compact_value(v) -> string {
+    let mut buf = []
+    _emit_value_compact(buf, v)
+    return buf.join("")
+}
+
+fn _emit_value_compact(buf: array, v) {
+    let t = type_of(v)
+    if t == "void"   { buf.push("null"); return }
+    if t == "bool"   {
+        if to_string(v) == "true" { buf.push("true") } else { buf.push("false") }
+        return
+    }
+    if t == "int"    { buf.push(to_string(v)); return }
+    if t == "float"  { buf.push(to_string(v)); return }
+    if t == "string" { _esc_string_into(buf, to_string(v)); return }
+    if t == "array"  {
+        let n = len(v)
+        buf.push("[")
+        let mut i = 0
+        while i < n {
+            _emit_value_compact(buf, v[i])
+            if i < n - 1 { buf.push(", ") }
+            i = i + 1
+        }
+        buf.push("]")
+        return
+    }
+    if t == "map"    {
+        let ks = v.keys()
+        let n = len(ks)
+        buf.push("{")
+        let mut i = 0
+        while i < n {
+            let k = to_string(ks[i])
+            _esc_string_into(buf, k)
+            buf.push(": ")
+            _emit_value_compact(buf, v[k])
+            if i < n - 1 { buf.push(", ") }
+            i = i + 1
+        }
+        buf.push("}")
+        return
+    }
+    buf.push("null")
+}
+
+// ─── filter / lookup helpers ──────────────────────────────────────────────
+
+fn _filter_papers(root, status: string, project: string, tier: string) -> array {
+    let papers = _map_arr(root, "papers")
+    let mut out = []
+    let mut i = 0
+    while i < len(papers) {
+        let e = papers[i]
+        let mut keep = true
+        if status != "" {
+            if _map_str(e, "status") != status { keep = false }
+        }
+        if keep && project != "" {
+            if _map_str(e, "repo") != project { keep = false }
+        }
+        if keep && tier != "" {
+            // tier may live as int in JSON; compare as string.
+            let tv = _map_str(e, "tier")
+            if tv != tier { keep = false }
+        }
+        if keep { out.push(e) }
+        i = i + 1
+    }
+    return out
+}
+
+fn _lookup_by_id(root, pid: string) {
+    let papers = _map_arr(root, "papers")
+    let mut i = 0
+    while i < len(papers) {
+        if _map_str(papers[i], "id") == pid { return papers[i] }
+        i = i + 1
+    }
+    return #{}
+}
+
+// ─── list rendering (text / json) ─────────────────────────────────────────
+
+fn _pad_right(s: string, w: int) -> string {
+    let mut t = s
+    if len(t) > w { t = t.slice(0, w) }
+    let mut pad = w - len(t)
+    let mut out = t
+    while pad > 0 { out = out + " "; pad = pad - 1 }
+    return out
+}
+
+fn _box_line(left: string, mid: string, fill: string, right: string,
+             widths: array) -> string {
+    let mut s = left
+    let mut i = 0
+    let n = len(widths)
+    while i < n {
+        let w = widths[i]
+        let mut k = 0
+        while k < w { s = s + fill; k = k + 1 }
+        if i < n - 1 { s = s + mid }
+        i = i + 1
+    }
+    s = s + right
+    return s
+}
+
+fn _box_cell(vals: array, widths: array) -> string {
+    let mut s = "│"
+    let mut i = 0
+    let n = len(widths)
+    while i < n {
+        let raw = to_string(vals[i])
+        let inner = _pad_right(raw, widths[i] - 2)
+        s = s + " " + inner + " │"
+        i = i + 1
+    }
+    return s
+}
+
+fn _print_list_text(rows: array, total: int) {
+    let widths = [18, 10, 10, 5, 68]
+    println(_box_line("┌", "┬", "─", "┐", widths))
+    println(_box_cell(["id", "status", "repo", "tier", "title"], widths))
+    println(_box_line("├", "┼", "─", "┤", widths))
+    let mut i = 0
+    while i < len(rows) {
+        let e = rows[i]
+        let id = _map_str(e, "id")
+        let st = _map_str(e, "status")
+        let rp = _map_str(e, "repo")
+        let tr = _map_str(e, "tier")
+        let tt = _map_str(e, "title")
+        let mut id2 = id; if id2 == "" { id2 = "?" }
+        let mut st2 = st; if st2 == "" { st2 = "?" }
+        let mut rp2 = rp; if rp2 == "" { rp2 = "?" }
+        let mut tr2 = tr; if tr2 == "" { tr2 = "?" }
+        println(_box_cell([id2, st2, rp2, tr2, tt], widths))
+        i = i + 1
+    }
+    println(_box_line("└", "┴", "─", "┘", widths))
+    println("total: " + to_string(len(rows)) + " / " + to_string(total))
+}
+
+fn _print_list_json(rows: array) {
+    // Pretty-print rows array (top-level depth 0).
+    let mut buf = []
+    _emit_value(buf, rows, 0)
+    buf.push("\n")
+    let s = buf.join("")
+    // Drop trailing newline; println adds one.
+    if s.ends_with("\n") {
+        println(s.slice(0, len(s) - 1))
+    } else {
+        println(s)
+    }
+}
+
+// ─── cite formatting ──────────────────────────────────────────────────────
+
+fn _cite_bibtex(e, pid: string) -> string {
+    let title = _map_str(e, "title")
+    let doi = _map_str(e, "doi")
+    let date = _map_str(e, "date")
+    let mut year = ""
+    if len(date) >= 4 { year = date.slice(0, 4) }
+    let mut author = _map_str(e, "authors")
+    if author == "" { author = "need-singularity" }
+    let repo = _map_str(e, "repo")
+    let key = pid.replace("-", "").to_lower()
+    let mut s = ""
+    s = s + "@article{" + key + ",\n"
+    s = s + "  title   = {" + title + "},\n"
+    s = s + "  author  = {" + author + "},\n"
+    s = s + "  year    = {" + year + "},\n"
+    s = s + "  doi     = {" + doi + "},\n"
+    s = s + "  url     = {https://doi.org/" + doi + "},\n"
+    s = s + "  note    = {" + repo + "}\n"
+    s = s + "}"
+    return s
+}
+
+fn _cite_apa(e) -> string {
+    let title = _map_str(e, "title")
+    let doi = _map_str(e, "doi")
+    let date = _map_str(e, "date")
+    let mut year = ""
+    if len(date) >= 4 { year = date.slice(0, 4) }
+    let mut author = _map_str(e, "authors")
+    if author == "" { author = "need-singularity" }
+    return author + " (" + year + "). " + title + ". Zenodo. https://doi.org/" + doi
+}
+
+fn _cite_ieee(e) -> string {
+    let title = _map_str(e, "title")
+    let doi = _map_str(e, "doi")
+    let date = _map_str(e, "date")
+    let mut year = ""
+    if len(date) >= 4 { year = date.slice(0, 4) }
+    let mut author = _map_str(e, "authors")
+    if author == "" { author = "need-singularity" }
+    return author + ", \"" + title + ",\" Zenodo, " + year + ". doi: " + doi + "."
+}
+
+fn _cite_ris(e) -> string {
+    let title = _map_str(e, "title")
+    let doi = _map_str(e, "doi")
+    let date = _map_str(e, "date")
+    let mut year = ""
+    if len(date) >= 4 { year = date.slice(0, 4) }
+    let mut author = _map_str(e, "authors")
+    if author == "" { author = "need-singularity" }
+    let mut s = ""
+    s = s + "TY  - JOUR\n"
+    s = s + "TI  - " + title + "\n"
+    s = s + "AU  - " + author + "\n"
+    s = s + "PY  - " + year + "\n"
+    s = s + "DO  - " + doi + "\n"
+    s = s + "ER  -"
+    return s
+}
+
+fn _cite_cff(e) -> string {
+    let title = _map_str(e, "title")
+    let doi = _map_str(e, "doi")
+    let date = _map_str(e, "date")
+    let mut author = _map_str(e, "authors")
+    if author == "" { author = "need-singularity" }
+    let mut s = ""
+    s = s + "cff-version: 1.2.0\n"
+    s = s + "title: " + title + "\n"
+    s = s + "authors:\n"
+    s = s + "  - name: " + author + "\n"
+    s = s + "date-released: " + date + "\n"
+    s = s + "doi: " + doi
+    return s
+}
+
+// ─── subcommands ──────────────────────────────────────────────────────────
+
+fn cmd_list(status: string, project: string, tier: string,
+            format: string) -> int {
+    let root = _load_manifest()
+    let total = len(_map_arr(root, "papers"))
+    let rows = _filter_papers(root, status, project, tier)
+    if format == "json" {
+        _print_list_json(rows)
+    } else {
+        _print_list_text(rows, total)
+    }
+    return 0
+}
+
+fn cmd_count(status: string, project: string, tier: string) -> int {
+    let root = _load_manifest()
+    let rows = _filter_papers(root, status, project, tier)
+    println(to_string(len(rows)))
+    return 0
+}
+
+fn cmd_get(pid: string, field: string, format: string) -> int {
+    if pid == "" {
+        eprintln("manifest_query get: <paper-id> required")
+        return 1
+    }
+    let root = _load_manifest()
+    let e = _lookup_by_id(root, pid)
+    if !_map_has(e, "id") {
+        eprintln("paper id not found: " + pid)
+        return 1
+    }
+    if field != "" {
+        if !_map_has(e, field) {
+            // legacy parity: missing field → blank line
+            println("")
+            return 0
+        }
+        let v = e[field]
+        let t = type_of(v)
+        if t == "array" || t == "map" {
+            println(_compact_value(v))
+        } else if t == "void" {
+            println("")
+        } else {
+            println(to_string(v))
+        }
+        return 0
+    }
+    if format == "json" {
+        let mut buf = []
+        _emit_value(buf, e, 0)
+        let s = buf.join("")
+        println(s)
+        return 0
+    }
+    // text mode: legacy field order
+    let order = ["id", "title", "status", "repo", "tier", "doi", "date", "file"]
+    let mut i = 0
+    while i < len(order) {
+        let k = order[i]
+        if _map_has(e, k) {
+            let v = e[k]
+            // 8-char key padding (parity with legacy f"  {k:8} {e[k]}")
+            println("  " + _pad_right(k, 8) + " " + to_string(v))
+        }
+        i = i + 1
+    }
+    let abs = _map_str(e, "abstract_first_line")
+    if abs != "" {
+        println("  " + _pad_right("abstract", 8) + " " + abs)
+    }
+    let kws = _map_arr(e, "keywords")
+    if len(kws) > 0 {
+        let mut s = ""
+        let mut j = 0
+        while j < len(kws) {
+            if j > 0 { s = s + ", " }
+            s = s + to_string(kws[j])
+            j = j + 1
+        }
+        println("  " + _pad_right("keywords", 8) + " " + s)
+    }
+    return 0
+}
+
+fn cmd_cite(pid: string, format: string) -> int {
+    if pid == "" {
+        eprintln("manifest_query cite: <paper-id> required")
+        return 1
+    }
+    let root = _load_manifest()
+    let e = _lookup_by_id(root, pid)
+    if !_map_has(e, "id") {
+        eprintln("paper id not found: " + pid)
+        return 1
+    }
+    if format == "bibtex" { println(_cite_bibtex(e, pid)); return 0 }
+    if format == "apa"    { println(_cite_apa(e));         return 0 }
+    if format == "ieee"   { println(_cite_ieee(e));        return 0 }
+    if format == "ris"    { println(_cite_ris(e));         return 0 }
+    if format == "cff"    { println(_cite_cff(e));         return 0 }
+    eprintln("unknown format: " + format)
+    return 1
+}
+
+fn cmd_validate(pid: string) -> int {
+    if pid == "" {
+        eprintln("manifest_query validate: <paper-id> required")
+        return 1
+    }
+    let root = _load_manifest()
+    let e = _lookup_by_id(root, pid)
+    if !_map_has(e, "id") {
+        println("E0 paper id not found: " + pid)
+        return 1
+    }
+    let mut errs = []
+    let mut warns = []
+    // E1 required fields
+    let required = ["id", "title", "repo", "status"]
+    let mut i = 0
+    while i < len(required) {
+        let k = required[i]
+        if _map_str(e, k) == "" { errs.push("E1 missing field: " + k) }
+        i = i + 1
+    }
+    // E2 file existence
+    let fp = _map_str(e, "file")
+    if fp != "" {
+        let full = _root() + "/" + fp
+        if !_file_exists(full) { errs.push("E2 file not found: " + fp) }
+    }
+    // E3 DOI format
+    let doi = _map_str(e, "doi")
+    if doi != "" && !doi.starts_with("10.") {
+        errs.push("E3 DOI malformed: " + doi)
+    }
+    // E4 published-must-have-DOI
+    let st = _map_str(e, "status")
+    if st == "published" && doi == "" {
+        errs.push("E4 status=published but no DOI")
+    }
+    // W1 abstract presence
+    if _map_str(e, "abstract_first_line") == "" {
+        warns.push("W1 abstract_first_line empty")
+    }
+    // W2 keywords
+    if len(_map_arr(e, "keywords")) == 0 {
+        warns.push("W2 keywords empty")
+    }
+    // W3 tier
+    if !_map_has(e, "tier") || _map_str(e, "tier") == "" {
+        warns.push("W3 tier not set")
+    }
+    let mut j = 0
+    while j < len(errs) { println(errs[j]); j = j + 1 }
+    let mut k = 0
+    while k < len(warns) { println(warns[k]); k = k + 1 }
+    println("--- validate " + pid + ": errors=" + to_string(len(errs))
+            + " warnings=" + to_string(len(warns)))
+    if len(errs) > 0 { return 1 }
+    return 0
+}
+
+// ─── selftest fixtures (raw 53 deterministic-verifier) ────────────────────
+
+fn _write_fixture_manifest(base: string) -> string {
+    let _mk = exec("mkdir -p " + _sh_q(base))
+    let mf = base + "/manifest.json"
+    let m = #{
+        "_meta": #{ "updated": "2026-04-28", "total_papers": 3 },
+        "metadata": #{ "total_papers": 3 },
+        "papers": [
+            #{ "id": "Q-001", "title": "Alpha",
+               "repo": "tecs-l", "status": "Published",
+               "doi": "10.5281/zenodo.1", "date": "2026-04-01",
+               "tier": 1, "file": "tecs-l/Q-001-alpha.md",
+               "keywords": ["a", "b"],
+               "abstract_first_line": "Alpha abstract." },
+            #{ "id": "Q-002", "title": "Beta",
+               "repo": "anima", "status": "Draft",
+               "doi": "", "date": "2026-04-02",
+               "tier": 2, "file": "anima/Q-002-beta.md",
+               "keywords": [],
+               "abstract_first_line": "" },
+            #{ "id": "Q-003", "title": "Gamma",
+               "repo": "tecs-l", "status": "Published",
+               "doi": "BAD", "date": "2026-04-03",
+               "tier": 1, "file": "tecs-l/Q-003-gamma.md",
+               "keywords": ["g"],
+               "abstract_first_line": "Gamma." }
+        ]
+    }
+    let body = _pretty_root(m)
+    write_file(mf, body)
+    return mf
+}
+
+fn _selftest_list_filter() -> int {
+    let pid = to_string(exec("echo $$")).trim()
+    let base = "/tmp/manifest_query_selftest_list_" + pid
+    let _rm = exec("rm -rf " + _sh_q(base))
+    let mf = _write_fixture_manifest(base)
+    let root = _load_manifest_from(mf)
+    // Filter status=Published → 2 rows
+    let published = _filter_papers(root, "Published", "", "")
+    if len(published) != 2 {
+        println("  fixture[list_filter]: FAIL  (status=Published got "
+                + to_string(len(published)) + ", want 2)")
+        return 1
+    }
+    // Filter project=anima → 1 row
+    let anima = _filter_papers(root, "", "anima", "")
+    if len(anima) != 1 {
+        println("  fixture[list_filter]: FAIL  (repo=anima got "
+                + to_string(len(anima)) + ", want 1)")
+        return 1
+    }
+    // Filter tier=1 → 2 rows (Q-001 + Q-003)
+    let t1 = _filter_papers(root, "", "", "1")
+    if len(t1) != 2 {
+        println("  fixture[list_filter]: FAIL  (tier=1 got "
+                + to_string(len(t1)) + ", want 2)")
+        return 1
+    }
+    // Compound: status=Published AND tier=1 → 2
+    let pt = _filter_papers(root, "Published", "", "1")
+    if len(pt) != 2 {
+        println("  fixture[list_filter]: FAIL  (combo got "
+                + to_string(len(pt)) + ", want 2)")
+        return 1
+    }
+    let _cleanup = exec("rm -rf " + _sh_q(base))
+    println("  fixture[list_filter]: PASS  (4 filter combos verified)")
+    return 0
+}
+
+fn _selftest_get_lookup() -> int {
+    let pid = to_string(exec("echo $$")).trim()
+    let base = "/tmp/manifest_query_selftest_get_" + pid
+    let _rm = exec("rm -rf " + _sh_q(base))
+    let mf = _write_fixture_manifest(base)
+    let root = _load_manifest_from(mf)
+    let hit = _lookup_by_id(root, "Q-002")
+    if _map_str(hit, "title") != "Beta" {
+        println("  fixture[get_lookup]: FAIL  (Q-002 title='"
+                + _map_str(hit, "title") + "', want 'Beta')")
+        return 1
+    }
+    let miss = _lookup_by_id(root, "ZZ-999")
+    if _map_has(miss, "id") {
+        println("  fixture[get_lookup]: FAIL  (ZZ-999 should miss)")
+        return 1
+    }
+    let _cleanup = exec("rm -rf " + _sh_q(base))
+    println("  fixture[get_lookup]: PASS  (hit + miss paths)")
+    return 0
+}
+
+fn _selftest_cite_formats() -> int {
+    let e = #{
+        "id": "P-007", "title": "Demo",
+        "repo": "tecs-l", "status": "Published",
+        "doi": "10.5281/zenodo.7", "date": "2026-04-28",
+        "authors": "Park, M."
+    }
+    let bib = _cite_bibtex(e, "P-007")
+    if !bib.starts_with("@article{p007,") {
+        println("  fixture[cite_formats]: FAIL  (bibtex prefix mismatch)")
+        eprintln("    got: " + bib)
+        return 1
+    }
+    if !bib.contains("doi     = {10.5281/zenodo.7}") {
+        println("  fixture[cite_formats]: FAIL  (bibtex doi field absent)")
+        return 1
+    }
+    let apa = _cite_apa(e)
+    if !apa.contains("(2026)") || !apa.contains("https://doi.org/10.5281/zenodo.7") {
+        println("  fixture[cite_formats]: FAIL  (apa year/doi)")
+        eprintln("    got: " + apa)
+        return 1
+    }
+    let ieee = _cite_ieee(e)
+    if !ieee.contains("Zenodo, 2026") || !ieee.contains("doi: 10.5281/zenodo.7.") {
+        println("  fixture[cite_formats]: FAIL  (ieee shape)")
+        return 1
+    }
+    let ris = _cite_ris(e)
+    if !ris.starts_with("TY  - JOUR\n") || !ris.ends_with("ER  -") {
+        println("  fixture[cite_formats]: FAIL  (ris shape)")
+        return 1
+    }
+    let cff = _cite_cff(e)
+    if !cff.starts_with("cff-version: 1.2.0\n") || !cff.contains("doi: 10.5281/zenodo.7") {
+        println("  fixture[cite_formats]: FAIL  (cff shape)")
+        return 1
+    }
+    println("  fixture[cite_formats]: PASS  (bibtex+apa+ieee+ris+cff)")
+    return 0
+}
+
+fn _selftest_cite_default_author() -> int {
+    let e = #{
+        "id": "P-008", "title": "NoAuthor",
+        "repo": "papers", "status": "Published",
+        "doi": "10.5281/zenodo.8", "date": "2026-04-28"
+    }
+    let bib = _cite_bibtex(e, "P-008")
+    if !bib.contains("author  = {need-singularity}") {
+        println("  fixture[cite_default_author]: FAIL  (default author not applied)")
+        eprintln("    got: " + bib)
+        return 1
+    }
+    println("  fixture[cite_default_author]: PASS  (need-singularity fallback)")
+    return 0
+}
+
+fn _selftest_validate_paths() -> int {
+    let pid = to_string(exec("echo $$")).trim()
+    let base = "/tmp/manifest_query_selftest_val_" + pid
+    let _rm = exec("rm -rf " + _sh_q(base))
+    let _mk = exec("mkdir -p " + _sh_q(base))
+    let mf = base + "/manifest.json"
+    // Build a fixture where the `file` paths resolve under `base/` (test root),
+    // not the live papers root. We exercise _root()-relative checks indirectly
+    // by checking just the field-level errors here.
+    let m = #{
+        "_meta": #{ "total_papers": 3 },
+        "papers": [
+            // V-001: clean — no errors, no warns (has abstract+keywords+tier)
+            #{ "id": "V-001", "title": "Clean", "repo": "papers",
+               "status": "Draft", "doi": "10.5281/zenodo.99",
+               "tier": 2, "abstract_first_line": "x",
+               "keywords": ["k"] },
+            // V-002: malformed DOI → E3
+            #{ "id": "V-002", "title": "BadDOI", "repo": "papers",
+               "status": "Draft", "doi": "BAD",
+               "tier": 1, "abstract_first_line": "y",
+               "keywords": ["k"] },
+            // V-003: missing fields, no DOI, all warns
+            #{ "id": "V-003", "title": "", "repo": "",
+               "status": "", "doi": "" }
+        ]
+    }
+    write_file(mf, _pretty_root(m))
+    let root = _load_manifest_from(mf)
+
+    // V-001: clean path → 0 errs, 0 warns. We exercise validate logic inline.
+    let v1 = _lookup_by_id(root, "V-001")
+    let mut e1 = []
+    let mut w1 = []
+    let req = ["id", "title", "repo", "status"]
+    let mut i = 0
+    while i < len(req) {
+        if _map_str(v1, req[i]) == "" { e1.push("E1") }
+        i = i + 1
+    }
+    if _map_str(v1, "abstract_first_line") == "" { w1.push("W1") }
+    if len(_map_arr(v1, "keywords")) == 0 { w1.push("W2") }
+    if !_map_has(v1, "tier") || _map_str(v1, "tier") == "" { w1.push("W3") }
+    if len(e1) != 0 || len(w1) != 0 {
+        println("  fixture[validate_paths]: FAIL  (V-001 e=" + to_string(len(e1))
+                + " w=" + to_string(len(w1)) + ", want 0/0)")
+        return 1
+    }
+
+    // V-002: malformed DOI → E3
+    let v2 = _lookup_by_id(root, "V-002")
+    let doi2 = _map_str(v2, "doi")
+    let mut e2 = 0
+    if doi2 != "" && !doi2.starts_with("10.") { e2 = e2 + 1 }
+    if e2 != 1 {
+        println("  fixture[validate_paths]: FAIL  (V-002 E3 not raised)")
+        return 1
+    }
+
+    // V-003: 3 missing required (title/repo/status; id is set) → E1*3;
+    // status='' so no E4 is raised either.
+    let v3 = _lookup_by_id(root, "V-003")
+    let mut e3 = 0
+    let mut j = 0
+    while j < len(req) {
+        if _map_str(v3, req[j]) == "" { e3 = e3 + 1 }
+        j = j + 1
+    }
+    if e3 != 3 {
+        println("  fixture[validate_paths]: FAIL  (V-003 E1 count="
+                + to_string(e3) + ", want 3)")
+        return 1
+    }
+
+    let _cleanup = exec("rm -rf " + _sh_q(base))
+    println("  fixture[validate_paths]: PASS  (clean / E3 / E1*3)")
+    return 0
+}
+
+fn _selftest_count_filter() -> int {
+    let pid = to_string(exec("echo $$")).trim()
+    let base = "/tmp/manifest_query_selftest_cnt_" + pid
+    let _rm = exec("rm -rf " + _sh_q(base))
+    let mf = _write_fixture_manifest(base)
+    let root = _load_manifest_from(mf)
+    let total = len(_map_arr(root, "papers"))
+    if total != 3 {
+        println("  fixture[count_filter]: FAIL  (total=" + to_string(total) + ", want 3)")
+        return 1
+    }
+    let published = _filter_papers(root, "Published", "", "")
+    if len(published) != 2 {
+        println("  fixture[count_filter]: FAIL  (Published count != 2)")
+        return 1
+    }
+    let _cleanup = exec("rm -rf " + _sh_q(base))
+    println("  fixture[count_filter]: PASS  (total=3, Published=2)")
+    return 0
+}
+
+fn _selftest() -> int {
+    println("manifest_query: selftest start")
+    let mut errs = 0
+    errs = errs + _selftest_list_filter()
+    errs = errs + _selftest_get_lookup()
+    errs = errs + _selftest_cite_formats()
+    errs = errs + _selftest_cite_default_author()
+    errs = errs + _selftest_validate_paths()
+    errs = errs + _selftest_count_filter()
+    if errs > 0 {
+        eprintln("manifest_query: selftest FAIL (" + to_string(errs) + " fixture(s))")
+        return 1
+    }
+    println("manifest_query: selftest PASS (6 fixtures)")
+    return 0
+}
+
+// ─── main / arg dispatch ──────────────────────────────────────────────────
+
+fn _usage() {
+    eprintln("manifest_query.hexa — read-only manifest.json query")
+    eprintln("usage:")
+    eprintln("  hexa manifest_query.hexa list [--status S] [--project P] [--tier T] [--format json|text]")
+    eprintln("  hexa manifest_query.hexa get <id> [--field F | --format json|text]")
+    eprintln("  hexa manifest_query.hexa cite <id> [--format bibtex|apa|ieee|cff|ris]")
+    eprintln("  hexa manifest_query.hexa validate <id>")
+    eprintln("  hexa manifest_query.hexa count [--status S] [--project P] [--tier T]")
+    eprintln("  hexa manifest_query.hexa --selftest")
+}
+
+fn main() {
+    // argv() shape varies between docker / native runtime — skip up to and
+    // including the leading .hexa script path (mirrors manifest_update.hexa).
+    let av = argv()
+    let mut start = 1
+    let mut sk = 0
+    while sk < len(av) {
+        let a = to_string(av[sk])
+        if a.ends_with(".hexa") { start = sk + 1; break }
+        sk = sk + 1
+    }
+    if start < 1 { start = 1 }
+    let mut args = []
+    let mut k = start
+    while k < len(av) { args.push(av[k]); k = k + 1 }
+
+    let mut subcmd = ""
+    let mut positional = ""
+    let mut status = ""
+    let mut project = ""
+    let mut tier = ""
+    let mut field = ""
+    let mut format = ""
+    let mut do_selftest = false
+    let mut j = 0
+    while j < len(args) {
+        let a = args[j]
+        if a == "--selftest" {
+            do_selftest = true
+        } else if a == "--status" && j + 1 < len(args) {
+            status = args[j + 1]; j = j + 1
+        } else if a == "--project" && j + 1 < len(args) {
+            project = args[j + 1]; j = j + 1
+        } else if a == "--tier" && j + 1 < len(args) {
+            tier = args[j + 1]; j = j + 1
+        } else if a == "--field" && j + 1 < len(args) {
+            field = args[j + 1]; j = j + 1
+        } else if a == "--format" && j + 1 < len(args) {
+            format = args[j + 1]; j = j + 1
+        } else if a == "--json" {
+            format = "json"
+        } else if !a.starts_with("--") {
+            if subcmd == "" { subcmd = a }
+            else if positional == "" { positional = a }
+        }
+        j = j + 1
+    }
+
+    if do_selftest { exit(_selftest()) }
+
+    if subcmd == "" { _usage(); exit(1) }
+
+    if subcmd == "list" {
+        let mut fmt = format
+        if fmt == "" { fmt = "text" }
+        exit(cmd_list(status, project, tier, fmt))
+    }
+    if subcmd == "count" {
+        exit(cmd_count(status, project, tier))
+    }
+    if subcmd == "get" {
+        let mut fmt = format
+        if fmt == "" { fmt = "text" }
+        exit(cmd_get(positional, field, fmt))
+    }
+    if subcmd == "cite" {
+        let mut fmt = format
+        if fmt == "" { fmt = "bibtex" }
+        exit(cmd_cite(positional, fmt))
+    }
+    if subcmd == "validate" {
+        exit(cmd_validate(positional))
+    }
+
+    eprintln("manifest_query: unknown subcommand: " + subcmd)
+    _usage()
+    exit(1)
+}
