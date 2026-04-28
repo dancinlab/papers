@@ -13,11 +13,20 @@
 //   SKIP:  archive/_deprecated/, _absorbed/, build/, state/, .cache/, .git/, dist/, node_modules/
 //   EXEMPT: papers repo + void repo (own 9 SSH-terminal scope 제외)
 //
+// GRANDFATHER MECHANISMS (v1.2 — 2026-04-29)
+//   1. Per-file marker: 첫 30 줄에 "[DEPRECATED <YYYY-MM-DD>]" AND "papers" (CLI 언급) 패턴
+//      → SKIP (PASS verdict, summary 의 grandfathered 카운터에만 집계)
+//      own 9 mandate: "[DEPRECATED] marker 추가 (papers CLI 위임 명시)" = compliance 인정
+//   2. Per-repo exempt 파일: <repo>/.papers-cross-repo-lint-exempt
+//      → 줄당 1 path (relative to repo root). #-주석 허용. 매치된 파일은 SKIP (PASS)
+//
 // raw 91 C3 DECLARED LIMITS
 //   L1. 동적 URL 합성 ("${ZENODO_BASE}/api/...") caller 검출 못함 (literal grep 만)
 //   L2. 비-hexa 도구 (.rs/.go) 는 raw 9 hexa-only 별 사안
 //   L3. void repo 는 own 9 명시 제외
 //   L4. WARN classification 은 파일명만 보므로 false-positive 가능 (실제 read-only doc 인지 판정 안 함)
+//   L5. grandfather marker 검출은 첫 30 줄만 — 본문 깊은 곳의 marker 는 못 잡음
+//   L6. exempt 파일은 own 9 mandate 의 grandfather 절차로만 추가, lint 가 직접 수정 X
 //
 // raw 99 hive-CLI canonical: bin/papers cross-repo-lint dispatch (별도 verb)
 // raw 65 idempotent: same input → same output (find sort 결과 stable, jsonl append 만)
@@ -62,7 +71,7 @@ fn _audit_append(repo: string, verdict: string, count: int, sample: string) {
            + "import json\n"
            + "row = {'ts': " + _sh_q(ts) + ",\n"
            + "       'tool': 'papers_cross_repo_lint',\n"
-           + "       'classifier_version': 'papers_cross_repo_lint.v1',\n"
+           + "       'classifier_version': 'papers_cross_repo_lint.v1.2',\n"
            + "       'repo': " + _sh_q(repo) + ",\n"
            + "       'verdict': " + _sh_q(verdict) + ",\n"
            + "       'count': " + to_string(count) + ",\n"
@@ -102,6 +111,73 @@ fn _scan_warn(repo: string) -> array {
     let out = to_string(exec(cmd)).trim()
     if len(out) == 0 { return [] }
     return out.split("\n")
+}
+
+// grandfather marker check: 파일 첫 30 줄에 [DEPRECATED YYYY-MM-DD] AND "papers" 패턴
+fn _has_grandfather_marker(path: string) -> bool {
+    let cmd = "head -30 " + _sh_q(path) + " 2>/dev/null"
+            + " | grep -E '\\[DEPRECATED [0-9]{4}-[0-9]{2}-[0-9]{2}\\]' 2>/dev/null"
+            + " | grep -i 'papers' 2>/dev/null | head -1"
+    let out = to_string(exec(cmd)).trim()
+    return len(out) > 0
+}
+
+// per-repo exempt list: <repo>/.papers-cross-repo-lint-exempt (줄당 1 relative path)
+fn _load_exempt(repo: string) -> array {
+    let path = _core() + "/" + repo + "/.papers-cross-repo-lint-exempt"
+    let cmd = "test -f " + _sh_q(path) + " && grep -v -E '^\\s*(#|$)' " + _sh_q(path) + " 2>/dev/null | sort | sed -e 's|^|" + _core() + "/" + repo + "/|' || true"
+    let out = to_string(exec(cmd)).trim()
+    if len(out) == 0 { return [] }
+    return out.split("\n")
+}
+
+fn _is_exempt(path: string, exempt_paths: array) -> bool {
+    let mut i = 0
+    while i < len(exempt_paths) {
+        if exempt_paths[i] == path { return true }
+        i = i + 1
+    }
+    return false
+}
+
+// filter: BLOCK list 에서 grandfather marker + exempt 모두 SKIP (PASS)
+//         결과 [kept_block, grandfathered_count] (둘 다 array of paths)
+fn _filter_block(block: array, exempt_paths: array) -> array {
+    let mut kept = []
+    let mut grandfathered = []
+    let mut i = 0
+    while i < len(block) {
+        let p = block[i]
+        if _is_exempt(p, exempt_paths) {
+            // exempt: SKIP (PASS) — 카운터에 안 집계 (exempt 카운터 별개)
+        } else if _has_grandfather_marker(p) {
+            grandfathered = grandfathered + [p]   // SKIP (PASS), grandfathered 카운터에만 집계
+        } else {
+            kept = kept + [p]   // 진짜 BLOCK
+        }
+        i = i + 1
+    }
+    return [kept, grandfathered]
+}
+
+// filter WARN: exempt + grandfather marker 모두 SKIP (PASS)
+//   결과 [kept_warn, grandfathered_warn] (둘 다 array)
+fn _filter_warn_v2(warn: array, exempt_paths: array) -> array {
+    let mut kept = []
+    let mut gf = []
+    let mut i = 0
+    while i < len(warn) {
+        let p = warn[i]
+        if _is_exempt(p, exempt_paths) {
+            // SKIP
+        } else if _has_grandfather_marker(p) {
+            gf = gf + [p]
+        } else {
+            kept = kept + [p]
+        }
+        i = i + 1
+    }
+    return [kept, gf]
 }
 
 // 두 set 의 차집합 (warn - block) — BLOCK 으로 이미 잡힌 건 WARN 에서 제거
@@ -160,7 +236,7 @@ fn _print_repo_section(repo: string, block: array, warn: array, json_mode: bool)
 fn _emit_json(per_repo: array) {
     // per_repo 는 [{repo, block:[...], warn:[...]}] 의 평면 표현
     // 단순 stringify
-    print("{\"tool\":\"papers_cross_repo_lint\",\"classifier_version\":\"papers_cross_repo_lint.v1\",\"sister_repos\":[")
+    print("{\"tool\":\"papers_cross_repo_lint\",\"classifier_version\":\"papers_cross_repo_lint.v1.2\",\"sister_repos\":[")
     let mut i = 0
     while i < len(per_repo) {
         if i > 0 { print(",") }
@@ -175,22 +251,39 @@ fn _emit_json(per_repo: array) {
 
 fn run_lint(strict: bool, json_mode: bool) -> int {
     if !json_mode {
-        println("[papers_cross_repo_lint] own 9 papers-cross-repo-publish-canonical (papers@6b670f9)")
+        println("[papers_cross_repo_lint v1.2] own 9 papers-cross-repo-publish-canonical (papers@6b670f9)")
         println("  scope: 6 sister repos (void excluded by own 9)")
+        println("  grandfather: per-file [DEPRECATED YYYY-MM-DD]+papers marker → SKIP (PASS)")
+        println("  exempt: <repo>/.papers-cross-repo-lint-exempt (per-line relative path → SKIP)")
         println("")
     }
     let mut total_block = 0
     let mut total_warn = 0
+    let mut total_grand = 0
+    let mut total_exempt = 0
     let mut json_rows = []
     let mut i = 0
     while i < len(SISTER_REPOS) {
         let repo = SISTER_REPOS[i]
-        let block = _scan_block(repo)
-        let warn_raw = _scan_warn(repo)
-        let warn = _diff_set(warn_raw, block)
+        let block_raw = _scan_block(repo)
+        let warn_raw_pre = _scan_warn(repo)
+        let exempt_paths = _load_exempt(repo)
+        // BLOCK filter: grandfather marker → SKIP (gf 카운터), exempt → SKIP
+        let bf = _filter_block(block_raw, exempt_paths)
+        let block = bf[0]
+        let block_gf = bf[1]
+        // WARN filter: 두 set 의 차집합 (warn-block) 후 grandfather + exempt SKIP
+        let warn_after_diff = _diff_set(warn_raw_pre, block_raw)
+        let wf = _filter_warn_v2(warn_after_diff, exempt_paths)
+        let warn = wf[0]
+        let warn_gf = wf[1]
+        let grandfathered_count = len(block_gf) + len(warn_gf)
+        let exempt_hit_count = (len(block_raw) - len(block) - len(block_gf)) + (len(warn_after_diff) - len(warn) - len(warn_gf))
         _print_repo_section(repo, block, warn, json_mode)
         total_block = total_block + len(block)
         total_warn = total_warn + len(warn)
+        total_grand = total_grand + grandfathered_count
+        total_exempt = total_exempt + exempt_hit_count
         // audit ledger
         let v = if len(block) > 0 { "BLOCK" }
                 else if len(warn) > 0 { "WARN" }
@@ -209,7 +302,8 @@ fn run_lint(strict: bool, json_mode: bool) -> int {
     if json_mode { _emit_json(json_rows) }
     else {
         println("")
-        println("[summary] BLOCK=" + to_string(total_block) + " WARN=" + to_string(total_warn))
+        println("[summary] BLOCK=" + to_string(total_block) + " WARN=" + to_string(total_warn)
+              + " (grandfathered=" + to_string(total_grand) + " exempt=" + to_string(total_exempt) + ")")
     }
     let verdict = if total_block > 0 { "BLOCK" }
                   else if total_warn > 0 && strict { "BLOCK" }
