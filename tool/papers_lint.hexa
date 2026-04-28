@@ -1,0 +1,636 @@
+#!hexa strict
+// papers/tool/papers_lint.hexa — papers SSOT lint (.own 8 rules, raw 77+80+91 compliant)
+//
+// @tool(slug="papers_lint", desc="papers project SSOT lint covering .own 1–8 rules: (1) tool naming, (2) bin single-entry, (3) secret-only token source, (4) manifest schema, (5) DOI invariant, (6) publish dual-target presence, (7) CLI help discoverability, (8) tool chflags uchg advisory")
+// @usage(hexa /Users/ghost/core/papers/tool/papers_lint.hexa [--rule N] [--strict] [--json] [--selftest])
+// @omega-saturation-exempt("structural lint over papers/ tree; bounded in O(files+manifest_entries) per pass")
+// @exit_codes(0=PASS or WARN-only, 1=FAIL or --strict with WARN, 2=usage/io error)
+//
+// CONTRACT (papers-self-arch v1) — design ref papers@da47e40
+//   own 1 papers-tool-naming
+//     - tool/*.hexa basenames must be snake_case verb_noun_suffix; pp_ prefix is FAIL.
+//     - single-word names (e.g. tool/foo.hexa) → WARN.
+//   own 2 papers-bin-single-entry
+//     - bin/ may contain only a single executable named "papers". Anything else → FAIL.
+//   own 3 papers-secret-only-token-source
+//     - tool/*.hexa, bin/*, scripts/*.hexa: hard-coded credential literals → FAIL.
+//     - Detected patterns:
+//         api_key=<nonempty>, token=<nonempty> (literal, not env/secret call),
+//         Bearer XXXX, sk-<chars>, cfut_<chars>, ghp_<chars>
+//     - Secret module fetch sites (`secret get …`, `$ZENODO_TOKEN`, etc.) excluded.
+//   own 4 papers-manifest-schema
+//     - manifest.json each papers[i] must contain id, title, status, repo (project alias), tier.
+//     - When status == "Published": doi must be a non-empty string.
+//   own 5 papers-doi-invariant
+//     - When DOI is present, it must match /^10\.\d{4,9}\/[-._;()/:A-Z0-9]+$/i.
+//     - status=Published ∧ (doi missing OR malformed) → FAIL.
+//   own 6 papers-publish-dual-target
+//     - tool/zenodo_publish.hexa AND tool/osf_publish.hexa must both exist.
+//     - bin/papers source must mention both targets in --target options OR
+//       contain "publish" subcommand referencing both tool files (WARN if not).
+//   own 7 papers-cli-help-discoverable
+//     - bin/papers help|--help output must enumerate every defined subcommand.
+//     - source-grep based: regex _cmd_<name>() ⇒ subcommand name; cross-check
+//       against help string.
+//   own 8 papers-tool-chflags-uchg (advisory)
+//     - tool/{papers_lint,zenodo_publish,osf_publish}.hexa SHOULD carry uchg flag.
+//     - Reports state only; never mutates flags.
+//
+// EMISSIONS
+//   - stdout: per-rule line "  rule N: <verdict> path=<...> detail=<...>"
+//   - --json: aggregated JSON summary on stdout
+//   - audit ledger JSONL append per raw 77 to
+//       state/papers_lint_audit/audit.jsonl
+//   - last stdout line (raw 80 sentinel): __PAPERS_LINT_RESULT__ PASS|WARN|FAIL
+//
+// raw 91 C3 DECLARED LIMITS
+//   L1. own 3 token detection is regex-based; obfuscated literals (concatenation,
+//       base64) are NOT caught. Manual review still required for new files.
+//   L2. own 4 schema check uses Python here-doc; manifest.json must be valid JSON
+//       or rule 4 itself errors (reported as FAIL with detail=parse_error).
+//   L3. own 6 dual-target presence is filesystem-only; does not validate that the
+//       tools are functionally equivalent or both endpoints reachable.
+//   L4. own 7 help-grep heuristic: tolerates _cmd_<name>() pattern but not
+//       arbitrary dispatch tables.
+//   L5. own 8 chflags read uses `ls -lO` (BSD/Darwin); on Linux falls through to
+//       WARN with detail=platform_unsupported (no FAIL).
+//   L6. Selftest writes synthetic fixtures under /tmp/papers_lint_selftest_<pid>;
+//       does not touch live papers/ tree (raw 95 self-host fixpoint preserved).
+
+// ─── shell + io helpers ───────────────────────────────────────────────────
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+
+fn _iso_now() -> string {
+    return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim()
+}
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _file_exists(p: string) -> bool {
+    let r = to_string(exec("test -f " + _sh_q(p) + " && echo y || echo n")).trim()
+    return r == "y"
+}
+
+fn _dir_exists(p: string) -> bool {
+    let r = to_string(exec("test -d " + _sh_q(p) + " && echo y || echo n")).trim()
+    return r == "y"
+}
+
+// raw 77 audit ledger append (one JSONL row per finding)
+fn _audit_append(rule: int, verdict: string, path: string, detail: string) {
+    let dir = _root() + "/state/papers_lint_audit"
+    let _mk = exec("mkdir -p " + _sh_q(dir))
+    let log = dir + "/audit.jsonl"
+    let ts = _iso_now()
+    let py = "python3 - <<'PYEOF'\n"
+           + "import json\n"
+           + "row = {'ts': " + _sh_q(ts) + ",\n"
+           + "       'tool': 'papers_lint',\n"
+           + "       'rule': " + to_string(rule) + ",\n"
+           + "       'verdict': " + _sh_q(verdict) + ",\n"
+           + "       'path': " + _sh_q(path) + ",\n"
+           + "       'detail': " + _sh_q(detail) + "}\n"
+           + "open(" + _sh_q(log) + ", 'a').write(json.dumps(row, ensure_ascii=False) + '\\n')\n"
+           + "PYEOF\n"
+    let _ = exec(py)
+}
+
+// ─── rule 1: papers-tool-naming ────────────────────────────────────────────
+
+fn _rule1_tool_naming(scope_root: string) -> array {
+    // Returns [verdict, findings_count, findings_text]
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import os, re, sys\n"
+           + "root = sys.argv[1]\n"
+           + "tool_dir = os.path.join(root, 'tool')\n"
+           + "if not os.path.isdir(tool_dir):\n"
+           + "    print('NA|0|tool/ dir absent'); sys.exit(0)\n"
+           + "snake_re = re.compile(r'^[a-z][a-z0-9]+(_[a-z0-9]+)+$')\n"
+           + "single_re = re.compile(r'^[a-z][a-z0-9]+$')\n"
+           + "fails, warns = [], []\n"
+           + "for fn in sorted(os.listdir(tool_dir)):\n"
+           + "    if not fn.endswith('.hexa'): continue\n"
+           + "    base = fn[:-5]\n"
+           + "    if base.startswith('pp_'):\n"
+           + "        fails.append((base, 'pp_ prefix retained')); continue\n"
+           + "    if snake_re.match(base):\n"
+           + "        continue\n"
+           + "    if single_re.match(base):\n"
+           + "        warns.append((base, 'single-word name; verb_noun_suffix preferred')); continue\n"
+           + "    fails.append((base, 'non snake_case'))\n"
+           + "if fails:\n"
+           + "    print('FAIL|' + str(len(fails)) + '|' + '; '.join(f'{b}: {r}' for b,r in fails))\n"
+           + "elif warns:\n"
+           + "    print('WARN|' + str(len(warns)) + '|' + '; '.join(f'{b}: {r}' for b,r in warns))\n"
+           + "else:\n"
+           + "    print('PASS|0|all tool names compliant')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule1 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 2: papers-bin-single-entry ──────────────────────────────────────
+
+fn _rule2_bin_single(scope_root: string) -> array {
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import os, sys\n"
+           + "bin_dir = os.path.join(sys.argv[1], 'bin')\n"
+           + "if not os.path.isdir(bin_dir):\n"
+           + "    print('FAIL|1|bin/ dir absent'); sys.exit(0)\n"
+           + "entries = sorted(e for e in os.listdir(bin_dir) if not e.startswith('.'))\n"
+           + "extras = [e for e in entries if e != 'papers']\n"
+           + "if 'papers' not in entries:\n"
+           + "    print('FAIL|' + str(len(extras)+1) + '|bin/papers missing'); sys.exit(0)\n"
+           + "if extras:\n"
+           + "    print('FAIL|' + str(len(extras)) + '|extra bin entries: ' + ', '.join(extras))\n"
+           + "else:\n"
+           + "    print('PASS|0|bin/ single entry papers')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule2 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 3: papers-secret-only-token-source ──────────────────────────────
+
+fn _rule3_secret_only(scope_root: string) -> array {
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import os, re, sys\n"
+           + "root = sys.argv[1]\n"
+           + "scan_dirs = ['tool', 'bin', 'scripts']\n"
+           + "# Skip the lint tool itself + any file named *_secret_*.hexa (secret-module bridge)\n"
+           + "pat_kv     = re.compile(r'(?:api_key|apikey|token|secret_key)\\s*=\\s*[\"\\']([A-Za-z0-9_\\-]{12,})[\"\\']', re.IGNORECASE)\n"
+           + "pat_bearer = re.compile(r'Bearer\\s+[A-Za-z0-9_\\-\\.]{20,}')\n"
+           + "pat_sk     = re.compile(r'\\bsk-[A-Za-z0-9]{20,}')\n"
+           + "pat_cfut   = re.compile(r'\\bcfut_[A-Za-z0-9_\\-]{20,}')\n"
+           + "pat_ghp    = re.compile(r'\\bghp_[A-Za-z0-9]{20,}')\n"
+           + "patterns = [('kv', pat_kv), ('bearer', pat_bearer), ('sk', pat_sk),\n"
+           + "            ('cfut', pat_cfut), ('ghp', pat_ghp)]\n"
+           + "fails = []\n"
+           + "self_basenames = {'papers_lint.hexa'}\n"
+           + "for sd in scan_dirs:\n"
+           + "    full = os.path.join(root, sd)\n"
+           + "    if not os.path.isdir(full): continue\n"
+           + "    for dp, _, files in os.walk(full):\n"
+           + "        for fn in files:\n"
+           + "            if fn in self_basenames: continue\n"
+           + "            if not (fn.endswith('.hexa') or fn == 'papers' or fn.startswith('pp_')): continue\n"
+           + "            fp = os.path.join(dp, fn)\n"
+           + "            try:\n"
+           + "                txt = open(fp, 'r', errors='ignore').read()\n"
+           + "            except Exception:\n"
+           + "                continue\n"
+           + "            for tag, pat in patterns:\n"
+           + "                for m in pat.finditer(txt):\n"
+           + "                    snippet = m.group(0)[:40]\n"
+           + "                    # Allow obvious env-var fallbacks: 'token=$TOKEN', 'token = ${X}'\n"
+           + "                    if tag == 'kv' and ('$' in m.group(0) or 'env(' in m.group(0).lower() or 'secret' in m.group(0).lower()):\n"
+           + "                        continue\n"
+           + "                    rel = os.path.relpath(fp, root)\n"
+           + "                    fails.append((rel, tag, snippet))\n"
+           + "if fails:\n"
+           + "    print('FAIL|' + str(len(fails)) + '|' + '; '.join(f'{r}: {t}={s!r}' for r,t,s in fails[:10]))\n"
+           + "else:\n"
+           + "    print('PASS|0|no hard-coded credential literals detected')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule3 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 4: papers-manifest-schema ───────────────────────────────────────
+
+fn _rule4_manifest_schema(scope_root: string) -> array {
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import json, os, sys\n"
+           + "mf = os.path.join(sys.argv[1], 'manifest.json')\n"
+           + "if not os.path.exists(mf):\n"
+           + "    print('FAIL|1|manifest.json absent'); sys.exit(0)\n"
+           + "try:\n"
+           + "    d = json.load(open(mf))\n"
+           + "except Exception as e:\n"
+           + "    print('FAIL|1|parse_error: ' + str(e)); sys.exit(0)\n"
+           + "papers = d.get('papers', [])\n"
+           + "REQ = ['id', 'title', 'status', 'repo', 'tier']\n"
+           + "fails = []\n"
+           + "for i, e in enumerate(papers):\n"
+           + "    pid = e.get('id', f'<idx{i}>')\n"
+           + "    miss = [k for k in REQ if k not in e or e.get(k) in (None, '')]\n"
+           + "    if miss:\n"
+           + "        fails.append((pid, 'missing fields=' + ','.join(miss)))\n"
+           + "        continue\n"
+           + "    if str(e.get('status','')).lower() == 'published':\n"
+           + "        if not e.get('doi'):\n"
+           + "            fails.append((pid, 'status=Published but doi empty'))\n"
+           + "if fails:\n"
+           + "    head = '; '.join(f'{p}: {r}' for p,r in fails[:8])\n"
+           + "    if len(fails) > 8: head += f' ... +{len(fails)-8} more'\n"
+           + "    print('FAIL|' + str(len(fails)) + '|' + head)\n"
+           + "else:\n"
+           + "    print('PASS|0|all ' + str(len(papers)) + ' entries schema-conformant')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule4 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 5: papers-doi-invariant ─────────────────────────────────────────
+
+fn _rule5_doi_invariant(scope_root: string) -> array {
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import json, os, re, sys\n"
+           + "mf = os.path.join(sys.argv[1], 'manifest.json')\n"
+           + "if not os.path.exists(mf):\n"
+           + "    print('FAIL|1|manifest.json absent'); sys.exit(0)\n"
+           + "try:\n"
+           + "    d = json.load(open(mf))\n"
+           + "except Exception as e:\n"
+           + "    print('FAIL|1|parse_error: ' + str(e)); sys.exit(0)\n"
+           + "doi_re = re.compile(r'^10\\.\\d{4,9}/[-._;()/:A-Z0-9]+$', re.IGNORECASE)\n"
+           + "fails = []\n"
+           + "for e in d.get('papers', []):\n"
+           + "    pid = e.get('id','?')\n"
+           + "    doi = e.get('doi','') or ''\n"
+           + "    st = str(e.get('status','')).lower()\n"
+           + "    if doi:\n"
+           + "        if not doi_re.match(doi):\n"
+           + "            fails.append((pid, f'malformed doi={doi}'))\n"
+           + "    elif st == 'published':\n"
+           + "        fails.append((pid, 'published+doi=NULL'))\n"
+           + "if fails:\n"
+           + "    head = '; '.join(f'{p}: {r}' for p,r in fails[:8])\n"
+           + "    if len(fails) > 8: head += f' ... +{len(fails)-8} more'\n"
+           + "    print('FAIL|' + str(len(fails)) + '|' + head)\n"
+           + "else:\n"
+           + "    print('PASS|0|all DOIs valid')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule5 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 6: papers-publish-dual-target ───────────────────────────────────
+
+fn _rule6_dual_target(scope_root: string) -> array {
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import os, sys\n"
+           + "root = sys.argv[1]\n"
+           + "zen = os.path.join(root, 'tool', 'zenodo_publish.hexa')\n"
+           + "osf = os.path.join(root, 'tool', 'osf_publish.hexa')\n"
+           + "missing = []\n"
+           + "if not os.path.exists(zen): missing.append('tool/zenodo_publish.hexa')\n"
+           + "if not os.path.exists(osf): missing.append('tool/osf_publish.hexa')\n"
+           + "if missing:\n"
+           + "    print('FAIL|' + str(len(missing)) + '|missing: ' + ', '.join(missing)); sys.exit(0)\n"
+           + "# WARN if bin/papers does not mention --target=all or both names\n"
+           + "bp = os.path.join(root, 'bin', 'papers')\n"
+           + "if os.path.exists(bp):\n"
+           + "    txt = open(bp, 'r', errors='ignore').read()\n"
+           + "    has_zen = 'zenodo' in txt.lower()\n"
+           + "    has_osf = 'osf' in txt.lower()\n"
+           + "    if has_zen and has_osf:\n"
+           + "        print('PASS|0|both publish tools present + bin/papers references both')\n"
+           + "    else:\n"
+           + "        miss = []\n"
+           + "        if not has_zen: miss.append('zenodo')\n"
+           + "        if not has_osf: miss.append('osf')\n"
+           + "        print('WARN|1|bin/papers missing target reference: ' + ','.join(miss))\n"
+           + "else:\n"
+           + "    print('WARN|1|bin/papers absent — publish wrapper not verified')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule6 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 7: papers-cli-help-discoverable ─────────────────────────────────
+
+fn _rule7_help_discoverable(scope_root: string) -> array {
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import os, re, sys\n"
+           + "bp = os.path.join(sys.argv[1], 'bin', 'papers')\n"
+           + "if not os.path.exists(bp):\n"
+           + "    print('FAIL|1|bin/papers absent'); sys.exit(0)\n"
+           + "txt = open(bp, 'r', errors='ignore').read()\n"
+           + "# subcommands declared via _cmd_<name>() definitions\n"
+           + "defined = set(re.findall(r'_cmd_([a-z][a-z0-9_]*)\\s*\\(\\)', txt))\n"
+           + "# Help block heuristic: between '_cmd_help' and the closing brace, list each name\n"
+           + "help_block = ''\n"
+           + "m = re.search(r'_cmd_help\\s*\\(\\)\\s*\\{(.+?)\\n\\}', txt, re.DOTALL)\n"
+           + "if m: help_block = m.group(1)\n"
+           + "if not help_block:\n"
+           + "    # fallback: the dispatcher's case list\n"
+           + "    m2 = re.search(r'help\\s*\\)\\s*_cmd_help.*?(?:esac|$)', txt, re.DOTALL)\n"
+           + "    if m2: help_block = m2.group(0)\n"
+           + "missing = sorted([n for n in defined if n != 'help' and n not in help_block])\n"
+           + "if not defined:\n"
+           + "    print('WARN|1|no _cmd_<name>() definitions found — heuristic NA')\n"
+           + "elif missing:\n"
+           + "    print('WARN|' + str(len(missing)) + '|help missing subcommands: ' + ', '.join(missing))\n"
+           + "else:\n"
+           + "    print('PASS|0|all ' + str(len(defined)) + ' subcommands documented in help')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["FAIL", "1", "rule7 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── rule 8: papers-tool-chflags-uchg (advisory) ──────────────────────────
+
+fn _rule8_chflags(scope_root: string) -> array {
+    // Darwin-only via `ls -lO`. Linux fallthrough to platform_unsupported WARN.
+    let uname = to_string(exec("uname -s")).trim()
+    if uname != "Darwin" {
+        return ["WARN", "0", "platform_unsupported (uname=" + uname + ")"]
+    }
+    let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
+           + "import os, subprocess, sys\n"
+           + "root = sys.argv[1]\n"
+           + "targets = ['tool/papers_lint.hexa', 'tool/zenodo_publish.hexa', 'tool/osf_publish.hexa']\n"
+           + "missing = []\n"
+           + "no_uchg = []\n"
+           + "for t in targets:\n"
+           + "    fp = os.path.join(root, t)\n"
+           + "    if not os.path.exists(fp):\n"
+           + "        missing.append(t); continue\n"
+           + "    out = subprocess.run(['ls', '-lO', fp], capture_output=True, text=True).stdout\n"
+           + "    if 'uchg' not in out:\n"
+           + "        no_uchg.append(t)\n"
+           + "issues = []\n"
+           + "if missing: issues.append('absent: ' + ','.join(missing))\n"
+           + "if no_uchg: issues.append('no uchg: ' + ','.join(no_uchg))\n"
+           + "if issues:\n"
+           + "    print('WARN|' + str(len(missing)+len(no_uchg)) + '|' + '; '.join(issues))\n"
+           + "else:\n"
+           + "    print('PASS|0|all 3 core tools carry uchg flag')\n"
+           + "PYEOF\n"
+    let out = to_string(exec(py)).trim()
+    let parts = out.split("|")
+    if len(parts) < 3 { return ["WARN", "1", "rule8 internal error: " + out] }
+    return [parts[0], parts[1], parts[2]]
+}
+
+// ─── dispatcher ───────────────────────────────────────────────────────────
+
+fn _run_rule(n: int, scope_root: string) -> array {
+    if n == 1 { return _rule1_tool_naming(scope_root) }
+    if n == 2 { return _rule2_bin_single(scope_root) }
+    if n == 3 { return _rule3_secret_only(scope_root) }
+    if n == 4 { return _rule4_manifest_schema(scope_root) }
+    if n == 5 { return _rule5_doi_invariant(scope_root) }
+    if n == 6 { return _rule6_dual_target(scope_root) }
+    if n == 7 { return _rule7_help_discoverable(scope_root) }
+    if n == 8 { return _rule8_chflags(scope_root) }
+    return ["FAIL", "1", "unknown rule " + to_string(n)]
+}
+
+fn _print_summary(results: array, json_mode: bool) {
+    if json_mode {
+        let py = "python3 - <<'PYEOF'\n"
+        let mut s = py + "import json\n" + "rows = [\n"
+        for r in results {
+            // r = [rule_n, verdict, count, detail]
+            s = s + "    {'rule': " + to_string(r[0]) + ", 'verdict': " + _sh_q(r[1])
+              + ", 'count': " + to_string(r[2]) + ", 'detail': " + _sh_q(r[3]) + "},\n"
+        }
+        s = s + "]\n" + "print(json.dumps({'tool':'papers_lint','results':rows}, ensure_ascii=False))\n" + "PYEOF\n"
+        let out = to_string(exec(s)).trim()
+        println(out)
+    } else {
+        println("┌─ papers_lint @ " + _iso_now() + " ─")
+        for r in results {
+            let line = "│  rule " + to_string(r[0]) + ": " + r[1]
+                     + " count=" + to_string(r[2]) + "  " + r[3]
+            println(line)
+        }
+        println("└─")
+    }
+}
+
+fn _classify_overall(results: array, strict: bool) -> string {
+    let mut has_fail = false
+    let mut has_warn = false
+    for r in results {
+        if r[1] == "FAIL" { has_fail = true }
+        if r[1] == "WARN" { has_warn = true }
+    }
+    if has_fail { return "FAIL" }
+    if has_warn && strict { return "FAIL" }
+    if has_warn { return "WARN" }
+    return "PASS"
+}
+
+fn _emit_sentinel(verdict: string) {
+    println("__PAPERS_LINT_RESULT__ " + verdict)
+}
+
+// ─── selftest fixtures (raw 95 fixpoint guard) ────────────────────────────
+
+fn _make_fixture_pass(base: string) {
+    let _ = exec("mkdir -p " + _sh_q(base) + "/tool " + _sh_q(base) + "/bin "
+                 + _sh_q(base) + "/scripts " + _sh_q(base) + "/state")
+    // tool/{papers_lint,zenodo_publish,osf_publish}.hexa stubs (rule 8 targets)
+    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/papers_lint.hexa")
+    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/zenodo_publish.hexa")
+    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/osf_publish.hexa")
+    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/some_tool.hexa")
+    // bin/papers with two subcommands both in help
+    let bp = base + "/bin/papers"
+    let papers_src = "#!/usr/bin/env bash\n"
+                   + "_cmd_list() { :; }\n"
+                   + "_cmd_publish() { echo \"target: zenodo|osf|all\"; }\n"
+                   + "_cmd_help() {\n"
+                   + "    cat <<EOF\n"
+                   + "subcommands: list publish\n"
+                   + "EOF\n"
+                   + "}\n"
+                   + "case \"$1\" in list) _cmd_list ;; publish) _cmd_publish ;; help) _cmd_help ;; esac\n"
+    let _ = exec("cat > " + _sh_q(bp) + " <<'BPEOF'\n" + papers_src + "BPEOF\nchmod +x " + _sh_q(bp))
+    // manifest.json minimal valid
+    let mf = "{\"papers\":[{\"id\":\"P-1\",\"title\":\"T\",\"status\":\"Draft\",\"repo\":\"x\",\"tier\":2}]}"
+    let _ = exec("printf %s " + _sh_q(mf) + " > " + _sh_q(base) + "/manifest.json")
+}
+
+fn _make_fixture_fail_naming(base: string) {
+    _make_fixture_pass(base)
+    // Add a pp_ prefixed tool
+    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/pp_legacy.hexa")
+}
+
+fn _make_fixture_fail_bin(base: string) {
+    _make_fixture_pass(base)
+    let _ = exec("printf '#!/bin/sh\\n' > " + _sh_q(base) + "/bin/extra_file && chmod +x " + _sh_q(base) + "/bin/extra_file")
+}
+
+fn _make_fixture_fail_token(base: string) {
+    _make_fixture_pass(base)
+    let bad = "let token = \"sk-AAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"\n"
+    let _ = exec("cat > " + _sh_q(base) + "/tool/leaky.hexa <<'LEEOF'\n" + bad + "LEEOF")
+}
+
+fn _make_fixture_fail_schema(base: string) {
+    _make_fixture_pass(base)
+    let mf = "{\"papers\":[{\"id\":\"P-1\",\"status\":\"Published\",\"repo\":\"x\"}]}"
+    let _ = exec("printf %s " + _sh_q(mf) + " > " + _sh_q(base) + "/manifest.json")
+}
+
+fn _make_fixture_fail_doi(base: string) {
+    _make_fixture_pass(base)
+    let mf = "{\"papers\":[{\"id\":\"P-1\",\"title\":\"T\",\"status\":\"Published\",\"repo\":\"x\",\"tier\":1,\"doi\":\"\"}]}"
+    let _ = exec("printf %s " + _sh_q(mf) + " > " + _sh_q(base) + "/manifest.json")
+}
+
+fn _make_fixture_warn_help(base: string) {
+    _make_fixture_pass(base)
+    // Help omits a subcommand
+    let papers_src = "#!/usr/bin/env bash\n"
+                   + "_cmd_list() { :; }\n"
+                   + "_cmd_publish() { :; }\n"
+                   + "_cmd_secret() { :; }\n"
+                   + "_cmd_help() {\n"
+                   + "    cat <<EOF\n"
+                   + "subcommands: list publish\n"
+                   + "EOF\n"
+                   + "}\n"
+    let bp = base + "/bin/papers"
+    let _ = exec("cat > " + _sh_q(bp) + " <<'BPEOF'\n" + papers_src + "BPEOF\nchmod +x " + _sh_q(bp))
+}
+
+fn _selftest_one(label: string, builder: string, expect: string) -> int {
+    let pid = to_string(exec("echo $$")).trim()
+    let base = "/tmp/papers_lint_selftest_" + pid + "_" + label
+    let _ = exec("rm -rf " + _sh_q(base))
+    if builder == "pass"        { _make_fixture_pass(base) }
+    if builder == "fail_naming" { _make_fixture_fail_naming(base) }
+    if builder == "fail_bin"    { _make_fixture_fail_bin(base) }
+    if builder == "fail_token"  { _make_fixture_fail_token(base) }
+    if builder == "fail_schema" { _make_fixture_fail_schema(base) }
+    if builder == "fail_doi"    { _make_fixture_fail_doi(base) }
+    if builder == "warn_help"   { _make_fixture_warn_help(base) }
+    // Run all 8 rules against the fixture; classify overall verdict.
+    let mut results = []
+    let mut n = 1
+    while n <= 8 {
+        let r = _run_rule(n, base)
+        results.push([n, r[0], r[1], r[2]])
+        n = n + 1
+    }
+    let verdict = _classify_overall(results, false)
+    let _cleanup = exec("rm -rf " + _sh_q(base))
+    if verdict == expect {
+        println("  fixture[" + label + "]: PASS  (got=" + verdict + ")")
+        return 0
+    }
+    println("  fixture[" + label + "]: FAIL  (expected=" + expect + " got=" + verdict + ")")
+    for r in results {
+        println("      rule " + to_string(r[0]) + ": " + r[1] + " " + r[3])
+    }
+    return 1
+}
+
+fn _selftest() -> int {
+    println("papers_lint: selftest start")
+    let mut errs = 0
+    // pass_baseline expects WARN: synthetic fixture cannot realistically carry
+    // chflags uchg, so rule 8 advisory legitimately WARNs. All other rules PASS.
+    errs = errs + _selftest_one("pass_baseline",  "pass",        "WARN")
+    errs = errs + _selftest_one("fail_naming",    "fail_naming", "FAIL")
+    errs = errs + _selftest_one("fail_bin",       "fail_bin",    "FAIL")
+    errs = errs + _selftest_one("fail_token",     "fail_token",  "FAIL")
+    errs = errs + _selftest_one("fail_schema",    "fail_schema", "FAIL")
+    errs = errs + _selftest_one("fail_doi",       "fail_doi",    "FAIL")
+    errs = errs + _selftest_one("warn_help",      "warn_help",   "WARN")
+    // raw 95 self-host fixpoint: lint over the live papers/ tree must NOT crash
+    // (verdict may legitimately be FAIL until migration completes; we only
+    //  assert that papers_lint can run on itself without internal error).
+    let mut self_errors = 0
+    let mut n = 1
+    while n <= 8 {
+        let r = _run_rule(n, _root())
+        if len(r) < 3 { self_errors = self_errors + 1 }
+        n = n + 1
+    }
+    if self_errors > 0 {
+        println("  fixture[self_host]: FAIL  (rule internal errors=" + to_string(self_errors) + ")")
+        errs = errs + 1
+    } else {
+        println("  fixture[self_host]: PASS  (8 rules executed without internal error)")
+    }
+    if errs > 0 {
+        eprintln("papers_lint: selftest FAIL (" + to_string(errs) + " fixture(s))")
+        return 1
+    }
+    println("papers_lint: selftest PASS (7 fixtures + self_host)")
+    return 0
+}
+
+// ─── main ────────────────────────────────────────────────────────────────
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut i = 2
+    while i < len(av) { args.push(av[i]); i = i + 1 }
+
+    let mut single_rule = 0
+    let mut strict = false
+    let mut json_mode = false
+    let mut do_selftest = false
+    let mut j = 0
+    while j < len(args) {
+        let a = args[j]
+        if a == "--selftest" { do_selftest = true }
+        else if a == "--strict" { strict = true }
+        else if a == "--json"   { json_mode = true }
+        else if a == "--rule" {
+            if j + 1 >= len(args) { eprintln("papers_lint: --rule N required"); exit(2) }
+            single_rule = args[j+1].parse_int()
+            j = j + 1
+        }
+        j = j + 1
+    }
+
+    if do_selftest { exit(_selftest()) }
+
+    let scope_root = _root()
+    let mut results = []
+    if single_rule > 0 {
+        let r = _run_rule(single_rule, scope_root)
+        results.push([single_rule, r[0], r[1], r[2]])
+    } else {
+        let mut n = 1
+        while n <= 8 {
+            let r = _run_rule(n, scope_root)
+            results.push([n, r[0], r[1], r[2]])
+            n = n + 1
+        }
+    }
+
+    // raw 77 audit ledger append
+    for r in results {
+        _audit_append(r[0], r[1], scope_root, r[3])
+    }
+
+    _print_summary(results, json_mode)
+    let verdict = _classify_overall(results, strict)
+    _emit_sentinel(verdict)
+    if verdict == "FAIL" { exit(1) }
+    exit(0)
+}

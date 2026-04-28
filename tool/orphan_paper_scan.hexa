@@ -1,4 +1,4 @@
-// papers/tool/pp_orphan_paper_scan.hexa — B2.
+// papers/tool/orphan_paper_scan.hexa — B2.
 //
 // Two-way drift detection:
 //   (1) manifest entry references a file that doesn't exist  (dangling_file)
@@ -18,8 +18,8 @@ fn _manifest_path() -> string { return _root() + "/manifest.json" }
 fn _selftest() -> int {
     let p = _manifest_path()
     let e = to_string(exec("test -f '" + p + "' && echo y || echo n")).trim()
-    if e != "y" { eprintln("pp_orphan_paper_scan: manifest missing"); return 1 }
-    println("pp_orphan_paper_scan: selftest PASS")
+    if e != "y" { eprintln("orphan_paper_scan: manifest missing"); return 1 }
+    println("orphan_paper_scan: selftest PASS")
     return 0
 }
 
@@ -51,7 +51,7 @@ fn _scan() -> int {
            + "            rel = os.path.relpath(os.path.join(dirpath, fn), root)\n"
            + "            if os.path.normpath(rel) not in declared_files:\n"
            + "                unreg.append(rel)\n"
-           + "print(f'pp_orphan_paper_scan: dangling={len(dangling)} unregistered={len(unreg)}')\n"
+           + "print(f'orphan_paper_scan: dangling={len(dangling)} unregistered={len(unreg)}')\n"
            + "if dangling:\n"
            + "    print('  ── dangling (manifest → no file) ──')\n"
            + "    for d_ in dangling[:20]: print(f'    {d_[0]:20}  {d_[1]}')\n"

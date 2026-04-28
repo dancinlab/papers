@@ -1,3 +1,68 @@
-# papers /.own — L1 project-local (0 rules)
-# SSOT — 프로젝트 고유 절대 규칙. L0(hexa-lang /.raw) 와 병렬, 독립 id namespace.
-# 포맷 스펙: hexa-lang self/raw_loader.hexa (L0 와 동일 문법)
+# papers /.own — L1 unified governance DSL (8 rules)
+# Project-local SSOT: declarative rules + verify hooks + lint dispatch.
+# Parallel to L0 (hexa-lang /.raw) with independent id namespace.
+# Grammar: hexa-lang self/raw_loader.hexa.
+#
+# Rules populated 2026-04-28 from design commit da47e40 (CLI 정리 + secret 통합).
+# Lint dispatch: hexa run tool/papers_lint.hexa [--rule N] [--strict] [--json]
+# Audit ledger:  state/papers_lint_audit/audit.jsonl
+# raw 91 C3: rule 4/7 currently emit WARN (gradual migration); rule 1/2/3/5/6/8 PASS expected.
+
+own 1 live "papers-tool-naming"
+  slug papers-tool-naming
+  scope tool/*.hexa MUST follow snake_case + verb_noun_suffix (e.g. *_lint, *_check, *_scan, *_publish)
+  bans pp_ prefix / camelCase / single-word names
+  why  sister repo 일관성 (hive/n6/nexus/anima)
+  verify hexa run tool/papers_lint.hexa --rule 1
+  on_fail block
+
+own 2 live "papers-bin-single-entry"
+  slug papers-bin-single-entry
+  scope bin/ contains exactly { papers } entry point
+  bans bin/pp_meta, bin/<other> — papers <subcommand> 흡수
+  why  raw 99 hive-cli-canonical-entry-point 사상
+  verify hexa run tool/papers_lint.hexa --rule 2
+  on_fail block
+
+own 3 live "papers-secret-only-token-source"
+  slug papers-secret-only-token-source
+  scope tool/*.hexa + bin/* MUST use `secret get <key>` for credentials
+  bans hard-coded api_token / api_key / Bearer literal
+  why  raw 99 + secret repo private invariant
+  verify hexa run tool/papers_lint.hexa --rule 3
+  on_fail block
+
+own 4 live "papers-manifest-schema"
+  slug papers-manifest-schema
+  decl manifest.json
+  scope each entry: id / title / status / project / tier / doi (status=published⇒required) / files
+  verify hexa run tool/papers_lint.hexa --rule 4
+  on_fail warn  # 31 entries miss `repo` field — gradual migration
+
+own 5 live "papers-doi-invariant"
+  slug papers-doi-invariant
+  scope DOI 정규식 10.\d{4,9}/[-._;()/:A-Z0-9]+
+  bans status=published AND (doi=NULL OR doi="")
+  verify hexa run tool/papers_lint.hexa --rule 5
+  on_fail block
+
+own 6 live "papers-publish-dual-target"
+  slug papers-publish-dual-target
+  scope tool/zenodo_publish.hexa + tool/osf_publish.hexa 동시 존재
+  why  Zenodo + OSF dual-archival redundancy
+  verify hexa run tool/papers_lint.hexa --rule 6
+  on_fail warn
+
+own 7 live "papers-cli-help-discoverable"
+  slug papers-cli-help-discoverable
+  scope `papers help` 출력에 모든 subcommand 등재
+  why  discoverability + 자동 동기화
+  verify hexa run tool/papers_lint.hexa --rule 7
+  on_fail warn
+
+own 8 live "papers-tool-chflags-uchg"
+  slug papers-tool-chflags-uchg
+  scope tool/{papers_lint,zenodo_publish,osf_publish}.hexa MUST be chflags uchg locked
+  why  raw 1 os-lock + 우발 수정 방지
+  verify hexa run tool/papers_lint.hexa --rule 8
+  on_fail warn  # darwin-only, Linux skip

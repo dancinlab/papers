@@ -1,9 +1,9 @@
-// normalize_keywords.hexa -- Apply keyword alias map to manifest.json
+// keyword_normalize.hexa -- Apply keyword alias map to manifest.json
 // + emit keyword_index.json (canonical_keyword -> [paper_ids]).
 //
 // Usage:
-//   hexa scripts/normalize_keywords.hexa --dry-run
-//   hexa scripts/normalize_keywords.hexa
+//   hexa tool/keyword_normalize.hexa --dry-run
+//   hexa tool/keyword_normalize.hexa
 
 fn main() {
   let cli_args = args()
@@ -27,7 +27,7 @@ import json, os, sys, tempfile, datetime as _dt
 REPO_ROOT = sys.argv[1]
 DRY = '--dry-run' in sys.argv[2:]
 MANIFEST = os.path.join(REPO_ROOT, 'manifest.json')
-ALIASES  = os.path.join(REPO_ROOT, 'scripts', 'keyword_aliases.json')
+ALIASES  = os.path.join(REPO_ROOT, 'tool', 'keyword_aliases.json')
 INDEX    = os.path.join(REPO_ROOT, 'keyword_index.json')
 TODAY    = _dt.date.today().isoformat()
 

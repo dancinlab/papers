@@ -14,10 +14,11 @@ tecsrs
 !.claude/hooks/
 
 # Legacy scripts replaced by .hexa (kept on disk for P-002 launcher compatibility)
-scripts/sync_zenodo.py
-scripts/verify_dois.py
-scripts/infinite_growth.sh
-scripts/lib/growth_common.sh
+# scripts/ moved to tool/ in 2026-04-28 cycle (CLI cleanup, da47e40 design).
+tool/sync_zenodo.py
+tool/verify_dois.py
+tool/infinite_growth.sh
+tool/lib/growth_common.sh
 tecs-l/P-002-figures.py
 tecs-l/P-002-reproduction.py
 upload_all_unpublished.sh

@@ -1,15 +1,15 @@
-// papers/tool/pp_meta.hexa — scanner dispatcher (T1).
+// papers/tool/meta_scanner.hexa — scanner dispatcher (T1).
 //
-// Runs one or all pp_* scanners under tool/, collates results. Mirrors
+// Runs one or all *_scan scanners under tool/, collates results. Mirrors
 // hexa-lang's hx_continuous_scan pattern for cross-repo consistency.
 //
 // CLI
-//   hexa tool/pp_meta.hexa list                   — list scanners
-//   hexa tool/pp_meta.hexa run <name>             — run one
-//   hexa tool/pp_meta.hexa all                    — run all (orchestrator)
-//   hexa tool/pp_meta.hexa --selftest             — dispatcher own smoke
+//   hexa tool/meta_scanner.hexa list             — list scanners
+//   hexa tool/meta_scanner.hexa run <name>       — run one
+//   hexa tool/meta_scanner.hexa all              — run all (orchestrator)
+//   hexa tool/meta_scanner.hexa --selftest       — dispatcher own smoke
 //
-// Scanner contract (each pp_*.hexa file):
+// Scanner contract (each *_scan.hexa file):
 //   --selftest        prints "<name>: selftest PASS" on stdout, exit 0
 //   (no args)         emits human-readable findings, exit 0 if clean else 1
 
@@ -23,7 +23,7 @@ fn _root() -> string { return _home() + "/core/papers" }
 fn _hexa_bin() -> string { return _home() + "/core/hexa-lang/hexa" }
 
 fn _list_scanners() -> array {
-    let raw = to_string(exec("ls " + _root() + "/tool/pp_*_scan.hexa 2>/dev/null"))
+    let raw = to_string(exec("ls " + _root() + "/tool/*_scan.hexa 2>/dev/null"))
     let mut out = []
     if len(raw) == 0 { return out }
     for line in raw.split("\n") {
@@ -31,6 +31,8 @@ fn _list_scanners() -> array {
         if len(t) == 0 { continue }
         // basename via shell (stage0 rfind() codegen pending — hxa-20260422-002)
         let base = to_string(exec("basename '" + t + "' .hexa")).trim()
+        // skip the meta orchestrator (continuous_scan) so we don't recurse
+        if base == "continuous_scan" { continue }
         out.push(base)
     }
     return out
@@ -39,10 +41,10 @@ fn _list_scanners() -> array {
 fn _cmd_list() -> int {
     let scanners = _list_scanners()
     if len(scanners) == 0 {
-        println("pp_meta: no scanners registered under tool/pp_*_scan.hexa")
+        println("meta_scanner: no scanners registered under tool/*_scan.hexa")
         return 0
     }
-    println("pp_meta: registered scanners (" + to_string(len(scanners)) + ")")
+    println("meta_scanner: registered scanners (" + to_string(len(scanners)) + ")")
     for s in scanners { println("  " + s) }
     return 0
 }
@@ -51,7 +53,7 @@ fn _cmd_run(name: string) -> int {
     let path = _root() + "/tool/" + name + ".hexa"
     let exists = to_string(exec("test -f '" + path + "' && echo y || echo n")).trim()
     if exists != "y" {
-        eprintln("pp_meta run: scanner not found: " + path)
+        eprintln("meta_scanner run: scanner not found: " + path)
         return 2
     }
     let cmd = "'" + _hexa_bin() + "' '" + path + "'"
@@ -62,7 +64,7 @@ fn _cmd_run(name: string) -> int {
 
 fn _cmd_all() -> int {
     let scanners = _list_scanners()
-    if len(scanners) == 0 { println("pp_meta all: no scanners"); return 0 }
+    if len(scanners) == 0 { println("meta_scanner all: no scanners"); return 0 }
     let mut fails = 0
     let mut ran = 0
     for s in scanners {
@@ -72,14 +74,14 @@ fn _cmd_all() -> int {
         if rc != 0 { fails = fails + 1 }
     }
     println("")
-    println("pp_meta all: ran=" + to_string(ran) + " fails=" + to_string(fails))
+    println("meta_scanner all: ran=" + to_string(ran) + " fails=" + to_string(fails))
     if fails > 0 { return 1 }
     return 0
 }
 
 fn _selftest() -> int {
     let scanners = _list_scanners()
-    println("pp_meta: selftest scanners=" + to_string(len(scanners)))
+    println("meta_scanner: selftest scanners=" + to_string(len(scanners)))
     let mut errs = 0
     for s in scanners {
         let path = _root() + "/tool/" + s + ".hexa"
@@ -93,10 +95,10 @@ fn _selftest() -> int {
         }
     }
     if errs > 0 {
-        eprintln("pp_meta: selftest FAIL (" + to_string(errs) + " scanner(s) failed)")
+        eprintln("meta_scanner: selftest FAIL (" + to_string(errs) + " scanner(s) failed)")
         return 1
     }
-    println("pp_meta: selftest PASS")
+    println("meta_scanner: selftest PASS")
     return 0
 }
 
@@ -112,9 +114,9 @@ fn main() {
     if cmd == "list"       { exit(_cmd_list()) }
     if cmd == "all"        { exit(_cmd_all()) }
     if cmd == "run" {
-        if len(args) < 2 { eprintln("pp_meta run: scanner name required"); exit(2) }
+        if len(args) < 2 { eprintln("meta_scanner run: scanner name required"); exit(2) }
         exit(_cmd_run(args[1]))
     }
-    eprintln("pp_meta: unknown command '" + cmd + "'")
+    eprintln("meta_scanner: unknown command '" + cmd + "'")
     exit(2)
 }

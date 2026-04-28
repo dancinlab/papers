@@ -1,0 +1,19 @@
+{
+  "ts": "2026-04-28T11:50:30Z",
+  "scanners": [
+    {
+      "name": "missing_doi_scan",
+      "rc": 0,
+      "findings": -1,
+      "runtime_ms": 586
+    },
+    {
+      "name": "orphan_paper_scan",
+      "rc": 0,
+      "findings": -1,
+      "runtime_ms": 693
+    }
+  ],
+  "total_findings": 0,
+  "fails": 0
+}

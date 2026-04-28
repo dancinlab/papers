@@ -3,7 +3,7 @@
     "description": "Keyword canonicalization map for manifest.json papers[].keywords",
     "updated": "2026-04-20",
     "schema_version": "1.0",
-    "policy": "alias (case-insensitive) -> canonical. Applied by scripts/normalize_keywords.hexa."
+    "policy": "alias (case-insensitive) -> canonical. Applied by tool/keyword_normalize.hexa."
   },
   "aliases": {
     "perfect number": "perfect-numbers",

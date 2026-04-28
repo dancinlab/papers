@@ -1,0 +1,32 @@
+{"ts": "2026-04-28T11:51:23Z", "tool": "papers_lint", "rule": 1, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all tool names compliant"}
+{"ts": "2026-04-28T11:51:23Z", "tool": "papers_lint", "rule": 2, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "bin/ single entry papers"}
+{"ts": "2026-04-28T11:51:23Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-04-28T11:51:23Z", "tool": "papers_lint", "rule": 4, "verdict": "FAIL", "path": "/Users/ghost/core/papers", "detail": "PA-11: missing fields=repo; PA-12: missing fields=repo; PA-13: missing fields=repo; PA-14: missing fields=repo; PA-15: missing fields=repo; PA-16: missing fields=repo; PS-24: missing fields=repo; PS-25: missing fields=repo ... +23 more"}
+{"ts": "2026-04-28T11:51:24Z", "tool": "papers_lint", "rule": 5, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all DOIs valid"}
+{"ts": "2026-04-28T11:51:24Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
+{"ts": "2026-04-28T11:51:24Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: fix_doi_gap, import_from, register_orphans"}
+{"ts": "2026-04-28T11:51:24Z", "tool": "papers_lint", "rule": 8, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "no uchg: tool/papers_lint.hexa,tool/zenodo_publish.hexa,tool/osf_publish.hexa"}
+{"ts": "2026-04-28T11:51:25Z", "tool": "papers_lint", "rule": 1, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all tool names compliant"}
+{"ts": "2026-04-28T11:51:25Z", "tool": "papers_lint", "rule": 2, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "bin/ single entry papers"}
+{"ts": "2026-04-28T11:51:25Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-04-28T11:51:25Z", "tool": "papers_lint", "rule": 4, "verdict": "FAIL", "path": "/Users/ghost/core/papers", "detail": "PA-11: missing fields=repo; PA-12: missing fields=repo; PA-13: missing fields=repo; PA-14: missing fields=repo; PA-15: missing fields=repo; PA-16: missing fields=repo; PS-24: missing fields=repo; PS-25: missing fields=repo ... +23 more"}
+{"ts": "2026-04-28T11:51:25Z", "tool": "papers_lint", "rule": 5, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all DOIs valid"}
+{"ts": "2026-04-28T11:51:26Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
+{"ts": "2026-04-28T11:51:26Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: fix_doi_gap, import_from, register_orphans"}
+{"ts": "2026-04-28T11:51:26Z", "tool": "papers_lint", "rule": 8, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "no uchg: tool/papers_lint.hexa,tool/zenodo_publish.hexa,tool/osf_publish.hexa"}
+{"ts": "2026-04-28T11:51:31Z", "tool": "papers_lint", "rule": 1, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all tool names compliant"}
+{"ts": "2026-04-28T11:51:32Z", "tool": "papers_lint", "rule": 2, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "bin/ single entry papers"}
+{"ts": "2026-04-28T11:51:32Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-04-28T11:51:32Z", "tool": "papers_lint", "rule": 4, "verdict": "FAIL", "path": "/Users/ghost/core/papers", "detail": "PA-11: missing fields=repo; PA-12: missing fields=repo; PA-13: missing fields=repo; PA-14: missing fields=repo; PA-15: missing fields=repo; PA-16: missing fields=repo; PS-24: missing fields=repo; PS-25: missing fields=repo ... +23 more"}
+{"ts": "2026-04-28T11:51:32Z", "tool": "papers_lint", "rule": 5, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all DOIs valid"}
+{"ts": "2026-04-28T11:51:33Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
+{"ts": "2026-04-28T11:51:33Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: fix_doi_gap, import_from, register_orphans"}
+{"ts": "2026-04-28T11:51:33Z", "tool": "papers_lint", "rule": 8, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "no uchg: tool/papers_lint.hexa,tool/zenodo_publish.hexa,tool/osf_publish.hexa"}
+{"ts": "2026-04-28T11:57:25Z", "tool": "papers_lint", "rule": 1, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all tool names compliant"}
+{"ts": "2026-04-28T11:57:25Z", "tool": "papers_lint", "rule": 2, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "bin/ single entry papers"}
+{"ts": "2026-04-28T11:57:25Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-04-28T11:57:25Z", "tool": "papers_lint", "rule": 4, "verdict": "FAIL", "path": "/Users/ghost/core/papers", "detail": "PA-11: missing fields=repo; PA-12: missing fields=repo; PA-13: missing fields=repo; PA-14: missing fields=repo; PA-15: missing fields=repo; PA-16: missing fields=repo; PS-24: missing fields=repo; PS-25: missing fields=repo ... +23 more"}
+{"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 5, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all DOIs valid"}
+{"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
+{"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: fix_doi_gap, import_from, register_orphans"}
+{"ts": "2026-04-28T11:57:26Z", "tool": "papers_lint", "rule": 8, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 3 core tools carry uchg flag"}

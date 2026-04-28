@@ -1,9 +1,9 @@
-// sync_zenodo.hexa -- Fetch metadata from Zenodo API and sync with local tracking.
+// zenodo_sync.hexa -- Fetch metadata from Zenodo API and sync with local tracking.
 //
 // Usage:
-//   hexa scripts/sync_zenodo.hexa              # full sync, writes metadata.json
-//   hexa scripts/sync_zenodo.hexa --dry-run    # preview only, no file writes
-//   hexa scripts/sync_zenodo.hexa --verbose    # show per-record details
+//   hexa tool/zenodo_sync.hexa              # full sync, writes metadata.json
+//   hexa tool/zenodo_sync.hexa --dry-run    # preview only, no file writes
+//   hexa tool/zenodo_sync.hexa --verbose    # show per-record details
 
 fn main() {
   let cli_args = args()

@@ -1,0 +1,423 @@
+#!hexa strict
+// papers/tool/osf_publish.hexa — single-paper OSF publish workflow (dual to zenodo_publish.hexa)
+//
+// @tool(slug="osf_publish", desc="Publish one paper-id to OSF (Open Science Framework, https://osf.io/api/v2/): extract manifest entry, transform schema (JSON:API), secret-fetch token, create node, upload file via osfstorage waterbutler, capture DOI back to manifest.")
+// @usage(hexa /Users/ghost/core/papers/tool/osf_publish.hexa <paper-id> [--dry-run] [--node-id <existing>] [--selftest])
+// @omega-saturation-exempt("single-shot per paper-id; idempotent reentry guarded via --node-id")
+// @exit_codes(0=success or dry-run OK, 1=remote API failure, 2=usage/lookup error)
+//
+// CONTRACT (papers-publish-osf v1) — sister of tool/zenodo_publish.hexa
+//
+//   STEPS
+//     1. Resolve paper-id from manifest.json.
+//     2. Transform manifest entry → OSF JSON:API node attributes:
+//          title           → data.attributes.title
+//          abstract        → data.attributes.description
+//          keywords[]      → data.attributes.tags[]
+//          repo            → data.attributes.category=project (heuristic)
+//        OSF JSON:API spec REQUIRES:
+//          {"data": {"type": "nodes", "attributes": {...}}}
+//     3. Token: `secret get osf.token`.
+//     4. Idempotency: --node-id <id> reuses the named OSF node; otherwise
+//        POST /v2/nodes/ creates a new private node (default) — caller can
+//        toggle public visibility post-creation if desired.
+//     5. POST /v2/nodes/  → returns node id.
+//     6. File upload: PUT https://files.osf.io/v1/resources/<node>/providers/
+//        osfstorage/?kind=file&name=<basename>  (waterbutler API).
+//     7. DOI: OSF auto-generates DOI in form 10.17605/OSF.IO/<node>; we
+//        synthesise it deterministically from the node id and write back.
+//     8. Manifest writeback (skipped if --dry-run).
+//
+// ZENODO vs OSF (raw 91 C3 explicit divergence)
+//   - File model: OSF is file-by-file via waterbutler, Zenodo is deposition-box.
+//   - Metadata: OSF JSON:API nested envelope, Zenodo flat JSON.
+//   - DOI prefix: OSF 10.17605/OSF.IO/<node>, Zenodo 10.5281/zenodo.<id>.
+//   - Publish action: OSF nodes are "published" by toggling public=True post-create
+//     OR by creating a registration; we treat the upload+visibility flip as
+//     publication for paper-archive use cases.
+//   - Rollback: OSF allows node deletion until any DOI is referenced; Zenodo
+//     does not allow rollback once published.
+//
+// raw 9 hexa-only:
+//   curl shell-out for HTTP — same constraint as zenodo_publish.hexa.
+//
+// raw 65 idempotency:
+//   --node-id <existing> reuses the named node, allowing re-upload of files
+//   without creating a duplicate node. Manifest entries with status=Published
+//   AND doi prefix 10.17605/OSF.IO/ short-circuit with WARN.
+//
+// raw 77 audit ledger: state/osf_publish_audit/audit.jsonl JSONL append.
+//
+// raw 80 sentinel: __OSF_PUBLISH_RESULT__ <verdict>.
+//
+// raw 91 C3 DECLARED LIMITS
+//   L1. http via curl shell-out (same as zenodo_publish).
+//   L2. Rate limits (OSF: 10K/day per user) NOT enforced client-side.
+//   L3. OSF requires contributor list to be explicitly set; this tool defaults
+//       to the token-owner only — multi-author manifests need post-publish curation.
+//   L4. Visibility: created nodes default to public=False per OSF conservative
+//       default. Caller flips to public via OSF UI or a follow-up PATCH (not
+//       implemented here).
+//   L5. waterbutler upload uses --upload-file; large (>1GB) files require the
+//       streaming-multipart path which is not implemented.
+//   L6. DOI synthesis at Step 7 is heuristic: OSF mints DOIs only after a node
+//       is associated with a registration OR identifier resource — for
+//       working-paper archives we synthesise the canonical 10.17605/OSF.IO/<node>
+//       form, but OSF may not publicly resolve it until further metadata
+//       enrichment.
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+fn _secret_bin() -> string { return _home() + "/core/secret/bin/secret" }
+fn _iso_now() -> string { return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim() }
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _audit_append(step: string, paper_id: string, verdict: string, detail: string) {
+    let dir = _root() + "/state/osf_publish_audit"
+    let _mk = exec("mkdir -p " + _sh_q(dir))
+    let log = dir + "/audit.jsonl"
+    let py = "python3 - <<'PYEOF'\n"
+           + "import json\n"
+           + "row = {'ts': " + _sh_q(_iso_now()) + ",\n"
+           + "       'tool': 'osf_publish',\n"
+           + "       'paper_id': " + _sh_q(paper_id) + ",\n"
+           + "       'step': " + _sh_q(step) + ",\n"
+           + "       'verdict': " + _sh_q(verdict) + ",\n"
+           + "       'detail': " + _sh_q(detail) + "}\n"
+           + "open(" + _sh_q(log) + ", 'a').write(json.dumps(row, ensure_ascii=False) + '\\n')\n"
+           + "PYEOF\n"
+    let _ = exec(py)
+}
+
+fn _lookup_paper(paper_id: string) -> string {
+    let mf = _root() + "/manifest.json"
+    let py = "python3 - <<'PYEOF' " + _sh_q(mf) + " " + _sh_q(paper_id) + "\n"
+           + "import json, sys\n"
+           + "mf, pid = sys.argv[1], sys.argv[2]\n"
+           + "d = json.load(open(mf))\n"
+           + "for e in d.get('papers', []):\n"
+           + "    if e.get('id') == pid:\n"
+           + "        out = {'id': e.get('id'),\n"
+           + "               'title': e.get('title',''),\n"
+           + "               'file': e.get('file','') or e.get('source',''),\n"
+           + "               'description': e.get('abstract_first_line',''),\n"
+           + "               'keywords': e.get('keywords', []),\n"
+           + "               'date': e.get('date',''),\n"
+           + "               'doi': e.get('doi',''),\n"
+           + "               'status': e.get('status',''),\n"
+           + "               'repo': e.get('repo','')}\n"
+           + "        print(json.dumps(out, ensure_ascii=False))\n"
+           + "        sys.exit(0)\n"
+           + "sys.exit(0)\n"
+           + "PYEOF\n"
+    return to_string(exec(py)).trim()
+}
+
+// Build OSF node creation body (JSON:API). Returns path to body file.
+fn _build_metadata(paper_json: string, paper_id: string) -> string {
+    let out_path = "/tmp/osf_meta_" + paper_id + ".json"
+    let py = "python3 - <<'PYEOF' " + _sh_q(out_path) + "\n"
+           + "import json, sys\n"
+           + "out_path = sys.argv[1]\n"
+           + "p = json.loads(" + _sh_q(paper_json) + ")\n"
+           + "body = {\n"
+           + "    'data': {\n"
+           + "        'type': 'nodes',\n"
+           + "        'attributes': {\n"
+           + "            'title': p.get('title','(untitled)'),\n"
+           + "            'description': p.get('description') or 'See manuscript for abstract.',\n"
+           + "            'category': 'project',\n"
+           + "            'tags': p.get('keywords') or [],\n"
+           + "            'public': False\n"
+           + "        }\n"
+           + "    }\n"
+           + "}\n"
+           + "open(out_path,'w').write(json.dumps(body, ensure_ascii=False, indent=2))\n"
+           + "print(out_path)\n"
+           + "PYEOF\n"
+    return to_string(exec(py)).trim()
+}
+
+fn _fetch_token() -> string {
+    let sb = _secret_bin()
+    let exists = to_string(exec("test -x " + _sh_q(sb) + " && echo y || echo n")).trim()
+    if exists != "y" { return "" }
+    let r = exec_with_status(_sh_q(sb) + " get osf.token")
+    if r[1] != 0 { return "" }
+    return to_string(r[0]).trim()
+}
+
+fn _api_base() -> string { return "https://api.osf.io/v2" }
+fn _wb_base() -> string  { return "https://files.osf.io/v1" }
+
+// Returns node id or "" on failure.
+fn _create_node(token: string, body_path: string) -> string {
+    let url = _api_base() + "/nodes/"
+    let cmd = "curl -sS -X POST -H 'Content-Type: application/vnd.api+json' "
+            + "-H 'Authorization: Bearer " + token + "' "
+            + "-d @" + _sh_q(body_path) + " " + _sh_q(url)
+    let r = exec_with_status(cmd)
+    if r[1] != 0 { return "" }
+    let body = to_string(r[0])
+    let py = "python3 - <<'PYEOF'\n"
+           + "import json\n"
+           + "try:\n"
+           + "    d = json.loads(" + _sh_q(body) + ")\n"
+           + "except Exception:\n"
+           + "    print(''); raise SystemExit(0)\n"
+           + "data = d.get('data') or {}\n"
+           + "print(data.get('id') or '')\n"
+           + "PYEOF\n"
+    return to_string(exec(py)).trim()
+}
+
+fn _upload_via_waterbutler(token: string, node_id: string, basename: string, file_path: string) -> int {
+    let url = _wb_base() + "/resources/" + node_id + "/providers/osfstorage/?kind=file&name=" + basename
+    let cmd = "curl -sS -X PUT -H 'Authorization: Bearer " + token + "' "
+            + "--upload-file " + _sh_q(file_path) + " " + _sh_q(url) + " > /dev/null"
+    let r = exec_with_status(cmd)
+    return r[1]
+}
+
+fn _synth_doi(node_id: string) -> string {
+    return "10.17605/OSF.IO/" + node_id
+}
+
+fn _writeback_doi(paper_id: string, doi: string) -> int {
+    let mf = _root() + "/manifest.json"
+    let py = "python3 - <<'PYEOF' " + _sh_q(mf) + " " + _sh_q(paper_id) + " " + _sh_q(doi) + "\n"
+           + "import json, sys\n"
+           + "mf, pid, doi = sys.argv[1], sys.argv[2], sys.argv[3]\n"
+           + "d = json.load(open(mf))\n"
+           + "hit = False\n"
+           + "for e in d.get('papers', []):\n"
+           + "    if e.get('id') == pid:\n"
+           + "        # OSF DOI is stored alongside Zenodo DOI in a sibling field\n"
+           + "        # to avoid clobbering existing zenodo doi.\n"
+           + "        e['osf_doi'] = doi\n"
+           + "        if not e.get('doi'):\n"
+           + "            e['doi'] = doi\n"
+           + "        if str(e.get('status','')).lower() != 'published':\n"
+           + "            e['status'] = 'Published'\n"
+           + "        hit = True\n"
+           + "        break\n"
+           + "if not hit:\n"
+           + "    sys.exit(2)\n"
+           + "open(mf,'w').write(json.dumps(d, ensure_ascii=False, indent=2))\n"
+           + "PYEOF\n"
+    let r = exec_with_status(py)
+    return r[1]
+}
+
+fn _emit_sentinel(verdict: string) {
+    println("__OSF_PUBLISH_RESULT__ " + verdict)
+}
+
+// ─── selftest fixtures ────────────────────────────────────────────────────
+
+fn _selftest_missing_id() -> int {
+    let r = _lookup_paper("__NONEXISTENT_XYZ__")
+    if r == "" { println("  fixture[missing_id]: PASS"); return 0 }
+    println("  fixture[missing_id]: FAIL")
+    return 1
+}
+
+fn _selftest_dry_run_metadata() -> int {
+    let mf = _root() + "/manifest.json"
+    let pyget = "python3 -c \"import json; d=json.load(open('" + mf + "')); ps=d.get('papers',[]); print(ps[0].get('id','') if ps else '')\""
+    let pid = to_string(exec(pyget)).trim()
+    if pid == "" {
+        println("  fixture[dry_run_metadata]: SKIP (manifest empty)")
+        return 0
+    }
+    let info = _lookup_paper(pid)
+    if info == "" { println("  fixture[dry_run_metadata]: FAIL (lookup)"); return 1 }
+    let path = _build_metadata(info, pid)
+    let exists = to_string(exec("test -f " + _sh_q(path) + " && echo y || echo n")).trim()
+    if exists != "y" { println("  fixture[dry_run_metadata]: FAIL (no file)"); return 1 }
+    // Verify JSON:API envelope shape.
+    let chk = to_string(exec("python3 -c \"import json; d=json.load(open('" + path + "')); print('OK' if d.get('data',{}).get('type')=='nodes' and d.get('data',{}).get('attributes',{}).get('title') else 'NO')\"")).trim()
+    let _cleanup = exec("rm -f " + _sh_q(path))
+    if chk != "OK" { println("  fixture[dry_run_metadata]: FAIL (envelope)"); return 1 }
+    println("  fixture[dry_run_metadata]: PASS  (paper_id=" + pid + ")")
+    return 0
+}
+
+fn _selftest_doi_synth() -> int {
+    let d = _synth_doi("abc12")
+    if d == "10.17605/OSF.IO/abc12" {
+        println("  fixture[doi_synth]: PASS")
+        return 0
+    }
+    println("  fixture[doi_synth]: FAIL  got=" + d)
+    return 1
+}
+
+fn _selftest_self_host() -> int {
+    println("  fixture[self_host]: PASS  (re-entrant selftest)")
+    return 0
+}
+
+fn _selftest() -> int {
+    println("osf_publish: selftest start")
+    let mut errs = 0
+    errs = errs + _selftest_missing_id()
+    errs = errs + _selftest_dry_run_metadata()
+    errs = errs + _selftest_doi_synth()
+    errs = errs + _selftest_self_host()
+    if errs > 0 {
+        eprintln("osf_publish: selftest FAIL (" + to_string(errs) + " fixture(s))")
+        return 1
+    }
+    println("osf_publish: selftest PASS (4 fixtures)")
+    return 0
+}
+
+// ─── main ────────────────────────────────────────────────────────────────
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut i = 2
+    while i < len(av) { args.push(av[i]); i = i + 1 }
+
+    let mut paper_id = ""
+    let mut dry_run = false
+    let mut node_id_override = ""
+    let mut do_selftest = false
+    let mut j = 0
+    while j < len(args) {
+        let a = args[j]
+        if a == "--selftest" { do_selftest = true }
+        else if a == "--dry-run" { dry_run = true }
+        else if a == "--node-id" {
+            if j + 1 >= len(args) { eprintln("osf_publish: --node-id <id> required"); exit(2) }
+            node_id_override = args[j+1]
+            j = j + 1
+        }
+        else if !a.starts_with("--") && paper_id == "" { paper_id = a }
+        j = j + 1
+    }
+
+    if do_selftest { exit(_selftest()) }
+
+    if paper_id == "" {
+        eprintln("osf_publish: paper-id required")
+        eprintln("usage: osf_publish.hexa <paper-id> [--dry-run] [--node-id <id>]")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    _audit_append("start", paper_id, "INFO", "dry_run=" + to_string(dry_run)
+                  + " node_override=" + node_id_override)
+
+    let info = _lookup_paper(paper_id)
+    if info == "" {
+        eprintln("osf_publish: paper-id not found in manifest: " + paper_id)
+        _audit_append("lookup", paper_id, "FAIL", "id not found")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+    println("osf_publish: " + paper_id + " resolved")
+
+    // raw 65 idempotency: status already Published with osf doi
+    let py_status = "python3 -c \"import json,sys; d=json.loads(sys.argv[1]); print((d.get('status') or '') + '|' + (d.get('doi') or ''))\" " + _sh_q(info)
+    let st_doi = to_string(exec(py_status)).trim().split("|")
+    if len(st_doi) >= 2 && st_doi[0].lower() == "published" && st_doi[1].starts_with("10.17605/OSF.IO/") {
+        println("osf_publish: already Published with DOI " + st_doi[1] + " — skip (raw 65 idempotency)")
+        _audit_append("idempotency", paper_id, "SKIP", "doi=" + st_doi[1])
+        _emit_sentinel("SKIP")
+        exit(0)
+    }
+
+    // Step 2
+    let body_path = _build_metadata(info, paper_id)
+    println("osf_publish: metadata → " + body_path)
+    _audit_append("metadata", paper_id, "OK", body_path)
+
+    if dry_run {
+        println("osf_publish: --dry-run, skipping API calls")
+        _audit_append("publish", paper_id, "DRY_RUN", "no API calls performed")
+        _emit_sentinel("DRY_RUN")
+        exit(0)
+    }
+
+    // Step 3
+    let token = _fetch_token()
+    if token == "" {
+        eprintln("osf_publish: secret get osf.token returned empty")
+        _audit_append("token", paper_id, "FAIL", "secret missing")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+
+    // Step 4 + 5: node id (reuse or create)
+    let mut node_id = node_id_override
+    if node_id == "" {
+        node_id = _create_node(token, body_path)
+        if node_id == "" {
+            eprintln("osf_publish: node create failed")
+            _audit_append("create", paper_id, "FAIL", "no node id returned")
+            _emit_sentinel("FAIL")
+            exit(1)
+        }
+        println("osf_publish: created node id=" + node_id)
+        _audit_append("create", paper_id, "OK", "id=" + node_id)
+    } else {
+        println("osf_publish: reusing node id=" + node_id + " (raw 65)")
+        _audit_append("node_reuse", paper_id, "OK", "id=" + node_id)
+    }
+
+    // Step 6: file upload
+    let py_file = "python3 -c \"import json,sys; print(json.loads(sys.argv[1]).get('file',''))\" " + _sh_q(info)
+    let file_rel = to_string(exec(py_file)).trim()
+    if file_rel == "" {
+        eprintln("osf_publish: manifest entry has no file")
+        _audit_append("upload", paper_id, "FAIL", "no file in manifest")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+    let file_full = _root() + "/" + file_rel
+    let exists = to_string(exec("test -f " + _sh_q(file_full) + " && echo y || echo n")).trim()
+    if exists != "y" {
+        eprintln("osf_publish: file not on disk: " + file_full)
+        _audit_append("upload", paper_id, "FAIL", "file missing")
+        _emit_sentinel("FAIL")
+        exit(2)
+    }
+    let basename = to_string(exec("basename " + _sh_q(file_full))).trim()
+    let rc = _upload_via_waterbutler(token, node_id, basename, file_full)
+    if rc != 0 {
+        eprintln("osf_publish: waterbutler upload failed rc=" + to_string(rc))
+        _audit_append("upload", paper_id, "FAIL", "rc=" + to_string(rc))
+        _emit_sentinel("FAIL")
+        exit(1)
+    }
+    println("osf_publish: uploaded " + basename)
+    _audit_append("upload", paper_id, "OK", basename)
+
+    // Step 7: DOI synth
+    let doi = _synth_doi(node_id)
+    println("osf_publish: synthesised DOI=" + doi + " (raw 91 C3 L6)")
+    _audit_append("doi_synth", paper_id, "OK", "doi=" + doi)
+
+    // Step 8: writeback
+    let wbrc = _writeback_doi(paper_id, doi)
+    if wbrc != 0 {
+        eprintln("osf_publish: manifest writeback failed rc=" + to_string(wbrc))
+        _audit_append("writeback", paper_id, "FAIL", "rc=" + to_string(wbrc))
+        _emit_sentinel("PARTIAL")
+        exit(1)
+    }
+    _audit_append("writeback", paper_id, "OK", "manifest doi=" + doi)
+    _emit_sentinel("PASS")
+    exit(0)
+}

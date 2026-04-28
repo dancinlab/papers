@@ -1,4 +1,4 @@
-// papers/tool/pp_missing_doi_scan.hexa — B1.
+// papers/tool/missing_doi_scan.hexa — B1.
 //
 // Finds manifest entries where status="Published" but doi="" or malformed.
 // Emits list; exit 1 if any offender found.
@@ -16,10 +16,10 @@ fn _selftest() -> int {
     let path = _manifest_path()
     let exists = to_string(exec("test -f '" + path + "' && echo y || echo n")).trim()
     if exists != "y" {
-        eprintln("pp_missing_doi_scan: manifest not found at " + path)
+        eprintln("missing_doi_scan: manifest not found at " + path)
         return 1
     }
-    println("pp_missing_doi_scan: selftest PASS")
+    println("missing_doi_scan: selftest PASS")
     return 0
 }
 
@@ -35,7 +35,7 @@ fn _scan() -> int {
            + "    if st.lower() == 'published':\n"
            + "        if not doi or not doi.startswith('10.'):\n"
            + "            offenders.append((e.get('id','?'), doi or '(empty)', e.get('title','')[:60]))\n"
-           + "print(f'pp_missing_doi_scan: {len(offenders)} offender(s)')\n"
+           + "print(f'missing_doi_scan: {len(offenders)} offender(s)')\n"
            + "for o in offenders:\n"
            + "    print(f'  {o[0]:20}  doi={o[1]:25}  {o[2]}')\n"
            + "import sys; sys.exit(1 if offenders else 0)\n"

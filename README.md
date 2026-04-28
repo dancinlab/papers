@@ -72,15 +72,56 @@ curl -fsSL https://raw.githubusercontent.com/need-singularity/hexa-lang/main/ins
 hx install papers
 ```
 
-## Run
+## Run — `papers` CLI (12-verb dispatch)
+
+Entry point: `bin/papers` (single canonical bin per `.own#2 papers-bin-single-entry`).
+
+| verb | purpose | backing tool |
+|---|---|---|
+| `list`     | list manifest entries (`--status`, `--project`, `--tier`, `--json`) | `manifest.json` |
+| `get`      | print one entry (`--field F` / `--json`) | `manifest.json` |
+| `cite`     | emit citation (`--format bibtex|apa|ieee|cff|ris` `--copy`) | `manifest.json` |
+| `validate` | schema check on a single paper id | `manifest.json` |
+| `verify`   | DOI / Zenodo / OSF link health | `tool/doi_verify.hexa` |
+| `publish`  | push to Zenodo and/or OSF (`--target zenodo|osf|all` `--sandbox`) | `tool/zenodo_publish.hexa` + `tool/osf_publish.hexa` |
+| `pull`     | fetch metadata from a DOI (Phase 2 stub) | (planned) |
+| `search`   | full-text query over titles/abstracts/tags (Phase 2 stub) | (planned) |
+| `sync`     | pull latest DOIs from Zenodo into manifest | `tool/zenodo_sync.hexa` |
+| `lint`     | run `.own` 8 rules over the project | `tool/papers_lint.hexa` |
+| `scan`     | meta / continuous / missing-doi / orphan scanners | `tool/meta_scanner.hexa` + `tool/*_scan.hexa` |
+| `secret`   | passthrough to the `secret` CLI for credential I/O | `~/core/secret/bin/secret` |
+| `help`     | list all subcommands | — |
 
 ```bash
-papers                # list all papers grouped by project
-papers search phi     # full-text search across titles + abstracts
-papers open P-004     # open a paper locally (xdg-open / open)
-papers doi P-NEW-1    # print Zenodo DOI for a paper id
-papers sync           # pull latest DOIs + OSF mirrors from Zenodo
+papers                              # default view: list grouped by project
+papers list --status published      # filter manifest
+papers cite P-NEW-1 --format bibtex # emit BibTeX
+papers verify --limit 20            # DOI link health
+papers publish P-NEW-1 --target all # Zenodo + OSF dual-archive
+papers sync                         # refresh manifest from Zenodo
+papers lint                         # .own 8-rule lint
 ```
+
+### Credentials via `secret` CLI (no hard-coded tokens)
+
+Per `.own#3 papers-secret-only-token-source`, every Zenodo / OSF token is fetched at call time:
+
+```bash
+secret set zenodo.token            # one-time interactive registration
+secret set osf.token
+papers publish P-NEW-1 --target all  # ZENODO_TOKEN=$(secret get zenodo.token) inside
+```
+
+### Directory layout
+
+- `bin/papers` — bash dispatcher (sole binary; `bin/pp_meta` retired, scanner re-homed under `tool/meta_scanner.hexa` and reachable via `papers scan meta`)
+- `tool/*.hexa` — 11 hexa-lang tools (post-rename: `pp_` prefix removed, `scripts/` folded in)
+- `tool/lib/` — shared helpers
+- `state/` — audit ledgers + scan output (`state/papers_lint_audit/audit.jsonl`)
+- `manifest.json` — canonical SSOT for paper entries
+- `.own` — 8 governance rules; `.guide` — cold-entry navigation
+
+> Migration note: `bin/pp_meta` is gone. `pp_meta` is now `tool/meta_scanner.hexa` and is invoked through `papers scan meta`. `scripts/` was merged into `tool/`.
 
 Or browse online: **[need-singularity.github.io/papers](https://need-singularity.github.io/papers/)**.
 

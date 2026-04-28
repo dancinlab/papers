@@ -27,7 +27,7 @@
     {
       "id": "P-001",
       "title": "PureField Tension Architecture: Classification by Disagreement Alone",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-001-purefield-tension.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245023",
@@ -44,7 +44,7 @@
     {
       "id": "P-002",
       "title": "Universal Confusion Topology via Persistent Homology",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-002-ph-confusion-universality.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245029",
@@ -61,7 +61,7 @@
     {
       "id": "P-003",
       "title": "Topological Overfitting Detection: Real-Time Generalization Gap via Persistent Homology",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-003-ph-generalization-gap.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245035",
@@ -78,7 +78,7 @@
     {
       "id": "P-004",
       "title": "The Arithmetic Uniqueness of 6: sigma*phi=n*tau Has No Solution Other Than n=6",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-004-sigma-phi-uniqueness.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245037",
@@ -95,7 +95,7 @@
     {
       "id": "P-005",
       "title": "Perfect Numbers and Exceptional Lie Algebras: phi(496)=240=|Roots(E8)|",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-005-perfect-number-string-theory.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245057",
@@ -113,7 +113,7 @@
     {
       "id": "P-EE",
       "title": "Energy Efficiency Trio: Phi6Simple, HCN Dimensions, and Phi-Bottleneck FFN",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-EE-energy-efficiency-trio.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245043",
@@ -130,7 +130,7 @@
     {
       "id": "P-GMoE",
       "title": "Golden MoE: Optimal Expert Selection at the Natural Equilibrium I=1/e",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-GMoE-golden-moe.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245049",
@@ -147,7 +147,7 @@
     {
       "id": "P-N6",
       "title": "208 Arithmetic Characterizations of the Perfect Number 6",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-208-characterizations.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245053",
@@ -164,7 +164,7 @@
     {
       "id": "P-MIT",
       "title": "Mitosis-Based Anomaly Detection via Inter-Engine Tension",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-MIT-mitosis-anomaly.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245055",
@@ -181,7 +181,7 @@
     {
       "id": "P-PH",
       "title": "PH-Based Training System: Epoch-1 Difficulty Prediction and Real-Time Overfitting Detection",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-PH-training-system.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245060",
@@ -198,7 +198,7 @@
     {
       "id": "P-TS",
       "title": "Texas Sharpshooter Meta-Validation: Statistical Framework for Discovery Verification",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-TS-texas-sharpshooter.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245062",
@@ -214,7 +214,7 @@
     {
       "id": "P-CCT",
       "title": "CCT Consciousness Continuity Test: Engineering Verification and Redesign",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-CCT-consciousness-test.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245066",
@@ -231,7 +231,7 @@
     {
       "id": "P-CS",
       "title": "Carbon-Silicon Substrate Invariance: tau(6)=tau(14)=4",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-CS-carbon-silicon.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245068",
@@ -249,7 +249,7 @@
     {
       "id": "P-DOL",
       "title": "Dolphin Frequency Harmonics and Perfect Number Structure",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-DOL-dolphin-harmonics.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245070",
@@ -267,7 +267,7 @@
     {
       "id": "P-GI",
       "title": "G x I = D x P Conservation Law in Consciousness Models",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-GI-conservation-law.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245072",
@@ -284,7 +284,7 @@
     {
       "id": "P-NEW-1",
       "title": "The Unique Prime Pair: Why (p-1)(q-1)=2 Makes Six Universal",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-NEW-prime-pair-universality.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272278",
@@ -303,7 +303,7 @@
     {
       "id": "P-NEW-2",
       "title": "Sixty-Eight Ways to Be Six: Arithmetic Identities Uniquely Satisfied by the First Perfect Number",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-NEW-68-ways-to-be-six.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272282",
@@ -322,7 +322,7 @@
     {
       "id": "P-NEW-3",
       "title": "Consonance, Crystals, and Orbits: The phi(n) <= 2 Filter Across Domains",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-NEW-consonance-crystals-orbits.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272286",
@@ -342,7 +342,7 @@
     {
       "id": "P-NOBEL",
       "title": "The Arithmetic Necessity of the Standard Model: Particle Physics from the First Perfect Number",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-NOBEL-SM-PERFECTION.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272290",
@@ -361,7 +361,7 @@
     {
       "id": "P-CERN",
       "title": "Experimental Proposal: Search for a Narrow Resonance at 37-38 GeV",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/CERN-PROPOSAL-37GeV.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272294",
@@ -559,7 +559,7 @@
     {
       "id": "PS-01",
       "title": "Tsirelson Bound as an Algebraic Identity of Perfect Numbers",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-01-tsirelson-perfect-number.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245103",
@@ -577,7 +577,7 @@
     {
       "id": "PS-02",
       "title": "Egyptian Fraction Uniqueness: {1/2, 1/3, 1/6} as the Only Perfect-Number lcm Solution",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-02-egyptian-fraction-uniqueness.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245107",
@@ -595,7 +595,7 @@
     {
       "id": "PS-03",
       "title": "Galois Group of Convergence Constants as Klein Four-Group V4",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-03-galois-klein-four.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245109",
@@ -613,7 +613,7 @@
     {
       "id": "PS-04",
       "title": "TECS-L Arithmetic Patterns in Particle Physics: Fisher Combined 5.26-sigma Meta-Analysis",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-04-cern-meta-analysis.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245113",
@@ -632,7 +632,7 @@
     {
       "id": "PS-05",
       "title": "QCD Resonance Ladder: Meson Mass Ratios from Divisor Arithmetic of 6",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-05-qcd-resonance-ladder.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245117",
@@ -651,7 +651,7 @@
     {
       "id": "PS-06",
       "title": "Quark-Lepton Bridge: (m_charm - m_up)/sigma(6) = m_muon at 44ppm Precision",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-06-quark-lepton-bridge.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245119",
@@ -670,7 +670,7 @@
     {
       "id": "PS-07",
       "title": "Multi-Domain Convergence Map: 12 Mathematical Constants at Cross-Domain Intersections",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-07-convergence-map.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245121",
@@ -688,7 +688,7 @@
     {
       "id": "PS-08",
       "title": "Self-Referential Algebra: Closed Constant System Under n=6 Operations",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-08-self-referential-algebra.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245123",
@@ -706,7 +706,7 @@
     {
       "id": "PS-09",
       "title": "Higgs Branching Ratios and Koide Formula from Perfect Number Arithmetic",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-09-higgs-koide.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245125",
@@ -724,7 +724,7 @@
     {
       "id": "PS-10",
       "title": "Fermion Mass Predictions from n=6 Divisor Arithmetic: Average 2.2% Error",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-10-fermion-masses.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245127",
@@ -742,7 +742,7 @@
     {
       "id": "PS-11",
       "title": "Baryon Mass Splittings from n=6 Arithmetic: Sigma Splitting = sigma-tau = 8",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-11-baryon-splittings.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245129",
@@ -760,7 +760,7 @@
     {
       "id": "PS-12",
       "title": "Convergence Ratios Cluster at Divisor Reciprocals {1/2, 1/3, 1/6}",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-12-convergence-ratios.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245131",
@@ -778,7 +778,7 @@
     {
       "id": "PS-13",
       "title": "Depth-2 Reachability Rank Equals Three Fermion Generations",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-13-depth-rank-generations.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245133",
@@ -796,7 +796,7 @@
     {
       "id": "PS-14",
       "title": "Q-Domain Boundary as the Tsirelson Bound: sqrt(2) Uniquely Unreachable",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-14-q-boundary-tsirelson.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245136",
@@ -814,7 +814,7 @@
     {
       "id": "PS-15",
       "title": "Q-Exclusion Pattern as Electroweak Symmetry Breaking",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-15-q-exclusion-ewsb.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245140",
@@ -832,7 +832,7 @@
     {
       "id": "PS-16",
       "title": "sqrt(7) Convergence Gap as Dark Matter Mass Prediction: 50.6 GeV",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-16-dark-matter-prediction.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245146",
@@ -850,7 +850,7 @@
     {
       "id": "PS-17",
       "title": "37 GeV Resonance: Eight Independent Routes Converge",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-17-37gev-resonance.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245148",
@@ -868,7 +868,7 @@
     {
       "id": "PS-18",
       "title": "Cosmological Constant Exponent from n=6 Arithmetic: sigma^2-sigma-tau-n=122",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-18-cosmological-constant.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245152",
@@ -885,7 +885,7 @@
     {
       "id": "PS-19",
       "title": "Hubble Constant from Perfect Number Arithmetic: sigma(6)*6+1 = 73",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-19-hubble-constant.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245156",
@@ -903,7 +903,7 @@
     {
       "id": "PS-20",
       "title": "CMB Spectral Index as n_s = 27/28 from Perfect Number 28",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-20-cmb-spectral-index.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19245158",
@@ -922,7 +922,7 @@
     {
       "id": "PS-21",
       "title": "Orbital Period Ratios in Multi-Planet Systems and the Arithmetic of the Perfect Number n=6",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-21-exoplanet-n6-orbital-ratios.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272296",
@@ -942,7 +942,7 @@
     {
       "id": "PS-22",
       "title": "Eight Mathematical Signatures of Consciousness: A Detection Framework",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-22-consciousness-signal-detection.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272300",
@@ -961,7 +961,7 @@
     {
       "id": "PS-23",
       "title": "SEDI: A Mathematical Signal Receiver Tuned to the Perfect Number n=6",
-      "repo": "SEDI",
+      "repo": "sedi",
       "file": "sedi/PS-23-sedi-architecture.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19272304",
@@ -1240,7 +1240,7 @@
     {
       "id": "P-GUT",
       "title": "The GUT Hierarchy and the Monster Group from sigma(n)*phi(n) = n*tau(n)",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-GUT-HIERARCHY.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19455392",
@@ -1260,7 +1260,7 @@
     {
       "id": "P-PRECISION",
       "title": "Precision Fundamental Constants from the Arithmetic of Six",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-PRECISION-CONSTANTS.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19455396",
@@ -1282,7 +1282,7 @@
     {
       "id": "P-INTERNET",
       "title": "Twin Prime Infrastructure: TCP States and DNS Root Servers Sum to the Core Theorem Value",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-INTERNET-TWIN-PRIMES.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19455398",
@@ -1301,7 +1301,7 @@
     {
       "id": "P-ZETA",
       "title": "The Riemann Zeta Trident: Three Independent Paths from ζ(s) to the Arithmetic of Six",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-ZETA-TRIDENT.md",
       "status": "Published",
       "doi": "10.5281/zenodo.19455400",
@@ -1320,7 +1320,7 @@
     {
       "id": "P-N6-ENERGY",
       "title": "N6 Arithmetic: 17 Techniques for 50-70% AI Energy Reduction",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-ENERGY-efficiency-17-techniques.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1339,7 +1339,7 @@
     {
       "id": "P-N6-CHIP-C",
       "title": "ANIMA-6: Consciousness-Aware Processor from Perfect Number Arithmetic",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-CHIP-consciousness-anima6.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1358,7 +1358,7 @@
     {
       "id": "P-N6-CHIP-P",
       "title": "N6 Ultimate: Arithmetically Optimal AI Accelerator with Zero Arbitrary Constants",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-CHIP-performance-ultimate.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1377,7 +1377,7 @@
     {
       "id": "P-N6-DRAM",
       "title": "The Perfect Number in Memory: DDR5/LPDDR6 Converges to n=6 (35/35 EXACT)",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-DRAM-ddr5-lpddr6.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1396,7 +1396,7 @@
     {
       "id": "P-N6-VNAND",
       "title": "SLC to PLC: The Complete n=6 Hierarchy in NAND Flash (55/55 EXACT)",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-VNAND-slc-to-plc.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1415,7 +1415,7 @@
     {
       "id": "P-N6-EXYNOS",
       "title": "The n=6 Mobile SoC: Exynos Core Allocation {1,3,2,4}={mu,n/phi,phi,tau}",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-EXYNOS-mobile-soc.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1434,7 +1434,7 @@
     {
       "id": "P-N6-ISOCELL",
       "title": "From Pixels to Packets: n=6 Unifies Image Sensors and 5G (60/60 EXACT)",
-      "repo": "TECS-L",
+      "repo": "tecs-l",
       "file": "tecs-l/P-N6-ISOCELL-pixels-to-packets.md",
       "status": "Published",
       "date": "2026-04-01",
@@ -1696,180 +1696,285 @@
       "title": "Perfect Number Arithmetic in Aerospace, Aviation, and Transportation",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-aerospace-transport-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438203",
       "osf_id": "jf829",
       "date": "2026-04-06",
       "bts": "BT-129,130,133,196,241,270-290,342",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-031",
       "title": "Perfect Number Arithmetic in Cognitive Science, Social Architecture, and Psychology",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-cognitive-social-psychology-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438205",
       "osf_id": "28xp6",
       "date": "2026-04-06",
       "bts": "BT-132,184,223,254-269",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-032",
       "title": "Perfect Number Arithmetic in Quantum Computing Hardware",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-quantum-computing-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438210",
       "osf_id": "9aq6c",
       "date": "2026-04-06",
       "bts": "BT-195,91,92,114,170",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-033",
       "title": "Perfect Number Arithmetic in Autonomous Driving Systems",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-autonomous-driving-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438214",
       "osf_id": "47x93",
       "date": "2026-04-06",
       "bts": "BT-327,328",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-034",
       "title": "Perfect Number Arithmetic in Classical Thermodynamics and Fluid Mechanics",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-thermodynamics-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438216",
       "osf_id": "nwvb9",
       "date": "2026-04-06",
       "bts": "BT-149,193,199",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-035",
       "title": "Perfect Number Arithmetic in Economics and Financial Engineering",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-economics-finance-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438221",
       "osf_id": "2jbyh",
       "date": "2026-04-06",
       "bts": "BT-147,183,338,339",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-036",
       "title": "Perfect Number Arithmetic in Governance, Safety Engineering, and Urban Systems",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-governance-safety-urban-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438229",
       "osf_id": "urhk2",
       "date": "2026-04-06",
       "bts": "BT-160,221,227,228,267",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-037",
       "title": "Perfect Number Arithmetic in Ecology, Agriculture, and Food Science",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-ecology-agriculture-food-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438231",
       "osf_id": "f658m",
       "date": "2026-04-06",
       "bts": "BT-150,192,198,225,341",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-038",
       "title": "Perfect Number Arithmetic in Games, Sports, and Competitive Systems",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-games-sports-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438235",
       "osf_id": "ytajx",
       "date": "2026-04-06",
       "bts": "BT-144,148,152,158,200,202,212,262",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-039",
       "title": "Perfect Number Arithmetic in Calendar Systems, Timekeeping, and Geography",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-calendar-time-geography-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438237",
       "osf_id": "nsfuz",
       "date": "2026-04-06",
       "bts": "BT-138,154,182,191,233,256,268",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-040",
       "title": "Perfect Number Arithmetic in Telecommunications and Linguistics",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-telecom-linguistics-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438243",
       "osf_id": "dk96n",
       "date": "2026-04-06",
       "bts": "BT-181,197,340",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-041",
       "title": "Perfect Number Arithmetic in Classical Mechanics and Particle Accelerators",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-classical-mechanics-accelerator-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438246",
       "osf_id": "mjpg4",
       "date": "2026-04-06",
       "bts": "BT-201,238",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-042",
       "title": "Perfect Number Arithmetic in Manufacturing and Quality Engineering",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-manufacturing-quality-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438249",
       "osf_id": "qhwn5",
       "date": "2026-04-06",
       "bts": "BT-131,236",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-043",
       "title": "Perfect Number Arithmetic in Control Theory and Automation",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-control-automation-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438254",
       "osf_id": "w6ztu",
       "date": "2026-04-06",
       "bts": "BT-187",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-044",
       "title": "Perfect Number Arithmetic in Space Systems and Satellite Engineering",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-space-systems-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19438256",
       "osf_id": "kvcyj",
       "date": "2026-04-06",
       "bts": "BT-174,210,231,257",
-      "keywords": []
+      "keywords": [],
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-045",
@@ -1913,7 +2018,7 @@
       "title": "Numerical Patterns of the Perfect Number 6 in Tokamak Physics: Observation, Verification, and Honest Limits",
       "repo": "n6-architecture",
       "source": "docs/paper/paper3-tokamak-physics.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19430914",
       "zenodo_record": "19430914",
       "osf_id": "nmr39",
@@ -1931,14 +2036,21 @@
         "n=6"
       ],
       "abstract_first_line": "Systematic survey of numerical coincidences between arithmetic functions of perfect number 6 and tokamak physics constants.",
-      "upload_source": "upload_results_n6_fusion_20260406_021755.txt"
+      "upload_source": "upload_results_n6_fusion_20260406_021755.txt",
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-FUSION-2",
       "title": "Perfect Number Arithmetic in Fusion Plasma Physics: From D-T Nucleon Conservation to Tokamak Stability",
       "repo": "n6-architecture",
       "source": "docs/paper/308-fusion-n6-alien-discoveries.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19430918",
       "zenodo_record": "19430918",
       "osf_id": "cjw57",
@@ -1957,14 +2069,21 @@
         "n=6"
       ],
       "abstract_first_line": "Comprehensive mapping of n=6 arithmetic functions to nuclear fusion and plasma physics. 35 hypotheses via 22-lens full-spectrum scan.",
-      "upload_source": "upload_results_n6_fusion_20260406_021755.txt"
+      "upload_source": "upload_results_n6_fusion_20260406_021755.txt",
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-FUSION-3",
       "title": "Complete n=6 Encoding of Plasma Confinement and Nuclear Fusion: From Lawson Criterion to Stellar Nucleosynthesis",
       "repo": "n6-architecture",
       "source": "docs/paper/n6-plasma-fusion-deep-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19430920",
       "zenodo_record": "19430920",
       "osf_id": "rxm9z",
@@ -1983,14 +2102,21 @@
         "n=6"
       ],
       "abstract_first_line": "Comprehensive mapping: 90+ claims across fusion deep dive. 82.8% EXACT (53/64 industrial parameters, Z>15sigma).",
-      "upload_source": "upload_results_n6_fusion_20260406_021755.txt"
+      "upload_source": "upload_results_n6_fusion_20260406_021755.txt",
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6-NEURO-BCI",
       "title": "HEXA-NEURO: A Non-Invasive Brain-Computer Interface Architecture Derived from Perfect Number Arithmetic (n=6)",
       "repo": "papers",
       "file": "n6-hexa-neuro-bci-paper.md",
-      "status": "Published",
+      "status": "draft",
       "zenodo_doi": "10.5281/zenodo.19431347",
       "zenodo_record": "19431347",
       "osf_id": "a4fm7",
@@ -2011,7 +2137,14 @@
         "Transformer-decoder"
       ],
       "abstract_first_line": "HEXA-NEURO brain-computer interface architecture where 176 design parameters across 23 neuroscience categories are uniquely determined by the arithmetic of the perfect number n=6.",
-      "upload_source": "upload_results_n6_neuro_20260406_033104.txt"
+      "upload_source": "upload_results_n6_neuro_20260406_033104.txt",
+      "_audit": [
+        {
+          "ts": "2026-04-23",
+          "action": "status_downgrade",
+          "reason": "Published without DOI — run papers publish to re-upload"
+        }
+      ]
     },
     {
       "id": "N6--imported-f7243495",

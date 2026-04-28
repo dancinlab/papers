@@ -1,9 +1,9 @@
-// verify_dois.hexa -- Verify all DOI/Zenodo links in README.md are reachable.
+// doi_verify.hexa -- Verify all DOI/Zenodo links in README.md are reachable.
 //
 // Usage:
-//   hexa scripts/verify_dois.hexa
-//   hexa scripts/verify_dois.hexa --verbose
-//   hexa scripts/verify_dois.hexa --timeout 10
+//   hexa tool/doi_verify.hexa
+//   hexa tool/doi_verify.hexa --verbose
+//   hexa tool/doi_verify.hexa --timeout 10
 
 fn main() {
   let cli_args = args()

@@ -1,21 +1,31 @@
 #!/usr/bin/env bash
-# papers/bin/papers — unified CLI for paper library, Phase 1 foundation.
+# papers/bin/papers — unified CLI for paper library (12-verb dispatch).
 #
-# Subcommands (Phase 1):
+# 12-verb matrix (design da47e40, 2026-04-28 cycle):
 #   list      [--status S] [--project P] [--tier T] [--json]
+#   get       <paper-id> [--field F | --json]
 #   cite      <paper-id> [--format bibtex|apa|ieee|cff|ris] [--copy]
 #   validate  <paper-id>
-#   publish   <paper-id> [--sandbox] [--dry-run] [--skip-pp2]
+#   verify                                              # tool/doi_verify.hexa
+#   publish   <paper-id> [--target zenodo|osf|all] [--sandbox] [--dry-run]
 #   pull      <doi>                                     # stub — Phase 2
 #   search    "<query>"                                 # stub — Phase 2
+#   sync                                                # tool/zenodo_sync.hexa
+#   lint                                                # tool/papers_lint.hexa (other agent)
+#   scan      <name|all>                                # tool/meta_scanner.hexa
+#   secret    <get|set|list> [args...]                  # passthrough → secret CLI
 #   help
 #
-# Credential access via sister CLI:
+# Phase 1 retained verbs (cleanup helpers):
+#   import-from <repo>   register-orphans   dedupe   fix-doi-gap
+#
+# Credential access via sister CLI (no hard-coded tokens):
 #   TOKEN=$(secret get zenodo.token)
 #
 # Source SSOT:
 #   manifest.json         — canonical paper list (120+ entries)
 #   upload_zenodo.hexa    — legacy publish impl (wrapped here)
+#   tool/*.hexa           — scanners + sync + verify (post-rename)
 set -euo pipefail
 
 PAPERS_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -27,6 +37,10 @@ _die() { echo "papers: $*" >&2; exit 2; }
 _secret() {
     [ -x "$SECRET_BIN" ] || _die "secret CLI not found at $SECRET_BIN"
     "$SECRET_BIN" "$@"
+}
+_hexa() {
+    [ -x "$HEXA_BIN" ] || _die "hexa not found at $HEXA_BIN"
+    "$HEXA_BIN" "$@"
 }
 
 _cmd_list() {
@@ -184,28 +198,247 @@ sys.exit(1 if errs else 0)
 _cmd_publish() {
     [ $# -ge 1 ] || _die "publish: paper-id required"
     local pid="$1"; shift
-    local sandbox=0 dry_run=0 skip_pp2=0
+    local sandbox=0 dry_run=0 skip_pp2=0 target="zenodo"
     while [ $# -gt 0 ]; do
         case "$1" in
+            --target)     target="$2"; shift 2 ;;
             --sandbox)    sandbox=1; shift ;;
             --dry-run)    dry_run=1; shift ;;
             --skip-pp2)   skip_pp2=1; shift ;;
             *)            shift ;;
         esac
     done
-    # Pull token from secret CLI
+    case "$target" in
+        zenodo|osf|all) ;;
+        *) _die "publish: --target must be zenodo|osf|all (got: $target)" ;;
+    esac
+    if [ "$target" = "osf" ] || [ "$target" = "all" ]; then
+        # OSF dual-publish path is design Phase 2 (tool/osf_publish.hexa).
+        # Warn but don't fail when --target=all so zenodo branch still runs.
+        local osf_tool="${PAPERS_ROOT}/tool/osf_publish.hexa"
+        if [ -x "$osf_tool" ] || [ -f "$osf_tool" ]; then
+            echo "papers publish: dispatching OSF target → $osf_tool" >&2
+            local osf_token
+            osf_token=$(_secret get osf.token 2>/dev/null) || osf_token=""
+            [ -n "$osf_token" ] || _die "osf.token missing — secret set osf.token"
+            local osf_args=("$pid")
+            [ "$dry_run" -eq 1 ] && osf_args+=("--dry-run")
+            OSF_TOKEN="$osf_token" "$HEXA_BIN" "$osf_tool" "${osf_args[@]}"
+        else
+            echo "papers publish: WARN tool/osf_publish.hexa not present (Phase 2). target=osf skipped." >&2
+            [ "$target" = "osf" ] && _die "OSF publish unavailable — implement tool/osf_publish.hexa first"
+        fi
+        [ "$target" = "osf" ] && return 0
+    fi
+    # zenodo branch (default + --target=all path)
     local tkey="zenodo.token"
     [ "$sandbox" -eq 1 ] && tkey="zenodo.sandbox_token"
     local token
-    token=$(_secret get "$tkey" 2>/dev/null) || _die "no $tkey in secret store. run: echo '<tok>' | secret set $tkey"
+    token=$(_secret get "$tkey" 2>/dev/null) || _die "$tkey missing — secret set $tkey"
     [ -n "$token" ] || _die "$tkey is empty — set a value first"
-    echo "papers publish: target=$([ $sandbox -eq 1 ] && echo sandbox || echo production) dry_run=$dry_run"
-    # Delegate to legacy upload_zenodo.hexa (wrapped)
+    echo "papers publish: target=zenodo$([ $sandbox -eq 1 ] && echo /sandbox || echo /production) dry_run=$dry_run"
     local upload_args=("$pid")
     [ "$dry_run" -eq 1 ] && upload_args+=("--dry-run")
     [ "$skip_pp2" -eq 1 ] && upload_args+=("--skip-pp2-gate")
     ZENODO_TOKEN="$token" \
         "$HEXA_BIN" "${PAPERS_ROOT}/upload_zenodo.hexa" "${upload_args[@]}"
+}
+
+# Print one entry from manifest by id. --field F prints just one field.
+# Usage: papers get <paper-id> [--field F | --json]
+_cmd_get() {
+    [ $# -ge 1 ] || _die "get: paper-id required"
+    local pid="$1"; shift
+    local field="" as_json=0
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --field) field="$2"; shift 2 ;;
+            --json)  as_json=1; shift ;;
+            *)       shift ;;
+        esac
+    done
+    python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1]))
+pid = sys.argv[2]; field = sys.argv[3]; as_json = int(sys.argv[4])
+e = next((x for x in d.get('papers', []) if x.get('id') == pid), None)
+if e is None:
+    print(f'paper id not found: {pid}', file=sys.stderr); sys.exit(1)
+if field:
+    v = e.get(field, '')
+    if isinstance(v, (list, dict)):
+        print(json.dumps(v, ensure_ascii=False))
+    else:
+        print(v)
+elif as_json:
+    print(json.dumps(e, ensure_ascii=False, indent=2))
+else:
+    for k in ('id','title','status','repo','tier','doi','date','file'):
+        if k in e: print(f'  {k:8} {e[k]}')
+    if e.get('abstract_first_line'):
+        print(f'  {\"abstract\":8} {e[\"abstract_first_line\"]}')
+    if e.get('keywords'):
+        print(f'  {\"keywords\":8} {\", \".join(e[\"keywords\"])}')
+" "$MANIFEST" "$pid" "$field" "$as_json"
+}
+
+# Verify DOI / Zenodo links via tool/doi_verify.hexa.
+# Usage: papers verify [--verbose] [--timeout N] [--limit N] [--skip-osf]
+_cmd_verify() {
+    local tool="${PAPERS_ROOT}/tool/doi_verify.hexa"
+    [ -f "$tool" ] || _die "tool/doi_verify.hexa not present"
+    _hexa "$tool" "$@"
+}
+
+# Sync Zenodo metadata via tool/zenodo_sync.hexa.
+# Reads token from secret CLI (zenodo.token).
+# Usage: papers sync [--dry-run] [--verbose] [--limit N]
+_cmd_sync() {
+    local tool="${PAPERS_ROOT}/tool/zenodo_sync.hexa"
+    [ -f "$tool" ] || _die "tool/zenodo_sync.hexa not present"
+    local token
+    token=$(_secret get zenodo.token 2>/dev/null) || token=""
+    # zenodo_sync supports public-record reads without a token; pass when present.
+    if [ -n "$token" ]; then
+        ZENODO_TOKEN="$token" _hexa "$tool" "$@"
+    else
+        _hexa "$tool" "$@"
+    fi
+}
+
+# papers lint — call tool/papers_lint.hexa if present (other agent's deliverable).
+# Falls back to a built-in minimal lint that runs validate across all entries.
+_cmd_lint() {
+    local tool="${PAPERS_ROOT}/tool/papers_lint.hexa"
+    if [ -f "$tool" ]; then
+        _hexa "$tool" "$@"
+        return $?
+    fi
+    echo "papers lint: tool/papers_lint.hexa not present — running fallback (validate all)" >&2
+    python3 -c "
+import json, os, sys, subprocess
+d = json.load(open(sys.argv[1]))
+errs = warns = 0
+total = 0
+for e in d.get('papers', []):
+    pid = e.get('id','')
+    if not pid: continue
+    total += 1
+    r = subprocess.run([sys.argv[2], 'validate', pid], capture_output=True, text=True)
+    out = (r.stdout or '') + (r.stderr or '')
+    for line in out.splitlines():
+        if line.startswith('E'): errs += 1
+        elif line.startswith('W'): warns += 1
+print(f'papers lint (fallback): total={total} errors={errs} warnings={warns}')
+sys.exit(1 if errs else 0)
+" "$MANIFEST" "$0"
+}
+
+# papers scan <kind|all> — delegate to tool/meta_scanner.hexa or tool/continuous_scan.hexa.
+# kinds: meta | continuous | all | missing-doi | orphan | <any *_scan>
+_cmd_scan() {
+    local kind="${1:-list}"; shift || true
+    local meta_tool="${PAPERS_ROOT}/tool/meta_scanner.hexa"
+    local cont_tool="${PAPERS_ROOT}/tool/continuous_scan.hexa"
+    case "$kind" in
+        list|--list)
+            [ -f "$meta_tool" ] || _die "tool/meta_scanner.hexa not present"
+            _hexa "$meta_tool" list ;;
+        meta)
+            [ -f "$meta_tool" ] || _die "tool/meta_scanner.hexa not present"
+            _hexa "$meta_tool" "$@" ;;
+        all|continuous)
+            [ -f "$cont_tool" ] || _die "tool/continuous_scan.hexa not present"
+            _hexa "$cont_tool" "$@" ;;
+        missing-doi|missing_doi)
+            _hexa "$meta_tool" run missing_doi_scan ;;
+        orphan|orphan-paper)
+            _hexa "$meta_tool" run orphan_paper_scan ;;
+        *)
+            # Treat as a literal scanner name under tool/<name>.hexa
+            local cand="${PAPERS_ROOT}/tool/${kind}.hexa"
+            local cand_scan="${PAPERS_ROOT}/tool/${kind}_scan.hexa"
+            if   [ -f "$cand" ];      then _hexa "$cand" "$@"
+            elif [ -f "$cand_scan" ]; then _hexa "$cand_scan" "$@"
+            else _die "scan: unknown kind '$kind' (try: list, meta, all, missing-doi, orphan)"
+            fi
+            ;;
+    esac
+}
+
+# papers secret <args...> — passthrough to ~/core/secret/bin/secret.
+_cmd_secret() {
+    [ $# -ge 1 ] || _die "secret: subcommand required (e.g. get zenodo.token)"
+    _secret "$@"
+}
+
+# Normalize repo field case (TECS-L → tecs-l, SEDI → sedi, etc.).
+# Usage: papers dedupe [--dry-run]
+_cmd_dedupe() {
+    local dry=0
+    while [ $# -gt 0 ]; do
+        case "$1" in --dry-run) dry=1; shift ;; *) shift ;; esac
+    done
+    python3 -c "
+import json, sys
+p = sys.argv[1]; dry = int(sys.argv[2])
+d = json.load(open(p))
+# Canonical project names (lowercase, matching filesystem dirs)
+canon = {'tecs-l','sedi','anima','nexus','n6-architecture','brainwire','papers'}
+fixed = 0
+for e in d.get('papers', []):
+    r = e.get('repo','')
+    if not r: continue
+    low = r.lower()
+    if low in canon and low != r:
+        e['repo'] = low
+        fixed += 1
+if not dry:
+    with open(p, 'w') as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+print(f'dedupe: normalized {fixed} repo fields (dry={dry})')
+" "$MANIFEST" "$dry"
+}
+
+# DOI gap handler: fix Published entries missing DOI.
+# Usage: papers fix-doi-gap [--downgrade | --dry-run]
+#   --downgrade  (default) → status=draft for all offenders (fast, reversible)
+#   --dry-run            just list, no changes
+_cmd_fix_doi_gap() {
+    local mode=downgrade
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --downgrade) mode=downgrade; shift ;;
+            --dry-run)   mode=dry; shift ;;
+            *) shift ;;
+        esac
+    done
+    python3 -c "
+import json, sys
+p = sys.argv[1]; mode = sys.argv[2]
+d = json.load(open(p))
+fixed = 0
+for e in d.get('papers', []):
+    st = e.get('status','').lower()
+    doi = e.get('doi','')
+    if st != 'published': continue
+    if doi and doi.startswith('10.'): continue
+    if mode == 'dry':
+        print(f'  would downgrade {e.get(\"id\",\"?\"):20} {e.get(\"title\",\"\")[:60]}')
+        fixed += 1
+        continue
+    # downgrade
+    e['status'] = 'draft'
+    e.setdefault('_audit', []).append({
+        'ts': '2026-04-23', 'action': 'status_downgrade',
+        'reason': 'Published without DOI — run papers publish to re-upload'
+    })
+    fixed += 1
+if mode != 'dry':
+    with open(p, 'w') as f:
+        json.dump(d, f, indent=2, ensure_ascii=False)
+print(f'fix-doi-gap: {fixed} entries {(\"would be \" if mode==\"dry\" else \"\")}downgraded to draft')
+" "$MANIFEST" "$mode"
 }
 
 # Register unregistered in-place .md files under project dirs.
@@ -325,7 +558,7 @@ for dirpath, _, files in os.walk(src):
                 except (PermissionError, OSError) as ex:
                     # raw#8 F1/F3 sandbox denials or other write failures —
                     # skip the file but continue (manifest entry will point
-                    # to a missing file, caught later by pp_orphan_paper_scan).
+                    # to a missing file, caught later by tool/orphan_paper_scan.hexa.
                     print(f'  SKIP (write blocked): {rel_in_src} — {ex.__class__.__name__}', file=sys.stderr)
                     skipped += 1
                     continue
@@ -382,40 +615,64 @@ _cmd_search() {
 
 _cmd_help() {
     cat <<EOF
-papers — paper library CLI (Phase 1)
+papers — paper library CLI (12-verb dispatch, design da47e40)
 
-usage:
+core verbs:
   papers list      [--status S] [--project P] [--tier T] [--json]
+  papers get       <paper-id> [--field F | --json]
   papers cite      <paper-id> [--format bibtex|apa|ieee|cff|ris] [--copy]
   papers validate  <paper-id>
-  papers publish   <paper-id> [--sandbox] [--dry-run] [--skip-pp2]
-  papers pull        <doi>               (Phase 2, not impl)
-  papers search      <query>             (Phase 2, not impl)
-  papers import-from <repo> [--dry-run]  sync sister repo's papers/*.md into this repo
-  papers register-orphans [--dry-run]    register in-place unregistered .md files to manifest
+  papers verify    [--verbose] [--timeout N] [--skip-osf]
+  papers publish   <paper-id> [--target zenodo|osf|all] [--sandbox] [--dry-run] [--skip-pp2]
+  papers pull      <doi>                              (Phase 2, not impl)
+  papers search    "<query>"                          (Phase 2, not impl)
+  papers sync      [--dry-run] [--verbose] [--limit N]
+  papers lint                                          (delegates to tool/papers_lint.hexa)
+  papers scan      <list|meta|all|missing-doi|orphan|...>
+  papers secret    <get|set|list> <key> [value]
 
-credentials:
-  papers publish reads Zenodo token via  secret get zenodo.token
-  set with:      echo '<token>' | secret set zenodo.token
-  sandbox mode:  echo '<token>' | secret set zenodo.sandbox_token
+cleanup helpers (Phase 1):
+  papers import-from <repo> [--dry-run]  sync sister repo's papers/*.md
+  papers register-orphans [--dry-run]    register in-place unregistered .md files
+  papers dedupe [--dry-run]              normalize repo field case
+  papers fix-doi-gap [--downgrade|--dry-run]  handle Published-without-DOI
+
+credentials (sister-secret-CLI integrated, no hard-coded tokens):
+  zenodo:        secret set zenodo.token   |  secret set zenodo.sandbox_token
+  osf:           secret set osf.token
+  arxiv/github:  secret set arxiv.token / github.token
 
 examples:
   papers list --status draft --project anima
+  papers get pa-n6-fusion-2026 --field doi
   papers cite pa-n6-fusion-2026 --format bibtex
   papers validate pa-n6-fusion-2026
-  papers publish pa-n6-fusion-2026 --sandbox --dry-run
+  papers publish pa-n6-fusion-2026 --target zenodo --sandbox --dry-run
+  papers scan all
+  papers scan missing-doi
+  papers verify
+  papers sync --dry-run
+  papers secret get zenodo.token
 EOF
 }
 
 case "${1:-help}" in
     list)        shift; _cmd_list "$@" ;;
+    get)         shift; _cmd_get "$@" ;;
     cite)        shift; _cmd_cite "$@" ;;
     validate)    shift; _cmd_validate "$@" ;;
+    verify)      shift; _cmd_verify "$@" ;;
     publish)     shift; _cmd_publish "$@" ;;
     pull)        shift; _cmd_pull "$@" ;;
     search)      shift; _cmd_search "$@" ;;
+    sync)        shift; _cmd_sync "$@" ;;
+    lint)        shift; _cmd_lint "$@" ;;
+    scan)        shift; _cmd_scan "$@" ;;
+    secret)      shift; _cmd_secret "$@" ;;
     import-from)      shift; _cmd_import_from "$@" ;;
     register-orphans) shift; _cmd_register_orphans "$@" ;;
+    dedupe)           shift; _cmd_dedupe "$@" ;;
+    fix-doi-gap)      shift; _cmd_fix_doi_gap "$@" ;;
     help|-h|--help) _cmd_help ;;
     *)           _die "unknown command '$1'. try: papers help" ;;
 esac

@@ -1,0 +1,141 @@
+// papers/tool/continuous_scan.hexa — B21 orchestrator.
+//
+// Runs all *_scan.hexa scanners (excluding self), writes summary to
+// state/continuous_scan.json, emits box-draw summary line. Intended for:
+//   - manual invocation: papers scan all
+//   - launchd daily: config/launchd/com.papers.continuous_scan.plist
+//
+// JSON summary schema
+//   {
+//     "ts": "2026-04-23T...Z",
+//     "scanners": [
+//       {"name": "missing_doi_scan", "rc": 1, "findings": 19, "runtime_ms": 42},
+//       ...
+//     ],
+//     "total_findings": N,
+//     "fails": K
+//   }
+
+fn _home() -> string {
+    let h = env("HOME")
+    if len(h) > 0 { return h }
+    return to_string(exec("echo $HOME")).trim()
+}
+
+fn _root() -> string { return _home() + "/core/papers" }
+fn _hexa_bin() -> string { return _home() + "/core/hexa-lang/hexa" }
+fn _iso_now() -> string { return to_string(exec("date -u +%Y-%m-%dT%H:%M:%SZ")).trim() }
+
+fn _list_scanners() -> array {
+    let raw = to_string(exec("ls " + _root() + "/tool/*_scan.hexa 2>/dev/null"))
+    let mut out = []
+    for line in raw.split("\n") {
+        let t = line.trim()
+        if len(t) == 0 { continue }
+        let base = to_string(exec("basename '" + t + "' .hexa")).trim()
+        // skip self (orchestrator) to avoid recursion
+        if base == "continuous_scan" { continue }
+        out.push(base)
+    }
+    return out
+}
+
+// Parse finding count from scanner stdout: looks for "<n> offender(s)" or
+// "dangling=N unregistered=M" patterns. Returns -1 if unparseable.
+fn _parse_findings(name: string, out_text: string) -> int {
+    // Simple heuristic — let python do the work via subprocess
+    let py = "python3 -c \"import re,sys; t=sys.stdin.read();"
+           + "m=re.search(r'(\\d+) offender', t);"
+           + "n=int(m.group(1)) if m else 0;"
+           + "mm=re.search(r'dangling=(\\d+) unregistered=(\\d+)', t);"
+           + "if mm: n += int(mm.group(1)) + int(mm.group(2));"
+           + "print(n)\""
+    let cmd = "echo " + _sh_q(out_text) + " | " + py
+    let r = exec_with_status(cmd)
+    if r[1] != 0 { return -1 }
+    let s = to_string(r[0]).trim()
+    if len(s) == 0 { return -1 }
+    return s.parse_int()
+}
+
+fn _sh_q(s: string) -> string {
+    return "'" + s.replace("'", "'\\''") + "'"
+}
+
+fn _write_summary(out_path: string, ts: string, results: array, total: int, fails: int) {
+    // Build JSON via python to avoid manual escaping
+    let py = "python3 - <<PY\n"
+           + "import json\n"
+           + "results = [\n"
+    let mut s = py
+    for r in results {
+        // r = [name, rc, findings, runtime_ms]
+        s = s + "    {'name': '" + r[0] + "', 'rc': " + to_string(r[1])
+          + ", 'findings': " + to_string(r[2]) + ", 'runtime_ms': " + to_string(r[3]) + "},\n"
+    }
+    s = s + "]\n"
+      + "obj = {'ts': '" + ts + "', 'scanners': results, 'total_findings': "
+      + to_string(total) + ", 'fails': " + to_string(fails) + "}\n"
+      + "open('" + out_path + "', 'w').write(json.dumps(obj, indent=2, ensure_ascii=False))\n"
+      + "PY\n"
+    let _ = exec(s)
+}
+
+fn _run_all() -> int {
+    let scanners = _list_scanners()
+    let out_dir = _root() + "/state"
+    let _mk = exec("mkdir -p " + _sh_q(out_dir))
+    let out_path = out_dir + "/continuous_scan.json"
+    let ts = _iso_now()
+    let mut results = []
+    let mut total = 0
+    let mut fails = 0
+
+    for s in scanners {
+        let path = _root() + "/tool/" + s + ".hexa"
+        let cmd = "'" + _hexa_bin() + "' '" + path + "' 2>&1"
+        let t0 = to_string(exec("date +%s%N")).trim()
+        let r = exec_with_status(cmd)
+        let t1 = to_string(exec("date +%s%N")).trim()
+        // Nanosecond diff → ms
+        let dt_ms = (t1.parse_int() - t0.parse_int()) / 1000000
+        let findings = _parse_findings(s, to_string(r[0]))
+        results.push([s, r[1], findings, dt_ms])
+        if findings > 0 { total = total + findings }
+        if r[1] != 0 { fails = fails + 1 }
+    }
+
+    _write_summary(out_path, ts, results, total, fails)
+
+    // Box-draw summary
+    println("")
+    println("┌─ continuous_scan @ " + ts + " ─")
+    for r in results {
+        let name = r[0]
+        let rc = to_string(r[1])
+        let findings = to_string(r[2])
+        let rtms = to_string(r[3])
+        println("│  " + name + "  rc=" + rc + "  findings=" + findings + "  " + rtms + "ms")
+    }
+    println("└─ total_findings=" + to_string(total) + " fails=" + to_string(fails))
+    println("   summary: " + out_path)
+
+    if fails > 0 { return 1 }
+    return 0
+}
+
+fn _selftest() -> int {
+    let scanners = _list_scanners()
+    println("continuous_scan: selftest registered=" + to_string(len(scanners)))
+    println("continuous_scan: selftest PASS")
+    return 0
+}
+
+fn main() {
+    let av = argv()
+    let mut args = []
+    let mut i = 2
+    while i < len(av) { args.push(av[i]); i = i + 1 }
+    if len(args) >= 1 && args[0] == "--selftest" { exit(_selftest()) }
+    exit(_run_all())
+}

@@ -1,8 +1,8 @@
-// infinite_growth.hexa -- Papers domain infinite growth loop
+// growth_loop.hexa -- Papers domain growth loop (formerly infinite_growth)
 //
 // Usage:
-//   hexa scripts/infinite_growth.hexa [max_cycles] [interval_sec]
-//   MAX_CYCLES=999 INTERVAL=1800 hexa scripts/infinite_growth.hexa
+//   hexa tool/growth_loop.hexa [max_cycles] [interval_sec]
+//   MAX_CYCLES=999 INTERVAL=1800 hexa tool/growth_loop.hexa
 
 fn log_info(msg) {
   let ts = exec("date '+%Y-%m-%dT%H:%M:%S'").trim()

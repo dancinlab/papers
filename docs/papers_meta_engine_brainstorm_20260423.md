@@ -1,5 +1,19 @@
 # papers repo — 메타진화 엔진 + CLI 브레인스토밍 (2026-04-23)
 
+> **2026-04-28 — 명명 정리 cycle (design da47e40)**: 본 문서는 historical brainstorm 으로
+> 보존됩니다. 실 코드의 `pp_` prefix 는 모두 제거되었으며, scripts/ 는 tool/ 로 통합됨.
+> 매핑:
+>   - `pp_meta` → `meta_scanner`
+>   - `pp_continuous_scan` → `continuous_scan`
+>   - `pp_missing_doi_scan` → `missing_doi_scan`
+>   - `pp_orphan_paper_scan` → `orphan_paper_scan`
+>   - `bin/pp_meta` → `papers scan` subcommand 로 흡수
+>   - `scripts/sync_zenodo.hexa` → `tool/zenodo_sync.hexa`
+>   - `scripts/verify_dois.hexa` → `tool/doi_verify.hexa`
+>   - `scripts/normalize_keywords.hexa` → `tool/keyword_normalize.hexa`
+>   - `scripts/infinite_growth.hexa` → `tool/growth_loop.hexa`
+> 아래 표의 `pp_*` 는 *historical name* 입니다.
+
 요청자: user session.
 범위: `/Users/ghost/core/papers/` 에 sister repos (hexa-lang / anima / nexus / airgenome / n6-architecture) 가 가진 수준의 meta engine + distribution CLI 를 주입. 고갈시까지 후보 나열.
 

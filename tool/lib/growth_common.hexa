@@ -1,11 +1,11 @@
 // growth_common.hexa -- Shared growth loop utilities for papers domain
 //
 // Provides: log_info, log_warn, write_growth_bus, run_growth_loop
-// Used by: scripts/infinite_growth.hexa
+// Used by: tool/growth_loop.hexa
 //
 // Note: This is a library file. Source it via the calling script.
 //       Functions are defined here for documentation; the actual
-//       growth loop logic is inlined in infinite_growth.hexa.
+//       growth loop logic is inlined in growth_loop.hexa.
 
 // Growth logging helpers — called from the growth loop.
 // In hexa, these are standalone functions used directly.
