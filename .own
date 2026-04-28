@@ -1,4 +1,4 @@
-# papers /.own — L1 unified governance DSL (8 rules)
+# papers /.own — L1 unified governance DSL (9 rules)
 # Project-local SSOT: declarative rules + verify hooks + lint dispatch.
 # Parallel to L0 (hexa-lang /.raw) with independent id namespace.
 # Grammar: hexa-lang self/raw_loader.hexa.
@@ -66,3 +66,22 @@ own 8 live "papers-tool-chflags-uchg"
   why  raw 1 os-lock + 우발 수정 방지
   verify hexa run tool/papers_lint.hexa --rule 8
   on_fail warn  # darwin-only, Linux skip
+
+own 9 new "papers-cross-repo-publish-canonical"
+  slug papers-cross-repo-publish-canonical
+  scope sister repos (anima / n6-architecture / hexa-lang / airgenome / nexus / hive / void)
+        MUST NOT have own zenodo/osf publish tools. paper 발행 시 papers CLI 위임.
+        sister repo 의 publish 잔재 (proposals/*zenodo*.md, design/kick/*zenodo*.json,
+        n6/atlas.append.zenodo-*.n6, papers/*zenodo*.json, self/attrs/publish.hexa의
+        paper-doc.md 분기 등) 는 archive/_deprecated/ 이동 또는 [DEPRECATED] marker 추가
+        (papers CLI 위임 명시).
+  why  cross-repo 멱등성 보장 — 같은 paper 두 번 발행해도 같은 manifest state.
+        single-entry-point invariant (raw 99 sister) + manifest atomic write (raw 65) +
+        DOI invariant (own 5) 가 cross-repo SSOT 형성. .workspace papers.cli/papers.manifest
+        resource canonical entry 선언 (2026-04-28 사용자 directive).
+  verify hexa run tool/papers_cross_repo_lint.hexa  # 신규 도구 (별도 cycle)
+  on_fail warn
+  promoted-at 2026-04-28
+  note sister repos에 grandfather 잔재 존재 — archive/marker migration 완료 후 block 격상.
+  note .workspace 의 papers.cli + papers.manifest resource + papers-publish/pull/search
+        commands + member papers role=exporter 가 SSOT-level 등재.
