@@ -1723,7 +1723,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-031",
@@ -1742,7 +1743,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-032",
@@ -1761,7 +1763,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-033",
@@ -1780,7 +1783,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-034",
@@ -1799,7 +1803,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-035",
@@ -1818,7 +1823,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-036",
@@ -1837,7 +1843,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-037",
@@ -1856,7 +1863,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-038",
@@ -1875,7 +1883,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-039",
@@ -1894,7 +1903,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-040",
@@ -1913,7 +1923,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-041",
@@ -1932,7 +1943,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-042",
@@ -1951,7 +1963,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-043",
@@ -1970,7 +1983,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-044",
@@ -1989,7 +2003,8 @@
           "action": "status_downgrade",
           "reason": "Published without DOI — run papers publish to re-upload"
         }
-      ]
+      ],
+      "tier": 3
     },
     {
       "id": "N6-045",
@@ -2003,7 +2018,8 @@
       "bts": "BT-404,BT-405,BT-406,BT-407,BT-408,BT-409,BT-410,BT-411,BT-412,BT-413",
       "superseded_by": "N6-NANOBOT",
       "note": "Same work (BT-404~413) published as N6-NANOBOT (DOI 10.5281/zenodo.19457675). Original goal-stub retained for traceability.",
-      "keywords": []
+      "keywords": [],
+      "tier": 3
     },
     {
       "id": "N6-NANOBOT",
