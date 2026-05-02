@@ -1,0 +1,98 @@
+marker: papers_raw270_triplet_landed
+agent: BG-PR (papers raw 270 triplet follow-up)
+date_iso: 2026-05-03
+preset: friendly
+mk2_scope: in_scope (peer perspective, additive only)
+policy: additive_only_no_migration
+
+raw_anchor: hive/.raw.mk2 arch.001 (derives-from mk1 raw 270/271/272/273)
+
+domains_landed: 2
+  - papers (self-domain)
+  - cross_repo_publish (publish flow)
+
+files_landed: 16
+  core/papers:
+    - source.hexa            (136 LOC, T0 interface)
+    - registry.hexa          (178 LOC, T1 dispatch)
+    - router.hexa            (167 LOC, T1 verb -> op)
+    - papers_main.hexa       (186 LOC, T1 aggregator, raw 270 strict stem)
+
+  core/cross_repo_publish:
+    - source.hexa            (133 LOC, T0 interface)
+    - registry.hexa          (182 LOC, T1 dispatch)
+    - router.hexa            (148 LOC, T1 verb -> op)
+    - main.hexa              (199 LOC, T1 aggregator, stem deviation C1)
+
+  modules/papers:
+    - manifest_query.hexa    (120 LOC, FACADE -> tool/manifest_query.hexa 986L)
+    - doi_verify.hexa        (113 LOC, FACADE -> tool/doi_verify.hexa 201L)
+    - zenodo_publish.hexa    (114 LOC, FACADE -> tool/zenodo_publish.hexa 619L)
+    - README.ai.md           (183 LOC, raw 271 mandate)
+
+  modules/cross_repo_publish:
+    - publish.hexa           (116 LOC, FACADE -> tool/zenodo_publish.hexa 619L)
+    - sync.hexa              (111 LOC, FACADE -> tool/zenodo_sync.hexa 207L)
+    - validate.hexa          (122 LOC, FACADE -> tool/papers_cross_repo_lint.hexa 388L)
+    - README.ai.md           (215 LOC, raw 271 mandate)
+
+total_loc: 2423 (1329 core + 696 modules + 398 README)
+
+referenced_tools_unchanged: 7
+  - tool/manifest_query.hexa
+  - tool/doi_verify.hexa
+  - tool/zenodo_publish.hexa
+  - tool/zenodo_sync.hexa
+  - tool/papers_cross_repo_lint.hexa
+  - tool/orphan_paper_scan.hexa            (referenced in source.hexa comment only)
+  - tool/continuous_scan.hexa              (referenced in source.hexa comment only)
+
+untouched_invariants:
+  - tool/*.hexa                            (19 files, additive policy verified)
+  - bin/papers                             (12-verb dispatch, sha256 d1129786...)
+  - manifest.json                          (183 KB, 433+ paper SSOT)
+  - project.hexa                           (sha256 a63fb8b3...)
+
+selftest_status:
+  papers_main:                             5 categories meta-only PASS expected
+  cross_repo_publish_main:                 6 categories meta-only PASS expected
+  6_facade_modules:                        meta-only PASS expected
+  shell_out_engaged:                       NO (PAPERS_FACADE_SHELL not set during selftest)
+
+facade_invariant: PASS
+  - All 6 modules: status="WRAPPED", tool_path set, no in-place tool/ change
+  - Default invocation: meta-only message, no shell-out
+  - Opt-in shell-out: PAPERS_FACADE_SHELL=1 + hexa.real
+
+caveats: 15 (see docs/papers_raw270_triplet_landed_2026_05_03.ai.md C1-C15)
+  C1:  cross_repo_publish/main.hexa stem deviation (per user task spec)
+  C2:  FACADE meta-only default may confuse cold-read agents
+  C3:  tool/doi_verify.hexa python3 heredoc inherited (raw 9 gap)
+  C4:  is_dual_archive=0 across all 3 xrp ops (Phase 2 OSF blocker active)
+  C5:  struct duplication 14/16 files (hexa-lang stage0 import gap)
+  C6:  bin/papers in-place untouched (BG additive policy)
+  C7:  papers_main cond coverage cross-domain (manifest_query=papers.cond.1, others=cross_repo_publish.*)
+  C8:  sister-repo papers/{anima,n6-architecture,nexus} subdirs untouched
+  C9:  selftest meta-only; tool/* correctness NOT verified
+  C10: XRP_OP_FORCE no validation (manual-only env override)
+  C11: README last_updated metadata 1-day skew (2026-05-02 vs 2026-05-03 land)
+  C12: single land marker (no 3-state pending/installed/done)
+  C13: F-arch.001-1 lint risk (theoretical, lint tool not run)
+  C14: 3 scan tools referenced but FACADE not created (Phase 2 sub-cluster)
+  C15: handoff doc + marker self-sha NOT computed (paradox avoidance)
+
+cost: $0 (mac-local, no GPU/cloud)
+destructive: 0
+duration_estimate: ~45min wallclock
+
+handoff_doc: papers/docs/papers_raw270_triplet_landed_2026_05_03.ai.md
+
+predecessor: papers/docs/papers_mk2_redesign_landed_2026_05_03.ai.md (mk2 .roadmap.* land)
+
+next_cycle_recommended:
+  1. C1 stem deviation decision (unify both domains' aggregator naming)
+  2. C4 OSF Phase 2 dual-archive (tool/osf_publish.hexa + flip is_dual_archive=1)
+  3. C14 scan sub-cluster (orphan_paper_scan + continuous_scan + missing_doi_scan FACADE add)
+  4. C9 end-to-end smoke with PAPERS_FACADE_SHELL=1 (verify shell-out path on real tool/*)
+
+status: LANDED

@@ -1,0 +1,116 @@
+#!hexa strict
+// papers/modules/cross_repo_publish/publish.hexa — FACADE for tool/zenodo_publish.hexa
+//
+// @tool(slug="xrp_modules_publish", desc="FACADE that exposes papers/tool/zenodo_publish.hexa under the canonical raw 270/271/272/273 module pattern. Single-paper Zenodo publish workflow; OSF dual-archive Phase 2 stub.")
+// @usage(hexa /Users/ghost/core/papers/modules/cross_repo_publish/publish.hexa <paper-id>)
+// @omega-saturation-exempt("FACADE; selftest is meta-only, no actual publish")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T2 module impl layer.
+//
+// REFERENCED tool/ FILE (use, link, deps; in-place change FORBIDDEN):
+//   tool/zenodo_publish.hexa  — 619 LOC, single-paper Zenodo publish
+//
+// PHASE 2 PARTNER (BLOCKED, cross_repo_publish.blk.1):
+//   tool/osf_publish.hexa     — NOT YET LANDED. is_dual_archive=0 until then.
+
+// --- struct mirror ---
+
+struct XrpOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    is_dual_archive: int,
+    status:         str,
+    tool_loc:       int
+}
+
+struct XrpOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn xrp_op_result_fail(reason: str, exit_code: int) -> XrpOpResult {
+    return XrpOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn xrp_op_result_ok(stdout_: str, message: str) -> XrpOpResult {
+    return XrpOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Required exports ---
+
+fn xrp_op_meta_publish() -> XrpOpMeta {
+    return XrpOpMeta {
+        name:            "publish",
+        tool_path:       "tool/zenodo_publish.hexa",
+        domain_cond:     "cross_repo_publish.cond.2",
+        bin_verb:        "publish",
+        is_readonly:     0,
+        requires_net:    1,
+        requires_secret: 1,
+        is_dual_archive: 0,
+        status:          "WRAPPED",
+        tool_loc:        619
+    }
+}
+
+fn xrp_op_invoke_publish(args: [str]) -> XrpOpResult {
+    let force_shell = exec("printenv PAPERS_FACADE_SHELL 2>/dev/null || true").trim()
+    let mut argv = "tool/zenodo_publish.hexa"
+    let mut i = 0
+    while i < len(args) {
+        argv = argv + " " + args[i]
+        i = i + 1
+    }
+    if force_shell != "1" {
+        return xrp_op_result_ok(
+            "FACADE: would invoke `" + argv + "` (set PAPERS_FACADE_SHELL=1 to actually exec; requires net + zenodo.token secret; --dry-run STRONGLY recommended)",
+            "facade-meta-only"
+        )
+    }
+    let cmd = "cd /Users/ghost/core/papers && hexa.real " + argv + " 2>&1; echo __EXIT__$?"
+    let out = exec(cmd)
+    let parts = out.split("__EXIT__")
+    if len(parts) < 2 {
+        return xrp_op_result_fail("publish: shell-out parse error", 2)
+    }
+    let stdout_body = parts[0]
+    let exit_str = parts[1].trim()
+    let exit_code = to_int(exit_str)
+    if exit_code != 0 {
+        return xrp_op_result_fail("publish exit=" + str(exit_code), exit_code)
+    }
+    return xrp_op_result_ok(stdout_body, "shell-out ok")
+}
+
+// --- Selftest (meta-only; never publishes) ---
+
+fn _selftest_publish() -> int {
+    let m = xrp_op_meta_publish()
+    if m.name != "publish" { return 0 }
+    if m.tool_path != "tool/zenodo_publish.hexa" { return 0 }
+    if m.tool_loc != 619 { return 0 }
+    if m.is_readonly != 0 { return 0 }
+    if m.requires_secret != 1 { return 0 }
+    if m.is_dual_archive != 0 { return 0 }     // Phase 2 stub
+    if m.status != "WRAPPED" { return 0 }
+    let r = xrp_op_invoke_publish(["--dry-run"])
+    if r.ok != 1 { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[modules/xrp/publish] FACADE for tool/zenodo_publish.hexa (Phase 2 OSF dual-archive blocked)")
+    if _selftest_publish() == 1 {
+        println("[modules/xrp/publish] SELFTEST PASS")
+    } else {
+        println("[modules/xrp/publish] SELFTEST FAIL")
+    }
+}

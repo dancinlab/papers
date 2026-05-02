@@ -1,0 +1,113 @@
+#!hexa strict
+// papers/modules/papers/doi_verify.hexa — FACADE for tool/doi_verify.hexa
+//
+// @tool(slug="papers_modules_doi_verify", desc="FACADE that exposes papers/tool/doi_verify.hexa under the canonical raw 270/271/272/273 module pattern. Does NOT modify the underlying tool — references it via meta + (opt-in) shell-out.")
+// @usage(hexa /Users/ghost/core/papers/modules/papers/doi_verify.hexa)
+// @omega-saturation-exempt("FACADE; selftest is meta-only")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T2 module impl layer.
+//
+// REFERENCED tool/ FILE (use, link, deps; in-place change FORBIDDEN):
+//   tool/doi_verify.hexa  — 201 LOC, DOI/Zenodo/OSF link health verifier
+//
+// Note: tool/doi_verify.hexa contains a python3 heredoc (network HTTP client).
+// raw 9 hexa-only enforcement is .roadmap.papers cond.3 — not yet met. This
+// FACADE inherits that gap; sibling .roadmap entry tracks the cleanup.
+
+// --- struct mirror ---
+
+struct PapersOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    status:         str,
+    tool_loc:       int
+}
+
+struct PapersOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn papers_op_result_fail(reason: str, exit_code: int) -> PapersOpResult {
+    return PapersOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn papers_op_result_ok(stdout_: str, message: str) -> PapersOpResult {
+    return PapersOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Required exports ---
+
+fn papers_op_meta_doi_verify() -> PapersOpMeta {
+    return PapersOpMeta {
+        name:            "doi_verify",
+        tool_path:       "tool/doi_verify.hexa",
+        domain_cond:     "cross_repo_publish.cond.3",
+        bin_verb:        "verify",
+        is_readonly:     1,
+        requires_net:    1,
+        requires_secret: 0,
+        status:          "WRAPPED",
+        tool_loc:        201
+    }
+}
+
+fn papers_op_invoke_doi_verify(args: [str]) -> PapersOpResult {
+    let force_shell = exec("printenv PAPERS_FACADE_SHELL 2>/dev/null || true").trim()
+    let mut argv = "tool/doi_verify.hexa"
+    let mut i = 0
+    while i < len(args) {
+        argv = argv + " " + args[i]
+        i = i + 1
+    }
+    if force_shell != "1" {
+        return papers_op_result_ok(
+            "FACADE: would invoke `" + argv + "` (set PAPERS_FACADE_SHELL=1 to actually exec; requires net)",
+            "facade-meta-only"
+        )
+    }
+    let cmd = "cd /Users/ghost/core/papers && hexa.real " + argv + " 2>&1; echo __EXIT__$?"
+    let out = exec(cmd)
+    let parts = out.split("__EXIT__")
+    if len(parts) < 2 {
+        return papers_op_result_fail("doi_verify: shell-out parse error", 2)
+    }
+    let stdout_body = parts[0]
+    let exit_str = parts[1].trim()
+    let exit_code = to_int(exit_str)
+    if exit_code != 0 {
+        return papers_op_result_fail("doi_verify exit=" + str(exit_code), exit_code)
+    }
+    return papers_op_result_ok(stdout_body, "shell-out ok")
+}
+
+// --- Selftest (meta-only) ---
+
+fn _selftest_doi_verify() -> int {
+    let m = papers_op_meta_doi_verify()
+    if m.name != "doi_verify" { return 0 }
+    if m.tool_path != "tool/doi_verify.hexa" { return 0 }
+    if m.tool_loc != 201 { return 0 }
+    if m.requires_net != 1 { return 0 }
+    if m.status != "WRAPPED" { return 0 }
+    let r = papers_op_invoke_doi_verify([])
+    if r.ok != 1 { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[modules/papers/doi_verify] FACADE for tool/doi_verify.hexa")
+    if _selftest_doi_verify() == 1 {
+        println("[modules/papers/doi_verify] SELFTEST PASS")
+    } else {
+        println("[modules/papers/doi_verify] SELFTEST FAIL")
+    }
+}

@@ -1,0 +1,148 @@
+#!hexa strict
+// papers/core/cross_repo_publish/router.hexa — bin/papers verb -> publish-flow op routing
+//
+// @tool(slug="cross_repo_publish_router", desc="Maps bin/papers publish-flow verbs (publish/sync/lint) to cross_repo_publish domain operations. Default route table mirrors bin/papers; env override XRP_OP_FORCE pins a single operation.")
+// @usage(hexa /Users/ghost/core/papers/core/cross_repo_publish/router.hexa)
+// @omega-saturation-exempt("read-only routing; selftest is pure")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T1 router layer.
+//
+// VERB ROUTING (3 verbs covered by THIS domain):
+//   publish  -> publish    (cross_repo_publish.cond.2)
+//   sync     -> sync       (cross_repo_publish.cond.3)
+//   lint     -> validate   (cross_repo_publish.cond.1)
+//
+// raw#10 caveats:
+//   (1) `lint` verb dispatches to BOTH papers_lint (papers domain self-rules
+//       8-rule own check) AND papers_cross_repo_lint (own#9 sister-repo check).
+//       This router covers only the cross-repo variant; the self-rule lint
+//       belongs to a future papers.cond.lint-self entry.
+//   (2) `scan` verb (meta/continuous/missing-doi/orphan) belongs to a sub-
+//       cluster of cross_repo_publish.cond.3 but is NOT in this router (each
+//       scanner is a separate tool/<name>.hexa called directly by bin/papers).
+
+// --- struct mirror ---
+
+struct XrpOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn xrp_op_result_fail(reason: str, exit_code: int) -> XrpOpResult {
+    return XrpOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn xrp_op_result_ok(stdout_: str, message: str) -> XrpOpResult {
+    return XrpOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Verb -> operation lookup ---
+
+fn xrp_route_verb_to_op(verb: str) -> str {
+    if verb == "publish" { return "publish" }
+    if verb == "sync" { return "sync" }
+    if verb == "lint" { return "validate" }
+    return ""
+}
+
+// --- Default verb chain ---
+
+fn xrp_default_verb_chain() -> [str] {
+    let mut a = []
+    a = a.push("lint")
+    a = a.push("publish")
+    a = a.push("sync")
+    return a
+}
+
+// --- Resolve forced op ---
+
+fn xrp_resolve_force_op() -> str {
+    let single = exec("printenv XRP_OP_FORCE 2>/dev/null || true").trim()
+    return single
+}
+
+// --- Public route ---
+
+struct XrpRouteResult {
+    verb:          str,
+    op_name:       str,
+    forced:        int,
+    result:        XrpOpResult
+}
+
+fn xrp_route(verb: str) -> XrpRouteResult {
+    let forced = xrp_resolve_force_op()
+    if len(forced) > 0 {
+        return XrpRouteResult {
+            verb: verb,
+            op_name: forced,
+            forced: 1,
+            result: xrp_op_result_ok(
+                "FACADE: forced op `" + forced + "` (env XRP_OP_FORCE)",
+                "forced"
+            )
+        }
+    }
+    let op = xrp_route_verb_to_op(verb)
+    if len(op) < 1 {
+        return XrpRouteResult {
+            verb: verb,
+            op_name: "",
+            forced: 0,
+            result: xrp_op_result_fail(
+                "router: verb `" + verb + "` not in cross_repo_publish domain (try papers domain or check bin/papers)",
+                2
+            )
+        }
+    }
+    return XrpRouteResult {
+        verb: verb,
+        op_name: op,
+        forced: 0,
+        result: xrp_op_result_ok(
+            "FACADE: verb `" + verb + "` -> op `" + op + "`",
+            "routed"
+        )
+    }
+}
+
+// --- Selftest ---
+
+fn _selftest_router() -> int {
+    // 1. Default chain
+    let dc = xrp_default_verb_chain()
+    if len(dc) != 3 { return 0 }
+    if dc[0] != "lint" { return 0 }
+    if dc[1] != "publish" { return 0 }
+    if dc[2] != "sync" { return 0 }
+    // 2. verb -> op mapping
+    if xrp_route_verb_to_op("publish") != "publish" { return 0 }
+    if xrp_route_verb_to_op("sync") != "sync" { return 0 }
+    if xrp_route_verb_to_op("lint") != "validate" { return 0 }
+    if len(xrp_route_verb_to_op("unknown_verb")) != 0 { return 0 }
+    // 3. route(): known verb
+    let r1 = xrp_route("publish")
+    if r1.result.ok != 1 { return 0 }
+    if r1.op_name != "publish" { return 0 }
+    if r1.forced != 0 { return 0 }
+    // 4. route(): unknown verb
+    let r2 = xrp_route("not_a_verb")
+    if r2.result.ok != 0 { return 0 }
+    if r2.result.exit_code != 2 { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[xrp/router] verb -> publish-flow op routing")
+    if _selftest_router() == 1 {
+        println("[xrp/router] SELFTEST PASS")
+    } else {
+        println("[xrp/router] SELFTEST FAIL")
+    }
+    let demo = xrp_route("sync")
+    println("[xrp/router] route('sync') -> op=" + demo.op_name + " ok=" + str(demo.result.ok))
+}

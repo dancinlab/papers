@@ -1,0 +1,133 @@
+#!hexa strict
+// papers/core/cross_repo_publish/source.hexa — cross-repo publish flow contract
+//
+// @tool(slug="cross_repo_publish_source", desc="Single canonical contract every publish-flow operation module (publish, sync, validate) satisfies. Routes sister-repo paper artifacts into papers/<sub>/ via own#9 (canonical archive locus).")
+// @usage(hexa /Users/ghost/core/papers/core/cross_repo_publish/source.hexa)
+// @omega-saturation-exempt("interface-only; no I/O")
+//
+// raw#9 hexa-only strict. raw#15 SSOT this file for the cross-repo publish contract.
+// raw 270/271/272/273 (mk2 arch.001): T0 source layer of canonical 4-file pattern.
+//
+// CONTRACT (every operation module under modules/cross_repo_publish/ must export):
+//   fn xrp_op_meta_<name>() -> XrpOpMeta
+//   fn xrp_op_invoke_<name>(args: [str]) -> XrpOpResult
+//
+// REFERENCED tool/ FILES (use/link/deps; in-place change FORBIDDEN per BG policy):
+//   tool/zenodo_publish.hexa            — single-paper Zenodo publish      (619 LOC)
+//   tool/zenodo_sync.hexa               — manifest <-> Zenodo reconcile    (207 LOC)
+//   tool/papers_cross_repo_lint.hexa    — own#9 sister-repo lint v1.2      (388 LOC)
+//   tool/orphan_paper_scan.hexa         — orphan paper scanner             ( 77 LOC)
+//   tool/continuous_scan.hexa           — continuous DOI/orphan scan       (141 LOC)
+//   tool/missing_doi_scan.hexa          — missing DOI scanner              ( 55 LOC)
+//   tool/doi_verify.hexa                — DOI link health verifier         (201 LOC)
+//
+// raw#10 caveats:
+//   (1) tool/* files remain authoritative. modules/cross_repo_publish/* are
+//       FACADE entries delegating via exec("hexa.real tool/<name>.hexa ...").
+//   (2) own#9 enforcement = sister-repo paper artifacts (anima/nexus/n6/
+//       brainwire/sedi/tecs-l) MUST land into papers/<sub>/ only. Sister-repo
+//       self-publish is FORBIDDEN. tool/papers_cross_repo_lint.hexa enforces.
+//   (3) OSF dual-archive Phase 2 stub — tool/osf_publish.hexa NOT in this set
+//       (cross_repo_publish.blk.1 active blocker tracks the impl gap).
+//   (4) The aggregator file in this domain is `main.hexa` per user task spec;
+//       this intentionally deviates from raw 270 stem-equals-feature mandate
+//       (which would require `cross_repo_publish_main.hexa`). Caveat flagged
+//       in handoff doc C1.
+
+// --- XrpOpMeta — operation metadata struct ---
+
+struct XrpOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,    // .roadmap.cross_repo_publish cond mapping
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    is_dual_archive: int,   // 1 if writes both Zenodo AND OSF, 0 otherwise
+    status:         str,    // "WRAPPED" | "FACADE" | "STUB"
+    tool_loc:       int
+}
+
+// --- XrpOpResult — operation invocation result ---
+
+struct XrpOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+// --- Helper: meta-only constructor ---
+
+fn xrp_op_meta_make(
+    name: str, tool_path: str, domain_cond: str, bin_verb: str,
+    is_readonly: int, requires_net: int, requires_secret: int,
+    is_dual_archive: int, status: str, tool_loc: int
+) -> XrpOpMeta {
+    return XrpOpMeta {
+        name:            name,
+        tool_path:       tool_path,
+        domain_cond:     domain_cond,
+        bin_verb:        bin_verb,
+        is_readonly:     is_readonly,
+        requires_net:    requires_net,
+        requires_secret: requires_secret,
+        is_dual_archive: is_dual_archive,
+        status:          status,
+        tool_loc:        tool_loc
+    }
+}
+
+// --- Helper: failure-result constructor ---
+
+fn xrp_op_result_fail(reason: str, exit_code: int) -> XrpOpResult {
+    return XrpOpResult {
+        ok:        0,
+        exit_code: exit_code,
+        stdout_:   "",
+        stderr_:   reason,
+        message:   reason
+    }
+}
+
+// --- Helper: success-result constructor ---
+
+fn xrp_op_result_ok(stdout_: str, message: str) -> XrpOpResult {
+    return XrpOpResult {
+        ok:        1,
+        exit_code: 0,
+        stdout_:   stdout_,
+        stderr_:   "",
+        message:   message
+    }
+}
+
+// --- Selftest ---
+
+fn _selftest_source() -> int {
+    let m = xrp_op_meta_make(
+        "publish", "tool/zenodo_publish.hexa", "cross_repo_publish.cond.2",
+        "publish", 0, 1, 1, 0, "WRAPPED", 619
+    )
+    if m.name != "publish" { return 0 }
+    if m.tool_loc != 619 { return 0 }
+    if m.is_dual_archive != 0 { return 0 }
+    let f = xrp_op_result_fail("test_fail", 2)
+    if f.ok != 0 { return 0 }
+    if f.exit_code != 2 { return 0 }
+    let s = xrp_op_result_ok("hello", "ok")
+    if s.ok != 1 { return 0 }
+    if s.stdout_ != "hello" { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[xrp/source] interface contract self-test")
+    if _selftest_source() == 1 {
+        println("[xrp/source] SELFTEST PASS")
+    } else {
+        println("[xrp/source] SELFTEST FAIL")
+    }
+}

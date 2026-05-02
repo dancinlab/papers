@@ -1,0 +1,178 @@
+#!hexa strict
+// papers/core/papers/registry.hexa — papers operation registry (name -> dispatch)
+//
+// @tool(slug="papers_core_registry", desc="Switch-style dispatch over canonical papers operation names. Each branch points to the authoritative tool/<name>.hexa via FACADE pattern (no in-place tool/ change).")
+// @usage(hexa /Users/ghost/core/papers/core/papers/registry.hexa)
+// @omega-saturation-exempt("read-only registry; selftest is pure")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T1 registry layer.
+//
+// REGISTERED OPERATIONS (3, papers domain self-scope):
+//   manifest_query  -- read-only manifest query (list/get/cite/validate/count) WRAPPED
+//   doi_verify      -- DOI/Zenodo link health check                            WRAPPED
+//   zenodo_publish  -- single-paper Zenodo publish workflow                    WRAPPED
+//
+// raw#10 caveats:
+//   (1) Registry FACADE-only. Real impl lives in tool/<name>.hexa (additive
+//       only policy this BG cycle).
+//   (2) cross_repo_publish operations (publish/sync/validate) belong to the
+//       sibling cross_repo_publish domain, NOT this registry.
+//   (3) bin/papers 12-verb dispatch is NOT migrated — bin/papers continues to
+//       call tool/<name>.hexa directly. This registry is an additive map.
+
+// --- struct mirror (SSOT: papers/core/papers/source.hexa) ---
+
+struct PapersOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    status:         str,
+    tool_loc:       int
+}
+
+struct PapersOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn papers_op_meta_make(
+    name: str, tool_path: str, domain_cond: str, bin_verb: str,
+    is_readonly: int, requires_net: int, requires_secret: int,
+    status: str, tool_loc: int
+) -> PapersOpMeta {
+    return PapersOpMeta {
+        name: name, tool_path: tool_path, domain_cond: domain_cond,
+        bin_verb: bin_verb, is_readonly: is_readonly,
+        requires_net: requires_net, requires_secret: requires_secret,
+        status: status, tool_loc: tool_loc
+    }
+}
+
+fn papers_op_result_fail(reason: str, exit_code: int) -> PapersOpResult {
+    return PapersOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn papers_op_result_ok(stdout_: str, message: str) -> PapersOpResult {
+    return PapersOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Registered names (SSOT for list_available) ---
+
+fn papers_registry_names() -> [str] {
+    let mut a = []
+    a = a.push("manifest_query")
+    a = a.push("doi_verify")
+    a = a.push("zenodo_publish")
+    return a
+}
+
+// --- Meta dispatch ---
+
+fn papers_registry_meta(name: str) -> PapersOpMeta {
+    if name == "manifest_query" {
+        return papers_op_meta_make(
+            "manifest_query",
+            "tool/manifest_query.hexa",
+            "papers.cond.1",
+            "list",
+            1, 0, 0, "WRAPPED", 986
+        )
+    }
+    if name == "doi_verify" {
+        return papers_op_meta_make(
+            "doi_verify",
+            "tool/doi_verify.hexa",
+            "cross_repo_publish.cond.3",
+            "verify",
+            1, 1, 0, "WRAPPED", 201
+        )
+    }
+    if name == "zenodo_publish" {
+        return papers_op_meta_make(
+            "zenodo_publish",
+            "tool/zenodo_publish.hexa",
+            "cross_repo_publish.cond.2",
+            "publish",
+            0, 1, 1, "WRAPPED", 619
+        )
+    }
+    // Unknown operation -> tool_loc=-1 sentinel
+    return papers_op_meta_make(name, "", "", "", 0, 0, 0, "UNKNOWN", -1)
+}
+
+// --- Invoke dispatch (FACADE — never mutates tool/) ---
+//
+// Returns immediate FACADE-only message; caller may then choose to actually
+// exec the tool/<name>.hexa via separate driver. This registry does NOT
+// shell out to tool/* during selftest (additive only, side-effect-free).
+
+fn papers_registry_invoke(name: str, args: [str]) -> PapersOpResult {
+    let m = papers_registry_meta(name)
+    if m.tool_loc == -1 {
+        return papers_op_result_fail("unknown operation: " + name, 2)
+    }
+    let mut argv = m.tool_path
+    let mut i = 0
+    while i < len(args) {
+        argv = argv + " " + args[i]
+        i = i + 1
+    }
+    return papers_op_result_ok(
+        "FACADE: would invoke `" + argv + "` (additive-only mode; no shell-out)",
+        "facade-ok"
+    )
+}
+
+// --- Selftest ---
+
+fn _selftest_registry() -> int {
+    // 1. names list = 3
+    let names = papers_registry_names()
+    if len(names) != 3 { return 0 }
+    // 2. each name has well-formed meta
+    let mut i = 0
+    while i < len(names) {
+        let m = papers_registry_meta(names[i])
+        if m.name != names[i] { return 0 }
+        if m.tool_loc < 1 { return 0 }
+        if len(m.tool_path) < 1 { return 0 }
+        if len(m.status) < 1 { return 0 }
+        i = i + 1
+    }
+    // 3. unknown name -> UNKNOWN sentinel
+    let m_x = papers_registry_meta("nonexistent_op")
+    if m_x.tool_loc != -1 { return 0 }
+    if m_x.status != "UNKNOWN" { return 0 }
+    // 4. invoke FACADE: known op -> ok=1 with message
+    let r1 = papers_registry_invoke("manifest_query", ["list", "--json"])
+    if r1.ok != 1 { return 0 }
+    if r1.exit_code != 0 { return 0 }
+    // 5. invoke FACADE: unknown op -> ok=0
+    let r2 = papers_registry_invoke("not_a_thing", [])
+    if r2.ok != 0 { return 0 }
+    if r2.exit_code != 2 { return 0 }
+    // 6. cond mapping coverage: cond.1 + cross_repo cond.2 + cond.3 all present
+    let mq = papers_registry_meta("manifest_query")
+    let dv = papers_registry_meta("doi_verify")
+    let zp = papers_registry_meta("zenodo_publish")
+    if mq.domain_cond != "papers.cond.1" { return 0 }
+    if dv.domain_cond != "cross_repo_publish.cond.3" { return 0 }
+    if zp.domain_cond != "cross_repo_publish.cond.2" { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[papers/registry] 3-operation FACADE dispatch table")
+    if _selftest_registry() == 1 {
+        println("[papers/registry] SELFTEST PASS")
+    } else {
+        println("[papers/registry] SELFTEST FAIL")
+    }
+}

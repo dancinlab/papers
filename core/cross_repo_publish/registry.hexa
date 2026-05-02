@@ -1,0 +1,182 @@
+#!hexa strict
+// papers/core/cross_repo_publish/registry.hexa — cross-repo publish operation registry
+//
+// @tool(slug="cross_repo_publish_registry", desc="Switch-style dispatch over canonical cross-repo publish operation names. Each branch FACADE-points to the authoritative tool/<name>.hexa (no in-place tool/ change).")
+// @usage(hexa /Users/ghost/core/papers/core/cross_repo_publish/registry.hexa)
+// @omega-saturation-exempt("read-only registry; selftest is pure")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T1 registry layer.
+//
+// REGISTERED OPERATIONS (3, cross_repo_publish domain):
+//   publish    -- single-paper Zenodo publish workflow             WRAPPED  cond.2
+//   sync       -- bi-directional manifest <-> Zenodo reconcile     WRAPPED  cond.3
+//   validate   -- own#9 sister-repo lint (cross-repo canonical)    WRAPPED  cond.1
+//
+// raw#10 caveats:
+//   (1) `publish` op currently single-archive (Zenodo). OSF dual-archive is
+//       Phase 2 (cross_repo_publish.blk.1 active blocker) — `is_dual_archive`
+//       remains 0 until tool/osf_publish.hexa lands.
+//   (2) `sync` is bi-directional (manifest <- Zenodo); writes manifest.json.
+//   (3) `validate` BLOCKs on sister-repo paper duplication (own#9), WARNs on
+//       grandfather-mark exempt entries.
+
+// --- struct mirror ---
+
+struct XrpOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    is_dual_archive: int,
+    status:         str,
+    tool_loc:       int
+}
+
+struct XrpOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn xrp_op_meta_make(
+    name: str, tool_path: str, domain_cond: str, bin_verb: str,
+    is_readonly: int, requires_net: int, requires_secret: int,
+    is_dual_archive: int, status: str, tool_loc: int
+) -> XrpOpMeta {
+    return XrpOpMeta {
+        name: name, tool_path: tool_path, domain_cond: domain_cond,
+        bin_verb: bin_verb, is_readonly: is_readonly,
+        requires_net: requires_net, requires_secret: requires_secret,
+        is_dual_archive: is_dual_archive, status: status, tool_loc: tool_loc
+    }
+}
+
+fn xrp_op_result_fail(reason: str, exit_code: int) -> XrpOpResult {
+    return XrpOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn xrp_op_result_ok(stdout_: str, message: str) -> XrpOpResult {
+    return XrpOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Registered names ---
+
+fn xrp_registry_names() -> [str] {
+    let mut a = []
+    a = a.push("publish")
+    a = a.push("sync")
+    a = a.push("validate")
+    return a
+}
+
+// --- Meta dispatch ---
+
+fn xrp_registry_meta(name: str) -> XrpOpMeta {
+    if name == "publish" {
+        return xrp_op_meta_make(
+            "publish",
+            "tool/zenodo_publish.hexa",
+            "cross_repo_publish.cond.2",
+            "publish",
+            0, 1, 1, 0, "WRAPPED", 619
+        )
+    }
+    if name == "sync" {
+        return xrp_op_meta_make(
+            "sync",
+            "tool/zenodo_sync.hexa",
+            "cross_repo_publish.cond.3",
+            "sync",
+            0, 1, 1, 0, "WRAPPED", 207
+        )
+    }
+    if name == "validate" {
+        return xrp_op_meta_make(
+            "validate",
+            "tool/papers_cross_repo_lint.hexa",
+            "cross_repo_publish.cond.1",
+            "lint",
+            1, 0, 0, 0, "WRAPPED", 388
+        )
+    }
+    // Unknown -> tool_loc=-1 sentinel
+    return xrp_op_meta_make(name, "", "", "", 0, 0, 0, 0, "UNKNOWN", -1)
+}
+
+// --- Invoke dispatch (FACADE) ---
+
+fn xrp_registry_invoke(name: str, args: [str]) -> XrpOpResult {
+    let m = xrp_registry_meta(name)
+    if m.tool_loc == -1 {
+        return xrp_op_result_fail("unknown publish op: " + name, 2)
+    }
+    let mut argv = m.tool_path
+    let mut i = 0
+    while i < len(args) {
+        argv = argv + " " + args[i]
+        i = i + 1
+    }
+    return xrp_op_result_ok(
+        "FACADE: would invoke `" + argv + "` (additive-only mode; no shell-out)",
+        "facade-ok"
+    )
+}
+
+// --- Selftest ---
+
+fn _selftest_registry() -> int {
+    // 1. names list = 3
+    let names = xrp_registry_names()
+    if len(names) != 3 { return 0 }
+    // 2. each name has well-formed meta
+    let mut i = 0
+    while i < len(names) {
+        let m = xrp_registry_meta(names[i])
+        if m.name != names[i] { return 0 }
+        if m.tool_loc < 1 { return 0 }
+        if len(m.tool_path) < 1 { return 0 }
+        if len(m.status) < 1 { return 0 }
+        i = i + 1
+    }
+    // 3. unknown -> UNKNOWN sentinel
+    let m_x = xrp_registry_meta("nonexistent_publish")
+    if m_x.tool_loc != -1 { return 0 }
+    if m_x.status != "UNKNOWN" { return 0 }
+    // 4. invoke FACADE: known op
+    let r1 = xrp_registry_invoke("publish", ["--dry-run"])
+    if r1.ok != 1 { return 0 }
+    // 5. invoke FACADE: unknown op
+    let r2 = xrp_registry_invoke("not_a_thing", [])
+    if r2.ok != 0 { return 0 }
+    if r2.exit_code != 2 { return 0 }
+    // 6. cond mapping coverage: 1, 2, 3 all present
+    let pub = xrp_registry_meta("publish")
+    let syn = xrp_registry_meta("sync")
+    let val = xrp_registry_meta("validate")
+    if pub.domain_cond != "cross_repo_publish.cond.2" { return 0 }
+    if syn.domain_cond != "cross_repo_publish.cond.3" { return 0 }
+    if val.domain_cond != "cross_repo_publish.cond.1" { return 0 }
+    // 7. dual_archive invariant: all 0 until OSF lands (Phase 2)
+    let mut da_total = 0
+    let mut k = 0
+    while k < len(names) {
+        da_total = da_total + xrp_registry_meta(names[k]).is_dual_archive
+        k = k + 1
+    }
+    if da_total != 0 { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[xrp/registry] 3-operation FACADE dispatch (publish/sync/validate)")
+    if _selftest_registry() == 1 {
+        println("[xrp/registry] SELFTEST PASS")
+    } else {
+        println("[xrp/registry] SELFTEST FAIL")
+    }
+}

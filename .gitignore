@@ -36,3 +36,8 @@ state/*.tmp
 *.credentials.*
 # Never commit local-override creds — use secret repo instead:
 #   papers publish calls `secret get zenodo.token` at runtime.
+
+# .workspace machine-local SSOT (mk2 schema, NEVER github push) — added 2026-05-02
+.workspace
+.workspace.*
+.workspace.lock

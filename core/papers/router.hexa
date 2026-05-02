@@ -1,0 +1,167 @@
+#!hexa strict
+// papers/core/papers/router.hexa — bin/papers verb -> operation routing
+//
+// @tool(slug="papers_core_router", desc="Maps bin/papers 12-verb CLI surface to papers domain operations. Default route table mirrors bin/papers; env override PAPERS_OP_FORCE pins a single operation.")
+// @usage(hexa /Users/ghost/core/papers/core/papers/router.hexa)
+// @omega-saturation-exempt("read-only routing; selftest is pure")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T1 router layer.
+//
+// VERB ROUTING (3 verbs covered by THIS domain; 9 others belong to cross_repo_publish or other tools):
+//   list / get / cite / validate -> manifest_query  (papers.cond.1)
+//   verify                       -> doi_verify      (cross_repo_publish.cond.3)
+//   publish                      -> zenodo_publish  (cross_repo_publish.cond.2)
+//
+// raw#10 caveats:
+//   (1) bin/papers is the live entrypoint; this router is an additive map for
+//       cold-read agents (raw 271 README.ai.md style discoverability).
+//   (2) Env override `PAPERS_OP_FORCE=<name>` for diagnostic-pin only — does
+//       NOT alter bin/papers behavior.
+//   (3) sync / scan / lint / pull / search / secret / help verbs route to other
+//       domains or external tools and are NOT in this router (separation
+//       enforced by raw 270 core-module-architecture-canonical-pattern).
+
+// --- struct mirror ---
+
+struct PapersOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    status:         str,
+    tool_loc:       int
+}
+
+struct PapersOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn papers_op_result_fail(reason: str, exit_code: int) -> PapersOpResult {
+    return PapersOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn papers_op_result_ok(stdout_: str, message: str) -> PapersOpResult {
+    return PapersOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Verb -> operation lookup ---
+
+fn papers_route_verb_to_op(verb: str) -> str {
+    if verb == "list" { return "manifest_query" }
+    if verb == "get" { return "manifest_query" }
+    if verb == "cite" { return "manifest_query" }
+    if verb == "validate" { return "manifest_query" }
+    if verb == "verify" { return "doi_verify" }
+    if verb == "publish" { return "zenodo_publish" }
+    return ""
+}
+
+// --- Default verb chain (manifest-readonly first, then verify, then publish) ---
+
+fn papers_default_verb_chain() -> [str] {
+    let mut a = []
+    a = a.push("list")
+    a = a.push("verify")
+    a = a.push("publish")
+    return a
+}
+
+// --- Resolve forced op from env (diagnostic only) ---
+
+fn papers_resolve_force_op() -> str {
+    let single = exec("printenv PAPERS_OP_FORCE 2>/dev/null || true").trim()
+    return single
+}
+
+// --- Public route: verb -> facade message ---
+
+struct PapersRouteResult {
+    verb:          str,
+    op_name:       str,
+    forced:        int,
+    result:        PapersOpResult
+}
+
+fn papers_route(verb: str) -> PapersRouteResult {
+    let forced = papers_resolve_force_op()
+    if len(forced) > 0 {
+        return PapersRouteResult {
+            verb: verb,
+            op_name: forced,
+            forced: 1,
+            result: papers_op_result_ok(
+                "FACADE: forced op `" + forced + "` (env PAPERS_OP_FORCE)",
+                "forced"
+            )
+        }
+    }
+    let op = papers_route_verb_to_op(verb)
+    if len(op) < 1 {
+        return PapersRouteResult {
+            verb: verb,
+            op_name: "",
+            forced: 0,
+            result: papers_op_result_fail(
+                "router: verb `" + verb + "` not in papers domain (try cross_repo_publish or check bin/papers)",
+                2
+            )
+        }
+    }
+    return PapersRouteResult {
+        verb: verb,
+        op_name: op,
+        forced: 0,
+        result: papers_op_result_ok(
+            "FACADE: verb `" + verb + "` -> op `" + op + "`",
+            "routed"
+        )
+    }
+}
+
+// --- Selftest ---
+
+fn _selftest_router() -> int {
+    // 1. Default verb chain has 3 entries
+    let dc = papers_default_verb_chain()
+    if len(dc) != 3 { return 0 }
+    if dc[0] != "list" { return 0 }
+    if dc[1] != "verify" { return 0 }
+    if dc[2] != "publish" { return 0 }
+    // 2. verb -> op resolution
+    if papers_route_verb_to_op("list") != "manifest_query" { return 0 }
+    if papers_route_verb_to_op("get") != "manifest_query" { return 0 }
+    if papers_route_verb_to_op("cite") != "manifest_query" { return 0 }
+    if papers_route_verb_to_op("validate") != "manifest_query" { return 0 }
+    if papers_route_verb_to_op("verify") != "doi_verify" { return 0 }
+    if papers_route_verb_to_op("publish") != "zenodo_publish" { return 0 }
+    // 3. unknown verb -> empty
+    if len(papers_route_verb_to_op("unknown_verb")) != 0 { return 0 }
+    // 4. route(): known verb -> ok=1
+    let r1 = papers_route("list")
+    if r1.result.ok != 1 { return 0 }
+    if r1.op_name != "manifest_query" { return 0 }
+    if r1.forced != 0 { return 0 }
+    // 5. route(): unknown verb -> ok=0
+    let r2 = papers_route("not_a_verb")
+    if r2.result.ok != 0 { return 0 }
+    if r2.result.exit_code != 2 { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[papers/router] verb -> operation routing")
+    if _selftest_router() == 1 {
+        println("[papers/router] SELFTEST PASS")
+    } else {
+        println("[papers/router] SELFTEST FAIL")
+    }
+    let demo = papers_route("verify")
+    println("[papers/router] route('verify') -> op=" + demo.op_name + " ok=" + str(demo.result.ok))
+}

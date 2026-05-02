@@ -1,0 +1,114 @@
+#!hexa strict
+// papers/modules/papers/zenodo_publish.hexa — FACADE for tool/zenodo_publish.hexa
+//
+// @tool(slug="papers_modules_zenodo_publish", desc="FACADE that exposes papers/tool/zenodo_publish.hexa under the canonical raw 270/271/272/273 module pattern. Does NOT modify the underlying tool — references it via meta + (opt-in) shell-out.")
+// @usage(hexa /Users/ghost/core/papers/modules/papers/zenodo_publish.hexa <paper-id>)
+// @omega-saturation-exempt("FACADE; selftest is meta-only")
+//
+// raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T2 module impl layer.
+//
+// REFERENCED tool/ FILE (use, link, deps; in-place change FORBIDDEN):
+//   tool/zenodo_publish.hexa  — 619 LOC, single-paper Zenodo publish workflow
+//
+// SECRET DEPENDENCY: requires `secret get zenodo.token` (or zenodo.sandbox_token).
+// Per .own permanent exclude (papers.cond credential_in_repo): secret CLI passthrough only.
+
+// --- struct mirror ---
+
+struct PapersOpMeta {
+    name:           str,
+    tool_path:      str,
+    domain_cond:    str,
+    bin_verb:       str,
+    is_readonly:    int,
+    requires_net:   int,
+    requires_secret: int,
+    status:         str,
+    tool_loc:       int
+}
+
+struct PapersOpResult {
+    ok:             int,
+    exit_code:      int,
+    stdout_:        str,
+    stderr_:        str,
+    message:        str
+}
+
+fn papers_op_result_fail(reason: str, exit_code: int) -> PapersOpResult {
+    return PapersOpResult { ok: 0, exit_code: exit_code, stdout_: "", stderr_: reason, message: reason }
+}
+
+fn papers_op_result_ok(stdout_: str, message: str) -> PapersOpResult {
+    return PapersOpResult { ok: 1, exit_code: 0, stdout_: stdout_, stderr_: "", message: message }
+}
+
+// --- Required exports ---
+
+fn papers_op_meta_zenodo_publish() -> PapersOpMeta {
+    return PapersOpMeta {
+        name:            "zenodo_publish",
+        tool_path:       "tool/zenodo_publish.hexa",
+        domain_cond:     "cross_repo_publish.cond.2",
+        bin_verb:        "publish",
+        is_readonly:     0,
+        requires_net:    1,
+        requires_secret: 1,
+        status:          "WRAPPED",
+        tool_loc:        619
+    }
+}
+
+fn papers_op_invoke_zenodo_publish(args: [str]) -> PapersOpResult {
+    let force_shell = exec("printenv PAPERS_FACADE_SHELL 2>/dev/null || true").trim()
+    let mut argv = "tool/zenodo_publish.hexa"
+    let mut i = 0
+    while i < len(args) {
+        argv = argv + " " + args[i]
+        i = i + 1
+    }
+    if force_shell != "1" {
+        return papers_op_result_ok(
+            "FACADE: would invoke `" + argv + "` (set PAPERS_FACADE_SHELL=1 to actually exec; requires net + zenodo.token secret)",
+            "facade-meta-only"
+        )
+    }
+    let cmd = "cd /Users/ghost/core/papers && hexa.real " + argv + " 2>&1; echo __EXIT__$?"
+    let out = exec(cmd)
+    let parts = out.split("__EXIT__")
+    if len(parts) < 2 {
+        return papers_op_result_fail("zenodo_publish: shell-out parse error", 2)
+    }
+    let stdout_body = parts[0]
+    let exit_str = parts[1].trim()
+    let exit_code = to_int(exit_str)
+    if exit_code != 0 {
+        return papers_op_result_fail("zenodo_publish exit=" + str(exit_code), exit_code)
+    }
+    return papers_op_result_ok(stdout_body, "shell-out ok")
+}
+
+// --- Selftest (meta-only; never publishes) ---
+
+fn _selftest_zenodo_publish() -> int {
+    let m = papers_op_meta_zenodo_publish()
+    if m.name != "zenodo_publish" { return 0 }
+    if m.tool_path != "tool/zenodo_publish.hexa" { return 0 }
+    if m.tool_loc != 619 { return 0 }
+    if m.is_readonly != 0 { return 0 }
+    if m.requires_net != 1 { return 0 }
+    if m.requires_secret != 1 { return 0 }
+    if m.status != "WRAPPED" { return 0 }
+    let r = papers_op_invoke_zenodo_publish(["--dry-run"])
+    if r.ok != 1 { return 0 }
+    return 1
+}
+
+fn main() {
+    println("[modules/papers/zenodo_publish] FACADE for tool/zenodo_publish.hexa")
+    if _selftest_zenodo_publish() == 1 {
+        println("[modules/papers/zenodo_publish] SELFTEST PASS")
+    } else {
+        println("[modules/papers/zenodo_publish] SELFTEST FAIL")
+    }
+}
