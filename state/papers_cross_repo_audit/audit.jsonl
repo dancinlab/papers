@@ -58,3 +58,10 @@
 {"ts": "2026-04-28T22:52:49Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1", "repo": "airgenome", "verdict": "PASS", "count": 0, "sample": ""}
 {"ts": "2026-04-28T22:52:56Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1", "repo": "nexus", "verdict": "PASS", "count": 0, "sample": ""}
 {"ts": "2026-04-28T22:53:01Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1", "repo": "hive", "verdict": "PASS", "count": 0, "sample": ""}
+{"ts": "2026-05-04T04:33:36Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "anima", "verdict": "PASS", "count": 0, "sample": ""}
+{"ts": "2026-05-04T04:34:59Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "n6-architecture", "verdict": "WARN", "count": 1, "sample": "/Users/ghost/core/n6-architecture/design/kick/2026-04-28_cycle23-zenodo-prep-refresh_omega_cycle.json"}
+{"ts": "2026-05-04T04:35:30Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "hexa-lang", "verdict": "PASS", "count": 0, "sample": ""}
+{"ts": "2026-05-04T04:35:31Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "airgenome", "verdict": "PASS", "count": 0, "sample": ""}
+{"ts": "2026-05-04T04:35:49Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "nexus", "verdict": "WARN", "count": 1, "sample": "/Users/ghost/core/nexus/n6/atlas.append.cycle23-zenodo-prep-refresh.n6"}
+{"ts": "2026-05-04T04:35:52Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "hive", "verdict": "PASS", "count": 0, "sample": ""}
+{"ts": "2026-05-04T04:38:30Z", "tool": "papers_cross_repo_lint", "classifier_version": "papers_cross_repo_lint.v1.2", "repo": "anima", "verdict": "PASS", "count": 0, "sample": ""}

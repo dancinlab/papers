@@ -5,7 +5,7 @@ preset: friendly
 mk2_scope: in_scope (peer perspective, additive only)
 policy: additive_only_no_migration
 
-raw_anchor: hive/.raw.mk2 arch.001 (raw 270/271/272/273)
+raw_anchor: hive/.raw.mk2 arch.001 (derives-from mk1 raw 270/271/272/273)
 
 domains_landed: 2
   - papers (self-domain)

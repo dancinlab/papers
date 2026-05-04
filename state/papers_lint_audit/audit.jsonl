@@ -128,3 +128,11 @@
 {"ts": "2026-04-28T15:00:58Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
 {"ts": "2026-04-28T15:00:59Z", "tool": "papers_lint", "rule": 7, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 17 subcommands documented in help"}
 {"ts": "2026-04-28T15:00:59Z", "tool": "papers_lint", "rule": 8, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 3 core tools carry uchg flag"}
+{"ts": "2026-05-04T04:32:43Z", "tool": "papers_lint", "rule": 1, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all tool names compliant"}
+{"ts": "2026-05-04T04:32:43Z", "tool": "papers_lint", "rule": 2, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "bin/ single entry papers"}
+{"ts": "2026-05-04T04:32:44Z", "tool": "papers_lint", "rule": 3, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "no hard-coded credential literals detected"}
+{"ts": "2026-05-04T04:32:44Z", "tool": "papers_lint", "rule": 4, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 433 entries schema-conformant"}
+{"ts": "2026-05-04T04:32:45Z", "tool": "papers_lint", "rule": 5, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all DOIs valid"}
+{"ts": "2026-05-04T04:32:45Z", "tool": "papers_lint", "rule": 6, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "both publish tools present + bin/papers references both"}
+{"ts": "2026-05-04T04:32:45Z", "tool": "papers_lint", "rule": 7, "verdict": "WARN", "path": "/Users/ghost/core/papers", "detail": "help missing subcommands: cross_repo_lint"}
+{"ts": "2026-05-04T04:32:46Z", "tool": "papers_lint", "rule": 8, "verdict": "PASS", "path": "/Users/ghost/core/papers", "detail": "all 3 core tools carry uchg flag"}

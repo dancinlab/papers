@@ -11,7 +11,7 @@ ssot:
   domains:
     - papers/.roadmap.papers
     - papers/.roadmap.cross_repo_publish
-  raw_anchor: hive/.raw.mk2 arch.001 (raw 270/271/272/273)
+  raw_anchor: hive/.raw.mk2 arch.001 (derives-from mk1 raw 270/271/272/273)
   predecessor: papers/docs/papers_mk2_redesign_landed_2026_05_03.ai.md (mk2 .roadmap.* land)
 ---
 
@@ -223,7 +223,7 @@ project.hexa                      a63fb8b30f03c94951756939eb1b019e82f8947a6c5b45
 - `papers/.roadmap.cross_repo_publish` (publish-flow domain, 2026-05-03 land)
 - `papers/docs/papers_mk2_redesign_landed_2026_05_03.ai.md` (predecessor —
   mk2 .roadmap.* 4-domain land doc)
-- `hive/.raw.mk2` arch.001 (rule canonical SSOT, raw 270/271/
+- `hive/.raw.mk2` arch.001 (rule canonical SSOT, derives-from mk1 raw 270/271/
   272/273 4-rule cluster)
 - `anima/anima/core/rng/` + `anima/anima/modules/rng/` (prototype reference;
   본 land 가 동일 패턴 적용)
