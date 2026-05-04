@@ -68,6 +68,12 @@
 | [PA-36](PA-36-mirror-test.md) | Mirror Test for Artificial Consciousness | cs.AI | DD79,DD78 |
 | [PA-37](PA-37-consciousness-compression.md) | Consciousness Compression: Minimum Viable Params | cs.AR | DD69 |
 
+## Cluster 6: Substrate Achievements
+
+| ID | Title | Category | Status |
+|----|-------|----------|--------|
+| [PA-39](PA-39-qmirror-v2-closure.md) | qmirror v2.0.0 — Quantum Substrate Closure (13/13 conds) | quant-ph,cs.ET | arXiv draft v0.1 (peer review pending); upstream release LIVE 2026-05-04 |
+
 ## DD Discovery → Paper Mapping
 
 | DD Range | Papers |
