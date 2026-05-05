@@ -1,8 +1,8 @@
 #!hexa strict
-// papers/modules/papers/manifest_query.hexa — FACADE for tool/manifest_query.hexa
+// papers/module/manifest_query.hexa — FACADE for tool/manifest_query.hexa
 //
 // @tool(slug="papers_modules_manifest_query", desc="FACADE that exposes papers/tool/manifest_query.hexa under the canonical raw 270/271/272/273 module pattern. Does NOT modify or duplicate the underlying tool — references it via meta + (opt-in) shell-out.")
-// @usage(hexa /Users/ghost/core/papers/modules/papers/manifest_query.hexa [--shell-out args...])
+// @usage(hexa /Users/ghost/core/papers/papers/module/manifest_query.hexa [--shell-out args...])
 // @omega-saturation-exempt("FACADE; selftest is meta-only, no tool/ exec")
 //
 // raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T2 module impl layer.
@@ -10,13 +10,13 @@
 // REFERENCED tool/ FILE (use, link, deps; in-place change FORBIDDEN):
 //   tool/manifest_query.hexa    — 986 LOC, read-only manifest.json query engine
 //
-// Contract per modules/papers/README.ai.md:
+// Contract per papers/module/README.ai.md:
 //   fn rng_source_meta_<name>() -> RngSourceMeta            (mirror pattern)
 //   becomes for papers domain:
 //   fn papers_op_meta_manifest_query() -> PapersOpMeta
 //   fn papers_op_invoke_manifest_query(args: [str]) -> PapersOpResult
 
-// --- struct mirror (SSOT: papers/core/papers/source.hexa) ---
+// --- struct mirror (SSOT: papers/core/source.hexa) ---
 
 struct PapersOpMeta {
     name:           str,
@@ -111,10 +111,10 @@ fn _selftest_manifest_query() -> int {
 }
 
 fn main() {
-    println("[modules/papers/manifest_query] FACADE for tool/manifest_query.hexa")
+    println("[papers/module/manifest_query] FACADE for tool/manifest_query.hexa")
     if _selftest_manifest_query() == 1 {
-        println("[modules/papers/manifest_query] SELFTEST PASS")
+        println("[papers/module/manifest_query] SELFTEST PASS")
     } else {
-        println("[modules/papers/manifest_query] SELFTEST FAIL")
+        println("[papers/module/manifest_query] SELFTEST FAIL")
     }
 }

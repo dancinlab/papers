@@ -1,14 +1,14 @@
 #!hexa strict
-// papers/core/cross_repo_publish/source.hexa — cross-repo publish flow contract
+// cross_repo_publish/core/source.hexa — cross-repo publish flow contract
 //
 // @tool(slug="cross_repo_publish_source", desc="Single canonical contract every publish-flow operation module (publish, sync, validate) satisfies. Routes sister-repo paper artifacts into papers/<sub>/ via own#9 (canonical archive locus).")
-// @usage(hexa /Users/ghost/core/papers/core/cross_repo_publish/source.hexa)
+// @usage(hexa /Users/ghost/core/papers/cross_repo_publish/core/source.hexa)
 // @omega-saturation-exempt("interface-only; no I/O")
 //
 // raw#9 hexa-only strict. raw#15 SSOT this file for the cross-repo publish contract.
 // raw 270/271/272/273 (mk2 arch.001): T0 source layer of canonical 4-file pattern.
 //
-// CONTRACT (every operation module under modules/cross_repo_publish/ must export):
+// CONTRACT (every operation module under cross_repo_publish/module/ must export):
 //   fn xrp_op_meta_<name>() -> XrpOpMeta
 //   fn xrp_op_invoke_<name>(args: [str]) -> XrpOpResult
 //
@@ -22,7 +22,7 @@
 //   tool/doi_verify.hexa                — DOI link health verifier         (201 LOC)
 //
 // raw#10 caveats:
-//   (1) tool/* files remain authoritative. modules/cross_repo_publish/* are
+//   (1) tool/* files remain authoritative. cross_repo_publish/module/* are
 //       FACADE entries delegating via exec("hexa.real tool/<name>.hexa ...").
 //   (2) own#9 enforcement = sister-repo paper artifacts (anima/nexus/n6/
 //       brainwire/sedi/tecs-l) MUST land into papers/<sub>/ only. Sister-repo

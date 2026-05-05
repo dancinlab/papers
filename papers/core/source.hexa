@@ -1,14 +1,14 @@
 #!hexa strict
-// papers/core/papers/source.hexa — papers domain interface contract
+// papers/core/source.hexa — papers domain interface contract
 //
 // @tool(slug="papers_core_source", desc="Single canonical contract every papers operation module (manifest_query, doi_verify, zenodo_publish) satisfies. Allows the router to swap operations via subcommand without touching consumer code.")
-// @usage(hexa /Users/ghost/core/papers/core/papers/source.hexa)
+// @usage(hexa /Users/ghost/core/papers/papers/core/source.hexa)
 // @omega-saturation-exempt("interface-only; no I/O")
 //
 // raw#9 hexa-only strict. raw#15 SSOT this file for the papers operation contract.
 // raw 270/271/272/273 (mk2 arch.001): T0 source layer of canonical 4-file pattern.
 //
-// CONTRACT (every operation module under modules/papers/ must export):
+// CONTRACT (every operation module under papers/module/ must export):
 //   fn papers_op_meta_<name>() -> PapersOpMeta
 //   fn papers_op_invoke_<name>(args: [str]) -> PapersOpResult
 //
@@ -18,9 +18,9 @@
 //   tool/zenodo_publish.hexa   — single-paper Zenodo publish (619 LOC)
 //
 // raw#10 caveats:
-//   (1) tool/* files remain authoritative for their operations. modules/papers/*
+//   (1) tool/* files remain authoritative for their operations. papers/module/*
 //       are thin facade entries that delegate via exec("hexa.real tool/<name>.hexa ...").
-//   (2) Migration of tool/* logic into modules/papers/* is NOT in scope for this
+//   (2) Migration of tool/* logic into papers/module/* is NOT in scope for this
 //       BG cycle (additive only). Phase 2 candidate.
 //   (3) PapersOpResult uses parallel-array str storage rather than typed structs
 //       because hexa-lang stage0 has no first-class generics.

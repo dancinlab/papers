@@ -1,11 +1,11 @@
 ---
-schema: papers/modules/papers/ai-native/1
+schema: papers/module/ai-native/1
 last_updated: 2026-05-02
 ssot:
-  interface: papers/core/papers/source.hexa
-  registry:  papers/core/papers/registry.hexa
-  router:    papers/core/papers/router.hexa
-  aggregator: papers/core/papers/papers_main.hexa
+  interface: papers/core/source.hexa
+  registry:  papers/core/registry.hexa
+  router:    papers/core/router.hexa
+  aggregator: papers/core/papers_main.hexa
 upstream_dependency:
   manifest: papers/manifest.json   # 183 KB, 433+ paper SSOT
   bin:      papers/bin/papers      # 12-verb CLI dispatch
@@ -32,7 +32,7 @@ additive layer that exposes the canonical interface for cold-read agents.
 - Three operations: `manifest_query`, `doi_verify`, `zenodo_publish`.
 - Each module exports two functions: `papers_op_meta_<name>()` and
   `papers_op_invoke_<name>(args)`.
-- The aggregator is `papers/core/papers/papers_main.hexa` (raw 270 stem-equals-
+- The aggregator is `papers/core/papers_main.hexa` (raw 270 stem-equals-
   feature rule; aggregator MUST be `papers_main.hexa`, not `main.hexa`).
 - FACADE meta-only by default. Set `PAPERS_FACADE_SHELL=1` to actually shell
   out to the underlying `tool/<name>.hexa` via `hexa.real`.
@@ -43,13 +43,13 @@ additive layer that exposes the canonical interface for cold-read agents.
 
 ```
 caller
-  |- papers/core/papers/router.hexa        (verb -> op routing)
-       |- papers/core/papers/registry.hexa (name -> module)
-            |- papers/modules/papers/manifest_query.hexa  WRAPPED  papers.cond.1
+  |- papers/core/router.hexa        (verb -> op routing)
+       |- papers/core/registry.hexa (name -> module)
+            |- papers/module/manifest_query.hexa  WRAPPED  papers.cond.1
             |    `- tool/manifest_query.hexa              (986 LOC, SSOT)
-            |- papers/modules/papers/doi_verify.hexa      WRAPPED  cross_repo_publish.cond.3
+            |- papers/module/doi_verify.hexa      WRAPPED  cross_repo_publish.cond.3
             |    `- tool/doi_verify.hexa                  (201 LOC, SSOT, py3 heredoc)
-            `- papers/modules/papers/zenodo_publish.hexa  WRAPPED  cross_repo_publish.cond.2
+            `- papers/module/zenodo_publish.hexa  WRAPPED  cross_repo_publish.cond.2
                  `- tool/zenodo_publish.hexa              (619 LOC, SSOT, requires secret)
 ```
 
@@ -76,7 +76,7 @@ struct PapersOpResult {
     message:   str       // human-readable diagnostic
 }
 
-// Per-module: papers/modules/papers/<name>.hexa exports
+// Per-module: papers/module/<name>.hexa exports
 fn papers_op_meta_<name>() -> PapersOpMeta
 fn papers_op_invoke_<name>(args: [str]) -> PapersOpResult
 ```
@@ -103,24 +103,24 @@ let r = papers_op_invoke_manifest_query(["list", "--json"])
 ### Opt-in shell-out (engages tool/<name>.hexa via hexa.real)
 
 ```bash
-PAPERS_FACADE_SHELL=1 hexa.real /Users/ghost/core/papers/modules/papers/manifest_query.hexa
+PAPERS_FACADE_SHELL=1 hexa.real /Users/ghost/core/papers/papers/module/manifest_query.hexa
 ```
 
 ### Force-single-op for diagnostic
 
 ```bash
-PAPERS_OP_FORCE=zenodo_publish hexa.real /Users/ghost/core/papers/core/papers/router.hexa
+PAPERS_OP_FORCE=zenodo_publish hexa.real /Users/ghost/core/papers/papers/core/router.hexa
 ```
 
 ## Adding a new papers operation (template)
 
 1. Create `papers/tool/<new_op>.hexa` with the actual logic (this is where the
    real implementation lives).
-2. Create `papers/modules/papers/<new_op>.hexa` with the two exported fns and
+2. Create `papers/module/<new_op>.hexa` with the two exported fns and
    two structs (mirror `manifest_query.hexa`).
-3. Register in `papers/core/papers/registry.hexa` (add dispatch case +
+3. Register in `papers/core/registry.hexa` (add dispatch case +
    `papers_registry_names()` entry).
-4. Add verb mapping in `papers/core/papers/router.hexa` if a new bin/papers
+4. Add verb mapping in `papers/core/router.hexa` if a new bin/papers
    verb dispatches here.
 5. Update `papers_main.hexa` aggregator (`_meta_for` + `names` array).
 6. Update this README's operation table row.
@@ -128,9 +128,9 @@ PAPERS_OP_FORCE=zenodo_publish hexa.real /Users/ghost/core/papers/core/papers/ro
 
 ## Invariants (lint-checkable, raw 270 conformance)
 
-- `papers/core/papers/<f>.hexa` MUST contain exactly four files: `source`,
+- `papers/core/<f>.hexa` MUST contain exactly four files: `source`,
   `registry`, `router`, `papers_main` (stem equals feature).
-- Every `papers/modules/papers/<name>.hexa` MUST export both
+- Every `papers/module/<name>.hexa` MUST export both
   `papers_op_meta_<name>()` and `papers_op_invoke_<name>(args)`.
 - This `README.ai.md` MUST exist as literal `README.ai.md` (raw 271 mandate).
 - Import direction: T2 modules -> T1 core registry -> T0 source. Reverse FORBIDDEN.
@@ -139,7 +139,7 @@ PAPERS_OP_FORCE=zenodo_publish hexa.real /Users/ghost/core/papers/core/papers/ro
 
 1. **FACADE-only by default.** No shell-out unless `PAPERS_FACADE_SHELL=1`.
    The 3 modules NEVER duplicate logic from `tool/<name>.hexa`. Migration of
-   tool logic into modules/papers/ is NOT in scope this BG cycle (additive only).
+   tool logic into papers/module/ is NOT in scope this BG cycle (additive only).
 2. **`tool/doi_verify.hexa` contains a python3 heredoc.** raw 9 hexa-only
    compliance is `.roadmap.papers cond.3` — not yet met. Tracked separately.
 3. **`tool/zenodo_publish.hexa` requires `secret get zenodo.token`.** Calling
@@ -171,13 +171,13 @@ PAPERS_OP_FORCE=zenodo_publish hexa.real /Users/ghost/core/papers/core/papers/ro
 
 | Path | LOC | role |
 |------|----:|------|
-| `papers/core/papers/source.hexa` | ~140 | T0 interface contract |
-| `papers/core/papers/registry.hexa` | ~190 | T1 name -> dispatch |
-| `papers/core/papers/router.hexa` | ~170 | T1 verb -> op routing |
-| `papers/core/papers/papers_main.hexa` | ~190 | T1 aggregator + selftest |
-| `papers/modules/papers/manifest_query.hexa` | ~135 | T2 FACADE |
-| `papers/modules/papers/doi_verify.hexa` | ~125 | T2 FACADE |
-| `papers/modules/papers/zenodo_publish.hexa` | ~130 | T2 FACADE |
-| `papers/modules/papers/README.ai.md` | this file | raw 271 mandate |
+| `papers/core/source.hexa` | ~140 | T0 interface contract |
+| `papers/core/registry.hexa` | ~190 | T1 name -> dispatch |
+| `papers/core/router.hexa` | ~170 | T1 verb -> op routing |
+| `papers/core/papers_main.hexa` | ~190 | T1 aggregator + selftest |
+| `papers/module/manifest_query.hexa` | ~135 | T2 FACADE |
+| `papers/module/doi_verify.hexa` | ~125 | T2 FACADE |
+| `papers/module/zenodo_publish.hexa` | ~130 | T2 FACADE |
+| `papers/module/README.ai.md` | this file | raw 271 mandate |
 
 LOC approximate at land time. Re-pin via `wc -l` after edits.

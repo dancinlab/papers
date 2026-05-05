@@ -1,11 +1,11 @@
 ---
-schema: papers/modules/cross_repo_publish/ai-native/1
+schema: cross_repo_publish/module/ai-native/1
 last_updated: 2026-05-02
 ssot:
-  interface: papers/core/cross_repo_publish/source.hexa
-  registry:  papers/core/cross_repo_publish/registry.hexa
-  router:    papers/core/cross_repo_publish/router.hexa
-  aggregator: papers/core/cross_repo_publish/main.hexa  # NOTE: stem 'main' per user task spec; raw 270 normally requires '<feature>_main' (caveat C1)
+  interface: cross_repo_publish/core/source.hexa
+  registry:  cross_repo_publish/core/registry.hexa
+  router:    cross_repo_publish/core/router.hexa
+  aggregator: cross_repo_publish/core/main.hexa  # NOTE: stem 'main' per user task spec; raw 270 normally requires '<feature>_main' (caveat C1)
 upstream_dependency:
   manifest: papers/manifest.json
   bin:      papers/bin/papers
@@ -33,7 +33,7 @@ own#9 (canonical archive locus = `papers/<sub>/`).
 
 - Three operations: `publish`, `sync`, `validate`.
 - Each module exports `xrp_op_meta_<name>()` and `xrp_op_invoke_<name>(args)`.
-- The aggregator is `papers/core/cross_repo_publish/main.hexa` (stem `main`
+- The aggregator is `cross_repo_publish/core/main.hexa` (stem `main`
   per user task spec — see caveat C1; deviates from raw 270 stem-equals-feature).
 - Default chain: `lint -> publish -> sync` (validate first, then publish, then
   reconcile).
@@ -48,18 +48,18 @@ own#9 (canonical archive locus = `papers/<sub>/`).
 ```
 sister-repo paper artifact
   |- (own#9 canonical archive: papers/<sub>/<paper-id>/)
-       |- papers/core/cross_repo_publish/router.hexa     (verb -> op)
-            |- papers/core/cross_repo_publish/registry.hexa
-                 |- papers/modules/cross_repo_publish/validate.hexa  WRAPPED  cond.1
+       |- cross_repo_publish/core/router.hexa     (verb -> op)
+            |- cross_repo_publish/core/registry.hexa
+                 |- cross_repo_publish/module/validate.hexa  WRAPPED  cond.1
                  |    `- tool/papers_cross_repo_lint.hexa            (388 LOC; own#9 v1.2)
-                 |- papers/modules/cross_repo_publish/publish.hexa   WRAPPED  cond.2
+                 |- cross_repo_publish/module/publish.hexa   WRAPPED  cond.2
                  |    `- tool/zenodo_publish.hexa                    (619 LOC; secret token)
-                 `- papers/modules/cross_repo_publish/sync.hexa      WRAPPED  cond.3
+                 `- cross_repo_publish/module/sync.hexa      WRAPPED  cond.3
                       `- tool/zenodo_sync.hexa                       (207 LOC; bulk reconcile)
 
   BLOCKED Phase 2:
   papers/tool/osf_publish.hexa  --  cross_repo_publish.blk.1 (impl gap)
-       |- modules/cross_repo_publish/publish.hexa.is_dual_archive remains 0 until landed
+       |- cross_repo_publish/module/publish.hexa.is_dual_archive remains 0 until landed
 ```
 
 ## Public API contract
@@ -86,7 +86,7 @@ struct XrpOpResult {
     message:   str
 }
 
-// Per-module: papers/modules/cross_repo_publish/<name>.hexa exports
+// Per-module: cross_repo_publish/module/<name>.hexa exports
 fn xrp_op_meta_<name>() -> XrpOpMeta
 fn xrp_op_invoke_<name>(args: [str]) -> XrpOpResult
 ```
@@ -112,13 +112,13 @@ let r = xrp_op_invoke_publish(["--dry-run"])
 ### Opt-in shell-out
 
 ```bash
-PAPERS_FACADE_SHELL=1 hexa.real /Users/ghost/core/papers/modules/cross_repo_publish/validate.hexa
+PAPERS_FACADE_SHELL=1 hexa.real /Users/ghost/core/papers/cross_repo_publish/module/validate.hexa
 ```
 
 ### Force-single-op for diagnostic
 
 ```bash
-XRP_OP_FORCE=sync hexa.real /Users/ghost/core/papers/core/cross_repo_publish/router.hexa
+XRP_OP_FORCE=sync hexa.real /Users/ghost/core/papers/cross_repo_publish/core/router.hexa
 ```
 
 ## own#9 canonical archive rule (the cross-repo invariant)
@@ -136,10 +136,10 @@ The `validate` op enforces this via `tool/papers_cross_repo_lint.hexa` v1.2:
 ## Adding a new cross-repo publish op (template)
 
 1. Create `papers/tool/<new_op>.hexa` with the actual logic.
-2. Create `papers/modules/cross_repo_publish/<new_op>.hexa` with the two
+2. Create `cross_repo_publish/module/<new_op>.hexa` with the two
    exported fns and structs (mirror `publish.hexa`).
-3. Register in `papers/core/cross_repo_publish/registry.hexa`.
-4. Add verb mapping in `papers/core/cross_repo_publish/router.hexa` if a new
+3. Register in `cross_repo_publish/core/registry.hexa`.
+4. Add verb mapping in `cross_repo_publish/core/router.hexa` if a new
    bin/papers verb dispatches here.
 5. Update `main.hexa` aggregator (`_meta_for` + `names` array).
 6. Update this README's operation table.
@@ -148,8 +148,8 @@ The `validate` op enforces this via `tool/papers_cross_repo_lint.hexa` v1.2:
 ## Phase 2 OSF dual-archive lift (cross_repo_publish.blk.1)
 
 When `tool/osf_publish.hexa` lands:
-1. Add `modules/cross_repo_publish/osf_publish.hexa` (new FACADE).
-2. Modify `modules/cross_repo_publish/publish.hexa` to flip
+1. Add `cross_repo_publish/module/osf_publish.hexa` (new FACADE).
+2. Modify `cross_repo_publish/module/publish.hexa` to flip
    `is_dual_archive` to 1 AND add OSF leg in invoke (after Zenodo success).
 3. Update aggregator selftest line 5 expectation: `dual_archive coverage:
    3/3` (was `0/3`).
@@ -157,9 +157,9 @@ When `tool/osf_publish.hexa` lands:
 
 ## Invariants (lint-checkable, raw 270 conformance)
 
-- `papers/core/cross_repo_publish/<f>.hexa` MUST contain exactly 4 files:
+- `cross_repo_publish/core/<f>.hexa` MUST contain exactly 4 files:
   `source`, `registry`, `router`, `main` (deviation flagged C1).
-- Every `papers/modules/cross_repo_publish/<name>.hexa` MUST export both
+- Every `cross_repo_publish/module/<name>.hexa` MUST export both
   `xrp_op_meta_<name>()` and `xrp_op_invoke_<name>(args)`.
 - This `README.ai.md` MUST exist (raw 271 mandate).
 - Import direction: T2 modules -> T1 core registry -> T0 source. Reverse FORBIDDEN.
@@ -203,13 +203,13 @@ When `tool/osf_publish.hexa` lands:
 
 | Path | LOC | role |
 |------|----:|------|
-| `papers/core/cross_repo_publish/source.hexa` | ~145 | T0 interface |
-| `papers/core/cross_repo_publish/registry.hexa` | ~190 | T1 dispatch |
-| `papers/core/cross_repo_publish/router.hexa` | ~155 | T1 verb -> op |
-| `papers/core/cross_repo_publish/main.hexa` | ~205 | T1 aggregator |
-| `papers/modules/cross_repo_publish/publish.hexa` | ~120 | T2 FACADE |
-| `papers/modules/cross_repo_publish/sync.hexa` | ~110 | T2 FACADE |
-| `papers/modules/cross_repo_publish/validate.hexa` | ~120 | T2 FACADE |
-| `papers/modules/cross_repo_publish/README.ai.md` | this file | raw 271 mandate |
+| `cross_repo_publish/core/source.hexa` | ~145 | T0 interface |
+| `cross_repo_publish/core/registry.hexa` | ~190 | T1 dispatch |
+| `cross_repo_publish/core/router.hexa` | ~155 | T1 verb -> op |
+| `cross_repo_publish/core/main.hexa` | ~205 | T1 aggregator |
+| `cross_repo_publish/module/publish.hexa` | ~120 | T2 FACADE |
+| `cross_repo_publish/module/sync.hexa` | ~110 | T2 FACADE |
+| `cross_repo_publish/module/validate.hexa` | ~120 | T2 FACADE |
+| `cross_repo_publish/module/README.ai.md` | this file | raw 271 mandate |
 
 LOC approximate at land time. Re-pin via `wc -l` after edits.

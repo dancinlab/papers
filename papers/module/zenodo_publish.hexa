@@ -1,8 +1,8 @@
 #!hexa strict
-// papers/modules/papers/zenodo_publish.hexa — FACADE for tool/zenodo_publish.hexa
+// papers/module/zenodo_publish.hexa — FACADE for tool/zenodo_publish.hexa
 //
 // @tool(slug="papers_modules_zenodo_publish", desc="FACADE that exposes papers/tool/zenodo_publish.hexa under the canonical raw 270/271/272/273 module pattern. Does NOT modify the underlying tool — references it via meta + (opt-in) shell-out.")
-// @usage(hexa /Users/ghost/core/papers/modules/papers/zenodo_publish.hexa <paper-id>)
+// @usage(hexa /Users/ghost/core/papers/papers/module/zenodo_publish.hexa <paper-id>)
 // @omega-saturation-exempt("FACADE; selftest is meta-only")
 //
 // raw#9 hexa-only strict. raw 270/271/272/273 (mk2 arch.001): T2 module impl layer.
@@ -105,10 +105,10 @@ fn _selftest_zenodo_publish() -> int {
 }
 
 fn main() {
-    println("[modules/papers/zenodo_publish] FACADE for tool/zenodo_publish.hexa")
+    println("[papers/module/zenodo_publish] FACADE for tool/zenodo_publish.hexa")
     if _selftest_zenodo_publish() == 1 {
-        println("[modules/papers/zenodo_publish] SELFTEST PASS")
+        println("[papers/module/zenodo_publish] SELFTEST PASS")
     } else {
-        println("[modules/papers/zenodo_publish] SELFTEST FAIL")
+        println("[papers/module/zenodo_publish] SELFTEST FAIL")
     }
 }
