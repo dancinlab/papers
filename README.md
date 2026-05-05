@@ -87,7 +87,7 @@ Entry point: `bin/papers` (single canonical bin per `.own#2 papers-bin-single-en
 | `pull`     | fetch metadata from a DOI (Phase 2 stub) | (planned) |
 | `search`   | full-text query over titles/abstracts/tags (Phase 2 stub) | (planned) |
 | `sync`     | pull latest DOIs from Zenodo into manifest | `tool/zenodo_sync.hexa` |
-| `lint`     | run `.own` 8 rules over the project | `tool/papers_lint.hexa` |
+| `lint`     | run `.own` 8 rules over the project | `papers/lint.hexa` |
 | `scan`     | meta / continuous / missing-doi / orphan scanners | `tool/meta_scanner.hexa` + `tool/*_scan.hexa` |
 | `secret`   | passthrough to the `secret` CLI for credential I/O | `~/core/secret/bin/secret` |
 | `help`     | list all subcommands | — |

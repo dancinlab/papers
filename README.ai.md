@@ -36,7 +36,7 @@ status: 92 papers archive · 12-verb CLI · Zenodo + OSF dual-archive
 | `nexus/` | nexus paper 그룹 | 30 |
 | `sedi/` | sedi paper 그룹 (factorial-universe 외) | 32 |
 | `tecs-l/` | tecs-l paper 그룹 (results / figures) | 91 |
-| `tool/` | papers 운영 도구 (.hexa) — doi_verify / zenodo_publish / osf_publish / zenodo_sync / papers_lint / meta_scanner / *_scan | 19 |
+| `tool/` | papers 운영 도구 (.hexa) — doi_verify / zenodo_publish / osf_publish / zenodo_sync / papers_cross_repo_lint / meta_scanner / *_scan | 18 |
 | `bin/` | `papers` CLI 단일 진입 (`.own#2 papers-bin-single-entry`) | 1 |
 | `docs/` | 운영 문서 (auto-alien10 외) | 3 |
 | `shared/` | shared/config | 1 |
@@ -63,7 +63,7 @@ papers help
 
 ## Caveats (raw#10)
 
-1. **manifest.json 단일 SSOT** — 어떤 도구도 paper meta 를 별도 file 에 duplicate 하면 안됨. `tool/papers_lint.hexa` 가 .own 8-rule 로 검증.
+1. **manifest.json 단일 SSOT** — 어떤 도구도 paper meta 를 별도 file 에 duplicate 하면 안됨. `papers/lint.hexa` 가 .own 8-rule 로 검증.
 2. **Zenodo + OSF dual-archive** — `publish --target all` 은 두 archive 모두 push. 한쪽 실패 시 다른 쪽도 rollback 정책 (현재: best-effort, hard-rollback 미구현).
 3. **DOI 발행 = 비가역** — 한번 publish 된 paper 의 manifest entry 는 immutable 영역 (title/authors/abstract/year). lint 가 mutation 차단.
 4. **bin/papers 는 단일 진입** — `.own#2` 에 의해 papers 관련 다른 bin entry 추가 금지.

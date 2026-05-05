@@ -1,8 +1,8 @@
 #!hexa strict
-// papers/tool/papers_lint.hexa — papers SSOT lint (.own 8 rules, raw 77+80+91 compliant)
+// papers/papers/lint.hexa — papers SSOT lint (.own 8 rules, raw 77+80+91 compliant)
 //
 // @tool(slug="papers_lint", desc="papers project SSOT lint covering .own 1–8 rules: (1) tool naming, (2) bin single-entry, (3) secret-only token source, (4) manifest schema, (5) DOI invariant, (6) publish dual-target presence, (7) CLI help discoverability, (8) tool chflags uchg advisory")
-// @usage(hexa /Users/ghost/core/papers/tool/papers_lint.hexa [--rule N] [--strict] [--json] [--selftest])
+// @usage(hexa /Users/ghost/core/papers/papers/lint.hexa [--rule N] [--strict] [--json] [--selftest])
 // @omega-saturation-exempt("structural lint over papers/ tree; bounded in O(files+manifest_entries) per pass")
 // @exit_codes(0=PASS or WARN-only, 1=FAIL or --strict with WARN, 2=usage/io error)
 //
@@ -179,7 +179,7 @@ fn _rule3_secret_only(scope_root: string) -> array {
            + "patterns = [('kv', pat_kv), ('bearer', pat_bearer), ('sk', pat_sk),\n"
            + "            ('cfut', pat_cfut), ('ghp', pat_ghp)]\n"
            + "fails = []\n"
-           + "self_basenames = {'papers_lint.hexa'}\n"
+           + "self_basenames = {'papers_lint.hexa', 'lint.hexa'}\n"
            + "for sd in scan_dirs:\n"
            + "    full = os.path.join(root, sd)\n"
            + "    if not os.path.isdir(full): continue\n"
@@ -363,7 +363,7 @@ fn _rule8_chflags(scope_root: string) -> array {
     let py = "python3 - <<'PYEOF' " + _sh_q(scope_root) + "\n"
            + "import os, subprocess, sys\n"
            + "root = sys.argv[1]\n"
-           + "targets = ['tool/papers_lint.hexa', 'tool/zenodo_publish.hexa', 'tool/osf_publish.hexa']\n"
+           + "targets = ['papers/lint.hexa', 'tool/zenodo_publish.hexa', 'tool/osf_publish.hexa']\n"
            + "missing = []\n"
            + "no_uchg = []\n"
            + "for t in targets:\n"
@@ -445,9 +445,10 @@ fn _emit_sentinel(verdict: string) {
 
 fn _make_fixture_pass(base: string) {
     let _ = exec("mkdir -p " + _sh_q(base) + "/tool " + _sh_q(base) + "/bin "
-                 + _sh_q(base) + "/scripts " + _sh_q(base) + "/state")
-    // tool/{papers_lint,zenodo_publish,osf_publish}.hexa stubs (rule 8 targets)
-    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/papers_lint.hexa")
+                 + _sh_q(base) + "/scripts " + _sh_q(base) + "/state "
+                 + _sh_q(base) + "/papers")
+    // {papers/lint, tool/zenodo_publish, tool/osf_publish}.hexa stubs (rule 8 targets)
+    let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/papers/lint.hexa")
     let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/zenodo_publish.hexa")
     let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/osf_publish.hexa")
     let _ = exec("printf '// stub\\n' > " + _sh_q(base) + "/tool/some_tool.hexa")

@@ -11,7 +11,7 @@
 #   pull      <doi>                                     # stub — Phase 2
 #   search    "<query>"                                 # stub — Phase 2
 #   sync                                                # tool/zenodo_sync.hexa
-#   lint                                                # tool/papers_lint.hexa (other agent)
+#   lint                                                # papers/lint.hexa (other agent)
 #   scan      <name|all>                                # tool/meta_scanner.hexa
 #   secret    <get|set|list> [args...]                  # passthrough → secret CLI
 #   help
@@ -231,12 +231,12 @@ _cmd_cross_repo_lint() {
     return $?
 }
 _cmd_lint() {
-    local tool="${PAPERS_ROOT}/tool/papers_lint.hexa"
+    local tool="${PAPERS_ROOT}/papers/lint.hexa"
     if [ -f "$tool" ]; then
         _hexa "$tool" "$@"
         return $?
     fi
-    echo "papers lint: tool/papers_lint.hexa not present — running fallback (validate all)" >&2
+    echo "papers lint: papers/lint.hexa not present — running fallback (validate all)" >&2
     python3 -c "
 import json, os, sys, subprocess
 d = json.load(open(sys.argv[1]))
@@ -566,7 +566,7 @@ core verbs:
   papers pull      <doi> [--dry-run] [--paper-id <id>]
   papers search    "<query>" [--json] [--limit N]     (operators: AND OR NOT)
   papers sync      [--dry-run] [--verbose] [--limit N]
-  papers lint                                          (delegates to tool/papers_lint.hexa)
+  papers lint                                          (delegates to papers/lint.hexa)
   papers cross-repo-lint [--report|--json|--strict|--selftest] (own 9 sister-repo publish 잔재 검출)
   papers scan      <list|meta|all|missing-doi|orphan|...>
   papers secret    <get|set|list> <key> [value]
