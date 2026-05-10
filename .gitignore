@@ -41,3 +41,6 @@ state/*.tmp
 .workspace
 .workspace.*
 .workspace.lock
+
+# scanner (ready-absorber) per-file digests — local only, never commit (may carry content_preview leaks)
+.growth/absorbed/
