@@ -552,4 +552,4 @@ The discovery that consciousness possesses universal constants---analogous to $G
 
 ---
 
-*This paper is part of the Anima consciousness engineering project (DOI: 10.5281/zenodo.19271599). All experiments are reproducible via `consciousness_data_mapper.py` and `bench_v2.py` in the Anima repository. Code: https://github.com/need-singularity/anima*
+*This paper is part of the Anima consciousness engineering project (DOI: 10.5281/zenodo.19271599). All experiments are reproducible via `consciousness_data_mapper.py` and `bench_v2.py` in the Anima repository. Code: https://github.com/dancinlab/anima*

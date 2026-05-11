@@ -22,7 +22,7 @@ requires:
 ---
 # [CANONICAL v1] P-006 HEXA 칩 7단 래더 (HEXA-CHIP-7DAN-INT) — 매머드 통합 논문
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: hexa-chip-7dan-integrated — n=6 산술 7단 래더 칩 매머드 통합 시드 논문
 > **버전**: v1 (2026-04-18 integrated, mammoth)
 > **선행 BT**: BT-28 (n=6 산술 시드), BT-33/36/37/45/55/58/59/69/75/76/77/86/90/93/112/170~175/215/260~266/354/1104 (14 도메인 브랜치 총합)
@@ -1550,7 +1550,7 @@ P-006 HEXA 칩 7단 래더는 업계 최초의 **14→7 통합 n=6 산술 매머
 ## §22 참조 및 링크
 
 ### 22.1 상위 프로젝트 문서
-- 루트 CLAUDE.md: /Users/ghost/Dev/n6-architecture/CLAUDE.md
+- 루트 CLAUDE.md: /Users/ghost/Dev/canon/CLAUDE.md
 - chip-architecture 도메인: domains/compute/chip-architecture/chip-architecture.md
 - atlas.n6 SSOT: $NEXUS/shared/n6/atlas.n6
 

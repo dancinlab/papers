@@ -5,7 +5,7 @@ requires: []
 ---
 # [CANONICAL v2] 궁극의 법의학 (HEXA-FORENSIC-SCIENCE) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: forensic-science — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-374, BT-73, BT-197, BT-15

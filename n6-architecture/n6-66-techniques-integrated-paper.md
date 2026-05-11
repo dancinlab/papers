@@ -13,7 +13,7 @@ requires:
 ---
 # [CANONICAL v1] 궁극의 66 AI 기법 통합 (HEXA-66-TECHNIQUES) — n=6 산술 좌표 통합 논문
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **제품 ID**: P-011 "66 Techniques"
 > **카테고리**: 66-techniques-integrated — n=6 산술 시드 논문 (3-in-1 캐노니컬 통합)
 > **버전**: v1 (2026-04-18 integrated canonical, 21 섹션 풀 스펙)
@@ -1068,7 +1068,7 @@ source (3 논문) ──► 합본 (본 논문) ──► lint (markdown) ──
 
 | 월 | 작업 | 담당 | 산출물 |
 |---|---|---|---|
-| 2026-04 | 본 통합 논문 작성 (Mk.I) | n6-architecture | 본 .md |
+| 2026-04 | 본 통합 논문 작성 (Mk.I) | CANON | 본 .md |
 | 2026-05 | §7 검증 자동화 CI 편입 | nexus harness | `nexus verify` 훅 |
 | 2026-06 | atlas.n6 SSM 24 편입 실측 | atlas 담당 | 0→24 EXACT |
 | 2026-07 | Mk.II 독립 재유도 (§7.2 3 경로) | external review | 경로 일치 보고 |

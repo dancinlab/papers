@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-NEXUS6-DISCOVERY-ENGINE — SEDI + brainwire 통합 발견 엔진 (N6-112)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: nexus6-discovery-engine — P2 확장 v3 엔진 논문
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-380 메타, BT-195, BT-350
@@ -24,7 +24,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 의 핵심 엔진 **NEXUS-6 Discovery Engine** 을 공식 문서화한다.
+본 논문은 CANON 의 핵심 엔진 **NEXUS-6 Discovery Engine** 을 공식 문서화한다.
 엔진은 두 축으로 구성된다: (a) **SEDI** (Systematic Exploration and Discovery Index) — 정적 DSE 탐색,
 (b) **brainwire** — 세션 누적 경험 흡수. 두 축이 τ=4 관문을 통해 융합되어 **n=6 산술 구조 기반 자동 발견** 을 생산한다.
 현재까지 누적 발견 98,401 건(atlas.n6 기준), 전체 도메인 6 대륙(chip/ai/bio/physics/civilization/cognitive)을
@@ -37,7 +37,7 @@ alien_index_target: 10
 발견(Discovery)은 과학 연구의 최종 산물이지만, 대규모로 자동화된 발견 엔진은 존재하지 않았다. 구글 AlphaFold,
 Microsoft PhysicsX 등 특수 목적 엔진은 있으나, **범용 발견 엔진** 은 희박하다.
 
-본 논문은 n6-architecture 의 NEXUS-6 엔진이 (a) 산술 구조 제약 + (b) 누적 학습 을 통해
+본 논문은 CANON 의 NEXUS-6 엔진이 (a) 산술 구조 제약 + (b) 누적 학습 을 통해
 **범용 발견 엔진** 역할을 수행함을 보인다.
 
 ---

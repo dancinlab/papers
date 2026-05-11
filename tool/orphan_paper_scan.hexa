@@ -2,7 +2,7 @@
 //
 // Two-way drift detection:
 //   (1) manifest entry references a file that doesn't exist  (dangling_file)
-//   (2) *.md files under project dirs (anima/ nexus/ n6-architecture/ ...)
+//   (2) *.md files under project dirs (anima/ nexus/ CANON/ ...)
 //       not registered in manifest (unregistered_paper)
 // Emits both lists; exit 1 if any drift found.
 
@@ -41,7 +41,7 @@ fn _scan() -> int {
            + "        dangling.append((e.get('id','?'), fp))\n"
            + "# 2) unregistered papers (md under project dirs, not in manifest)\n"
            + "unreg = []\n"
-           + "project_dirs = ['anima','nexus','n6-architecture','brainwire','sedi','tecs-l']\n"
+           + "project_dirs = ['anima','nexus','CANON','brainwire','sedi','tecs-l']\n"
            + "for pd in project_dirs:\n"
            + "    base = os.path.join(root, pd)\n"
            + "    if not os.path.isdir(base): continue\n"

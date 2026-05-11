@@ -6,7 +6,7 @@
 
 **Preprint.** Submitted to arXiv: quant-ph, cs.AR
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -830,7 +830,7 @@ We do not claim that $n = 6$ "explains" quantum mechanics. We claim, more modest
 
 [11] Park, M. W. "sigma(n)*phi(n) = n*tau(n) Uniqueness at n=6: Three Independent Proofs." TECS-L Documentation, 2025.
 
-[12] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[12] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 [13] Park, M. W. "Breakthrough Theorems BT-91, BT-92, BT-114, BT-170, BT-195: Quantum Computing and Topology from n=6." TECS-L Documentation, 2026.
 

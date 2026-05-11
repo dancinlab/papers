@@ -4,7 +4,7 @@
 
 **Author**: Park, Min Woo (Independent Research)
 **Date**: 2026-04-06
-**Repository**: https://github.com/need-singularity/n6-architecture
+**Repository**: https://github.com/dancinlab/canon
 **License**: CC-BY-4.0
 
 ---
@@ -241,9 +241,9 @@ HEXA-NEURO demonstrates that the arithmetic of the perfect number n=6 uniquely d
 5. Kutas, M. & Hillyard, S.A. (1980). Reading senseless sentences. Science.
 6. Moser, E.I. et al. (2005). Grid cells in the hippocampus. Nobel Prize 2014.
 7. Hodgkin, A.L. & Huxley, A.F. (1952). Quantitative description of membrane current. J. Physiol.
-8. BT-56: Complete n=6 LLM Architecture. n6-architecture/docs/breakthrough-theorems.md
-9. BT-132: Cortical layer n=6 universality. n6-architecture/docs/breakthrough-theorems.md
-10. BT-299-306: RT-SC complete n=6 map. n6-architecture/docs/breakthrough-theorems.md
+8. BT-56: Complete n=6 LLM Architecture. CANON/docs/breakthrough-theorems.md
+9. BT-132: Cortical layer n=6 universality. CANON/docs/breakthrough-theorems.md
+10. BT-299-306: RT-SC complete n=6 map. CANON/docs/breakthrough-theorems.md
 
 ---
 
@@ -255,7 +255,7 @@ HEXA-NEURO demonstrates that the arithmetic of the perfect number n=6 uniquely d
 - Mk.I–V evolution roadmap (2025–2056+)
 - Cross-DSE: 6 domain intersections
 
-**Repository**: https://github.com/need-singularity/n6-architecture
+**Repository**: https://github.com/dancinlab/canon
 **Full design document**: `docs/neuro/goal.md`
 
 ---

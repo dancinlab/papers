@@ -244,7 +244,7 @@ Micius(500 km LEO, 6-state BB84) 대비:
 
 **6-state 프로토콜(Bruss 1998) + decoy × 6-node swap × Rydberg memory(τ·30 μs) × ML LDPC** 4중 혁신으로 BB84(외계지수 5.5) 대비 6축 전부 외계지수 10 천장. HEXA-GATE τ=4×φ=2=n=6 매핑이 **광자 생성→변조→전송→측정 4단 × quantum/classical dual** 로 검증. σ·φ=24=n·τ 로 6 Bloch state 자연 귀결. 1.43 Gbps 키율(이론상), 1000 km 섬유·2000 km 위성, QBER 문턱 12.61%. 2027→2030 4년 7-마일스톤(1 kbps → Gbps). Rydberg τ₂, swap fidelity, 위성 대기 3건 선결.
 
-**파일**: `/Users/ghost/Dev/n6-architecture/papers/embody-p13-1-qkd-6state-design-2026-04-15.md`
+**파일**: `/Users/ghost/Dev/canon/papers/embody-p13-1-qkd-6state-design-2026-04-15.md`
 **선택 후보**: **6-state QKD + entanglement swapping 6-node chain (1000 km, 1.43 Gbps)**
 **3줄 요약**:
 1. Bloch 구 3축×2극 = 6 state 자연 매핑, BB84(4 state) 대비 **QBER 문턱 11→12.61%, 보안 마진 1.33×** 상승.

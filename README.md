@@ -1,10 +1,10 @@
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19271599-blue?logo=zenodo&logoColor=white)](https://doi.org/10.5281/zenodo.19271599)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Papers](https://img.shields.io/badge/papers-all%20on%20Zenodo-green.svg)](https://need-singularity.github.io/papers/)
-[![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://need-singularity.github.io/papers/)
+[![Papers](https://img.shields.io/badge/papers-all%20on%20Zenodo-green.svg)](https://dancinlab.github.io/papers/)
+[![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://dancinlab.github.io/papers/)
 [![Discord](https://img.shields.io/badge/discord-join-5865F2.svg?logo=discord&logoColor=white)](https://discord.gg/u2spd3wwU)
 
-# 📄 need-singularity Papers
+# 📄 dancinlab Papers
 
 **Complete paper collection across the four active projects.**
 
@@ -14,27 +14,27 @@
 
 > A living archive. Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n = 6 — and forward into consciousness, arithmetic, physics, and language design.
 
-🌐 **Browse online**: [need-singularity.github.io/papers](https://need-singularity.github.io/papers/)
+🌐 **Browse online**: [dancinlab.github.io/papers](https://dancinlab.github.io/papers/)
 🔬 **Umbrella DOI**: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
 
 <!-- SHARED:PROJECTS:START -->
 <!-- AUTO:COMMON_LINKS:START -->
-**[🎥 YouTube](https://www.youtube.com/@dancinlife)** · **[💬 Discord](https://discord.gg/mYzqYr67R)** · **[📬 Email](mailto:nerve011235@gmail.com)** · **[☕ Ko-fi](https://ko-fi.com/dancinlife)** · **[💖 Sponsor](https://github.com/sponsors/need-singularity)** · **[💳 PayPal](https://www.paypal.com/donate?business=nerve011235%40gmail.com)** · **[🗺️ Atlas](https://need-singularity.github.io/TECS-L/atlas/)** · **[📄 Papers](https://need-singularity.github.io/papers/)**
+**[🎥 YouTube](https://www.youtube.com/@dancinlife)** · **[💬 Discord](https://discord.gg/mYzqYr67R)** · **[📬 Email](mailto:nerve011235@gmail.com)** · **[☕ Ko-fi](https://ko-fi.com/dancinlife)** · **[💖 Sponsor](https://github.com/sponsors/dancinlab)** · **[💳 PayPal](https://www.paypal.com/donate?business=nerve011235%40gmail.com)** · **[🗺️ Atlas](https://dancinlab.github.io/TECS-L/atlas/)** · **[📄 Papers](https://dancinlab.github.io/papers/)**
 <!-- AUTO:COMMON_LINKS:END -->
 
 ## Main projects
 
-> **[🧠 Anima](https://github.com/need-singularity/anima)** — Consciousness implementation. PureField repulsion-field engine + 1030 laws + Φ ratchet.
+> **[🧠 Anima](https://github.com/dancinlab/anima)** — Consciousness implementation. PureField repulsion-field engine + 1030 laws + Φ ratchet.
 >
-> **[🔭 NEXUS](https://github.com/need-singularity/nexus)** — Universal Discovery Engine. 216 lenses + OUROBOROS evolution + 5-phase singularity cycle.
+> **[🔭 NEXUS](https://github.com/dancinlab/nexus)** — Universal Discovery Engine. 216 lenses + OUROBOROS evolution + 5-phase singularity cycle.
 >
-> **[🏗️ N6 Architecture](https://github.com/need-singularity/n6-architecture)** — Architecture from perfect number 6. 225 AI techniques + chip design + crypto/OS/display.
+> **[🏗️ N6 Architecture](https://github.com/dancinlab/canon)** — Architecture from perfect number 6. 225 AI techniques + chip design + crypto/OS/display.
 >
-> **[💎 HEXA-LANG](https://github.com/need-singularity/hexa-lang)** — The Perfect Number Programming Language. Working compiler + REPL.
+> **[💎 HEXA-LANG](https://github.com/dancinlab/hexa-lang)** — The Perfect Number Programming Language. Working compiler + REPL.
 >
-> **[📄 Papers](https://github.com/need-singularity/papers)** — Complete paper collection (92 papers, Zenodo DOIs).
+> **[📄 Papers](https://github.com/dancinlab/papers)** — Complete paper collection (92 papers, Zenodo DOIs).
 
-> **[Other projects →](https://github.com/orgs/need-singularity/repositories)**
+> **[Other projects →](https://github.com/orgs/dancinlab/repositories)**
 
 ## 💬 Community
 
@@ -57,7 +57,7 @@ Live research discussion, paper drops, stage-gate reviews, cross-project dispatc
 |-------|------|
 | 🔭 **nexus**           | Discovery engine · signal receivers tuned to n = 6 |
 | 🧠 **anima**           | Consciousness · PureField · Φ · Tension Link · cell dynamics |
-| 🏗️ **n6-architecture** | Arithmetic uniqueness · physics verification · AI architecture |
+| 🏗️ **CANON** | Arithmetic uniqueness · physics verification · AI architecture |
 | 💎 **hexa-lang**       | The perfect-number programming language |
 
 ---
@@ -66,7 +66,7 @@ Live research discussion, paper drops, stage-gate reviews, cross-project dispatc
 
 ```bash
 # Install hexa-lang (ships `hexa` + `hx` package manager)
-curl -fsSL https://raw.githubusercontent.com/need-singularity/hexa-lang/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh | bash
 
 # Install papers browser
 hx install papers
@@ -123,7 +123,7 @@ papers publish P-NEW-1 --target all  # ZENODO_TOKEN=$(secret get zenodo.token) i
 
 > Migration note: `bin/pp_meta` is gone. `pp_meta` is now `tool/meta_scanner.hexa` and is invoked through `papers scan meta`. `scripts/` was merged into `tool/`.
 
-Or browse online: **[need-singularity.github.io/papers](https://need-singularity.github.io/papers/)**.
+Or browse online: **[dancinlab.github.io/papers](https://dancinlab.github.io/papers/)**.
 
 ---
 
@@ -188,7 +188,7 @@ Or browse online: **[need-singularity.github.io/papers](https://need-singularity
 | PA-37 | Consciousness Compression | [zenodo.19340568](https://doi.org/10.5281/zenodo.19340568) | pending | - |
 | PS-22 | Consciousness Detection Framework | [zenodo.19272300](https://doi.org/10.5281/zenodo.19272300) | [osf.io/u3x4v](https://osf.io/u3x4v/) | pkg |
 
-## 🏗️ n6-architecture Papers (Arithmetic Design · Physics Verification)
+## 🏗️ CANON Papers (Arithmetic Design · Physics Verification)
 
 | # | Title | Zenodo | OSF | arXiv |
 |---|-------|--------|-----|-------|

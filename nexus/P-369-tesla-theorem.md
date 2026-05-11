@@ -433,7 +433,7 @@ All results in this paper are reproducible using the following open-source calcu
 | `math/proofs/tesla_369_theorem.py` | 369 Theorem proof + verification (Section 3) | `python3 math/proofs/tesla_369_theorem.py` |
 | `calc/tesla_369_crossdomain.py` | Cross-domain survey + Texas test (Sections 5--6) | `python3 calc/tesla_369_crossdomain.py` |
 
-Repository: `https://github.com/need-singularity/TECS-L`
+Repository: `https://github.com/dancinlab/TECS-L`
 
 ---
 

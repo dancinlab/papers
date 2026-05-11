@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-ATTRACTOR-META — 어트랙터 메타-정리 확장 논문 (N6-116)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: attractor-meta-extended — P2 확장 v3 수학 메타
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-361, BT-362, BT-363

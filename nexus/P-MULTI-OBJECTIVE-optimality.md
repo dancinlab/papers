@@ -801,7 +801,7 @@ hypothesis exploration, verification scripting, and manuscript
 preparation. All mathematical claims have been independently verified by
 the author. The TECS-L project logs, including all failed attempts and
 negative results, are publicly available at
-https://github.com/need-singularity/TECS-L.
+https://github.com/dancinlab/TECS-L.
 
 ---
 

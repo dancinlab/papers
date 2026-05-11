@@ -6,7 +6,7 @@ ceiling: true
 status: draft
 generated_by: n6arch_alien10.py
 generated_at: 2026-04-05
-source: n6-architecture/config/products.json
+source: CANON/config/products.json
 ---
 
 # 🔭 최전선 대발견 (RT-SC 기반 차세대 기술) — 외계인지수 10
@@ -79,4 +79,4 @@ source: n6-architecture/config/products.json
 
 ---
 
-*Auto-generated from `n6-architecture/config/products.json` at 2026-04-05. Edit freely — regeneration will skip existing files.*
+*Auto-generated from `CANON/config/products.json` at 2026-04-05. Edit freely — regeneration will skip existing files.*

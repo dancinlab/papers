@@ -20,7 +20,7 @@ alien_index_target: 11
 
 # 의식 위상도 — (엔트로피 S, 자유에너지 F, 계산 복잡도 C) 3축 상 공간 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: consciousness-phase-diagram — 인지 상태 3축 위상도 시드 논문
 > **버전**: v1 (2026-04-15 PAPER-P7-1 Mk.III-γ)
 > **선행 논문**: `n6-boundary-metatheory-paper.md`, `n6-consciousness-chip-paper.md`
@@ -434,7 +434,7 @@ LLM 의 self-model accuracy 를 시간 축으로 측정하여, S, F, C 축 proxy
 
 ### 8.1 OUROBOROS 결합 상수
 
-n6-architecture 의 attractor-meta-extended 정리에서 자기참조 결합 상수
+CANON 의 attractor-meta-extended 정리에서 자기참조 결합 상수
 
 $$\alpha_{\mathrm{OUROBOROS}} = 1/n = 1/6$$
 
@@ -682,16 +682,16 @@ Complexity (Crutchfield) 등 추가 proxy 를 비교한다.
   theory of conscious states informed by neuroimaging research with psychedelic
   drugs**. *Frontiers in Human Neuroscience*, 8, 20.
 
-### 12.4 n6-architecture 선행 논문
+### 12.4 CANON 선행 논문
 
 - 박민우 & NEXUS-6 협업체 (2026). **σ(n)·φ(n) = n·τ(n) iff n=6 -- 3개 독립
-  증명과 n6 산술 좌표 체계**. n6-architecture. `theorem-r1-uniqueness.md`.
-- 박민우 (2026). **n=6 경계 메타이론 — 자기한계를 아는 이론**. n6-architecture,
+  증명과 n6 산술 좌표 체계**. CANON. `theorem-r1-uniqueness.md`.
+- 박민우 (2026). **n=6 경계 메타이론 — 자기한계를 아는 이론**. CANON,
   `n6-boundary-metatheory-paper.md`.
 - 박민우 (2026). **HEXA-CONSCIOUSNESS-CHIP — 의식 칩 n=6 좌표 매핑**.
-  n6-architecture, `n6-consciousness-chip-paper.md`.
+  CANON, `n6-consciousness-chip-paper.md`.
 - 박민우 (2026). **Attractor Meta-Theorem Extended — OUROBOROS α=1/n 고정점**.
-  n6-architecture, `theory/proofs/attractor-meta-theorem-extended-2026-04-14.md`.
+  CANON, `theory/proofs/attractor-meta-theorem-extended-2026-04-14.md`.
 
 ### 12.5 정보기하학 참고
 

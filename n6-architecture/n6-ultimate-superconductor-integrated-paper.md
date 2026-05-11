@@ -22,7 +22,7 @@ requires:
 ---
 # [CANONICAL v1] 궁극의 초전도체 (HEXA-ULTIMATE-SC) — n=6 산술 좌표 14-in-1 통합 논문
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **제품 ID**: P-039 "궁극의 초전도체"
 > **카테고리**: ultimate-superconductor-integrated — 14 시드 논문 봉합 canonical
 > **버전**: v1 (2026-04-18 integrated, 21 섹션 풀 스펙)

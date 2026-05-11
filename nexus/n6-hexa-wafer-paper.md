@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -486,7 +486,7 @@ HEXA-WAFER is Level 5 of the N6 chip architecture ladder. It represents the culm
 
 [10] Park, M. W. "Breakthrough Theorems BT-28, BT-33, BT-55, BT-69, BT-76: Architecture Scaling from n=6." TECS-L Documentation, 2026.
 
-[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 ---
 

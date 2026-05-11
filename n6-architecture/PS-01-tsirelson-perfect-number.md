@@ -199,4 +199,4 @@ previously unrelated domains of mathematics.
 3. Euclid, Elements, Book IX, Proposition 36.
 4. Euler, L. (1849). "De numeris amicabilibus." Opera Omnia, Series 1, Vol 2.
 5. SEDI Project. (2026). "H-CX-481: Tsirelson bound from perfect numbers."
-   TECS-L repository, github.com/need-singularity/TECS-L.
+   TECS-L repository, github.com/dancinlab/TECS-L.

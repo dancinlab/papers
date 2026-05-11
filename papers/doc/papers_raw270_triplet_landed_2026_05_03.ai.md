@@ -178,7 +178,7 @@ project.hexa                      a63fb8b30f03c94951756939eb1b019e82f8947a6c5b45
   publish-pipeline 양쪽 op 를 wrapping 하기 때문. Phase 2 에서 도메인 strict-
   partition 결정 시 reorganize 권장.
 
-- **C8** — sister-repo 의 `papers/anima/`, `papers/n6-architecture/`,
+- **C8** — sister-repo 의 `papers/anima/`, `papers/canon/`,
   `papers/nexus/` (이름 충돌 caveat C4 of 2026-05-03 mk2 redesign doc) 에 본
   triplet 의 영향 X — 본 land 는 `papers/core/` + `papers/modules/` 만 add,
   sister-repo-name sub-dir 미접근.

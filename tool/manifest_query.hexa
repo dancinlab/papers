@@ -47,7 +47,7 @@
 //       W3=tier-unset. Tail line is "--- validate <id>: errors=N warnings=M".
 //   L3. `cite` formats: bibtex / apa / ieee / cff / ris. Field set follows
 //       the legacy implementation (title, authors, year, doi, repo).
-//       Authors default to "need-singularity" when absent (parity with legacy).
+//       Authors default to "dancinlab" when absent (parity with legacy).
 //   L4. `list` table widths are fixed [18, 10, 10, 5, 68]; UTF-8 multi-byte
 //       cells may overflow visually but are byte-truncated by `slice`.
 
@@ -386,7 +386,7 @@ fn _cite_bibtex(e, pid: string) -> string {
     let mut year = ""
     if len(date) >= 4 { year = date.slice(0, 4) }
     let mut author = _map_str(e, "authors")
-    if author == "" { author = "need-singularity" }
+    if author == "" { author = "dancinlab" }
     let repo = _map_str(e, "repo")
     let key = pid.replace("-", "").to_lower()
     let mut s = ""
@@ -408,7 +408,7 @@ fn _cite_apa(e) -> string {
     let mut year = ""
     if len(date) >= 4 { year = date.slice(0, 4) }
     let mut author = _map_str(e, "authors")
-    if author == "" { author = "need-singularity" }
+    if author == "" { author = "dancinlab" }
     return author + " (" + year + "). " + title + ". Zenodo. https://doi.org/" + doi
 }
 
@@ -419,7 +419,7 @@ fn _cite_ieee(e) -> string {
     let mut year = ""
     if len(date) >= 4 { year = date.slice(0, 4) }
     let mut author = _map_str(e, "authors")
-    if author == "" { author = "need-singularity" }
+    if author == "" { author = "dancinlab" }
     return author + ", \"" + title + ",\" Zenodo, " + year + ". doi: " + doi + "."
 }
 
@@ -430,7 +430,7 @@ fn _cite_ris(e) -> string {
     let mut year = ""
     if len(date) >= 4 { year = date.slice(0, 4) }
     let mut author = _map_str(e, "authors")
-    if author == "" { author = "need-singularity" }
+    if author == "" { author = "dancinlab" }
     let mut s = ""
     s = s + "TY  - JOUR\n"
     s = s + "TI  - " + title + "\n"
@@ -446,7 +446,7 @@ fn _cite_cff(e) -> string {
     let doi = _map_str(e, "doi")
     let date = _map_str(e, "date")
     let mut author = _map_str(e, "authors")
-    if author == "" { author = "need-singularity" }
+    if author == "" { author = "dancinlab" }
     let mut s = ""
     s = s + "cff-version: 1.2.0\n"
     s = s + "title: " + title + "\n"
@@ -767,12 +767,12 @@ fn _selftest_cite_default_author() -> int {
         "doi": "10.5281/zenodo.8", "date": "2026-04-28"
     }
     let bib = _cite_bibtex(e, "P-008")
-    if !bib.contains("author  = {need-singularity}") {
+    if !bib.contains("author  = {dancinlab}") {
         println("  fixture[cite_default_author]: FAIL  (default author not applied)")
         eprintln("    got: " + bib)
         return 1
     }
-    println("  fixture[cite_default_author]: PASS  (need-singularity fallback)")
+    println("  fixture[cite_default_author]: PASS  (dancinlab fallback)")
     return 0
 }
 

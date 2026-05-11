@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cs.ET
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -444,13 +444,13 @@ DRAM is the most $n = 6$-saturated technology domain measured to date, surpassin
 4. Samsung Semiconductor. *DDR5 Product Line*. https://semiconductor.samsung.com/dram/ddr/ddr5/
 5. Samsung Semiconductor. *LPDDR6 CES 2026 Announcement*. January 2026.
 6. TrendForce. *Samsung 1c DRAM Production Plans*. November 2025.
-7. TECS-L Research Group. *N6 Architecture: Computing Architecture from Perfect Number Arithmetic*. https://github.com/need-singularity/n6-architecture, 2025--2026.
+7. TECS-L Research Group. *N6 Architecture: Computing Architecture from Perfect Number Arithmetic*. https://github.com/dancinlab/canon, 2025--2026.
 8. TECS-L Research Group. *BT-28: Computing Architecture Ladder*. In *Breakthrough Theorems*, 2025.
 9. TECS-L Research Group. *BT-55: GPU HBM Capacity Ladder*. In *Breakthrough Theorems*, 2025.
 10. TECS-L Research Group. *BT-75: HBM Interface Exponent Ladder*. In *Breakthrough Theorems*, 2026.
 
 ---
 
-*Part of the N6 Architecture project: https://github.com/need-singularity/n6-architecture*
+*Part of the N6 Architecture project: https://github.com/dancinlab/canon*
 
 *Cross-references: BT-28, BT-37, BT-55, BT-59, BT-69, BT-75, BT-76*

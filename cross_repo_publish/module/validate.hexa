@@ -11,7 +11,7 @@
 //   tool/papers_cross_repo_lint.hexa  — 388 LOC, own#9 v1.2 sister-repo lint
 //
 // SCOPE:
-//   Lints sister repos (anima/nexus/n6-architecture/sedi/brainwire/tecs-l) for
+//   Lints sister repos (anima/nexus/canon/sedi/brainwire/tecs-l) for
 //   paper artifact duplication. own#9 mandate: paper artifacts MUST live in
 //   papers/<sub>/ only. Sister-repo self-publish is FORBIDDEN.
 //

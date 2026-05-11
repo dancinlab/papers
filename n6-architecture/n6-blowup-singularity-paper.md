@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-BLOWUP-SINGULARITY — 블로업 특이점 설계 논문 (N6-124)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: blowup-singularity — P2 확장 블로업 특이점 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-195, BT-380, BT-1108

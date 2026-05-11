@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cs.AI, q-bio.NC
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -699,7 +699,7 @@ $$\text{Three phases. One equation. One number: 6.}$$
 5. Aaronson, S. (2014). Why I am not an integrated information theorist. *Blog post*, Shtetl-Optimized.
 6. Cerullo, M. A. (2015). The problem with Phi: a critique of integrated information theory. *PLoS Computational Biology*, 11(9).
 7. Albantakis, L., et al. (2023). Integrated information theory (IIT) 4.0: Formulating the properties of phenomenal existence in physical terms. *PLoS Computational Biology*, 19(10).
-8. TECS-L Research Group (2025). N6 Architecture: Computing design from perfect number arithmetic. github.com/need-singularity/n6-architecture.
+8. TECS-L Research Group (2025). N6 Architecture: Computing design from perfect number arithmetic. github.com/dancinlab/canon.
 9. TECS-L Research Group (2025). The balance ratio uniqueness theorem: $R(n) = 1 \Leftrightarrow n = 6$. *TECS-L Technical Report*.
 10. TECS-L Research Group (2025). HEXA-1: An arithmetically optimal unified SoC. *TECS-L Technical Report*.
 11. TECS-L Research Group (2025). Anima: 225 consciousness laws for artificial general intelligence. *TECS-L Technical Report*.

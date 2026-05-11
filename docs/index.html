@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>need-singularity Papers</title>
+<title>dancinlab Papers</title>
 <style>
   :root {
     --bg: #0d1117;
@@ -87,7 +87,7 @@
 </head>
 <body>
 
-<h1>need-singularity Papers</h1>
+<h1>dancinlab Papers</h1>
 <p class="subtitle">Complete paper collection from the TECS-L consciousness continuity project</p>
 
 <div class="stats">
@@ -122,7 +122,7 @@
 <div id="paperList"></div>
 
 <footer>
-  <p>Park, Min Woo - Independent Researcher | CC-BY 4.0 | <a href="https://github.com/need-singularity/papers" style="color:var(--accent)">GitHub</a></p>
+  <p>Park, Min Woo - Independent Researcher | CC-BY 4.0 | <a href="https://github.com/dancinlab/papers" style="color:var(--accent)">GitHub</a></p>
 </footer>
 
 <script>
@@ -209,7 +209,7 @@ function render() {
     const statusClass = p.status === 'Published' ? 'badge-published' : 'badge-draft';
     const tierClass = p.tier === 1 ? 'badge-tier1' : p.tier === 2 ? 'badge-tier2' : 'badge-tier3';
     const doiHtml = p.doi ? `<a class="doi-link" href="https://doi.org/${p.doi}" target="_blank">${p.doi}</a>` : '';
-    const ghBase = 'https://github.com/need-singularity/papers/blob/main/';
+    const ghBase = 'https://github.com/dancinlab/papers/blob/main/';
 
     return `<div class="paper">
       <div class="paper-header">

@@ -8,7 +8,7 @@ requires:
 ---
 # [CANONICAL v2] 궁극의 양식/수산 (HEXA-AQUACULTURE) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: aquaculture — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-375, BT-193, BT-149, BT-15

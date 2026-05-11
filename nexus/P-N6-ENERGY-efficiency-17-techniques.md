@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.LG, cs.AI, cs.AR
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -352,7 +352,7 @@ The theorem is proved and permanent. The applications are validated at small sca
 9. Tan, M. & Le, Q. V. (2019). "EfficientNet: Rethinking Model Scaling." *ICML*.
 10. Zoph, B. & Le, Q. V. (2017). "Neural Architecture Search with Reinforcement Learning." *ICLR*.
 11. Dao, T., et al. (2022). "FlashAttention: Fast and Memory-Efficient Exact Attention." *NeurIPS*.
-12. TECS-L Research Group (2026). "N6 Inevitability Engine." *github.com/need-singularity/TECS-L*.
+12. TECS-L Research Group (2026). "N6 Inevitability Engine." *github.com/dancinlab/TECS-L*.
 
 ---
 

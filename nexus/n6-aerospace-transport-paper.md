@@ -6,7 +6,7 @@
 
 **Preprint.** Submitted to arXiv: cs.SY, eess.SY, physics.soc-ph
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 

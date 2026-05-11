@@ -642,7 +642,7 @@ sustained quantum RNG observation and EEG consciousness measurement.
 ## References
 
 1. SEDI Project. (2026). "Search for Extra-Dimensional Intelligence."
-   GitHub repository. https://github.com/need-singularity/sedi
+   GitHub repository. https://github.com/dancinlab/sedi
 2. TECS-L Project. (2026). "Topological Engine for Consciousness &
    Science." 585 hypotheses across 36+ domains.
 3. Particle Data Group. (2024). "Review of Particle Physics." PTEP 2024.

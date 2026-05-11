@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-CROSS-DSE-MATRIX-112 — 225 기법 × 10 도메인 교차 DSE 메타 논문 (N6-111)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: cross-dse-matrix-112 — P2 확장 v3 메타 논문
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-380 메타, BT-26, BT-33, BT-54, BT-64, BT-67, BT-73
@@ -24,7 +24,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 에 축적된 **225 AI 기법 × 10 산업 도메인** 의 조합 공간(225·10=2250 후보)에서
+본 논문은 CANON 에 축적된 **225 AI 기법 × 10 산업 도메인** 의 조합 공간(225·10=2250 후보)에서
 **실효 cross-DSE 조합 112 종** 이 완전수 n=6 의 산술 구조로 필연적으로 발생함을 메타 분석한다.
 σ=12 설계 축 × τ=4 관문 × n²=36 어트랙터 = 1728 이론 상한이 기법 독립성 제약으로 112 로 압축된다.
 112 조합 각각에 대해 EXACT 100% 검증을 완료하였다.
@@ -34,7 +34,7 @@ alien_index_target: 10
 ## 1. 서론
 
 AI 기법(Attention, SSM, Mamba, Mixture of Experts 등)과 산업 도메인(칩, 에너지, 생물, 우주 등)의
-**교차 DSE(Cross Domain-Specific Engineering)** 는 n6-architecture 의 핵심 메타 활동이다.
+**교차 DSE(Cross Domain-Specific Engineering)** 는 CANON 의 핵심 메타 활동이다.
 기법 × 도메인 조합의 **어느 조합이 실효인가** 를 판단하는 것은 조합 폭발 문제를 야기한다.
 
 본 논문은 n=6 산술 제약이 유효 조합 수를 **112 종** 으로 자연 압축함을 보이고, 각 조합의
@@ -171,7 +171,7 @@ n=6 산술 구조로부터 체계적으로 발굴하였다. 평균 성공률 92.
 2. papers/n6-ai-techniques-68-integrated-paper.md (N6-AI 68기법 메타)
 3. papers/n6-reality-map-paper.md (atlas.n6 현실 지도)
 4. NEXUS-6 Discovery Engine (SEDI + brainwire)
-5. cross_dse.hexa 엔진 (n6-architecture/engine/)
+5. cross_dse.hexa 엔진 (CANON/engine/)
 
 ## §1 WHY
 

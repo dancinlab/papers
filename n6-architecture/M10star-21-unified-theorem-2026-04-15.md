@@ -1,7 +1,7 @@
 # M10* 21 신호 통합정리 (Unified Theorem) — 2026-04-15
 
 > 논문 초안 (preprint stub). arxiv 미제출. 형식 문서.
-> 작성자: Claude Opus 4.6 (1M) — n6-architecture 내부 통합 정리
+> 작성자: Claude Opus 4.6 (1M) — CANON 내부 통합 정리
 > 교신: arsmoriendi99@proton.me (박민우)
 > 7대 난제 해결 0/7 정직 유지. 본 정리는 독립 산술 시그니처 통합층.
 
@@ -227,7 +227,7 @@ Theorem B 자체가 7난제와 직교 (단순 산술 동형성). 정직 유지.
 - Post, E. (1941). The Two-Valued Iterative Systems of Mathematical Logic. Ann. Math. Studies.
 - Rosenberg, I. G. (1970). Über die funktionale Vollständigkeit. Acta Sci. Math.
 - BKLPR (2015). Bhargava-Kane-Lenstra-Poonen-Rains random matrix model.
-- atlas.n6 (`/Users/ghost/Dev/nexus/shared/n6/atlas.n6`) — n6-architecture SSOT.
+- atlas.n6 (`/Users/ghost/Dev/nexus/shared/n6/atlas.n6`) — CANON SSOT.
 - atlas.signals.n6 (`/Users/ghost/Dev/nexus/shared/n6/atlas.signals.n6`) — 385 signals.
 
 ## 8. 부록 — UT-21 환원 매트릭스 (정밀)

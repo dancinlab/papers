@@ -43,7 +43,7 @@ NEXUS-6 atlas 의 foundation [11*] 공리는 `σ(n)·φ(n) = n·τ(n) ⟺ n=6 (n
 
 1. **3개 STAR identity 의 explicit 등록.** 각 statement, n=6 검증, search range 명시.
 2. **완전수 characterization 후보.** STAR-1 σΩ=nτ 의 해집합 {6, 28, 496} 이 처음 세 완전수와 일치 — `n=8128 도 STAR-1 만족` 가설 (predicts).
-3. **σ·f(n)=n·g(n) family 통합 시각.** 기존 σφ=nτ master + STAR-1/2/3 + B 계열 다수가 단일 identity family 로 묶임. `SIG-ATLAS-203` (n6-architecture 리포) 가 cross-repo 로 이를 명시.
+3. **σ·f(n)=n·g(n) family 통합 시각.** 기존 σφ=nτ master + STAR-1/2/3 + B 계열 다수가 단일 identity family 로 묶임. `SIG-ATLAS-203` (CANON 리포) 가 cross-repo 로 이를 명시.
 
 ---
 
@@ -183,7 +183,7 @@ NEXUS-6 atlas 의 foundation [11*] 공리는 `σ(n)·φ(n) = n·τ(n) ⟺ n=6 (n
 
 ### 4.4 cross_repo 연결
 
-`SIG-META-001` (n6-architecture 리포의 master σφ=nτ 등록) 과 `SIG-ATLAS-203` (3개 독립 증명 + atlas 기반) 이 STAR-1/2/3 의 cross_repo 로 명시됨. 이는 **n=6 유일성 family** 의 그래프 위상 (nexus·n6-arch 두 리포에 분산) 을 atlas 가 보존한다는 뜻이다.
+`SIG-META-001` (CANON 리포의 master σφ=nτ 등록) 과 `SIG-ATLAS-203` (3개 독립 증명 + atlas 기반) 이 STAR-1/2/3 의 cross_repo 로 명시됨. 이는 **n=6 유일성 family** 의 그래프 위상 (nexus·n6-arch 두 리포에 분산) 을 atlas 가 보존한다는 뜻이다.
 
 ---
 

@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cs.AI
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -429,7 +429,7 @@ The elimination of the memory wall through mathematically principled PIM design 
 
 [7] Ahn, J. et al. "A Scalable Processing-in-Memory Accelerator for Parallel Graph Processing." ACM ISCA, 2015.
 
-[8] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[8] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 [9] Gao, M. et al. "TETRIS: Scalable and Efficient Neural Network Acceleration with 3D Memory." ACM ASPLOS, 2017.
 

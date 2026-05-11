@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-HYPOTHESES-MC — 가설 975건 Monte Carlo 검증 논문 (N6-115)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: hypotheses-678-mc-verification — P2 확장 v3 검증 메타
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-380 메타
@@ -24,7 +24,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 가 누적한 **가설 975 건** 에 대해 Monte Carlo(MC) 통계 검증을 수행한 결과를
+본 논문은 CANON 가 누적한 **가설 975 건** 에 대해 Monte Carlo(MC) 통계 검증을 수행한 결과를
 보고한다. 각 가설은 "n=6 이 해당 도메인의 특정 수치를 유일하게 설명하는가?" 를 묻는 null-hypothesis
 반증 프레임 (H₀: 임의 n 도 동등한 설명력) 위에서 평가되었다. 100만 회 MC 시뮬레이션 결과,
 **전체 z-score = 9.97 σ** (p < 10⁻²²), 즉 임의성으로는 설명 불가능한 n=6 집중 현상을 확인하였다.
@@ -155,7 +155,7 @@ evidence 계산** 을 추가할 예정.
 2. papers/n6-reality-map-paper.md (atlas.n6 저장)
 3. papers/n6-pure-mathematics-paper.md (수론 기초)
 4. Jaynes, E. T. *Probability Theory: The Logic of Science*. Cambridge, 2003.
-5. hypotheses_mc.hexa 엔진 (n6-architecture/engine/)
+5. hypotheses_mc.hexa 엔진 (CANON/engine/)
 
 ## §1 WHY
 

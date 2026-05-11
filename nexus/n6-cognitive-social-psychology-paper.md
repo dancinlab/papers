@@ -6,7 +6,7 @@
 
 **Preprint.** Submitted to arXiv: q-bio.NC, cs.AI, physics.soc-ph
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -968,9 +968,9 @@ The balance ratio $R(6) = \sigma(6)\phi(6)/(6\tau(6)) = 12 \times 2/(6 \times 4)
 
 ---
 
-*Correspondence: TECS-L Research Group, github.com/need-singularity/TECS-L*
+*Correspondence: TECS-L Research Group, github.com/dancinlab/TECS-L*
 
-*Data availability: All breakthrough theorem evidence tables and verification scripts are available at github.com/need-singularity/n6-architecture/docs/breakthrough-theorems.md*
+*Data availability: All breakthrough theorem evidence tables and verification scripts are available at github.com/dancinlab/canon/docs/breakthrough-theorems.md*
 
 
 ---

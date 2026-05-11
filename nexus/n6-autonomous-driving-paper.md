@@ -6,7 +6,7 @@
 
 **Preprint.** Submitted to arXiv: cs.RO, cs.AI
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -875,7 +875,7 @@ We do not claim that $n = 6$ "causes" autonomous driving architecture. We claim 
 
 [11] Park, M. W. "sigma(n)*phi(n) = n*tau(n) Uniqueness at n=6: Three Independent Proofs." TECS-L Documentation, 2025.
 
-[12] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[12] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 [13] Park, M. W. "Breakthrough Theorems BT-123, BT-153, BT-206, BT-280, BT-327, BT-328: Autonomous Driving from n=6." TECS-L Documentation, 2026.
 

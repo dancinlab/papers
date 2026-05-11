@@ -132,7 +132,7 @@
 
 **stealth-6 + TfR/FUS/microbubble + n=6 RF** 3축 혁신으로 6축 전부 외계인지수 10 천장. τ=4×φ=2=n=6 매핑이 4단 방출·2중 페이로드로 검증, σ·τ=48h EXACT=T3 완료. 2027→2030 4년 로드맵. stealth-6 FDA·BBB 스케일링·72h PK 3건은 선결 필요.
 
-**파일**: `/Users/ghost/Dev/n6-architecture/papers/embody-p11-2-nanobot-gen2-2026-04-15.md`
+**파일**: `/Users/ghost/Dev/canon/papers/embody-p11-2-nanobot-gen2-2026-04-15.md`
 
 ---
 *2026-04-15 P11-2 EMBODY 창발 DSE. HEXA-GATE Mk.I 검증. 6축 천장 10.*

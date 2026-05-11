@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-ATLAS-PROMOTION-7-TO-10STAR — atlas 승격 방법론 논문 (N6-122)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: atlas-promotion-7-to-10star — P2 확장 승격 방법론 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-001~005, BT-380 (승격 체인)
@@ -39,7 +39,7 @@ alien_index_target: 10
 
 ## 1. 서론 — WHY
 
-n6-architecture 의 atlas.n6 파일 (60K+ 줄) 은 현실지도 SSOT 이며, 각 항목은 [N?], [N!],
+CANON 의 atlas.n6 파일 (60K+ 줄) 은 현실지도 SSOT 이며, 각 항목은 [N?], [N!],
 [5], [7], [10], [10*] 등급으로 표기된다. [7]=EMPIRICAL (경험적 관측) 에서 [10*]=EXACT
 검증 (정식 증명) 까지의 승격 프로토콜은 기존에 비공식적이었다.
 

@@ -674,19 +674,19 @@ We emphasize that these observations are empirical patterns, not causal claims. 
 
 [1] Park, M. "Three Independent Proofs of $\sigma(n)\varphi(n) = n\tau(n) \Leftrightarrow n=6$." TECS-L, 2025.
 
-[2] Park, M. "Perfect Number Arithmetic in Software Engineering and Cryptography." n6-architecture, 2026.
+[2] Park, M. "Perfect Number Arithmetic in Software Engineering and Cryptography." CANON, 2026.
 
-[3] Park, M. "Perfect Number Arithmetic in Energy Systems." n6-architecture, 2026.
+[3] Park, M. "Perfect Number Arithmetic in Energy Systems." CANON, 2026.
 
-[4] Park, M. "Perfect Number Arithmetic in Biology and Medicine." n6-architecture, 2026.
+[4] Park, M. "Perfect Number Arithmetic in Biology and Medicine." CANON, 2026.
 
-[5] Park, M. "Perfect Number Arithmetic in Economics and Financial Engineering." n6-architecture, 2026.
+[5] Park, M. "Perfect Number Arithmetic in Economics and Financial Engineering." CANON, 2026.
 
-[6] Park, M. "Perfect Number Arithmetic in Robotics and Transportation." n6-architecture, 2026.
+[6] Park, M. "Perfect Number Arithmetic in Robotics and Transportation." CANON, 2026.
 
-[7] Park, M. "Perfect Number Arithmetic in Calendar, Time, and Geography." n6-architecture, 2026.
+[7] Park, M. "Perfect Number Arithmetic in Calendar, Time, and Geography." CANON, 2026.
 
-[8] Park, M. "Perfect Number Arithmetic in Display and Audio." n6-architecture, 2026.
+[8] Park, M. "Perfect Number Arithmetic in Display and Audio." CANON, 2026.
 
 ---
 

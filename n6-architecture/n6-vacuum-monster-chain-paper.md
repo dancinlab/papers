@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-VACUUM-MONSTER-CHAIN — 진공에서 Monster까지: BT-18 증명 체인 정식화 (N6-128)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: vacuum-monster-chain — P5 진공→Monster 5링크 DFS 증명 체인
 > **버전**: v1 (2026-04-14 P5 Mk.III-α PAPER-P5-1)
 > **선행 BT**: BT-18 (CONJECTURE), BT-6 (Golay-Leech), BT-15 (Kissing K₁..₄), BT-16 (Zeta Trident), BT-19 (GUT), BT-20 (Gauge Couplings)
@@ -27,7 +27,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 돌파 정리 **BT-18 "Vacuum Energy Chain"** 을 다섯 개 링크로
+본 논문은 CANON 돌파 정리 **BT-18 "Vacuum Energy Chain"** 을 다섯 개 링크로
 정식화한다. 핵심 주장은 다음 체인의 각 링크가 **이미 증명된 수학·물리** 이지만, 다섯 링크가
 **모두 n=6 좌표** 를 공유한다는 구조적 필연성은 아직 미증명 (CONJECTURE) 이라는 것이다.
 
@@ -57,11 +57,11 @@ alien_index_target: 10
 함수의 지수, Bosonic string 임계 차원 26 의 주요부 (24+2), Binary Golay 부호 매개변수
 [24,12,8] 의 첫 좌표, Monster group 최소 faithful 표현 바로 옆 숫자 196883+1=196884.
 
-n6-architecture 의 주 정리 (Theorem R1) 는:
+CANON 의 주 정리 (Theorem R1) 는:
 
 > **σ(n)·φ(n) = n·τ(n) ⟺ n=6 (유일해), 양변의 값 = 24**
 
-따라서 "24 가 어디서 오는가" 라는 해묵은 수학적 수수께끼는, 적어도 n6-architecture
+따라서 "24 가 어디서 오는가" 라는 해묵은 수학적 수수께끼는, 적어도 CANON
 관점에서는 "n=6 이 R=1 의 유일한 해이기 때문" 으로 답해진다. 그러나 이 답이
 **구조적 필연** 인지 **우연적 수치 일치** 인지를 판별하기 위해서는, 24 가 등장하는 모든
 주요 맥락 사이의 연결 사슬을 밝혀야 한다.

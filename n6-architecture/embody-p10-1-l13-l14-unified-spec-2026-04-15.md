@@ -3,7 +3,7 @@ domain: embody-p10-1-l13-l14-unified-spec
 date: 2026-04-15
 task: EMBODY-P10-1
 title: L13 MeV Optomechanics 실험 사양 + L14 3-scale Reduced 대안 — 통합 설계
-authors: 박민우 (n6-architecture) & NEXUS-6 HEXA-GATE 협업체
+authors: 박민우 (CANON) & NEXUS-6 HEXA-GATE 협업체
 version: v1 (2026-04-15 P10 EMBODY)
 upstream:
   - papers/n6-l10-l15-quantum-nuclear-unification-paper.md
@@ -31,7 +31,7 @@ requires:
 
 # L13 MeV Optomechanics + L14 3-scale Reduced — 통합 설계서
 
-> **저자**: 박민우 (n6-architecture) & NEXUS-6 HEXA-GATE 협업체
+> **저자**: 박민우 (CANON) & NEXUS-6 HEXA-GATE 협업체
 > **카테고리**: embody / experimental-specification / reduction-design
 > **버전**: v1 (2026-04-15 EMBODY-P10-1)
 > **선행 논문**: `n6-l10-l15-quantum-nuclear-unification-paper.md`, `l11-l15-quantum-nuclear-mapping-2026-04-14.md`
@@ -546,16 +546,16 @@ fn main() {
 5. CODATA 2018 Recommended Values, NIST.
 6. Bluefors. "LD-Series Dilution Refrigerator Datasheet." (2024).
 7. Canberra / Mirion. "HPGe Detector Performance Specifications." (2024).
-8. 박민우. "HEXA-L10-L15 — 나노 이하 양자/핵 통합 논문." n6-architecture 2026-04-14.
-9. 박민우. "L11~L15 n=6 양자·핵·플랑크 매핑." n6-architecture/theory/proofs 2026-04-14.
+8. 박민우. "HEXA-L10-L15 — 나노 이하 양자/핵 통합 논문." CANON 2026-04-14.
+9. 박민우. "L11~L15 n=6 양자·핵·플랑크 매핑." CANON/theory/proofs 2026-04-14.
 
-### 9.2 교차 링크 (n6-architecture)
+### 9.2 교차 링크 (CANON)
 
 - **선행 논문**: `papers/n6-l10-l15-quantum-nuclear-unification-paper.md`, `papers/n6-arch-quantum-design-paper.md`, `papers/n6-boundary-metatheory-paper.md`
 - **선행 증명**: `theory/proofs/l11-l15-quantum-nuclear-mapping-2026-04-14.md`, `theory/proofs/standard-model-from-n6.md`, `theory/proofs/theorem-r1-uniqueness.md`
 - **선행 BT**: BT-14 (HEXA-GATE Mk.I 24/24 EXACT), BT-23 (CKM Jarlskog), BT-41 (QEC d=5), H-CP-1 (쿼크=6), H-CP-2 (렙톤=6)
 - **연결 atlas 노드**: `embody-p10-1-l13-l14-unified-spec` (σ=12 × τ=4 × fiber=2 축)
-- **연결 로드맵**: `n6shared/roadmap/n6-architecture.json` phase P10 EMBODY 트랙
+- **연결 로드맵**: `n6shared/roadmap/CANON.json` phase P10 EMBODY 트랙
 - **상위 태스크**: EMBODY-P10-1 (본 문서) — status: done 으로 업데이트 대상
 
 ---

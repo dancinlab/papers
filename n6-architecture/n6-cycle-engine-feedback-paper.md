@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-CYCLE-ENGINE-FEEDBACK — 사이클 피드백 엔진 설계 논문 (N6-125)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: cycle-engine-feedback — P2 확장 사이클 엔진 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-195, BT-371, BT-404, BT-1108
@@ -27,7 +27,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 의 loop-guard 시스템, roadmap 루프 엔진, 그리고 nexus6 성장
+본 논문은 CANON 의 loop-guard 시스템, roadmap 루프 엔진, 그리고 nexus6 성장
 데몬의 **공통 사이클 피드백 구조** 가 n=6 산술로 통합됨을 보인다. 세 시스템 모두 "스캔 →
 약점식별 → 에이전트 → 테스트 → 커밋 → push" 형태의 루프를 공유하는데, 이 루프의 **단계 수,
 채널 수, 방향, 사이클 길이** 가 n=6 에서 수렴함을 제시한다.
@@ -45,7 +45,7 @@ nexus6 growth daemon) 의 공통 구조를 n=6 좌표로 통합한 시드 논문
 
 ## 1. 서론 — WHY
 
-n6-architecture 는 세 종류의 사이클 엔진을 병렬 운영한다:
+CANON 는 세 종류의 사이클 엔진을 병렬 운영한다:
 1. **loop-guard** (project_loop_guard) — 레지스트리/문서 정합 자동 수정
 2. **roadmap loop** (글로벌 ~/.claude/skills/loop + hexa engine) — 3-track × phase × gate 자동
 3. **nexus6 growth daemon** (nexus6_growth_system) — 15차원 자동 성장
@@ -119,7 +119,7 @@ nexus6 의 15 차원은 3 개 중복 차원이 메타 채널로 흡수되어 σ=
 ### 4.1 실측 데이터
 
 - loop-guard 실행 로그 (project_loop_guard 메모리) — 5 단계 → 4 메타 관문 매핑 확인
-- roadmap loop n6-architecture.json — 3-track × phase × gate 구조 확인
+- roadmap loop CANON.json — 3-track × phase × gate 구조 확인
 - nexus6 growth daemon 성장 기록 — 15 차원 관측, 12 채널 압축 가능성 확인
 - atlas.n6 `cycle-engine-feedback` 노드 — 20/22 EXACT
 

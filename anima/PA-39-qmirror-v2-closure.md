@@ -2,7 +2,7 @@
 
 > **Status**: arXiv draft v0.1 ready (peer review pending) · upstream release LIVE 2026-05-04
 > **Date**: 2026-05-04
-> **Source**: standalone repo `need-singularity/qmirror` v2.0.0 release
+> **Source**: standalone repo `dancinlab/qmirror` v2.0.0 release
 > **Upstream draft**: `anima/docs/qmirror_arxiv_draft_2026_05_03.md` (v0.1 covers v1.0 8/8 closure; v2.0 5-axis extension landed 2026-05-04, draft refresh pending)
 > **arXiv category target**: `quant-ph` (primary) · `cs.ET` (cross-listing for hexa-lang substrate framing)
 > **License**: paper draft CC BY 4.0 (papers repo); software Apache-2.0 (qmirror core); pyphi optional GPLv3 isolated via subprocess
@@ -46,11 +46,11 @@
 
 ## Upstream artifacts
 
-- **GitHub release**: https://github.com/need-singularity/qmirror/releases/tag/v2.0.0
-- **GitHub canonical**: https://github.com/need-singularity/qmirror
-- **HuggingFace mirror**: https://huggingface.co/need-singularity/qmirror
+- **GitHub release**: https://github.com/dancinlab/qmirror/releases/tag/v2.0.0
+- **GitHub canonical**: https://github.com/dancinlab/qmirror
+- **HuggingFace mirror**: https://huggingface.co/dancinlab/qmirror
 - **arXiv draft v0.1** (v1.0 covering 8/8): `anima/docs/qmirror_arxiv_draft_2026_05_03.md`
-- **CHANGELOG**: https://github.com/need-singularity/qmirror/blob/main/CHANGELOG.md (v2.0.0 entry — 5 v2 axes added)
+- **CHANGELOG**: https://github.com/dancinlab/qmirror/blob/main/CHANGELOG.md (v2.0.0 entry — 5 v2 axes added)
 - **Closure spec**: `anima/docs/qmirror_2_closure_spec_2026_05_04.md`
 - **Closure synth output**: `anima/docs/qmirror_2_closure_2026_05_04.md`
 - **Releases marker**: `anima/state/markers/qmirror_2_closure_landed.marker`
@@ -59,23 +59,23 @@
 
 The qmirror standalone repo follows the same `hx install <pkg>` consumer pattern as three sister substrates extracted under the `anima_offrepo` cycle (2026-05-03 → 2026-05-04):
 
-- [`sim-universe v1.0.0`](https://github.com/need-singularity/sim-universe) — Virtual Universe Runtime (τ-clock + multiverse interferometer + ouroboros QRNG)
-- [`hexa-bio v1.0.0`](https://github.com/need-singularity/hexa-bio) — Molecular Toolkit (WEAVE / NANOBOT / RIBOZYME / VIROCAPSID 4-verb tetrahedron)
-- [`honesty-monitor v1.0.0`](https://github.com/need-singularity/honesty-monitor) — AI Honesty-Bit Falsifier (BT-AI2 contract)
+- [`sim-universe v1.0.0`](https://github.com/dancinlab/sim-universe) — Virtual Universe Runtime (τ-clock + multiverse interferometer + ouroboros QRNG)
+- [`hexa-bio v1.0.0`](https://github.com/dancinlab/hexa-bio) — Molecular Toolkit (WEAVE / NANOBOT / RIBOZYME / VIROCAPSID 4-verb tetrahedron)
+- [`honesty-monitor v1.0.0`](https://github.com/dancinlab/honesty-monitor) — AI Honesty-Bit Falsifier (BT-AI2 contract)
 
 The four standalone repos plus the upstream `nexus` discovery engine and the `anima` meta-orchestration layer constitute the consumer pattern: nexus + anima + standalone repos all consume substrates by URL via `hx install`, with no in-tree forks.
 
 ## Honest caveats (raw#10 C3) — paper-scope
 
 1. **arXiv draft v0.1 covers v1.0 only.** The on-disk draft `anima/docs/qmirror_arxiv_draft_2026_05_03.md` documents the 8/8 closure axes; the 5 new v2.0 axes (cond.9–cond.13) need a draft refresh before arXiv submission. Refresh blocked on: peer-review pass + LaTeX migration + figure prep + counsel sign-off (license/IP review for the cross-vendor IBM/AWS Braket calibration data + ANU QRNG ToS attribution).
-2. **Cross-link burden grows per release.** Each qmirror version cycle (v1.0.0 → v1.0.1 → v2.0.0) adds another row of cross-link maintenance across 17+ anima docs + 4 sister repos + papers entry + n6-architecture README. Mitigation idea (out-of-scope this cycle): consolidate per-doc xref blocks into a single-source `nexus.qmirror.upstream_url` symbol in `nexus/.roadmap.qmirror`. Without that, future renames or version bumps require a fan-out sweep.
+2. **Cross-link burden grows per release.** Each qmirror version cycle (v1.0.0 → v1.0.1 → v2.0.0) adds another row of cross-link maintenance across 17+ anima docs + 4 sister repos + papers entry + CANON README. Mitigation idea (out-of-scope this cycle): consolidate per-doc xref blocks into a single-source `nexus.qmirror.upstream_url` symbol in `nexus/.roadmap.qmirror`. Without that, future renames or version bumps require a fan-out sweep.
 3. **Papers repo needs separate workflow.** The papers/ repo is CC BY 4.0 (creative commons) while qmirror code is Apache-2.0; this PA-39 entry is a status pointer + closure summary, not the upstream draft. The upstream draft refresh + arXiv submission live under the anima cycle (separate from papers cycle). Until refresh lands, papers/anima/PA-39 is the canonical pointer for closure status; arXiv draft v0.1 is the canonical pre-print body (v1-only scope).
-4. **v2.0.0 deletion would invalidate links.** The v2.0.0 release tag is technically deletable via `gh release delete v2.0.0 --yes`, but the tag retains its OID in any clone that fetched it; downstream consumers (this PA-39 entry, the 17 anima docs, the 4 sister repo READMEs, n6-architecture README) all carry phantom references. Treat each release tag as effectively immutable; if a critical bug requires retraction, prefer a v2.0.1 patch release over deletion.
+4. **v2.0.0 deletion would invalidate links.** The v2.0.0 release tag is technically deletable via `gh release delete v2.0.0 --yes`, but the tag retains its OID in any clone that fetched it; downstream consumers (this PA-39 entry, the 17 anima docs, the 4 sister repo READMEs, CANON README) all carry phantom references. Treat each release tag as effectively immutable; if a critical bug requires retraction, prefer a v2.0.1 patch release over deletion.
 
 ## Next steps (publication path)
 
 - [ ] Refresh `anima/docs/qmirror_arxiv_draft_2026_05_03.md` to incorporate 5 v2.0 axes (cond.9–cond.13) — author: anima cycle, target ts: 2026-05-10
-- [ ] Internal peer review (need-singularity stack contributors) — gated on draft refresh
+- [ ] Internal peer review (dancinlab stack contributors) — gated on draft refresh
 - [ ] LaTeX migration (Markdown → arXiv-ready `.tex`) — gated on peer review pass
 - [ ] Figure prep (per-axis verdict matrix + cost comparison + sister substrate diagram) — parallel to LaTeX
 - [ ] Counsel sign-off (license / IP / ANU QRNG ToS attribution / pyphi GPLv3 sub-component disclosure)
@@ -98,7 +98,7 @@ If you cite the qmirror v2.0.0 closure achievement in academic work:
   year         = {2026},
   month        = {may},
   publisher    = {GitHub},
-  url          = {https://github.com/need-singularity/qmirror/releases/tag/v2.0.0},
+  url          = {https://github.com/dancinlab/qmirror/releases/tag/v2.0.0},
   note         = {Closure 13/13 conds met: 8 v1 (CHSH/IIT/NIST/cross-vendor) + 5 v2 (process-tomography/GHZ-Mermin/stabilizer/surface-d3/CSCS).}
 }
 ```

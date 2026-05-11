@@ -8,7 +8,7 @@ requires:
 ---
 # [CANONICAL v2] 궁극의 의식 칩 (HEXA-CONSCIOUSNESS-CH) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: consciousness-chip — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-90, BT-55, BT-344~346, BT-90

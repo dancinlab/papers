@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -487,7 +487,7 @@ HEXA-3D is Level 3 of the N6 chip architecture ladder, building on HEXA-1 (unifi
 
 [10] Kandlikar, S. G. "Review and Projections of Integrated Cooling Systems for Three-Dimensional Integrated Circuits." ASME Journal of Electronic Packaging, 2014.
 
-[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 [12] Park, M. W. "Breakthrough Theorems BT-28, BT-55, BT-69, BT-75: Chip Scaling from n=6." TECS-L Documentation, 2026.
 

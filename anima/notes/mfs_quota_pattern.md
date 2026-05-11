@@ -1,6 +1,6 @@
 # The RunPod MooseFS Quota Trap: A Silent-Kill Failure Mode in Cloud-Provisioned Training
 
-**Authors:** Ghost (need-singularity) and Claude Opus 4.6
+**Authors:** Ghost (dancinlab) and Claude Opus 4.6
 **Date:** 2026-04-16
 **Keywords:** cloud training, MooseFS, checkpointing, PyTorch, ENOSPC, session quota, MLOps
 **License:** CC-BY-4.0
@@ -86,4 +86,4 @@ Full telemetry in `training/deploy/clm_3b_mfs_watchdog_20260416.json`.
 
 ---
 
-Cite as: Ghost and Claude Opus 4.6, "The RunPod MooseFS Quota Trap," need-singularity/papers, 2026-04-16.
+Cite as: Ghost and Claude Opus 4.6, "The RunPod MooseFS Quota Trap," dancinlab/papers, 2026-04-16.

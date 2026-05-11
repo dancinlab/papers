@@ -6,7 +6,7 @@
 
 **Preprint.** Submitted to arXiv: stat.AP, cs.SE, math-ph
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 

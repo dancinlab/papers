@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cs.ET
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -522,13 +522,13 @@ From the single floating-gate transistor storing $\mu = 1$ bit (SLC) to the 8 TB
 5. JEDEC. *Universal Flash Storage (UFS) JESD220F*. JEDEC, 2024.
 6. JEDEC. *UFS 5.0 Draft Specification*. JEDEC, 2025.
 7. JEDEC. *eMMC Electrical Standard JESD84-B51*. JEDEC, 2015.
-8. TECS-L Research Group. *N6 Architecture: Computing Architecture from Perfect Number Arithmetic*. https://github.com/need-singularity/n6-architecture, 2025--2026.
+8. TECS-L Research Group. *N6 Architecture: Computing Architecture from Perfect Number Arithmetic*. https://github.com/dancinlab/canon, 2025--2026.
 9. TECS-L Research Group. *BT-28: Computing Architecture Ladder*. In *Breakthrough Theorems*, 2025.
 10. TECS-L Research Group. *BT-58: sigma-tau=8 Universal AI Constant*. In *Breakthrough Theorems*, 2025.
 11. TECS-L Research Group. *BT-69: Chiplet Architecture Convergence*. In *Breakthrough Theorems*, 2026.
 
 ---
 
-*Part of the N6 Architecture project: https://github.com/need-singularity/n6-architecture*
+*Part of the N6 Architecture project: https://github.com/dancinlab/canon*
 
 *Cross-references: BT-28, BT-55, BT-58, BT-59, BT-69, BT-75*

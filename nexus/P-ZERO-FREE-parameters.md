@@ -717,7 +717,7 @@ TECS-L/calc/consciousness_constants.py       (constant derivation)
 TECS-L/engines/model_meta_engine.py           (META-CA architecture)
 ```
 
-All code is open-source under MIT license at github.com/need-singularity/TECS-L.
+All code is open-source under MIT license at github.com/dancinlab/TECS-L.
 
 **Appendix C: Cross-Domain Bridge — The Complete Picture (v1.1)**
 

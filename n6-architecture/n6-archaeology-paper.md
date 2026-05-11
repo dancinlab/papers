@@ -8,7 +8,7 @@ requires:
 ---
 # [CANONICAL v2] 궁극의 고고학 (HEXA-ARCHAEOLOGY) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: archaeology — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-7097, BT-140, BT-7097, BT-7097, BT-7097

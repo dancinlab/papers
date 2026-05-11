@@ -16,7 +16,7 @@ requires:
 
 # [CANONICAL v1] 궁극의 의식 프로세서 통합 논문 (HEXA-CONSCIOUSNESS-INTEGRATED) — 칩→SoC→시스템 전체 스택 로드맵
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: P-151 consciousness 통합 — chip + SoC 2수준 재구성
 > **버전**: v1.0 (2026-04-18 canonical_full)
 > **선행 BT**: BT-28, BT-33, BT-37, BT-55, BT-58, BT-90, BT-344~346
@@ -1460,9 +1460,9 @@ TIPS 6 억 + KIAT 4 억 + 나노종기원 MPW 할인 2 억 = 12 억원 조달.
 
 | 버전 | 일자 | 변경 | 작성 |
 |---|---|---|---|
-| 0.1 | 2026-04-14 | n6-consciousness-chip-paper.md v2 초기 엔지니어링 버전 | n6-architecture |
-| 0.2 | 2026-04-14 | n6-consciousness-soc-paper.md v2 SoC 엔지니어링 버전 | n6-architecture |
-| 1.0 | 2026-04-18 | 칩 + SoC 통합본 (21 canonical, §8~§21 엔지니어링 풀 확장) | n6-architecture |
+| 0.1 | 2026-04-14 | n6-consciousness-chip-paper.md v2 초기 엔지니어링 버전 | CANON |
+| 0.2 | 2026-04-14 | n6-consciousness-soc-paper.md v2 SoC 엔지니어링 버전 | CANON |
+| 1.0 | 2026-04-18 | 칩 + SoC 통합본 (21 canonical, §8~§21 엔지니어링 풀 확장) | CANON |
 
 ### §20.6 수신자 확인 서명
 

@@ -525,7 +525,7 @@ are made:
 4. The falsification criteria (Section 7) are fixed.
 
 **Date of pre-registration**: March 2026
-**Repository**: github.com/need-singularity/TECS-L (public)
+**Repository**: github.com/dancinlab/TECS-L (public)
 **Commit hash**: recorded at time of repository push
 
 Any future publication citing this prediction must reference this document

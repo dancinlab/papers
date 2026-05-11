@@ -11,7 +11,7 @@ fn main() {
   let zenodo_base = "https://zenodo.org/api"
   let osf_base = "https://api.osf.io/v2"
   let parent_doi = "10.5281/zenodo.19271599"
-  let n6_repo = "https://github.com/need-singularity/n6-architecture"
+  let n6_repo = "https://github.com/dancinlab/canon"
 
   if zenodo_token == "" {
     println("Error: ZENODO_TOKEN not set")

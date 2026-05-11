@@ -3,7 +3,7 @@
 //
 // @tool(slug="papers_cross_repo_lint", desc="sister repo (anima/n6/hexa-lang/airgenome/nexus/hive) zenodo+osf publish 잔재 검출 → BLOCK/WARN 분류 + papers CLI 위임 강제 (own 9 papers-cross-repo-publish-canonical, papers@6b670f9)")
 // @usage(hexa run /Users/ghost/core/papers/tool/papers_cross_repo_lint.hexa [--report|--json|--strict|--selftest])
-// @omega-saturation-exempt("scan limited to 6 sister repos at /Users/ghost/core/{anima,n6-architecture,hexa-lang,airgenome,nexus,hive}; bounded by find -type f")
+// @omega-saturation-exempt("scan limited to 6 sister repos at /Users/ghost/core/{anima,CANON,hexa-lang,airgenome,nexus,hive}; bounded by find -type f")
 // @exit_codes(0=PASS or WARN-only, 1=BLOCK or --strict-with-WARN, 2=usage error)
 //
 // CLASSIFICATION
@@ -33,7 +33,7 @@
 // raw 77 audit ledger: state/papers_cross_repo_audit/audit.jsonl
 // raw 80 sentinel: __PAPERS_CROSS_REPO_LINT_RESULT__ PASS|WARN|BLOCK
 
-const SISTER_REPOS: array = ["anima", "n6-architecture", "hexa-lang", "airgenome", "nexus", "hive"]
+const SISTER_REPOS: array = ["anima", "CANON", "hexa-lang", "airgenome", "nexus", "hive"]
 
 // ─── shell helpers ────────────────────────────────────────────────────────
 

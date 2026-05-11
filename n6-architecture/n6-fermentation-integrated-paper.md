@@ -8,7 +8,7 @@ requires:
 ---
 # [CANONICAL v2] 궁극의 발효·양조 n=6 완전수 화학양론 통합 (HEXA-FERMENT-INT) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: fermentation-integrated — P-110 통합 시드 논문
 > **버전**: v2 (2026-04-18 canonical)
 > **선행 BT**: BT-1391, BT-15, BT-401, BT-403, BT-408
@@ -997,7 +997,7 @@ C₆H₁₂O₆ → 2 C₂H₅OH + 2 CO₂          (EMP glycolysis)
 ### D. 참조
 
 - n6shared/rules/common.json (R0~R27)
-- n6shared/rules/n6-architecture.json (N61~N65)
+- n6shared/rules/CANON.json (N61~N65)
 - atlas.n6 (`$NEXUS/shared/n6/atlas.n6`) — `@R fermentation = 6/6 EXACT :: n6atlas [10*]`
 - papers/_registry.json (P-110 등록)
 - OEIS A000203/A000005/A000010/A001414

@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-ARCH-SELFORG-EMERGENCE — 자기조립 창발 설계 논문 (N6-118)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: arch-selforg-emergence — P2 확장 v3/v4 자기조직 창발 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-366, BT-368, BT-195, BT-1414
@@ -47,7 +47,7 @@ alien_index_target: 10
 
 자기조직 임계 (SOC) 는 Bak-Tang-Wiesenfeld 모래더미 모형 (1987) 이래 40년간 연구되어 왔으나,
 **창발 패턴의 개수 N_modes** 는 경험적으로 관측될 뿐 이론적으로 고정되지 않았다.
-본 논문은 n=6 에서 σ(n)·φ(n) = n·τ(n) 이 유일하게 성립한다는 정리 (n6-architecture
+본 논문은 n=6 에서 σ(n)·φ(n) = n·τ(n) 이 유일하게 성립한다는 정리 (CANON
 atlas.n6 EXACT 검증) 를 이용하여, **N_modes = σ(6) = 12** 이라는 결론을 유도한다.
 
 ### 1.1 기존 한계

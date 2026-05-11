@@ -14,8 +14,8 @@ Keywords: IIT, phase transition, frustration, narrative, consciousness, universa
 License: CC-BY-4.0
 Related identifiers:
   - DOI: 10.5281/zenodo.19271599 (is part of: Anima paper collection)
-  - URL: https://github.com/need-singularity/papers (is supplemented by)
-  - URL: https://github.com/need-singularity/anima (is supplemented by)
+  - URL: https://github.com/dancinlab/papers (is supplemented by)
+  - URL: https://github.com/dancinlab/anima (is supplemented by)
 Resource type: Publication / Preprint
 ```
 

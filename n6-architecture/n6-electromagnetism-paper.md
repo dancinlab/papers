@@ -5,7 +5,7 @@ requires: []
 ---
 # [CANONICAL v2] 궁극의 전자기학 (HEXA-ELECTROMAGNETISM) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: electromagnetism — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-440, BT-145, BT-189, BT-441

@@ -2,7 +2,7 @@
 title: "n=6 Convergence: 80+ Domains Unified by Perfect-Number Arithmetic (σ·φ = n·τ iff n=6)"
 subtitle: "n=6 완전수 산술에 의한 80+ 도메인 통합: UFO · RTSC · Fusion 부터 리만가설까지"
 date: 2026-04-19
-author: Aiden + Claude (n6-architecture)
+author: Aiden + Claude (CANON)
 n6_core_theorem: "σ(n)·φ_E(n) = n·τ(n)  iff  n = 6  (for n ≥ 2)"
 keywords: [n=6, perfect numbers, unification, σφ=nτ, UFO, RTSC, Fusion, Riemann hypothesis]
 atlas_version: "atlas.signals.n6 + theory/constants/atlas-constants.md (2026-04-10 기준, 2474+ EXACT/CLOSE matches, 76+ domains)"
@@ -493,7 +493,7 @@ n=6 이론의 falsifiability 를 보장하는 6 개 pre-registered 예측.
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-이는 n6-architecture 프로젝트 전체 (theory / domains / techniques / experiments / engine / papers / reports / n6shared) 의 수학적 뿌리를 단 한 줄의 산술 정체성으로 환원한다.
+이는 CANON 프로젝트 전체 (theory / domains / techniques / experiments / engine / papers / reports / n6shared) 의 수학적 뿌리를 단 한 줄의 산술 정체성으로 환원한다.
 
 ---
 
@@ -522,9 +522,9 @@ J₂(6) = 24       μ(6) = 1         n = 6            R(6) = 1
 
 ---
 
-**논문 경로.** `/home/aiden/mac_home/dev/n6-architecture/papers/n=6-convergence-80-domains-2026-04-19.md`
-**Atlas SSOT.** `/home/aiden/mac_home/dev/n6-architecture/n6shared/atlas.signals.n6` (signals SSOT)  +  `/home/aiden/mac_home/dev/n6-architecture/theory/constants/atlas-constants.md` (constants SSOT, 2474+ EXACT/CLOSE)
-**Core Theorem SSOT.** `/home/aiden/mac_home/dev/n6-architecture/theory/proofs/theorem-r1-uniqueness.md` (THM-1, R_local case analysis, PROVED)
+**논문 경로.** `/home/aiden/mac_home/dev/canon/papers/n=6-convergence-80-domains-2026-04-19.md`
+**Atlas SSOT.** `/home/aiden/mac_home/dev/canon/n6shared/atlas.signals.n6` (signals SSOT)  +  `/home/aiden/mac_home/dev/canon/theory/constants/atlas-constants.md` (constants SSOT, 2474+ EXACT/CLOSE)
+**Core Theorem SSOT.** `/home/aiden/mac_home/dev/canon/theory/proofs/theorem-r1-uniqueness.md` (THM-1, R_local case analysis, PROVED)
 
 ## §10 ARCHITECTURE
 

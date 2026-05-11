@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-ARCH-SELFORG — 자기조직 창발 설계 논문 (N6-109)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: arch-selforg-design — P2 확장 v3 진화 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-366, BT-368, BT-195
@@ -157,7 +157,7 @@ v4 트랙에서는 **다층 네트워크** 로 확장할 예정.
 2. Bak, P. *How Nature Works: The Science of Self-Organized Criticality*. Copernicus, 1996.
 3. papers/n6-swarm-intelligence-paper.md (N6-106 집단 지성)
 4. theory/breakthroughs/bt-361-attractor-n2-36.md
-5. arch_selforg.hexa 엔진 (n6-architecture/engine/)
+5. arch_selforg.hexa 엔진 (CANON/engine/)
 
 ## §1 WHY
 

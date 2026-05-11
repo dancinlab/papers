@@ -72,7 +72,7 @@ papers repo (peer perspective, mk2 scope_out → in_scope on 2026-05-03)
 |---|---|---:|---|
 | `anima/` | anima 측 PA-* paper + notes | 45 | (consumer 측 anima repo 산하 .roadmap.* 가 cross-link, 본 repo .roadmap 중복 X) |
 | `brainwire/` | brainwire P-001~003 (cortical/epilepsy/depression) | 3 | `.roadmap.brainwire` neww |
-| `n6-architecture/` | n6 paper 그룹 (group-P / pandoc_templates / sigma_tau_8 / N6-auto-convergence) | 168 | (n6-architecture sister repo 측 mk2 .roadmap.* 별도, 본 repo 중복 X) |
+| `CANON/` | n6 paper 그룹 (group-P / pandoc_templates / sigma_tau_8 / N6-auto-convergence) | 168 | (CANON sister repo 측 mk2 .roadmap.* 별도, 본 repo 중복 X) |
 | `nexus/` | nexus paper 그룹 | 30 | (nexus 측 .roadmap.* 별도, cross-link) |
 | `sedi/` | PS-01~14 + factorial-universe | 32 | `.roadmap.sedi` new |
 | `tecs-l/` | tecs-l n6-* paper + figures + CERN proposal | 91 | (도메인 ambiguity — C3 caveat) |
@@ -131,8 +131,8 @@ papers repo (peer perspective, mk2 scope_out → in_scope on 2026-05-03)
 
 - **C1** — 기존 single-file SSOT (`manifest.json` 183KB / 433 paper entry) 가 작동 중. raw 270/271/272/273 triplet (core/<도메인>/{source,registry,router,main} + modules/<도메인>/) 으로 재정합 시 대규모 file 구조 변경 필수 — 본 BG 는 additive only 정책으로 마이그레이션 보류. `.roadmap.*` 4개만 신규 land.
 - **C2** — `papers_cross_repo_lint v1.2` (commit 2f776b7) 의 grandfather marker SKIP + per-repo exempt mechanism 이 mk2 peer perspective 와 상호작용 미검증. lint 가 `.roadmap.*` 의 excludes entry 를 인식하지 못함 — Phase 2 lint v1.3 에서 mk2 spec 통합 필요.
-- **C3** — `tecs-l/` (91 file, n6-* paper + CERN proposal + figures) 의 도메인 정의 ambiguous. `.roadmap.tecs_l` 신규 add 후보 vs `n6-architecture` 와 중복 우려 — 본 BG 는 보류, 다음 cycle 사용자 directive 후 결정.
-- **C4** — `papers/anima/`, `papers/n6-architecture/`, `papers/nexus/` 가 sister repo 와 이름 중복. mk2 ecosystem 측 `.roadmap.*` (anima 21 / nexus 3 / hexa-lang 1) 는 sister repo 측에 거주 — papers/ 산하 동일 이름 sub-dir 는 paper sub-archive 만 가리키므로 `.roadmap.anima` / `.roadmap.n6-architecture` / `.roadmap.nexus` 신규 add 시 cross-repo name collision 우려. 본 BG 는 brainwire/sedi 만 add (sister repo 측 .roadmap 부재 → 충돌 가능성 0).
+- **C3** — `tecs-l/` (91 file, n6-* paper + CERN proposal + figures) 의 도메인 정의 ambiguous. `.roadmap.tecs_l` 신규 add 후보 vs `CANON` 와 중복 우려 — 본 BG 는 보류, 다음 cycle 사용자 directive 후 결정.
+- **C4** — `papers/anima/`, `papers/canon/`, `papers/nexus/` 가 sister repo 와 이름 중복. mk2 ecosystem 측 `.roadmap.*` (anima 21 / nexus 3 / hexa-lang 1) 는 sister repo 측에 거주 — papers/ 산하 동일 이름 sub-dir 는 paper sub-archive 만 가리키므로 `.roadmap.anima` / `.roadmap.CANON` / `.roadmap.nexus` 신규 add 시 cross-repo name collision 우려. 본 BG 는 brainwire/sedi 만 add (sister repo 측 .roadmap 부재 → 충돌 가능성 0).
 - **C5** — `bin/papers` 12-verb 와 raw 270/271/272/273 triplet 의 정합 deferred. 현재 single bash entry + tool/* delegation 구조 유지 — raw 270 router pattern 도입 시 bin/papers refactor 필요 (Phase 3 candidate).
 - **C6** — `cross_repo_publish.blk.1` (OSF Phase 2 stub) 가 active blocker. `tool/osf_publish.hexa` 미존재 → `bin/papers publish --target osf` 는 WARN+skip path. dual-archive 완성 시까지 cond.2 unmet 유지.
 - **C7** — handoff doc (`docs/papers_mk2_redesign_landed_2026_05_03.ai.md`) 본 land 는 papers/docs/ 에 위치. mk2 ecosystem catalog 측 (hive/spec/mk2_ecosystem_catalog.spec.yaml) 의 `papers` entry 갱신 필요 — 본 BG scope 외, hive 측 BG (BG-CL/BG-PL) 와 file scope 분리 위해 보류.

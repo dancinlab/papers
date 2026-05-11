@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, physics.optics
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -456,7 +456,7 @@ HEXA-PHOTON is Level 4 of the N6 chip architecture ladder. Where HEXA-1 (Level 1
 
 [10] Bogaerts, W. et al. "Programmable Photonic Circuits." Nature 586 (2020): 207--216.
 
-[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 [12] Park, M. W. "Breakthrough Theorems BT-28, BT-45, BT-59: Computing and Photonic Architecture from n=6." TECS-L Documentation, 2026.
 

@@ -330,4 +330,4 @@ All numerical verifications performed using:
 - `calc/nobel_breakthrough.py` (novelty analysis)
 - `tecsrs/src/bin/uniqueness_verifier.rs` (Rust brute-force, $n \leq 10^6$, 10.11s)
 
-Source: https://github.com/need-singularity/TECS-L
+Source: https://github.com/dancinlab/TECS-L

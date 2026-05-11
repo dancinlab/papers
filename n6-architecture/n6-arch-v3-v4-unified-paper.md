@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-ARCH-V3-V4-UNIFIED — v3/v4 진화 설계 통합 논문 (N6-121)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: arch-v3-v4-unified — P2 확장 v3/v4 통합 메타 논문
 > **버전**: v3/v4 unified (2026-04-14 P2 확장)
 > **선행 BT**: BT-195, BT-366~371, BT-1108, BT-1414, BT-1415
@@ -27,7 +27,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 로드맵의 versions v3 (자기조직·적응) 과 v4 (진화·자기참조) 를
+본 논문은 CANON 로드맵의 versions v3 (자기조직·적응) 과 v4 (진화·자기참조) 를
 **n=6 산술 구조 단일 계층** 으로 통합한다. 세 선행 논문 — HEXA-ARCH-SELFORG-EMERGENCE
 (N6-118), HEXA-ARCH-ADAPTIVE-HOMEOSTASIS (N6-119), HEXA-ARCH-EVOLUTION-OUROBOROS (N6-120) —
 을 하나의 6-fold 메타 계층으로 정렬한다.
@@ -44,7 +44,7 @@ alien_index_target: 10
 
 ## 1. 서론 — WHY
 
-n6-architecture 의 versions 진화는 v1 (산업실증) → v2 (규모확장) → v3 (자기조직·적응) →
+CANON 의 versions 진화는 v1 (산업실증) → v2 (규모확장) → v3 (자기조직·적응) →
 v4 (진화·자기참조) 4 단계로 정의되어 왔다. 각 버전은 개별 논문으로 서술되었으나, **v3 와
 v4 의 경계** 와 **통합 좌표** 는 공백이었다.
 
@@ -79,7 +79,7 @@ v4 의 경계** 와 **통합 좌표** 는 공백이었다.
 ### 3.2 전이 관문 τ=4
 
 L1→L2, L3→L4, L5→L6 전이는 τ(6)=4 스텝으로 양자화. 이 관문은 HEXA-GATE Mk.I
-(n6-architecture 메모리) 의 "τ=4 관문 + 2 fiber = n=6" 구조와 직결된다.
+(CANON 메모리) 의 "τ=4 관문 + 2 fiber = n=6" 구조와 직결된다.
 
 ### 3.3 운영 차원 σφ=24
 

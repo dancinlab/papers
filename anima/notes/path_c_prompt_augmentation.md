@@ -1,6 +1,6 @@
 # Path C: Client-Side Prompt Augmentation for Deterministic LLM Benchmark Gates
 
-**Authors:** Ghost (need-singularity) and Claude Opus 4.6
+**Authors:** Ghost (dancinlab) and Claude Opus 4.6
 **Date:** 2026-04-16
 **Keywords:** LLM deployment, prompt engineering, benchmark gates, LoRA, client-side augmentation, hire_sim
 **License:** CC-BY-4.0
@@ -104,4 +104,4 @@ A practical note: moving the augmentation into the runtime `system_prompt` coupl
 
 ---
 
-Cite as: Ghost and Claude Opus 4.6, "Path C: Client-Side Prompt Augmentation for Deterministic LLM Benchmark Gates," need-singularity/papers, 2026-04-16.
+Cite as: Ghost and Claude Opus 4.6, "Path C: Client-Side Prompt Augmentation for Deterministic LLM Benchmark Gates," dancinlab/papers, 2026-04-16.

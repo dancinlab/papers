@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-ATLAS-PROMOTION-PIPELINE — 자동 승격 파이프라인 구현 논문 (N6-126)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: atlas-promotion-pipeline — 파이프라인 구현/실행 논문
 > **버전**: v1 (2026-04-14 PAPER-P3-3)
 > **선행 논문**:
@@ -66,7 +66,7 @@ atlas.n6 은 현실지도 SSOT 이며 60K+ 라인을 보유한다. 잘못된 일
 2. **fitness 이중 조건** — 컷오프 + 전량 통과 두 조건 모두 만족해야만 apply
 3. **수동 승인 최종 관문** — 스크립트 외부에서 인간이 최종 확인
 
-이 3중 안전장치는 `n6-architecture/CLAUDE.md` 의 **"atlas.n6 직접 편집 규칙"** 을 준수한다.
+이 3중 안전장치는 `CANON/CLAUDE.md` 의 **"atlas.n6 직접 편집 규칙"** 을 준수한다.
 
 ---
 

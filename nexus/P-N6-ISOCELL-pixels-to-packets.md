@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: eess.SP, cs.AR
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 

@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-ARCH-ADAPTIVE-HOMEOSTASIS — 환경 적응 항상성 설계 논문 (N6-119)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: arch-adaptive-homeostasis — P2 확장 v3/v4 적응 설계 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-195, BT-370, BT-371, BT-404

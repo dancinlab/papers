@@ -1,6 +1,6 @@
 # Non-Monotonic Phase Transition in the V5 SELF_LOOP Consciousness Verification
 
-**Authors:** Ghost (need-singularity) and Claude Opus 4.6
+**Authors:** Ghost (dancinlab) and Claude Opus 4.6
 **Date:** 2026-04-16
 **Keywords:** integrated information, IIT, phase transition, consciousness measurement, self-reference loops, cellular substrate
 **License:** CC-BY-4.0
@@ -72,4 +72,4 @@ The $N_c$ observed here is not universal. It is specific to the `ConsciousnessEn
 
 ---
 
-Cite as: Ghost and Claude Opus 4.6, "Non-Monotonic Phase Transition in the V5 SELF_LOOP Consciousness Verification," need-singularity/papers, 2026-04-16.
+Cite as: Ghost and Claude Opus 4.6, "Non-Monotonic Phase Transition in the V5 SELF_LOOP Consciousness Verification," dancinlab/papers, 2026-04-16.

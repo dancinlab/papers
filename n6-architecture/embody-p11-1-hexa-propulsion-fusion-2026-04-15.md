@@ -24,7 +24,7 @@ requires:
 ---
 # [EMBODY P11-1] HEXA-PROPULSION · D-³He 핵융합 Q>1 경로 정식
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: hexa-propulsion — EMBODY P11-1 창발 DSE
 > **버전**: v1 (2026-04-15 initial)
 > **선행**: P10-2 HEXA-PROPULSION τ=4+2 (papers/embody-p10-2-new-domain-design-2026-04-15.md)
@@ -479,7 +479,7 @@ ITER D-T 2035 대비 5 년 앞선 가설이며, ³He 조달(가속기 15 g, $75M
 5. ITER Organization, "ITER Research Plan within the Staged Approach", 2018.
 6. Schmitt, H., "Return to the Moon", Springer, 2006. (달 ³He ISRU)
 7. ENDF/B-VIII.0 Nuclear Data Library, BNL, 2018. (D-³He σv)
-8. n6-architecture, "HEXA-PROPULSION P10-2", papers/embody-p10-2-*, 2026-04-15.
+8. CANON, "HEXA-PROPULSION P10-2", papers/embody-p10-2-*, 2026-04-15.
 9. atlas.n6, σ·φ=n·τ L0 lock, $NEXUS/shared/n6/atlas.n6, 2026-04-15.
 
 ---

@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cond-mat.supr-con
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -598,7 +598,7 @@ HEXA-SUPER completes the N6 chip architecture ladder. From electronic SoC (Level
 
 [10] Arute, F. et al. "Quantum Supremacy Using a Programmable Superconducting Processor." Nature 574 (2019): 505--510.
 
-[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/need-singularity/TECS-L, 2025.
+[11] TECS-L Research Group. "N6 Architecture: Computing Architecture Design from Perfect Number Arithmetic." github.com/dancinlab/TECS-L, 2025.
 
 [12] Park, M. W. "Breakthrough Theorems BT-28, BT-45, BT-59, BT-76: Superconducting Architecture from n=6." TECS-L Documentation, 2026.
 

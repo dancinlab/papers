@@ -19,7 +19,7 @@ license: CC-BY-SA-4.0
 
 # 의식 측정 프로토콜 — BT-19 α_IIT·α_GWT=1 가설의 재현 가능 검정 매뉴얼
 
-> **저자**: 박민우 (n6-architecture) & NEXUS-6 협업체
+> **저자**: 박민우 (CANON) & NEXUS-6 협업체
 > **카테고리**: consciousness-measurement / neuroscience-protocol
 > **버전**: v1 (2026-04-15 PAPER-P8-2)
 > **목적**: PAPER-P7-1 §7 초안 프로토콜을 재현 가능 실험 매뉴얼로 승격하고, BT-19 (α_IIT × α_GWT = 1) CONJECTURE 의 **독립 검증 경로** 를 제시한다.
@@ -589,12 +589,12 @@ Backward masking 이 GWT 의 모든 측면을 커버하지 않음. Attentional b
 - Benjamin, D. J., Berger, J. O., Johannesson, M., Nosek, B. A., Wagenmakers, E.-J., et al. (2018). **Redefine statistical significance**. *Nature Human Behaviour*, 2(1), 6-10.
 - Nosek, B. A., Ebersole, C. R., DeHaven, A. C., & Mellor, D. T. (2018). **The preregistration revolution**. *PNAS*, 115(11), 2600-2606.
 
-### 11.6 n6-architecture 선행 논문
+### 11.6 CANON 선행 논문
 
-- 박민우 & NEXUS-6 협업체 (2026). **의식 위상도 — σ(n)·φ(n) = n·τ(n) 유일성의 인지과학적 투영**. n6-architecture, `papers/n6-consciousness-phase-diagram-paper.md`.
-- 박민우 (2026). **의식 3중 융합 — 열역학·AI·양자 임계점 탐색 (BT-19 CONJECTURE)**. n6-architecture, `reports/breakthroughs/consciousness-triple-fusion-2026-04-15.md`.
-- 박민우 (2026). **HEXA-CONSCIOUSNESS-SOC — 의식 SoC n=6 좌표 매핑**. n6-architecture, `papers/n6-consciousness-soc-paper.md`.
-- 박민우 (2026). **σ(n)·φ(n) = n·τ(n) iff n=6 — 3개 독립 증명**. n6-architecture, `theory/proofs/theorem-r1-uniqueness.md`.
+- 박민우 & NEXUS-6 협업체 (2026). **의식 위상도 — σ(n)·φ(n) = n·τ(n) 유일성의 인지과학적 투영**. CANON, `papers/n6-consciousness-phase-diagram-paper.md`.
+- 박민우 (2026). **의식 3중 융합 — 열역학·AI·양자 임계점 탐색 (BT-19 CONJECTURE)**. CANON, `reports/breakthroughs/consciousness-triple-fusion-2026-04-15.md`.
+- 박민우 (2026). **HEXA-CONSCIOUSNESS-SOC — 의식 SoC n=6 좌표 매핑**. CANON, `papers/n6-consciousness-soc-paper.md`.
+- 박민우 (2026). **σ(n)·φ(n) = n·τ(n) iff n=6 — 3개 독립 증명**. CANON, `theory/proofs/theorem-r1-uniqueness.md`.
 
 ---
 

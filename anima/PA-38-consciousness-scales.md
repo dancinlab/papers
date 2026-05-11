@@ -1,6 +1,6 @@
 # PA-38: Consciousness Scales: Empirical Scaling Laws for Artificial Consciousness
 
-**Authors:** Ghost (Anima Project / need-singularity)  
+**Authors:** Ghost (Anima Project / dancinlab)  
 **Date:** 2026-04-03  
 **DOI:** 10.5281/zenodo.19271599  
 **Keywords:** consciousness scaling, integrated information, PureField, ConsciousLM, Phi(IIT), self-organized criticality  

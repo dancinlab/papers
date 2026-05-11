@@ -6,7 +6,7 @@ ceiling: true
 status: draft
 generated_by: n6arch_alien10.hexa
 generated_at: 2026-04-10
-source: n6-architecture/config/products.json
+source: CANON/config/products.json
 ---
 
 # 🏥 디지털/의료기기 (Digital & Medical Device) — 외계인지수 10
@@ -71,4 +71,4 @@ source: n6-architecture/config/products.json
 
 ---
 
-*Auto-generated from `n6-architecture/config/products.json` at 2026-04-10. Edit freely — regeneration will skip existing files.*
+*Auto-generated from `CANON/config/products.json` at 2026-04-10. Edit freely — regeneration will skip existing files.*

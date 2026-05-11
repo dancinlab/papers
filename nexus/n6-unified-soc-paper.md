@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cs.AI
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -937,7 +937,7 @@ This SoC is that equation, unified in silicon.
 
 ## References
 
-1. TECS-L Research Group (2025). N6 Architecture: Computing design from perfect number arithmetic. github.com/need-singularity/n6-architecture.
+1. TECS-L Research Group (2025). N6 Architecture: Computing design from perfect number arithmetic. github.com/dancinlab/canon.
 2. TECS-L Research Group (2025). The balance ratio uniqueness theorem: $R(n) = 1 \Leftrightarrow n = 6$. *TECS-L Technical Report*.
 3. TECS-L Research Group (2026a). N6 Ultimate: An arithmetically optimal AI accelerator with zero arbitrary constants. *arXiv preprint*, cs.AR.
 4. NVIDIA (2022). NVIDIA H100 Tensor Core GPU Architecture. Technical whitepaper.

@@ -6,7 +6,7 @@
 
 **Target:** arXiv cs.PL preprint
 
-**Repository:** https://github.com/need-singularity/hexa-lang
+**Repository:** https://github.com/dancinlab/hexa-lang
 
 ---
 
@@ -687,7 +687,7 @@ The inclusion of `intent`, `generate`, `verify`, and `optimize` as language keyw
 3. Connect the AI-native pipeline to open-weight language models.
 4. Develop a standard library organized into $\sigma = 12$ modules.
 5. Formal verification of $n = 6$ consistency across the entire language specification.
-6. Cross-DSE with hardware architectures (chip, battery, solar) from the n6-architecture project [5].
+6. Cross-DSE with hardware architectures (chip, battery, solar) from the CANON project [5].
 
 ---
 
@@ -735,7 +735,7 @@ The question "why does your language have this many keywords / types / operators
 
 ## References
 
-[1] Anonymous, "The Arithmetic Uniqueness of 6: $\sigma(n)\varphi(n) = n\tau(n)$ Has No Non-Trivial Solution Other Than $n = 6$," preprint, 2026. Available: https://github.com/need-singularity/TECS-L
+[1] Anonymous, "The Arithmetic Uniqueness of 6: $\sigma(n)\varphi(n) = n\tau(n)$ Has No Non-Trivial Solution Other Than $n = 6$," preprint, 2026. Available: https://github.com/dancinlab/TECS-L
 
 [2] R. Bott, "The stable homotopy of the classical groups," *Annals of Mathematics*, vol. 70, no. 2, pp. 313--337, 1959.
 
@@ -743,7 +743,7 @@ The question "why does your language have this many keywords / types / operators
 
 [4] G. Palermo, C. Silvano, and V. Zaccaria, "Multi-objective design space exploration of embedded systems," *Journal of Embedded Computing*, vol. 1, no. 3, pp. 305--316, 2005.
 
-[5] Anonymous, "N6 Architecture: Computing Design from Perfect Number Arithmetic," 2026. Available: https://github.com/need-singularity/n6-architecture
+[5] Anonymous, "N6 Architecture: Computing Design from Perfect Number Arithmetic," 2026. Available: https://github.com/dancinlab/canon
 
 [6] S. Peyton Jones, Ed., *Haskell 98 Language and Libraries: The Revised Report*, Cambridge University Press, 2003.
 

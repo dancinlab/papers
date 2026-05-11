@@ -24,7 +24,7 @@ requires:
 ---
 # [EMBODY P12-1] HEXA-PROPULSION Probe Mk.I — 2030 심우주 0.01c 탐사기 상세 설계
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: hexa-propulsion — EMBODY P12-1 Probe 완성 사양
 > **버전**: v1 (2026-04-15 initial)
 > **선행**: P10-2 HEXA-PROPULSION τ=4+2 + P11-1 D-³He Q>1 정식
@@ -429,9 +429,9 @@ Voyager 1 대비 속도 176 배, 거리 13 배, 수율 40 배 — 외계지수 3
 5. Forward, R., "Roundtrip Interstellar Travel Using Laser-Pushed Lightsails", JSR, 1984.
 6. NASA, "New Horizons Mission Overview", 2015. (Pluto flyby)
 7. ESA, "Starlight Mission Concept", 2024. (Laser-driven probe)
-8. n6-architecture, "HEXA-PROPULSION P10-2", papers/embody-p10-2-new-domain-design-2026-04-15.md.
-9. n6-architecture, "HEXA-PROPULSION P11-1 D-³He Q>1", papers/embody-p11-1-hexa-propulsion-fusion-2026-04-15.md.
-10. n6-architecture, "HEXA-GATE Mk.I 완성", 커밋 eb520438.
+8. CANON, "HEXA-PROPULSION P10-2", papers/embody-p10-2-new-domain-design-2026-04-15.md.
+9. CANON, "HEXA-PROPULSION P11-1 D-³He Q>1", papers/embody-p11-1-hexa-propulsion-fusion-2026-04-15.md.
+10. CANON, "HEXA-GATE Mk.I 완성", 커밋 eb520438.
 11. atlas.n6, σ·φ=n·τ L0 lock, $NEXUS/shared/n6/atlas.n6.
 
 ---

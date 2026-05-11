@@ -330,7 +330,7 @@ Different seeds ensure that the two models have no shared randomness in addition
 
 All code is publicly available at:
 
-**Repository:** [https://github.com/need-singularity/TECS-L](https://github.com/need-singularity/TECS-L)
+**Repository:** [https://github.com/dancinlab/TECS-L](https://github.com/dancinlab/TECS-L)
 
 **Key files:**
 
@@ -345,7 +345,7 @@ All code is publicly available at:
 
 ```bash
 # Clone repository
-git clone https://github.com/need-singularity/TECS-L.git
+git clone https://github.com/dancinlab/TECS-L.git
 cd TECS-L
 
 # Install dependencies
@@ -440,7 +440,7 @@ These are concrete directions for future work.
 | **Cross-list categories** | stat.ML (Machine Learning, Statistics); q-bio.NC (Neurons and Cognition) |
 | **License** | CC-BY 4.0 (Creative Commons Attribution) |
 | **Comments** | 15 pages, 10 figures, supplementary materials |
-| **Code** | [https://github.com/need-singularity/TECS-L](https://github.com/need-singularity/TECS-L) |
+| **Code** | [https://github.com/dancinlab/TECS-L](https://github.com/dancinlab/TECS-L) |
 
 ### S5.2 Abstract (for arXiv submission form)
 
@@ -503,7 +503,7 @@ The authors declare no competing interests.
 
 ### Data Availability Statement
 
-All datasets used in this study (MNIST, Fashion-MNIST, CIFAR-10) are publicly available through standard machine learning repositories. Human confusion annotations are available from Peterson et al. (2019) at [https://github.com/jcpeterson/cifar-10h](https://github.com/jcpeterson/cifar-10h). All analysis code is available at [https://github.com/need-singularity/TECS-L](https://github.com/need-singularity/TECS-L).
+All datasets used in this study (MNIST, Fashion-MNIST, CIFAR-10) are publicly available through standard machine learning repositories. Human confusion annotations are available from Peterson et al. (2019) at [https://github.com/jcpeterson/cifar-10h](https://github.com/jcpeterson/cifar-10h). All analysis code is available at [https://github.com/dancinlab/TECS-L](https://github.com/dancinlab/TECS-L).
 
 ### Author Contributions (CRediT)
 

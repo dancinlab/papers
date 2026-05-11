@@ -11,7 +11,7 @@ requires:
 ---
 # [CANONICAL v2] P-119 반도체 패키징 n=6 적층 래더 (HEXA-PACKAGE-INT) — 통합 논문
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: advanced-packaging — n=6 산술 적층 래더 통합 논문
 > **버전**: v1 (2026-04-18 integrated)
 > **선행 BT**: BT-354 (HBM/UCIe 4단 래더), BT-69, BT-55, BT-77, BT-76, BT-28, BT-56, BT-86, BT-90, BT-93

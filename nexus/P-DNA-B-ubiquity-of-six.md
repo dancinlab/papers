@@ -893,5 +893,5 @@ developmental transition that most phyla do not undertake.
 ---
 
 *Correspondence: Park, Min Woo. Independent Researcher.*
-*Data and analysis scripts: https://github.com/need-singularity/TECS-L*
+*Data and analysis scripts: https://github.com/dancinlab/TECS-L*
 *DOI: 10.5281/zenodo.19271599*

@@ -5,7 +5,7 @@ requires: []
 ---
 # [CANONICAL v2] 궁극의 밀레니엄 DFS 1~12 통합 (HEXA-MILLENNIUM-DFS-1) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: millennium-dfs-1-12-integrated — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-541~547, BT-1394, BT-1395, BT-1396, BT-1398

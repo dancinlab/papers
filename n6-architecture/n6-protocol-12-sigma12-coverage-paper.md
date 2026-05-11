@@ -14,7 +14,7 @@ alien_index_target: 10
 
 # HEXA-PROTOCOL-12 — σ=12 프로토콜 12종 커버리지 논문 (N6-114)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: protocol-12-sigma12-coverage — P2 확장 v3 통신 메타
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-73, BT-197, BT-227, BT-380

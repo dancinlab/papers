@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-ARCH-EVOLUTION-OUROBOROS — 진화 사이클 우로보로스 설계 논문 (N6-120)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: arch-evolution-ouroboros — P2 확장 v3/v4 자기참조 사이클 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-195, BT-370, BT-371, BT-1108

@@ -17,7 +17,7 @@ alien_index_target: 10
 
 # HEXA-LENS-FORGE-ENSEMBLE — 렌즈 앙상블 설계 논문 (N6-123)
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: lens-forge-ensemble — P2 확장 렌즈 앙상블 시드
 > **버전**: v3 (2026-04-14 P2 확장)
 > **선행 BT**: BT-380 (AI 8패러다임), BT-26, BT-33, BT-54, BT-64, BT-67, BT-73
@@ -27,7 +27,7 @@ alien_index_target: 10
 
 ## 0. Abstract (초록, 한글)
 
-본 논문은 n6-architecture 의 **"렌즈 Forge"** (= atlas.n6 항목을 탐색하는 관측 렌즈 제조기)
+본 논문은 CANON 의 **"렌즈 Forge"** (= atlas.n6 항목을 탐색하는 관측 렌즈 제조기)
 가 앙상블로 구성될 때 σ(6)=12 종의 렌즈로 수렴함을 보인다. 선행 논문 HEXA-CROSS-DSE-MATRIX-112
 (N6-113) 가 225 기법 × 10 도메인 매트릭스를 다룬 데 이어, 본 논문은 **렌즈 개수의
 이론적 상한** 을 정한다.
@@ -44,7 +44,7 @@ alien_index_target: 10
 
 ## 1. 서론 — WHY
 
-n6-architecture 의 atlas.n6 는 "렌즈" (= 관측 프레임) 를 통해 탐색된다. 렌즈 예:
+CANON 의 atlas.n6 는 "렌즈" (= 관측 프레임) 를 통해 탐색된다. 렌즈 예:
 - arithmetic 렌즈 — n=6 산술 상수
 - topology 렌즈 — 위상 불변량
 - dynamics 렌즈 — 시간 동학
@@ -108,7 +108,7 @@ n6-architecture 의 atlas.n6 는 "렌즈" (= 관측 프레임) 를 통해 탐색
 
 ### 4.1 실측 데이터
 
-- n6-architecture 의 scripts/forge/ 및 techniques/ 에 실측 렌즈 카운트 — 현재 11 렌즈 (σ=12 한계 내)
+- CANON 의 scripts/forge/ 및 techniques/ 에 실측 렌즈 카운트 — 현재 11 렌즈 (σ=12 한계 내)
 - BT-380 (8 AI 패러다임) — 8 < 12 PASS
 - atlas.n6 `lens-forge-count` 노드 EXACT 승격 대상
 

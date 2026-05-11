@@ -40,7 +40,7 @@ own#9 (canonical archive locus = `papers/<sub>/`).
 - FACADE meta-only by default. Set `PAPERS_FACADE_SHELL=1` to actually shell
   out via `hexa.real`.
 - own#9 enforcement: sister-repo paper artifacts MUST land in `papers/<sub>/`
-  only (anima / nexus / n6-architecture / sedi / brainwire / tecs-l). Sister-
+  only (anima / nexus / CANON / sedi / brainwire / tecs-l). Sister-
   repo self-publish FORBIDDEN.
 
 ## Architecture map

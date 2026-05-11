@@ -15,7 +15,7 @@
 > 아래 표의 `pp_*` 는 *historical name* 입니다.
 
 요청자: user session.
-범위: `/Users/ghost/core/papers/` 에 sister repos (hexa-lang / anima / nexus / airgenome / n6-architecture) 가 가진 수준의 meta engine + distribution CLI 를 주입. 고갈시까지 후보 나열.
+범위: `/Users/ghost/core/papers/` 에 sister repos (hexa-lang / anima / nexus / airgenome / CANON) 가 가진 수준의 meta engine + distribution CLI 를 주입. 고갈시까지 후보 나열.
 
 관련 선행:
 - `docs/meta_engine_cross_repo_analysis_20260423.md` — 5-repo 비교
@@ -213,7 +213,7 @@ bin/papers publish <paper-id>
 | # | 항목 |
 |---|---|
 | E1 | anima → papers auto-export: 매 release 시 새 PA-##.md |
-| E2 | n6-architecture 논문 → papers/n6-architecture/ 자동 동기 |
+| E2 | CANON 논문 → papers/canon/ 자동 동기 |
 | E3 | nexus discovery → papers fact claim 자동 드래프트 |
 | E4 | papers → proposal_inbox: 리뷰어 comment 를 해당 repo 제안으로 |
 | E5 | paper의 figure code → repo 로 역전개 (reproducibility) |

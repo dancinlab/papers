@@ -196,7 +196,7 @@ SNR_HEXA = SNR_QI · σ · √τ = SNR_QI · 12 · 2 = 24·SNR_QI
 
 **SPDC 6채널 + Rydberg memory(τ=4·30μs) + JPA squeeze(σ dB) + n=6 정8면체 array** 4중 혁신으로 6축 전부 외계인지수 10 천장. HEXA-GATE τ=4×φ=2=n=6 매핑이 **photon→electron→spin→signal 4단 × active/passive dual** 로 검증. σ·τ=48 feat ML CNN 로 실시간 ≤τ=4 ms 처리. SNR 6→36 dB, stealth 600 km 탐지, 질량 100→16.7 kg(=1/n 배 감). 2027→2030 4년 6-마일스톤. SPDC 수율, Rydberg τ₂, 대기감쇠 3건 선결.
 
-**파일**: `/Users/ghost/Dev/n6-architecture/papers/embody-p12-2-quantum-sensor-design-2026-04-15.md`
+**파일**: `/Users/ghost/Dev/canon/papers/embody-p12-2-quantum-sensor-design-2026-04-15.md`
 **선택 후보**: **Quantum Radar (Entangled Illumination, SNR 6→36 dB, 4000×)**
 **3줄 요약**:
 1. 3 축(magnetometer/gravimeter/radar) 중 차원점프 4000× 인 **Quantum Radar** 를 심층 설계로 선정.

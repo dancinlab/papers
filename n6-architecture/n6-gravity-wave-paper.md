@@ -5,7 +5,7 @@ requires: []
 ---
 # [CANONICAL v2] 궁극의 중력파 (HEXA-GRAVITY-WAVE) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: gravity-wave — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-130, BT-143, BT-167, BT-189, BT-201

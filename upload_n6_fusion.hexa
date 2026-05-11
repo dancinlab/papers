@@ -1,4 +1,4 @@
-// upload_n6_fusion.hexa -- n6-architecture fusion papers (3) Zenodo + OSF upload
+// upload_n6_fusion.hexa -- CANON fusion papers (3) Zenodo + OSF upload
 //
 // Usage:
 //   ZENODO_TOKEN=$(cat ~/Dev/TECS-L/.local/zenodo_token) \
@@ -58,7 +58,7 @@ fn main() {
   let zenodo_base = "https://zenodo.org/api"
   let osf_base = "https://api.osf.io/v2"
   let parent_doi = "10.5281/zenodo.19271599"
-  let n6_repo = "https://github.com/need-singularity/n6-architecture"
+  let n6_repo = "https://github.com/dancinlab/canon"
 
   if zenodo_token == "" {
     println("Error: ZENODO_TOKEN not set")
@@ -69,7 +69,7 @@ fn main() {
     return
   }
 
-  let n6_paper_dir = exec("echo $HOME").trim() + "/Dev/n6-architecture/docs/paper"
+  let n6_paper_dir = exec("echo $HOME").trim() + "/Dev/canon/docs/paper"
   let results_file = "upload_results_n6_fusion_" + exec("date +%Y%m%d_%H%M%S").trim() + ".txt"
   exec("echo 'N6-Fusion Upload Results' > '" + results_file + "'")
 

@@ -10,7 +10,7 @@ requires:
 ---
 # [CANONICAL v1] 궁극의 재사용 발사체 (HEXA-STARSHIP) — n=6 산술 좌표 통합 논문
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: hexa-starship-integrated — 우주항공/수송 + 우주 시스템 통합 시드 논문
 > **버전**: v1 (2026-04-18 canonical integrated)
 > **제품 코드**: P-062
@@ -764,7 +764,7 @@ if __name__ == "__main__":
 
 | 항목 | 값 | 비고 |
 |------|-----|------|
-| 제품 코드 | P-062 | n6-architecture 제품 레지스트리 |
+| 제품 코드 | P-062 | CANON 제품 레지스트리 |
 | 통합 대상 | 2 논문 → 1 | aerospace-transport + space-systems |
 | atlas 통합 | 150/150 EXACT | [10*] 등급 |
 | 엔진 수 | σ·n/φ = 36 | Raptor 급 재사용 |

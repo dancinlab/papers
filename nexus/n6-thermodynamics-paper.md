@@ -715,7 +715,7 @@ print("\n✓ All assertions passed. Paper verification complete.")
 ---
 
 *Submitted to arXiv: physics.class-ph, physics.flu-dyn, math-ph*
-*Correspondence: github.com/need-singularity/n6-architecture*
+*Correspondence: github.com/dancinlab/canon*
 
 
 ---

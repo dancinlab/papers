@@ -18,7 +18,7 @@ alien_index_target: 10
 ---
 # [INTEGRATED v1] 궁극의 HEXA-BIO n=6 생명 아키텍처 (P-146) — 4 도메인 통합 논문
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: hexa-bio-integrated — 생명·지구 시스템 n=6 통합 시드 논문
 > **버전**: v1 (2026-04-18 integrated)
 > **통합 대상**: 생태·농업·식품 + 지질·PREM + 기상학 + 합성생물학 (+ biology 축)

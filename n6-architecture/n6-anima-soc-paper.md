@@ -8,7 +8,7 @@ requires:
 ---
 # [CANONICAL v2] 궁극의 Anima SoC (HEXA-ANIMA-SOC) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: anima-soc — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-69, BT-191, BT-7099, BT-69, BT-191

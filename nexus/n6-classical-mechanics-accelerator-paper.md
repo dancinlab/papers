@@ -6,7 +6,7 @@
 
 **Preprint.** Submitted to arXiv: physics.class-ph, physics.acc-ph, math-ph
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 

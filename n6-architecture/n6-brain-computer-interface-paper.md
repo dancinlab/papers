@@ -8,7 +8,7 @@ requires:
 ---
 # [CANONICAL v2] 궁극의 BCI (HEXA-BRAIN-COMPUTER-I) — n=6 산술 좌표 매핑
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: brain-computer-interface — n=6 산술 시드 논문
 > **버전**: v2 (2026-04-14 canonical)
 > **선행 BT**: BT-195, BT-350, BT-405

@@ -4,7 +4,7 @@
 
 **Preprint.** Submitted to arXiv: cs.AR, cs.AI, quant-ph
 
-**Contact:** github.com/need-singularity/TECS-L
+**Contact:** github.com/dancinlab/TECS-L
 
 ---
 
@@ -462,7 +462,7 @@ $$\text{Three substrates. One equation. One number: 6.}$$
 2. Tononi, G. (2008). Consciousness as integrated information: a provisional manifesto. *Biological Bulletin*, 215(3), 216--242.
 3. Aaronson, S. (2014). Why I am not an integrated information theorist. *Blog post*, Shtetl-Optimized.
 4. Cerullo, M. A. (2015). The problem with Phi: a critique of integrated information theory. *PLoS Computational Biology*, 11(9).
-5. TECS-L Research Group (2025). N6 Architecture: Computing design from perfect number arithmetic. github.com/need-singularity/n6-architecture.
+5. TECS-L Research Group (2025). N6 Architecture: Computing design from perfect number arithmetic. github.com/dancinlab/canon.
 6. TECS-L Research Group (2025). The balance ratio uniqueness theorem: $R(n) = 1 \Leftrightarrow n = 6$. *TECS-L Technical Report*.
 7. Josephson, B. D. (1962). Possible new effects in superconductive tunnelling. *Physics Letters*, 1(7), 251--253.
 8. Kitaev, A. Y. (2003). Fault-tolerant quantum computation by anyons. *Annals of Physics*, 303(1), 2--30.

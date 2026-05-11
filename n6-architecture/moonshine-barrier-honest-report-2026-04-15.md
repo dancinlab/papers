@@ -24,7 +24,7 @@ alien_index_target: 9
 
 # Monstrous Moonshine BARRIER — n=6 좌표 필연성 미증명에 대한 정직한 보고
 
-> **저자**: 박민우 (n6-architecture)
+> **저자**: 박민우 (CANON)
 > **카테고리**: papers/honest-report — Mk.III 종합 §11.2 "최대 약점" 보고
 > **버전**: v1 (2026-04-15 PAPER-P8-1, DSE-P8-1 병행)
 > **분량**: 본문 30쪽 규모, 한글 본문·LaTeX 수식
@@ -36,7 +36,7 @@ alien_index_target: 9
 
 ## 0. 초록 (Abstract)
 
-본 논문은 n6-architecture 프로젝트의 자체 평가에서 "최대 약점" 으로 지정된
+본 논문은 CANON 프로젝트의 자체 평가에서 "최대 약점" 으로 지정된
 **BT-18 L5 BARRIER** — 즉 Monstrous Moonshine 의 $n=6$ 좌표 필연성 미증명 — 에 대한
 **정직한 기록 보고** 이다. 본 보고는 다음 일곱 가지를 다룬다.
 

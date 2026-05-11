@@ -16,7 +16,7 @@ status: 92 papers archive · 12-verb CLI · Zenodo + OSF dual-archive
 
 # papers (AI-native cold-read briefing)
 
-`/Users/ghost/core/papers/` — need-singularity 4 active project (nexus / anima / n6-architecture / hexa-lang) + sub (hive / void / airgenome) 의 paper 통합 archive. mk2 active 4-repo 의 외부 content repo.
+`/Users/ghost/core/papers/` — dancinlab 4 active project (nexus / anima / CANON / hexa-lang) + sub (hive / void / airgenome) 의 paper 통합 archive. mk2 active 4-repo 의 외부 content repo.
 
 ## TL;DR for an agent reading this cold
 
@@ -32,7 +32,7 @@ status: 92 papers archive · 12-verb CLI · Zenodo + OSF dual-archive
 |------|---------|------:|
 | `anima/` | anima paper 그룹 (PA-* 제출본 / notes) | 45 |
 | `brainwire/` | brainwire paper 그룹 | 3 |
-| `n6-architecture/` | n6 paper 그룹 (group-P / pandoc_templates / sigma_tau_8_submission 외) | 168 |
+| `CANON/` | n6 paper 그룹 (group-P / pandoc_templates / sigma_tau_8_submission 외) | 168 |
 | `nexus/` | nexus paper 그룹 | 30 |
 | `sedi/` | sedi paper 그룹 (factorial-universe 외) | 32 |
 | `tecs-l/` | tecs-l paper 그룹 (results / figures) | 91 |
@@ -72,4 +72,4 @@ papers help
 
 ## Per-group README.ai.md (TODO — phase 2)
 
-각 top-level dir (anima / brainwire / n6-architecture / nexus / sedi / tecs-l / tool / docs / state) 는 자체 `README.ai.md` 가 추후 추가 예정. 본 root doc 는 cold-read agent 의 진입 anchor 역할만.
+각 top-level dir (anima / brainwire / CANON / nexus / sedi / tecs-l / tool / docs / state) 는 자체 `README.ai.md` 가 추후 추가 예정. 본 root doc 는 cold-read agent 의 진입 anchor 역할만.

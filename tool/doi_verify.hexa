@@ -51,7 +51,7 @@ def check_url(url, timeout=10):
         def redirect_request(self, req, fp, code, msg, headers, newurl):
             return None
     opener = urllib.request.build_opener(NoRedirectHandler)
-    headers = {'User-Agent': 'papers-doi-verifier/1.0 (https://github.com/need-singularity/papers)', 'Accept': 'text/html,application/json'}
+    headers = {'User-Agent': 'papers-doi-verifier/1.0 (https://github.com/dancinlab/papers)', 'Accept': 'text/html,application/json'}
     for method in ['HEAD', 'GET']:
         try:
             req = urllib.request.Request(url, headers=headers, method=method)
