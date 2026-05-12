@@ -70,7 +70,7 @@ curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh
 hx install papers
 ```
 
-## Run — `papers` CLI (12-verb dispatch)
+## Run
 
 Entry point: `bin/papers` (single canonical bin per `.own#2 papers-bin-single-entry`).
 
