@@ -52,6 +52,8 @@
 
 @I id001 := "papers" :: identity-claim [d=2026-05-14 active]
   kind = "dancinlab paper collection · complete archive across four active projects"
+  brief = "complete paper collection · 92 papers · Zenodo DOIs · umbrella DOI 10.5281/zenodo.19271599"
+  parent = "dancinlab"
   total = "92 papers (README §Collection)"
   umbrella-doi = "10.5281/zenodo.19271599"
   axis = "publication archive · Zenodo-primary · OSF-mirror · CC BY 4.0"
