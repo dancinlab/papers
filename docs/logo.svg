@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" role="img" aria-label="papers logo">
+  <!-- papers signature — a stack of three papers (back / middle / front), gold #bf8700 -->
+  <g fill="none" stroke="#bf8700" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <!-- back sheet -->
+    <rect x="30" y="22" width="70" height="86" rx="4"/>
+    <!-- middle sheet -->
+    <rect x="38" y="34" width="70" height="86" rx="4"/>
+    <!-- front sheet (folded corner) -->
+    <path d="M46 46 H110 V120 Q110 132 98 132 H58 Q46 132 46 120 Z"/>
+    <!-- text lines on front sheet -->
+    <line x1="56" y1="68" x2="100" y2="68"/>
+    <line x1="56" y1="82" x2="100" y2="82"/>
+    <line x1="56" y1="96" x2="88"  y2="96"/>
+  </g>
+  <text x="70" y="20" text-anchor="middle"
+        font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace"
+        font-size="14" font-weight="700" fill="#bf8700"
+        letter-spacing="2">papers</text>
+</svg>

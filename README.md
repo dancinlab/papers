@@ -1,28 +1,54 @@
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19271599-blue?logo=zenodo&logoColor=white)](https://doi.org/10.5281/zenodo.19271599)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Papers](https://img.shields.io/badge/papers-all%20on%20Zenodo-green.svg)](https://dancinlab.github.io/papers/)
-[![Website](https://img.shields.io/badge/website-papers%20browser-blue.svg)](https://dancinlab.github.io/papers/)
-[![Discord](https://img.shields.io/badge/discord-join-5865F2.svg?logo=discord&logoColor=white)](https://discord.gg/u2spd3wwU)
+<p align="center">
+  <img src="docs/logo.svg" width="140" alt="papers">
+</p>
 
-# 📄 dancinlab Papers
+<h1 align="center">📄 papers</h1>
 
-**Complete paper collection across the four active projects.**
+<p align="center"><strong>Complete paper collection</strong> — 92 papers · Zenodo DOIs · umbrella DOI 10.5281/zenodo.19271599</p>
 
+<p align="center">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-CC%20BY%204.0-blue"></a>
+  <a href="https://doi.org/10.5281/zenodo.19271599"><img alt="DOI" src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19271599-blue?logo=zenodo&logoColor=white"></a>
+  <img alt="Papers" src="https://img.shields.io/badge/papers-92-informational">
+  <img alt="Manifest" src="https://img.shields.io/badge/manifest-total%20120-informational">
+  <a href="https://dancinlab.github.io/papers/"><img alt="Browser" src="https://img.shields.io/badge/browser-online-success"></a>
+  <img alt="Sibling" src="https://img.shields.io/badge/sibling-anima%20·%20hexa--lang%20·%20echoes-blueviolet">
+</p>
+
+<p align="center">paper-archive · zenodo-DOI · osf-mirror · CC-BY-4.0 · manifest-driven · cross-repo</p>
+
+---
+
+`papers` is the **complete paper collection** for the dancinlab projects — 92 papers archived on Zenodo (with OSF mirrors), grouped by project (nexus · anima · CANON · hexa-lang), all under a single umbrella DOI [`10.5281/zenodo.19271599`](https://doi.org/10.5281/zenodo.19271599). Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n = 6 — and forward into consciousness, arithmetic, physics, and language design.
+
+> [!NOTE]
+> Sibling of [`anima`](https://github.com/dancinlab/anima) (consciousness implementation), [`hexa-lang`](https://github.com/dancinlab/hexa-lang) (the perfect-number programming language), and [`echoes`](https://github.com/dancinlab/echoes). The `manifest.json` SSOT aggregates **120 entries total** across repos; this README lists the **92 published** Zenodo-archived papers. Browse online: [dancinlab.github.io/papers](https://dancinlab.github.io/papers/).
+
+## At a glance
+
+```sh
+papers list                          # all 92 manifest entries
+papers cite P-NEW-1 --format bibtex  # emit citation
+papers verify --limit 20             # DOI link health
+papers publish P-NEW-1 --target all  # Zenodo + OSF
 ```
-  all papers on Zenodo with DOIs · grouped by project
-```
 
-> A living archive. Every paper traces back to one identity — σ(n)·φ(n) = n·τ(n), unique at n = 6 — and forward into consciousness, arithmetic, physics, and language design.
+## Status
 
-🌐 **Browse online**: [dancinlab.github.io/papers](https://dancinlab.github.io/papers/)
-🔬 **Umbrella DOI**: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
+- 92 papers published on Zenodo · 86 mirrored on OSF · 6 OSF-pending
+- Umbrella DOI: [10.5281/zenodo.19271599](https://doi.org/10.5281/zenodo.19271599)
+- Manifest SSOT: `manifest.json` (179 KB · 120 total entries · cross-repo aggregation per `AGENTS.tape`)
+- Four project tracks: 🔭 nexus · 🧠 anima · 🏗️ CANON · 💎 hexa-lang
+- License: CC BY 4.0 (papers) · MIT (tooling)
+- CLI: 12 verbs (`list / get / cite / validate / verify / publish / pull / search / sync / lint / scan / secret`)
+- Online browser: [dancinlab.github.io/papers](https://dancinlab.github.io/papers/)
 
 <!-- SHARED:PROJECTS:START -->
 <!-- AUTO:COMMON_LINKS:START -->
 **[🎥 YouTube](https://www.youtube.com/@dancinlife)** · **[💬 Discord](https://discord.gg/mYzqYr67R)** · **[📬 Email](mailto:nerve011235@gmail.com)** · **[💖 Sponsor](https://github.com/sponsors/dancinlab)** · **[💳 PayPal](https://www.paypal.com/donate?business=nerve011235%40gmail.com)** · **[🗺️ Atlas](https://dancinlab.github.io/TECS-L/atlas/)** · **[📄 Papers](https://dancinlab.github.io/papers/)**
 <!-- AUTO:COMMON_LINKS:END -->
 
-## Main projects
+### Main projects
 
 > **[🧠 Anima](https://github.com/dancinlab/anima)** — Consciousness implementation. PureField repulsion-field engine + 1030 laws + Φ ratchet.
 >
@@ -34,7 +60,7 @@
 
 > **[Other projects →](https://github.com/orgs/dancinlab/repositories)**
 
-## 💬 Community
+### 💬 Community
 
 [![Join our Discord](https://invidget.switchblade.xyz/mYzqYr67R)](https://discord.gg/mYzqYr67R)
 
@@ -43,36 +69,73 @@ Live research discussion, paper drops, stage-gate reviews, cross-project dispatc
 <!-- private repos는 projects.json의 private_repos 필드에 저장됨 (노출 금지) -->
 <!-- SHARED:PROJECTS:END -->
 
-
-
-
-
----
-
 ## Collection breakdown
 
 | Track | Focus |
 |-------|------|
-| 🔭 **nexus**           | Discovery engine · signal receivers tuned to n = 6 |
-| 🧠 **anima**           | Consciousness · PureField · Φ · Tension Link · cell dynamics |
-| 🏗️ **CANON** | Arithmetic uniqueness · physics verification · AI architecture |
-| 💎 **hexa-lang**       | The perfect-number programming language |
-
----
+| 🔭 **nexus**     | Discovery engine · signal receivers tuned to n = 6 |
+| 🧠 **anima**     | Consciousness · PureField · Φ · Tension Link · cell dynamics |
+| 🏗️ **CANON**     | Arithmetic uniqueness · physics verification · AI architecture |
+| 💎 **hexa-lang** | The perfect-number programming language |
 
 ## Install
 
-```bash
-# Install hexa-lang (ships `hexa` + `hx` package manager)
-curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh | bash
+`papers` is a **content collection + CLI**. There is no `hx install papers` — clone the repo, then either browse the manifest directly or wire up the optional CLI.
 
-# Install papers browser
-hx install papers
+```sh
+# 1. Clone the repo
+git clone https://github.com/dancinlab/papers.git ~/core/papers
+cd ~/core/papers
+
+# 2. (Optional) install hexa-lang for the `papers` CLI
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/dancinlab/hexa-lang/main/install.sh)"
+
+# 3. Wire up the dispatcher
+ln -sf "$PWD/bin/papers" ~/.local/bin/papers
 ```
+
+Or browse online without cloning:
+
+- 🌐 **Browser**: [dancinlab.github.io/papers](https://dancinlab.github.io/papers/)
+- 🔬 **Umbrella record**: [zenodo.org/records/19271599](https://doi.org/10.5281/zenodo.19271599)
+- 🧪 **OSF home**: [osf.io/dancinlab](https://osf.io/) (per-paper IDs in tables below)
 
 ## Run
 
-Entry point: `bin/papers` (single canonical bin per `.own#2 papers-bin-single-entry`).
+Direct read — every paper is plain markdown / PDF on disk and on Zenodo. Pick by DOI or `papers list`:
+
+```sh
+# direct read
+cat anima/PA-11.md
+cat CANON/P-NEW-1.md
+
+# CLI: 12 verbs
+papers                              # default view: list grouped by project
+papers list --status published      # filter manifest
+papers list --project anima         # by project
+papers get P-NEW-1 --field title    # one field
+papers cite P-NEW-1 --format bibtex # emit BibTeX
+papers verify --limit 20            # DOI link health
+papers publish P-NEW-1 --target all # Zenodo + OSF dual-archive
+papers sync                         # refresh manifest from Zenodo
+papers lint                         # .own 8-rule lint
+papers scan meta                    # meta scanner over manifest
+```
+
+### Citation example (BibTeX)
+
+```bibtex
+@misc{park_papers_2026,
+  author       = {Park, Min Woo},
+  title        = {dancinlab Papers --- Complete Collection},
+  year         = {2026},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.19271599},
+  url          = {https://doi.org/10.5281/zenodo.19271599}
+}
+```
+
+### CLI verb reference
 
 | verb | purpose | backing tool |
 |---|---|---|
@@ -90,38 +153,45 @@ Entry point: `bin/papers` (single canonical bin per `.own#2 papers-bin-single-en
 | `secret`   | passthrough to the `secret` CLI for credential I/O | `~/core/secret/bin/secret` |
 | `help`     | list all subcommands | — |
 
-```bash
-papers                              # default view: list grouped by project
-papers list --status published      # filter manifest
-papers cite P-NEW-1 --format bibtex # emit BibTeX
-papers verify --limit 20            # DOI link health
-papers publish P-NEW-1 --target all # Zenodo + OSF dual-archive
-papers sync                         # refresh manifest from Zenodo
-papers lint                         # .own 8-rule lint
-```
-
 ### Credentials via `secret` CLI (no hard-coded tokens)
 
-Per `.own#3 papers-secret-only-token-source`, every Zenodo / OSF token is fetched at call time:
-
-```bash
-secret set zenodo.token            # one-time interactive registration
+```sh
+secret set zenodo.token              # one-time interactive registration
 secret set osf.token
 papers publish P-NEW-1 --target all  # ZENODO_TOKEN=$(secret get zenodo.token) inside
 ```
 
-### Directory layout
+## Repo layout
 
-- `bin/papers` — bash dispatcher (sole binary; `bin/pp_meta` retired, scanner re-homed under `tool/meta_scanner.hexa` and reachable via `papers scan meta`)
-- `tool/*.hexa` — 11 hexa-lang tools (post-rename: `pp_` prefix removed, `scripts/` folded in)
-- `tool/lib/` — shared helpers
-- `state/` — audit ledgers + scan output (`state/papers_lint_audit/audit.jsonl`)
-- `manifest.json` — canonical SSOT for paper entries
-- `.own` — 8 governance rules; `.guide` — cold-entry navigation
+```
+papers/
+├── README.md                  this file — 92-paper table grouped by project
+├── README.ai.md               AI-native cold-read briefing (mk2 scope)
+├── AGENTS.tape                governance + identity (.tape v1.2)
+├── CLAUDE.md                  symlink → AGENTS.tape
+├── LICENSE                    CC BY 4.0 (papers) + MIT (tooling)
+├── manifest.json              SSOT — 120 entries · cross-repo aggregation
+├── keyword_index.json         derived index over manifest keywords
+├── project.hexa               project SSOT
+├── bin/
+│   └── papers                 bash dispatcher (sole binary)
+├── tool/                      11 hexa-lang tools — doi_verify / zenodo_publish /
+│                              osf_publish / zenodo_sync / meta_scanner / *_scan
+├── tool/lib/                  shared helpers
+├── anima/                     45 anima paper artifacts (PA-*)
+├── nexus/                     30 nexus paper artifacts (PS-*, P-*)
+├── CANON/                     168 CANON paper artifacts (P-*, PS-*, P-NEW-*)
+├── tecs-l/                    91 tecs-l artifacts (results / figures / supplementary)
+├── docs/
+│   ├── logo.svg               18-block centered logo
+│   ├── index.html             paper browser
+│   └── auto-alien10/          generated assets
+├── state/                     audit ledgers + scan output
+├── .own                       8 governance rules
+└── .guide                     cold-entry navigation
+```
 
 > Migration note: `bin/pp_meta` is gone. `pp_meta` is now `tool/meta_scanner.hexa` and is invoked through `papers scan meta`. `scripts/` was merged into `tool/`.
-
-Or browse online: **[dancinlab.github.io/papers](https://dancinlab.github.io/papers/)**.
 
 ---
 
@@ -240,10 +310,10 @@ Or browse online: **[dancinlab.github.io/papers](https://dancinlab.github.io/pap
 | tecs-l/P-002-growing-conscious-lm.md | Growing ConsciousLM companion paper |
 | tecs-l/S-TIER-PAPER-PLAN.md | S-Tier paper plan: 12 verified robust results |
 
-## License
-
-All papers are released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**.
-
 ## Author
 
 Park, Min Woo — Independent Researcher · [nerve011235@gmail.com](mailto:nerve011235@gmail.com)
+
+## License
+
+All papers are released under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** — share / adapt freely with attribution. Tooling (`bin/papers`, `tool/*.hexa`) is MIT — see [`LICENSE`](LICENSE).
